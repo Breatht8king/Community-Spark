@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Community Spark | Pricing</title>
+<meta name="description" content="Clear event pricing tiers plus an à la carte add-ons calculator for Community Spark resident events."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="announcement">Now booking fall and holiday 2026 events for apartment communities</div>
+<header id="site-header">
+  <a class="brand" href="index.html"><span class="mark">✦</span><span class="brand-text"><strong>Community Spark</strong><small>Apartment Community Events</small></span></a>
+  <nav aria-label="Primary navigation"><a href="index.html">Home</a><a href="events.html">Events</a><a href="book.html">Book</a><a href="pricing.html" class="active">Pricing</a><a href="partnerships.html">Partnerships</a><a href="gallery.html">Gallery</a><a href="about.html">About</a></nav>
+  <a class="nav-cta" href="contact.html">Plan an Event</a>
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+</header>
+<div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <nav class="drawer-panel"><button class="drawer-close" id="drawerClose">✕</button><a href="index.html">Home</a><a href="events.html">Event Catalog</a><a href="book.html">Book a Preset Event</a><a href="pricing.html" class="active">Pricing</a><a href="partnerships.html">Community Partnerships</a><a href="gallery.html">Gallery</a><a href="about.html">About & Contact</a><a class="btn btn-primary nav-cta" href="contact.html">Plan an Event</a></nav>
+</div>
+<main>
+<section class="section" id="pricing">
+  <div class="section-center reveal"><p class="section-label">Transparent pricing</p><h2>Clear event tiers with room to customize.</h2><p>Pricing is based on scope, production level, and selected services — not a published resident headcount limit.</p></div>
+  <div class="pricing-grid reveal">
+    <div class="price-card">
+      <div class="price-tier">Polished Essentials</div><h3>The Spark</h3>
+      <div class="price-amount" style="color:var(--ink)">$800</div>
+      <p class="price-sub">A streamlined event with essentials needed for a professional resident experience.</p>
+      <ul class="price-features"><li>Up to 1 hour</li><li>One featured activity</li><li>Planning and coordination</li><li>Standard décor</li><li>Setup and breakdown</li></ul>
+      <a class="btn btn-ghost" href="contact.html">Plan a Spark Event</a>
+    </div>
+    <div class="price-card featured">
+      <div class="badge">Most Popular</div>
+      <div class="price-tier">Elevated Experience</div><h3>The Glow</h3>
+      <div class="price-amount">$1,250</div>
+      <p class="price-sub">An elevated event with upgraded décor, multiple engagement elements, and expanded planning.</p>
+      <ul class="price-features"><li>1 to 2 hours</li><li>Multiple event elements</li><li>Expanded planning</li><li>Upgraded décor</li><li>Additional staffing as needed</li></ul>
+      <a class="btn btn-primary" href="contact.html">Plan a Glow Event</a>
+    </div>
+    <div class="price-card">
+      <div class="price-tier">Premium Production</div><h3>The Radiance</h3>
+      <div class="price-amount" style="color:var(--ink)">$1,750<span style="font-size:32px">+</span></div>
+      <p class="price-sub">A high-impact experience with full-service production, elevated styling, and entertainment.</p>
+      <ul class="price-features"><li>1 to 3 hours</li><li>Full event management</li><li>Premium décor</li><li>Entertainment options</li><li>Enhanced production</li></ul>
+      <a class="btn btn-ghost" href="contact.html">Plan a Radiance Event</a>
+    </div>
+  </div>
+  <div class="budget-banner reveal">
+    <div><p class="section-label" style="color:rgba(255,255,255,.6)">Working with a set budget?</p><h3 style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#fff;margin-bottom:8px">We can build the strongest event within your budget.</h3><p>Tell us your budget and top priorities. We'll recommend the best event format, inclusions, and enhancements for that amount.</p></div>
+    <a class="btn btn-outline" href="contact.html">Build Around My Budget</a>
+  </div>
+</section>
+
+<section class="section section-soft">
+  <div class="section-head reveal"><div><p class="section-label">Indiana event add-ons</p><h2>Build the experience one enhancement at a time.</h2></div><p>Prices are planning estimates based on publicly available Indianapolis-area vendor benchmarks. Final quotes may change based on event date, location, delivery, duration, availability, and taxes.</p></div>
+  <div class="estimate-notice reveal"><strong>Planning estimates only.</strong> Choose a quantity to see a live estimate. Final vendor quotes required before booking.</div>
+  <div class="addons-grid reveal">
+    <div class="addon-item"><div><span class="addon-name">Balloon Garland</span><span class="addon-desc">Organic balloon installation in 5-foot sections</span></div><div class="addon-controls"><select class="addon-qty" data-unit="225" aria-label="Balloon garland quantity"><option value="0">0</option><option value="1">5 ft</option><option value="2">10 ft</option><option value="3">15 ft</option><option value="4">20 ft</option></select><span class="addon-price">$225 / 5 ft</span></div></div>
+    <div class="addon-item"><div><span class="addon-name">Premium Photo Backdrop</span><span class="addon-desc">Greenery, floral, shimmer, or specialty wall</span></div><div class="addon-controls"><select class="addon-qty" data-unit="325" aria-label="Photo backdrop quantity"><option value="0">0</option><option value="1">1 backdrop</option><option value="2">2 backdrops</option></select><span class="addon-price">$325 each</span></div></div>
+    <div class="addon-item"><div><span class="addon-name">360 Photo Booth</span><span class="addon-desc">Two-hour booth rental with basic event setup</span></div><div class="addon-controls"><select class="addon-qty" data-unit="550" aria-label="Photo booth quantity"><option value="0">0</option><option value="1">1 booth</option><option value="2">2 booths</option></select><span class="addon-price">$550 each</span></div></div>
+    <div class="addon-item"><div><span class="addon-name">Mobile Coffee Bar</span><span class="addon-desc">Two-hour specialty coffee service block</span></div><div class="addon-controls"><select class="addon-qty" data-unit="750" aria-label="Coffee bar quantity"><option value="0">0</option><option value="1">1 block (2 hrs)</option><option value="2">2 blocks (4 hrs)</option></select><span class="addon-price">$750 / 2 hrs</span></div></div>
+    <div class="addon-item"><div><span class="addon-name">Ice Cream Social Package</span><span class="addon-desc">Cart or cooler service in 50-serving groups</span></div><div class="addon-controls"><select class="addon-qty" data-unit="350" aria-label="Ice cream quantity"><option value="0">0</option><option value="1">50 servings</option><option value="2">100 servings</option><option value="3">150 servings</option><option value="4">200 servings</option></select><span class="addon-price">$350 / 50 servings</span></div></div>
+    <div class="addon-item"><div><span class="addon-name">Lawn Game Set</span><span class="addon-desc">Cornhole or comparable resident-friendly game</span></div><div class="addon-controls"><select class="addon-qty" data-unit="50" aria-label="Lawn game quantity"><option value="0">0</option><option value="1">1 set</option><option value="2">2 sets</option><option value="3">3 sets</option><option value="4">4 sets</option><option value="5">5 sets</option><option value="6">6 sets</option></select><span class="addon-price">$50 each</span></div></div>
+    <div class="addon-item"><div><span class="addon-name">Event Photographer</span><span class="addon-desc">Professional coverage and edited digital gallery</span></div><div class="addon-controls"><select class="addon-qty" data-unit="400" aria-label="Photographer hours"><option value="0">0</option><option value="1">1 hour</option><option value="2">2 hours</option><option value="3">3 hours</option><option value="4">4 hours</option></select><span class="addon-price">$400 / hr</span></div></div>
+    <div class="addon-item"><div><span class="addon-name">DJ and Sound</span><span class="addon-desc">DJ service with basic sound equipment</span></div><div class="addon-controls"><select class="addon-qty" data-unit="175" aria-label="DJ hours"><option value="0">0</option><option value="2">2 hours</option><option value="3">3 hours</option><option value="4">4 hours</option></select><span class="addon-price">$175 / hr</span></div></div>
+    <div class="addon-item"><div><span class="addon-name">Custom Welcome Sign</span><span class="addon-desc">Full-color event sign with community branding</span></div><div class="addon-controls"><select class="addon-qty" data-unit="95" aria-label="Sign quantity"><option value="0">0</option><option value="1">1 sign</option><option value="2">2 signs</option><option value="3">3 signs</option><option value="4">4 signs</option></select><span class="addon-price">$95 each</span></div></div>
+    <div class="addon-item"><div><span class="addon-name">Lighted Sign or Marquee Accent</span><span class="addon-desc">Decorative illuminated sign element</span></div><div class="addon-controls"><select class="addon-qty" data-unit="75" aria-label="Light sign quantity"><option value="0">0</option><option value="1">1 sign</option><option value="2">2 signs</option><option value="3">3 signs</option></select><span class="addon-price">$75 each</span></div></div>
+    <div class="addon-item"><div><span class="addon-name">Resident Prize Pack</span><span class="addon-desc">Gift cards or prizes in $25 increments</span></div><div class="addon-controls"><select class="addon-qty" data-unit="25" aria-label="Prize pack value"><option value="0">$0</option><option value="1">$25</option><option value="2">$50</option><option value="4">$100</option><option value="6">$150</option><option value="8">$200</option><option value="10">$250</option></select><span class="addon-price">$25 increments</span></div></div>
+    <div class="addon-item"><div><span class="addon-name">Additional Event Staff</span><span class="addon-desc">Extra setup, guest support, or activity staffing</span></div><div class="addon-controls"><select class="addon-qty" data-unit="45" aria-label="Staff hours"><option value="0">0</option><option value="2">2 staff-hours</option><option value="4">4 staff-hours</option><option value="6">6 staff-hours</option><option value="8">8 staff-hours</option></select><span class="addon-price">$45 / staff-hour</span></div></div>
+    <div class="addon-total"><div><span class="addon-total-label">Estimated add-on total<small>Planning estimate only. Final vendor quote required.</small></span></div><span class="addon-total-amount" id="addonTotal">$0</span></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="mark">✦</span><span class="brand-text"><strong style="font-size:20px;font-family:'Cormorant Garamond',serif">Community Spark</strong></span></div><p>Creating memorable moments that help apartment communities feel more connected. Based in Indiana, serving Indiana communities.</p></div>
+    <div class="footer-col"><h4>Explore</h4><a href="events.html">Event Catalog</a><a href="pricing.html">Pricing</a><a href="gallery.html">Gallery</a><a href="about.html">About</a></div>
+    <div class="footer-col"><h4>Programs</h4><a href="partnerships.html">Community Partnerships</a><a href="contact.html">Custom Events</a><a href="pricing.html">Budget-Based Events</a></div>
+    <div class="footer-col"><h4>Contact</h4><a href="mailto:Griffin.newton@indycollab.com">Griffin.newton@indycollab.com</a><a href="tel:3173545880">(317) 354-5880</a><a href="contact.html">Submit an Inquiry</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 Community Spark · Apartment Community Events</span><span>Indiana-based and resident-focused</span></div>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Community Spark | Contact</title>
+<meta name="description" content="Request a custom Community Spark event for your apartment community."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="announcement">Now booking fall and holiday 2026 events for apartment communities</div>
+<header id="site-header">
+  <a class="brand" href="index.html"><span class="mark">✦</span><span class="brand-text"><strong>Community Spark</strong><small>Apartment Community Events</small></span></a>
+  <nav aria-label="Primary navigation"><a href="index.html">Home</a><a href="events.html">Events</a><a href="book.html">Book</a><a href="pricing.html">Pricing</a><a href="partnerships.html">Partnerships</a><a href="gallery.html">Gallery</a><a href="about.html">About</a></nav>
+  <a class="nav-cta" href="contact.html">Plan an Event</a>
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+</header>
+<div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <nav class="drawer-panel"><button class="drawer-close" id="drawerClose">✕</button><a href="index.html">Home</a><a href="events.html">Event Catalog</a><a href="book.html">Book a Preset Event</a><a href="pricing.html">Pricing</a><a href="partnerships.html">Community Partnerships</a><a href="gallery.html">Gallery</a><a href="about.html">About & Contact</a><a class="btn btn-primary nav-cta" href="contact.html">Plan an Event</a></nav>
+</div>
+<main>
+<section class="section" id="contact">
+  <div class="about-grid reveal">
+    <div>
+      <p class="section-label">Request a custom event</p>
+      <h2 style="font-size:clamp(34px,4vw,52px);margin-bottom:20px">Tell us the basics.</h2>
+      <p style="color:var(--muted);font-size:16px;line-height:1.75;margin-bottom:28px">We can work through the details with you after reviewing your request. Submitting this form does not commit you to anything — it starts a conversation.</p>
+      <div class="contact-info">
+        <div class="contact-info-item"><span>Email</span><strong><a href="mailto:Griffin.newton@indycollab.com">Griffin.newton@indycollab.com</a></strong></div>
+        <div class="contact-info-item"><span>Phone</span><strong><a href="tel:3173545880">(317) 354-5880</a></strong></div>
+      </div>
+    </div>
+    <div class="form-wrap">
+      <div class="form-intro"><h3>Request a Custom Event</h3><p>Community Spark will follow up to discuss availability, event details, and next steps.</p></div>
+      <form id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="contact"/>
+        <p style="position:absolute;left:-9999px" aria-hidden="true"><label>Don't fill this out if you're human: <input name="bot-field" tabindex="-1" autocomplete="off"/></label></p>
+        <div class="form-grid">
+          <div class="field-group"><label for="contactName">Contact Name <span style="color:var(--gold)">*</span></label><input type="text" id="contactName" name="contactName" required placeholder="Your name" autocomplete="name"/></div>
+          <div class="field-group"><label for="communityName">Apartment Community Name <span style="color:var(--gold)">*</span></label><input type="text" id="communityName" name="communityName" required placeholder="Community name"/></div>
+          <div class="field-group"><label for="email">Email Address <span style="color:var(--gold)">*</span></label><input type="email" id="email" name="email" required placeholder="you@example.com" autocomplete="email"/></div>
+          <div class="field-group"><label for="phone">Phone Number</label><input type="tel" id="phone" name="phone" placeholder="(317) 555-0100" autocomplete="tel"/></div>
+          <div class="field-group"><label for="eventDate">Event Date</label><input type="date" id="eventDate" name="eventDate"/></div>
+          <div class="field-group"><label for="attendance">Estimated Attendance</label><select id="attendance" name="attendance"><option value="">Select a range</option><option value="under25">Under 25 residents</option><option value="25-50">25–50 residents</option><option value="50-100">50–100 residents</option><option value="100-200">100–200 residents</option><option value="200+">200+ residents</option></select></div>
+          <div class="field-group"><label for="budget">Estimated Budget</label><select id="budget" name="budget"><option value="">Select a range</option><option value="under500">Under $500</option><option value="500-800">$500–$800</option><option value="800-1250">$800–$1,250</option><option value="1250-1750">$1,250–$1,750</option><option value="1750+">$1,750+</option><option value="flexible">Flexible — recommend what works</option></select></div>
+          <div class="field-group"><label for="location">Event Location</label><input type="text" id="location" name="location" placeholder="City, property name, or address"/></div>
+        </div>
+        <div class="field-group" style="margin-top:14px"><label for="eventDesc">Tell Us About the Event You Want</label><textarea id="eventDesc" name="eventDesc" placeholder="Describe the type of event, theme, or experience you have in mind…" rows="3"></textarea></div>
+        <div class="field-group" style="margin-top:14px"><label for="inclusions">What Would You Like Included?</label><textarea id="inclusions" name="inclusions" placeholder="Food, entertainment, décor, activities, prizes, photography…" rows="2"></textarea><span class="field-help">Feel free to list everything — we will help you prioritize within your budget.</span></div>
+        <div class="form-check"><input type="checkbox" id="sponsorOpen" name="sponsorOpen"/><label for="sponsorOpen"><strong>I'm open to sponsor support.</strong> An approved local sponsor may help reduce your community's cost while adding upgrades to the event.</label></div>
+        <div class="field-group" style="margin-top:6px"><label for="additional">Additional Information</label><textarea id="additional" name="additional" placeholder="Anything else we should know — special requirements, property rules, preferred vendors…" rows="2"></textarea></div>
+        <div style="margin-top:22px"><button class="btn btn-primary" type="submit" style="width:100%">Request My Custom Event →</button></div>
+        <p class="form-response" id="formResponse" role="alert" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="mark">✦</span><span class="brand-text"><strong style="font-size:20px;font-family:'Cormorant Garamond',serif">Community Spark</strong></span></div><p>Creating memorable moments that help apartment communities feel more connected. Based in Indiana, serving Indiana communities.</p></div>
+    <div class="footer-col"><h4>Explore</h4><a href="events.html">Event Catalog</a><a href="pricing.html">Pricing</a><a href="gallery.html">Gallery</a><a href="about.html">About</a></div>
+    <div class="footer-col"><h4>Programs</h4><a href="partnerships.html">Community Partnerships</a><a href="contact.html">Custom Events</a><a href="pricing.html">Budget-Based Events</a></div>
+    <div class="footer-col"><h4>Contact</h4><a href="mailto:Griffin.newton@indycollab.com">Griffin.newton@indycollab.com</a><a href="tel:3173545880">(317) 354-5880</a><a href="contact.html">Submit an Inquiry</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 Community Spark · Apartment Community Events</span><span>Indiana-based and resident-focused</span></div>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

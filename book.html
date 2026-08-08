@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Community Spark | Book a Preset Event</title>
+<meta name="description" content="Request to book a preset Community Spark event — pick a date at least 2 weeks out and tell us how you would like it customized."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="announcement">Now booking fall and holiday 2026 events for apartment communities</div>
+<header id="site-header">
+  <a class="brand" href="index.html"><span class="mark">✦</span><span class="brand-text"><strong>Community Spark</strong><small>Apartment Community Events</small></span></a>
+  <nav aria-label="Primary navigation"><a href="index.html">Home</a><a href="events.html">Events</a><a href="book.html" class="active">Book</a><a href="pricing.html">Pricing</a><a href="partnerships.html">Partnerships</a><a href="gallery.html">Gallery</a><a href="about.html">About</a></nav>
+  <a class="nav-cta" href="contact.html">Plan an Event</a>
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+</header>
+<div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <nav class="drawer-panel"><button class="drawer-close" id="drawerClose">✕</button><a href="index.html">Home</a><a href="events.html">Event Catalog</a><a href="book.html" class="active">Book a Preset Event</a><a href="pricing.html">Pricing</a><a href="partnerships.html">Community Partnerships</a><a href="gallery.html">Gallery</a><a href="about.html">About & Contact</a><a class="btn btn-primary nav-cta" href="contact.html">Plan an Event</a></nav>
+</div>
+<main>
+<section class="section" id="booking">
+  <div class="about-grid reveal">
+    <div>
+      <p class="section-label">Request to book</p>
+      <h2 style="font-size:clamp(34px,4vw,52px);margin-bottom:20px">Book a preset event.</h2>
+      <p style="color:var(--muted);font-size:16px;line-height:1.75;margin-bottom:28px">Choose a date and time below. This <strong>requests</strong> the event — it is not an instant confirmation. Griffin will reply within 1–2 business days to confirm availability and finalize details.</p>
+      <div class="contact-info">
+        <div class="contact-info-item"><span>Email</span><strong><a href="mailto:Griffin.newton@indycollab.com">Griffin.newton@indycollab.com</a></strong></div>
+        <div class="contact-info-item"><span>Phone</span><strong><a href="tel:3173545880">(317) 354-5880</a></strong></div>
+      </div>
+    </div>
+    <div class="form-wrap">
+      <div class="form-intro"><h3 id="bookingEventName">Select an event above to begin</h3><p id="bookingEventMeta">Pick "Book This Event" on any event card, or choose one below.</p></div>
+      <form id="bookingForm" name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="booking"/>
+        <input type="hidden" id="bookDate" name="eventDate"/>
+        <input type="hidden" id="bookTime" name="eventTime"/>
+        <p style="position:absolute;left:-9999px" aria-hidden="true"><label>Don't fill this out if you're human: <input name="bot-field" tabindex="-1" autocomplete="off"/></label></p>
+
+        <div class="book-step" id="bookStep1">
+          <div class="field-group" style="margin-bottom:14px">
+            <label for="bookEventSelect">Event <span style="color:var(--gold)">*</span></label>
+            <select id="bookEventSelect" name="eventName" required>
+              <option value="">Select an event…</option>
+              <option value="trivia night" data-duration="1–2 hours" data-allday="false" data-price="About $1,200">Trivia Night</option>
+              <option value="national bagel day bar" data-duration="1–2 hours" data-allday="false" data-price="About $1,000">National Bagel Day Bar</option>
+              <option value="valentines bouquet bar" data-duration="1–2 hours" data-allday="false" data-price="About $800">Valentine&#39;s Bouquet Bar</option>
+              <option value="march madness watch party" data-duration="1–2 hours" data-allday="false" data-price="About $800">March Madness Watch Party</option>
+              <option value="build-your-own waffle bar" data-duration="Up to 1 hour" data-allday="false" data-price="About $1,000">Build-Your-Own Waffle Bar</option>
+              <option value="pi day pizza party" data-duration="Up to 1 hour" data-allday="false" data-price="About $1,000">Pi Day Pizza Party</option>
+              <option value="dog adoption pet appreciation day" data-duration="1–2 hours" data-allday="false" data-price="About $800">Dog Adoption &amp; Pet Appreciation Day</option>
+              <option value="patio decorating contest" data-duration="Multi-day" data-allday="true" data-price="About $1,000">Patio Decorating Contest</option>
+              <option value="resident fitness session" data-duration="1 hour" data-allday="false" data-price="About $800 (not done)">Resident Fitness Session</option>
+              <option value="community farmers market" data-duration="2–3 hours" data-allday="false" data-price="About $1,500">Community Farmers Market</option>
+              <option value="national donut day" data-duration="Up to 1 hour" data-allday="false" data-price="About $1,000">National Donut Day</option>
+              <option value="community pool party" data-duration="2–3 hours" data-allday="false" data-price="About $1,500">Community Pool Party</option>
+              <option value="national ice cream day" data-duration="Up to 1 hour" data-allday="false" data-price="About $1,000">National Ice Cream Day</option>
+              <option value="back-to-school supply event" data-duration="1–2 hours" data-allday="false" data-price="About $1,500">Back-to-School Supply Event</option>
+              <option value="fall festival" data-duration="1–2 hours" data-allday="false" data-price="About $1,000">Fall Festival</option>
+              <option value="national coffee day" data-duration="Up to 1 hour" data-allday="false" data-price="About $1,000">National Coffee Day</option>
+              <option value="halloween costume contest photo area" data-duration="1–2 hours" data-allday="false" data-price="About $800">Halloween Costume Contest &amp; Photo Area</option>
+              <option value="pumpkin decorating fall hangout" data-duration="1–2 hours" data-allday="false" data-price="About $1,000">Pumpkin Decorating &amp; Fall Hangout</option>
+              <option value="halloween dessert bar" data-duration="1–2 hours" data-allday="false" data-price="About $1,000">Halloween Dessert Bar</option>
+              <option value="hot cocoa bar" data-duration="Up to 1 hour" data-allday="false" data-price="About $800 (not done)">Hot Cocoa Bar</option>
+            </select>
+          </div>
+          <div class="form-grid">
+            <div class="field-group"><label for="bookName">Contact Name <span style="color:var(--gold)">*</span></label><input type="text" id="bookName" name="contactName" required placeholder="Your name" autocomplete="name"/></div>
+            <div class="field-group"><label for="bookCommunity">Apartment Community Name <span style="color:var(--gold)">*</span></label><input type="text" id="bookCommunity" name="communityName" required placeholder="Community name"/></div>
+            <div class="field-group"><label for="bookEmail">Email Address <span style="color:var(--gold)">*</span></label><input type="email" id="bookEmail" name="email" required placeholder="you@example.com" autocomplete="email"/></div>
+            <div class="field-group"><label for="bookPhone">Phone Number</label><input type="tel" id="bookPhone" name="phone" placeholder="(317) 555-0100" autocomplete="tel"/></div>
+            <div class="field-group"><label for="bookLocation">Event Location</label><input type="text" id="bookLocation" name="location" placeholder="City, property name, or address"/></div>
+          </div>
+          <div class="field-group" style="margin-top:14px"><label for="bookChanges">What Would You Like to Add or Change About This Event?</label><textarea id="bookChanges" name="requestedChanges" placeholder="This preset already includes what's listed on the event card — tell us about any tweaks, upgrades, or swaps you'd like." rows="3"></textarea><span class="field-help">Leave blank to book the preset exactly as shown.</span></div>
+          <div class="field-group" style="margin-top:14px">
+            <label>Are you open to a local sponsor helping cover part of this event's cost? <span style="color:var(--gold)">*</span></label>
+            <div class="sponsor-choice">
+              <label><input type="radio" name="sponsorInterest" value="yes" required/> Yes</label>
+              <label><input type="radio" name="sponsorInterest" value="no" required/> No</label>
+            </div>
+            <span class="field-help">Optional and subject to your approval — a sponsor can help offset the cost and add upgrades, but nothing is confirmed without your sign-off. See <a href="partnerships.html">Community Partnerships</a> for details.</span>
+          </div>
+          <div style="margin-top:22px"><button class="btn btn-primary" type="button" id="bookScheduleBtn" style="width:100%">Press Here to Schedule →</button></div>
+          <p class="form-response" id="bookingStep1Response" role="alert" aria-live="polite"></p>
+        </div>
+
+        <div class="book-step" id="bookStep2" hidden>
+          <h3 style="margin-bottom:6px">Pick a date and time</h3>
+          <p class="field-help" style="margin-bottom:16px">Dates must be at least 2 weeks out. Start times run 10:00 AM – 6:00 PM.</p>
+          <div class="calendar" id="bookCalendar">
+            <div class="calendar-header">
+              <button type="button" class="calendar-nav" id="calPrev" aria-label="Previous month">←</button>
+              <strong id="calMonthLabel"></strong>
+              <button type="button" class="calendar-nav" id="calNext" aria-label="Next month">→</button>
+            </div>
+            <div class="calendar-weekdays"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+            <div class="calendar-grid" id="calGrid"></div>
+          </div>
+          <div id="bookTimeSlotWrap" style="display:none;margin-top:16px">
+            <label style="display:block;margin-bottom:8px;font-weight:600">Start Time</label>
+            <div class="time-slot-grid" id="timeSlotGrid"></div>
+          </div>
+          <p class="form-response" id="bookingConflictNote" role="status" aria-live="polite" style="display:none"></p>
+          <div style="margin-top:22px;display:flex;gap:10px">
+            <button class="btn btn-ink-ghost" type="button" id="bookBackTo1">← Back</button>
+            <button class="btn btn-primary" type="button" id="bookToStep3" style="flex:1" disabled>Continue →</button>
+          </div>
+        </div>
+
+        <div class="book-step" id="bookStep3" hidden>
+          <h3 style="margin-bottom:14px">Estimated cost</h3>
+          <div class="estimate-notice">
+            <div><strong id="bookEstimatePrice"></strong><p style="margin-top:4px">This is the base planning estimate for <span id="bookEstimateEventName"></span>, before any changes or additions you requested. Griffin will confirm final pricing when reviewing your request.</p></div>
+          </div>
+          <p style="color:var(--muted);font-size:14px;line-height:1.6">No deposit is required to submit this request. A deposit will only be collected once your event is fully confirmed on our side.</p>
+          <div style="margin-top:22px;display:flex;gap:10px">
+            <button class="btn btn-ink-ghost" type="button" id="bookBackTo2">← Back</button>
+            <button class="btn btn-primary" type="submit" style="flex:1">Submit Request →</button>
+          </div>
+          <p class="form-response" id="bookingResponse" role="alert" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="mark">✦</span><span class="brand-text"><strong style="font-size:20px;font-family:'Cormorant Garamond',serif">Community Spark</strong></span></div><p>Creating memorable moments that help apartment communities feel more connected. Based in Indiana, serving Indiana communities.</p></div>
+    <div class="footer-col"><h4>Explore</h4><a href="events.html">Event Catalog</a><a href="pricing.html">Pricing</a><a href="gallery.html">Gallery</a><a href="about.html">About</a></div>
+    <div class="footer-col"><h4>Programs</h4><a href="partnerships.html">Community Partnerships</a><a href="contact.html">Custom Events</a><a href="pricing.html">Budget-Based Events</a></div>
+    <div class="footer-col"><h4>Contact</h4><a href="mailto:Griffin.newton@indycollab.com">Griffin.newton@indycollab.com</a><a href="tel:3173545880">(317) 354-5880</a><a href="contact.html">Submit an Inquiry</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 Community Spark · Apartment Community Events</span><span>Indiana-based and resident-focused</span></div>
+</footer>
+<script src="bookings-data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
