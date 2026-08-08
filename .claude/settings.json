@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git show*)",
+      "Bash(git branch*)",
+      "Bash(git add*)",
+      "Bash(git mv*)",
+      "Bash(ls*)",
+      "Bash(cat*)",
+      "Bash(pwd)",
+      "Bash(node *)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(curl*)",
+      "Bash(mkdir*)",
+      "Bash(echo*)",
+      "Bash(grep*)",
+      "Bash(find*)",
+      "Bash(wc*)",
+      "Bash(awk*)",
+      "Bash(netstat*)",
+      "Bash(taskkill*)"
+    ]
+  }
+}

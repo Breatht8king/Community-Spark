@@ -1056,7 +1056,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
     </div>
     <div class="form-wrap">
       <div class="form-intro"><h3>Request a Custom Event</h3><p>Community Spark will follow up to discuss availability, event details, and next steps.</p></div>
-      <form id="contactForm" novalidate>
+      <form id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="contact"/>
+        <p style="position:absolute;left:-9999px" aria-hidden="true"><label>Don't fill this out if you're human: <input name="bot-field" tabindex="-1" autocomplete="off"/></label></p>
         <div class="form-grid">
           <div class="field-group"><label for="contactName">Contact Name <span style="color:var(--gold)">*</span></label><input type="text" id="contactName" name="contactName" required placeholder="Your name" autocomplete="name"/></div>
           <div class="field-group"><label for="communityName">Apartment Community Name <span style="color:var(--gold)">*</span></label><input type="text" id="communityName" name="communityName" required placeholder="Community name"/></div>
@@ -1118,7 +1120,7 @@ var addonSelects=Array.from(document.querySelectorAll('.addon-qty')),addonTotal=
 function updateTotal(){var sum=addonSelects.reduce(function(a,s){return a+(Number(s.value)*Number(s.dataset.unit||0));},0);if(addonTotal)addonTotal.textContent='$'+sum.toLocaleString('en-US');}
 addonSelects.forEach(function(s){s.addEventListener('change',updateTotal);});updateTotal();
 var form=document.getElementById('contactForm'),formResponse=document.getElementById('formResponse');
-if(form){form.addEventListener('submit',function(e){e.preventDefault();var req=Array.from(form.querySelectorAll('[required]')),first=req.find(function(f){return!String(f.value||'').trim();});if(first){first.focus();if(formResponse){formResponse.textContent='Please fill in all required fields before submitting.';formResponse.style.color='#c0392b';}return;}if(formResponse){formResponse.textContent='✓ Thank you! Your custom event request has been received. Griffin will follow up with you shortly.';formResponse.style.color='var(--gold)';}});}
+if(form){form.addEventListener('submit',function(e){e.preventDefault();var req=Array.from(form.querySelectorAll('[required]')),first=req.find(function(f){return!String(f.value||'').trim();});if(first){first.focus();if(formResponse){formResponse.textContent='Please fill in all required fields before submitting.';formResponse.style.color='#c0392b';}return;}var submitBtn=form.querySelector('button[type="submit"]');if(submitBtn)submitBtn.disabled=true;fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form)).toString()}).then(function(res){if(!res.ok)throw new Error('Network response was not ok');if(formResponse){formResponse.textContent='✓ Thank you! Your custom event request has been received. Griffin will follow up with you shortly.';formResponse.style.color='var(--gold)';}form.reset();}).catch(function(){if(formResponse){formResponse.textContent='Something went wrong sending your request. Please try again or email us directly.';formResponse.style.color='#c0392b';}}).finally(function(){if(submitBtn)submitBtn.disabled=false;});});}
 var navLinks=Array.from(document.querySelectorAll('header nav a'));
 var sections=navLinks.map(function(l){var id=l.getAttribute('href').slice(1);return document.getElementById(id);}).filter(Boolean);
 window.addEventListener('scroll',function(){var sy=window.scrollY+100,cur=sections.reduce(function(a,s){return s.offsetTop<=sy?s:a;},sections[0]);navLinks.forEach(function(l){var active=cur&&l.getAttribute('href')==='#'+cur.id;l.style.color=active?'var(--gold)':'';l.style.background=active?'var(--cream)':'';l.style.fontWeight=active?'700':'';})},{passive:true});
