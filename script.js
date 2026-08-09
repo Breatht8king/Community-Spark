@@ -12,6 +12,16 @@ if(backdrop)backdrop.addEventListener('click',closeDrawer);
 if(closeBtn)closeBtn.addEventListener('click',closeDrawer);
 (drawer?drawer.querySelectorAll('a'):[]).forEach(function(l){l.addEventListener('click',closeDrawer);});
 document.documentElement.classList.add('js');
+Array.from(document.querySelectorAll('input[type="tel"]')).forEach(function(input){
+  input.addEventListener('input',function(){
+    var digits=input.value.replace(/\D/g,'').slice(0,10);
+    var out=digits;
+    if(digits.length>6){out='('+digits.slice(0,3)+') '+digits.slice(3,6)+'-'+digits.slice(6);}
+    else if(digits.length>3){out='('+digits.slice(0,3)+') '+digits.slice(3);}
+    else if(digits.length>0){out='('+digits;}
+    input.value=out;
+  });
+});
 if('IntersectionObserver' in window){
   var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
   document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
@@ -51,6 +61,7 @@ function durationToHours(text){
 function pad2(n){return n<10?'0'+n:String(n);}
 function toISODate(d){return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate());}
 function minBookableDate(){var d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()+14);return d;}
+function maxBookableDate(){var d=new Date();d.setHours(0,0,0,0);d.setMonth(d.getMonth()+6);return d;}
 function bufferWindow(booking){
   if(booking.allDay){
     var dayStart=new Date(booking.date+'T00:00:00'),dayEnd=new Date(booking.date+'T23:59:59');
@@ -212,6 +223,7 @@ function renderCalendar(){
   var firstWeekday=new Date(year,month,1).getDay();
   var daysInMonth=new Date(year,month+1,0).getDate();
   var min=minBookableDate();
+  var max=maxBookableDate();
   var todayReal=new Date();todayReal.setHours(0,0,0,0);
   var opt=selectedEventOption();
   var isAllDayEvent=!!(opt&&opt.value&&opt.dataset.allday==='true');
@@ -229,10 +241,11 @@ function renderCalendar(){
       btn.className='cal-day';
       btn.textContent=String(day);
       var tooEarly=cellDate<min;
+      var tooLate=cellDate>max;
       var capReached=dailyBookingCount(dateStr)>=2;
       var allDayBlocked=dateHasAllDayBlock(dateStr);
       var conflictIfAllDay=isAllDayEvent&&dailyBookingCount(dateStr)>0;
-      var disabled=tooEarly||capReached||allDayBlocked||conflictIfAllDay;
+      var disabled=tooEarly||tooLate||capReached||allDayBlocked||conflictIfAllDay;
       btn.disabled=disabled;
       if(dateStr===selectedDateStr)btn.classList.add('selected');
       if(!disabled){
@@ -251,6 +264,7 @@ function renderCalendar(){
     })(day);
   }
   if(calPrev)calPrev.disabled=(year===todayReal.getFullYear()&&month===todayReal.getMonth());
+  if(calNext)calNext.disabled=(year===max.getFullYear()&&month===max.getMonth());
 }
 
 if(calPrev)calPrev.addEventListener('click',function(){
@@ -305,8 +319,13 @@ if(bookingForm){
     e.preventDefault();
     var bDate=bookDateInput?bookDateInput.value:'';
     var minDate=toISODate(minBookableDate());
+    var maxDate=toISODate(maxBookableDate());
     if(!bDate||bDate<minDate){
       if(bookingResponse){bookingResponse.textContent='Please pick a date at least 2 weeks out.';bookingResponse.style.color='#c0392b';}
+      return;
+    }
+    if(bDate>maxDate){
+      if(bookingResponse){bookingResponse.textContent='Please pick a date within the next 6 months.';bookingResponse.style.color='#c0392b';}
       return;
     }
     var bOpt=selectedEventOption();
