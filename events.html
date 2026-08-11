@@ -41,11 +41,17 @@
       <button class="filter-btn" data-filter="pet">Pet-Friendly</button>
       <button class="filter-btn" data-filter="community">Community</button>
     </div>
+    <div class="filter-row" role="group" aria-label="Filter by price plan">
+      <button class="filter-btn active" data-price-filter="all">All Prices</button>
+      <button class="filter-btn" data-price-filter="800">$800</button>
+      <button class="filter-btn" data-price-filter="1000">$1,000–$1,200</button>
+      <button class="filter-btn" data-price-filter="1500">$1,500</button>
+    </div>
   </div>
   <div class="estimate-notice reveal"><strong>Event costs are planning estimates.</strong> Each amount is based on the workbook total. Final pricing may change with quantities, vendor costs, taxes, delivery, staffing, and customization.</div>
   <div class="catalog-grid" id="catalogGrid">
     
-    <article class="event-card reveal" data-category="social" data-name="trivia night">
+    <article class="event-card reveal" data-category="social" data-name="trivia night" data-price-band="1000">
       <div class="event-photo-wrap">
         <div class="event-photo-placeholder" style="background:linear-gradient(135deg,#f3ece0,#e8ddd0)">🎯</div>
       </div>
@@ -71,7 +77,7 @@
       </div>
     </article>
 
-    <article class="event-card reveal" data-category="food" data-name="national bagel day bar">
+    <article class="event-card reveal" data-category="food" data-name="national bagel day bar" data-price-band="1000">
       <div class="event-photo-wrap">
         <div class="event-photo-placeholder" style="background:linear-gradient(135deg,#fdf6e8,#f3ece0)">🥯</div>
       </div>
@@ -97,7 +103,7 @@
       </div>
     </article>
 
-    <article class="event-card reveal" data-category="holiday" data-name="valentines bouquet bar">
+    <article class="event-card reveal" data-category="holiday" data-name="valentines bouquet bar" data-price-band="800">
       <div class="event-photo-wrap">
         <div class="event-photo-placeholder" style="background:linear-gradient(135deg,#f9eef2,#f3dde6)">🌸</div>
       </div>
@@ -123,7 +129,7 @@
       </div>
     </article>
 
-    <article class="event-card reveal" data-category="seasonal social" data-name="march madness watch party">
+    <article class="event-card reveal" data-category="seasonal social" data-name="march madness watch party" data-price-band="800">
       <div class="event-photo-wrap">
         <div class="event-photo-placeholder" style="background:linear-gradient(135deg,#eaf0f9,#dce8f5)">🏀</div>
       </div>
@@ -149,7 +155,7 @@
       </div>
     </article>
 
-    <article class="event-card reveal" data-category="food family" data-name="build-your-own waffle bar">
+    <article class="event-card reveal" data-category="food family" data-name="build-your-own waffle bar" data-price-band="1000">
       <div class="event-photo-wrap">
         <div class="event-photo-placeholder" style="background:linear-gradient(135deg,#fdf4e0,#f5ead0)">🧇</div>
       </div>
@@ -175,7 +181,7 @@
       </div>
     </article>
 
-    <article class="event-card reveal" data-category="food" data-name="pi day pizza party">
+    <article class="event-card reveal" data-category="food" data-name="pi day pizza party" data-price-band="1000">
       <div class="event-photo-wrap">
         <div class="event-photo-placeholder" style="background:linear-gradient(135deg,#f9ede8,#f2ddd6)">🍕</div>
       </div>
@@ -201,7 +207,7 @@
       </div>
     </article>
 
-    <article class="event-card reveal" data-category="pet community" data-name="dog adoption pet appreciation day">
+    <article class="event-card reveal" data-category="pet community" data-name="dog adoption pet appreciation day" data-price-band="800">
       <div class="event-photo-wrap">
         <div class="event-photo-placeholder" style="background:linear-gradient(135deg,#edf5ee,#ddeede)">🐾</div>
       </div>
@@ -227,7 +233,7 @@
       </div>
     </article>
 
-    <article class="event-card reveal" data-category="community" data-name="patio decorating contest">
+    <article class="event-card reveal" data-category="community" data-name="patio decorating contest" data-price-band="1000">
       <div class="event-photo-wrap">
         <div class="event-photo-placeholder" style="background:linear-gradient(135deg,#eef5ea,#ddeedd)">🌿</div>
       </div>
@@ -253,7 +259,7 @@
       </div>
     </article>
 
-    <article class="event-card reveal" data-category="wellness" data-name="resident fitness session">
+    <article class="event-card reveal" data-category="wellness" data-name="resident fitness session" data-price-band="800">
       <div class="event-photo-wrap">
         <div class="event-photo-placeholder" style="background:linear-gradient(135deg,#eaf2f0,#d8ece8)">💪</div>
       </div>
@@ -279,7 +285,7 @@
       </div>
     </article>
 
-    <article class="event-card reveal" data-category="seasonal community" data-name="community farmers market">
+    <article class="event-card reveal" data-category="seasonal community" data-name="community farmers market" data-price-band="1500">
       <div class="event-photo-wrap">
         <div class="event-photo-placeholder" style="background:linear-gradient(135deg,#f0f5e8,#e4eed8)">🛒</div>
       </div>
@@ -305,7 +311,7 @@
       </div>
     </article>
 
-    <article class="event-card reveal" data-category="food" data-name="national donut day">
+    <article class="event-card reveal" data-category="food" data-name="national donut day" data-price-band="1000">
       <div class="event-photo-wrap">
         <div class="event-photo-placeholder" style="background:linear-gradient(135deg,#fdf0e8,#f5e0d0)">🍩</div>
       </div>
@@ -331,7 +337,7 @@
       </div>
     </article>
 
-    <article class="event-card reveal" data-category="seasonal family" data-name="community pool party">
+    <article class="event-card reveal" data-category="seasonal family" data-name="community pool party" data-price-band="1500">
       <div class="event-photo-wrap">
         <div class="event-photo-placeholder" style="background:linear-gradient(135deg,#e6f4fa,#cce8f5)">🏊</div>
       </div>
@@ -357,7 +363,7 @@
       </div>
     </article>
 
-    <article class="event-card reveal" data-category="food family" data-name="national ice cream day">
+    <article class="event-card reveal" data-category="food family" data-name="national ice cream day" data-price-band="1000">
       <div class="event-photo-wrap">
         <div class="event-photo-placeholder" style="background:linear-gradient(135deg,#fef8f0,#faeee0)">🍦</div>
       </div>
@@ -383,7 +389,7 @@
       </div>
     </article>
 
-    <article class="event-card reveal" data-category="community family" data-name="back-to-school supply event">
+    <article class="event-card reveal" data-category="community family" data-name="back-to-school supply event" data-price-band="1500">
       <div class="event-photo-wrap">
         <div class="event-photo-placeholder" style="background:linear-gradient(135deg,#eef0fa,#dee2f5)">🎒</div>
       </div>
@@ -409,7 +415,7 @@
       </div>
     </article>
 
-    <article class="event-card reveal" data-category="seasonal family" data-name="fall festival">
+    <article class="event-card reveal" data-category="seasonal family" data-name="fall festival" data-price-band="1000">
       <div class="event-photo-wrap">
         <div class="event-photo-placeholder" style="background:linear-gradient(135deg,#faf0e0,#f2e0c0)">🍂</div>
       </div>
@@ -435,7 +441,7 @@
       </div>
     </article>
 
-    <article class="event-card reveal" data-category="food" data-name="national coffee day">
+    <article class="event-card reveal" data-category="food" data-name="national coffee day" data-price-band="1000">
       <div class="event-photo-wrap">
         <div class="event-photo-placeholder" style="background:linear-gradient(135deg,#f5ede0,#e8d8c0)">☕</div>
       </div>
@@ -461,7 +467,7 @@
       </div>
     </article>
 
-    <article class="event-card reveal" data-category="holiday" data-name="halloween costume contest photo area">
+    <article class="event-card reveal" data-category="holiday" data-name="halloween costume contest photo area" data-price-band="800">
       <div class="event-photo-wrap">
         <div class="event-photo-placeholder" style="background:linear-gradient(135deg,#f5ede8,#e8d8d0)">🎃</div>
       </div>
@@ -487,7 +493,7 @@
       </div>
     </article>
 
-    <article class="event-card reveal" data-category="seasonal family" data-name="pumpkin decorating fall hangout">
+    <article class="event-card reveal" data-category="seasonal family" data-name="pumpkin decorating fall hangout" data-price-band="1000">
       <div class="event-photo-wrap">
         <div class="event-photo-placeholder" style="background:linear-gradient(135deg,#faf0e0,#f0e0c0)">🎨</div>
       </div>
@@ -513,7 +519,7 @@
       </div>
     </article>
 
-    <article class="event-card reveal" data-category="holiday food" data-name="halloween dessert bar">
+    <article class="event-card reveal" data-category="holiday food" data-name="halloween dessert bar" data-price-band="1000">
       <div class="event-photo-wrap">
         <div class="event-photo-placeholder" style="background:linear-gradient(135deg,#f5ede8,#ecddd0)">🍰</div>
       </div>
@@ -539,7 +545,7 @@
       </div>
     </article>
 
-    <article class="event-card reveal" data-category="food seasonal" data-name="hot cocoa bar">
+    <article class="event-card reveal" data-category="food seasonal" data-name="hot cocoa bar" data-price-band="800">
       <div class="event-photo-wrap">
         <div class="event-photo-placeholder" style="background:linear-gradient(135deg,#f2e4d8,#e4cdb8)">☕</div>
       </div>
@@ -565,7 +571,7 @@
       </div>
     </article>
   </div>
-  <div id="catalog-empty" style="display:none;text-align:center;padding:60px 20px;color:var(--muted)"><h3 style="font-family:'Cormorant Garamond',serif;font-size:28px;margin-bottom:8px">No events match your search.</h3><p>Try a different keyword or clear the filter to see all 20 events.</p></div>
+  <div id="catalog-empty" style="display:none;text-align:center;padding:60px 20px;color:var(--muted)"><h3 style="font-family:'Cormorant Garamond',serif;font-size:28px;margin-bottom:8px">No events match your search.</h3><p>Try a different keyword or clear the filters to see all 20 events.</p></div>
 </section>
 </main>
 
