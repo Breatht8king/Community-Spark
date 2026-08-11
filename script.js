@@ -120,6 +120,21 @@ priceFilterBtns.forEach(function(btn){btn.addEventListener('click',function(){pr
 if(searchInput)searchInput.addEventListener('input',updateCatalog);
 var allDetails=Array.from(document.querySelectorAll('.event-details'));
 allDetails.forEach(function(d){d.addEventListener('toggle',function(){if(!d.open)return;allDetails.forEach(function(o){if(o!==d&&o.open)o.open=false;});});});
+var faqItems=Array.from(document.querySelectorAll('.faq-item')),openFaqQueue=[];
+faqItems.forEach(function(d){
+  d.addEventListener('toggle',function(){
+    if(d.open){
+      openFaqQueue.push(d);
+      if(openFaqQueue.length>2){
+        var oldest=openFaqQueue.shift();
+        if(oldest!==d)oldest.open=false;
+      }
+    }else{
+      var idx=openFaqQueue.indexOf(d);
+      if(idx>-1)openFaqQueue.splice(idx,1);
+    }
+  });
+});
 var addonSelects=Array.from(document.querySelectorAll('.addon-qty')),addonTotal=document.getElementById('addonTotal');
 function updateTotal(){var sum=addonSelects.reduce(function(a,s){return a+(Number(s.value)*Number(s.dataset.unit||0));},0);if(addonTotal)addonTotal.textContent='$'+sum.toLocaleString('en-US');}
 addonSelects.forEach(function(s){s.addEventListener('change',updateTotal);});updateTotal();
@@ -272,10 +287,9 @@ function dateToStr(y,m,d){return y+'-'+pad2(m+1)+'-'+pad2(d);}
 function getActiveEventInfo(){
   if(bookingType==='custom'){
     var durValue=customDuration?customDuration.value:'';
-    var isAllDay=durValue==='allday';
     return {
-      durationHours:isAllDay?null:durationToHours(durValue),
-      isAllDay:isAllDay,
+      durationHours:durationToHours(durValue),
+      isAllDay:false,
       priceText:'',
       label:'Custom Event'
     };
@@ -304,7 +318,7 @@ function setBookingType(type){
   if(customEventNameFallback)customEventNameFallback.disabled=!isCustom;
   if(customEventDesc){customEventDesc.required=isCustom;customEventDesc.disabled=!isCustom;}
   if(customDuration){customDuration.required=isCustom;customDuration.disabled=!isCustom;}
-  if(customAttendance)customAttendance.disabled=!isCustom;
+  if(customAttendance){customAttendance.required=isCustom;customAttendance.disabled=!isCustom;}
   if(customInclusions)customInclusions.disabled=!isCustom;
   updateEventIntro();
 }
