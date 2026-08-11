@@ -40,9 +40,16 @@
         <input type="hidden" name="form-name" value="booking"/>
         <input type="hidden" id="bookDate" name="eventDate"/>
         <input type="hidden" id="bookTime" name="eventTime"/>
+        <input type="hidden" id="bookingType" name="bookingType" value="preset"/>
+        <input type="hidden" id="customEventNameFallback" name="eventName" value="Custom Event" disabled/>
         <p style="position:absolute;left:-9999px" aria-hidden="true"><label>Don't fill this out if you're human: <input name="bot-field" tabindex="-1" autocomplete="off"/></label></p>
 
         <div class="book-step" id="bookStep1">
+          <div class="type-toggle" role="group" aria-label="Event type" style="margin-bottom:16px">
+            <button type="button" class="type-toggle-btn active" id="typePresetBtn">Preset Event</button>
+            <button type="button" class="type-toggle-btn" id="typeCustomBtn">Custom Event</button>
+          </div>
+          <div id="bookPresetFields">
           <div class="field-group" style="margin-bottom:14px">
             <label for="bookEventSelect">Event <span style="color:var(--gold)">*</span></label>
             <select id="bookEventSelect" name="eventName" required>
@@ -69,14 +76,23 @@
               <option value="hot cocoa bar" data-duration="Up to 1 hour" data-allday="false" data-price="About $800 (not done)">Hot Cocoa Bar</option>
             </select>
           </div>
-          <div class="form-grid">
+          </div>
+          <div id="bookCustomFields" hidden>
+            <div class="field-group" style="margin-bottom:14px"><label for="customEventDesc">Tell Us About the Event You Want <span style="color:var(--gold)">*</span></label><textarea id="customEventDesc" name="eventDesc" placeholder="Describe the type of event, theme, or experience you have in mind…" rows="3"></textarea></div>
+            <div class="form-grid">
+              <div class="field-group"><label for="customAttendance">Estimated Attendance</label><select id="customAttendance" name="attendance"><option value="">Select a range</option><option value="under25">Under 25 residents</option><option value="25-50">25–50 residents</option><option value="50-100">50–100 residents</option><option value="100-200">100–200 residents</option><option value="200+">200+ residents</option></select></div>
+              <div class="field-group"><label for="customDuration">Estimated Event Length <span style="color:var(--gold)">*</span></label><select id="customDuration" name="eventLength"><option value="">Select a length…</option><option value="Up to 1 hour">Up to 1 hour</option><option value="1–2 hours">1–2 hours</option><option value="2–3 hours">2–3 hours</option><option value="allday">All-day event</option></select></div>
+            </div>
+            <div class="field-group" style="margin-top:14px"><label for="customInclusions">What Would You Like Included?</label><textarea id="customInclusions" name="inclusions" placeholder="Food, entertainment, décor, activities, prizes, photography…" rows="2"></textarea><span class="field-help">Feel free to list everything — we will help you prioritize within your budget.</span></div>
+          </div>
+          <div class="form-grid" style="margin-top:14px">
             <div class="field-group"><label for="bookName">Contact Name <span style="color:var(--gold)">*</span></label><input type="text" id="bookName" name="contactName" required placeholder="Your name" autocomplete="name"/></div>
             <div class="field-group"><label for="bookCommunity">Apartment Community Name <span style="color:var(--gold)">*</span></label><input type="text" id="bookCommunity" name="communityName" required placeholder="Community name"/></div>
             <div class="field-group"><label for="bookEmail">Email Address <span style="color:var(--gold)">*</span></label><input type="email" id="bookEmail" name="email" required placeholder="you@example.com" autocomplete="email"/></div>
             <div class="field-group"><label for="bookPhone">Phone Number</label><input type="tel" id="bookPhone" name="phone" placeholder="(317) 555-0100" autocomplete="tel"/></div>
-            <div class="field-group"><label for="bookLocation">Event Location</label><input type="text" id="bookLocation" name="location" placeholder="City, property name, or address"/></div>
+            <div class="field-group location-field"><label for="bookLocation">Event Location</label><input type="text" id="bookLocation" name="location" placeholder="Start typing an address…" autocomplete="off"/></div>
           </div>
-          <div class="field-group" style="margin-top:14px"><label for="bookChanges">What Would You Like to Add or Change About This Event?</label><textarea id="bookChanges" name="requestedChanges" placeholder="This preset already includes what's listed on the event card — tell us about any tweaks, upgrades, or swaps you'd like." rows="3"></textarea><span class="field-help">Leave blank to book the preset exactly as shown.</span></div>
+          <div id="bookChangesGroup" class="field-group" style="margin-top:14px"><label for="bookChanges">What Would You Like to Add or Change About This Event?</label><textarea id="bookChanges" name="requestedChanges" placeholder="This preset already includes what's listed on the event card — tell us about any tweaks, upgrades, or swaps you'd like." rows="3"></textarea><span class="field-help">Leave blank to book the preset exactly as shown.</span></div>
           <div class="field-group" style="margin-top:14px">
             <label>Are you open to a local sponsor helping cover part of this event's cost? <span style="color:var(--gold)">*</span></label>
             <div class="sponsor-choice">
@@ -113,9 +129,13 @@
         </div>
 
         <div class="book-step" id="bookStep3" hidden>
-          <h3 style="margin-bottom:14px">Estimated cost</h3>
+          <h3 id="bookStep3Heading" style="margin-bottom:14px">Estimated cost</h3>
           <div class="estimate-notice">
-            <div><strong id="bookEstimatePrice"></strong><p style="margin-top:4px">This is the base planning estimate for <span id="bookEstimateEventName"></span>, before any changes or additions you requested. Griffin will confirm final pricing when reviewing your request.</p></div>
+            <div>
+              <strong id="bookEstimatePrice"></strong>
+              <p id="bookEstimateDescPreset" style="margin-top:4px">This is the base planning estimate for <span id="bookEstimateEventName"></span>, before any changes or additions you requested. Griffin will confirm final pricing when reviewing your request.</p>
+              <p id="bookEstimateDescCustom" style="margin-top:4px" hidden>Pricing will be provided after a quote — Griffin needs the full event details before pricing it out, which can take a couple of days.</p>
+            </div>
           </div>
           <p style="color:var(--muted);font-size:14px;line-height:1.6">No deposit is required to submit this request. A deposit will only be collected once your event is fully confirmed on our side.</p>
           <div style="margin-top:22px;display:flex;gap:10px">

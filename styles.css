@@ -1,5 +1,6 @@
 :root{--ink:#1a1714;--paper:#fdfaf6;--cream:#f3ece0;--warm:#e8ddd0;--gold:#c49a3c;--gold-light:#e8c97a;--gold-dark:#9a7628;--plum:#4a2d3e;--sage:#6b7c5e;--muted:#7a7068;--line:rgba(26,23,20,.11);--shadow-sm:0 4px 16px rgba(26,23,20,.08);--shadow-md:0 12px 40px rgba(26,23,20,.12);--shadow-lg:0 28px 80px rgba(26,23,20,.16);--r-sm:12px;--r-md:20px;--r-lg:28px}
 *{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{font-family:"Inter",sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
 body.lock{overflow:hidden}
@@ -285,6 +286,16 @@ nav a.active{color:var(--gold)}
 .field-group input:focus,.field-group select:focus,.field-group textarea:focus{outline:none;border-color:var(--gold);background:#fff;box-shadow:0 0 0 3px rgba(196,154,60,.12)}
 .field-group textarea{resize:vertical;min-height:100px}
 .field-help{font-size:12px;color:var(--muted);line-height:1.45}
+.type-toggle{display:flex;gap:10px}
+.type-toggle-btn{padding:11px 20px;border-radius:999px;font-size:14px;font-weight:700;background:#fff;border:1px solid var(--line);color:var(--muted);transition:all .2s;cursor:pointer}
+.type-toggle-btn:hover{border-color:var(--ink);color:var(--ink)}
+.type-toggle-btn.active{background:var(--ink);border-color:var(--ink);color:#fff}
+.location-field{position:relative}
+.location-suggestions{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;background:#fff;border:1px solid var(--line);border-radius:var(--r-sm);box-shadow:var(--shadow-md);max-height:240px;overflow-y:auto}
+.location-suggestion-item{display:block;width:100%;text-align:left;padding:11px 15px;font-size:14px;color:var(--ink);cursor:pointer;border-bottom:1px solid var(--line)}
+.location-suggestion-item:last-child{border-bottom:none}
+.location-suggestion-item span{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.location-suggestion-item:hover,.location-suggestion-item.active{background:var(--cream);color:var(--gold-dark)}
 .form-check{display:flex;gap:10px;align-items:flex-start;padding:14px 0}
 .form-check input{width:18px;height:18px;margin-top:2px;flex-shrink:0;accent-color:var(--gold)}
 .form-check label{font-size:14px;color:var(--muted);line-height:1.5;cursor:pointer}
