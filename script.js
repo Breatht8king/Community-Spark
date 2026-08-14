@@ -26,6 +26,7 @@ var GOOGLE_PLACES_API_KEY='AIzaSyBzIF6tDgzrCOLRQHh63R5WUlhk-W9KQ4o';
 var GOOGLE_PLACES_ENDPOINT='https://places.googleapis.com/v1/places:autocomplete';
 var GOOGLE_PLACES_FIELD_MASK='suggestions.placePrediction.text.text,suggestions.placePrediction.structuredFormat.mainText.text,suggestions.placePrediction.structuredFormat.secondaryText.text';
 var INDIANA_BOUNDS={low:{latitude:37.77,longitude:-88.10},high:{latitude:41.76,longitude:-84.78}};
+var placesFailures=0,placesDisabled=false;
 function initLocationAutocomplete(inputEl){
   if(!inputEl)return;
   var wrap=inputEl.closest('.location-field');
@@ -35,6 +36,11 @@ function initLocationAutocomplete(inputEl){
   list.hidden=true;
   wrap.appendChild(list);
   var debounceTimer=null,activeIndex=-1,currentSuggestions=[];
+  var fallbackNote=document.createElement('span');
+  fallbackNote.className='field-help';
+  fallbackNote.hidden=true;
+  fallbackNote.textContent='Address suggestions are unavailable right now — please type the full street address.';
+  wrap.appendChild(fallbackNote);
   function closeList(){list.hidden=true;list.innerHTML='';activeIndex=-1;currentSuggestions=[];}
   function selectSuggestion(s){
     if(s&&s.placePrediction&&s.placePrediction.text)inputEl.value=s.placePrediction.text.text;
@@ -71,15 +77,26 @@ function initLocationAutocomplete(inputEl){
       headers:{'Content-Type':'application/json','X-Goog-Api-Key':GOOGLE_PLACES_API_KEY,'X-Goog-FieldMask':GOOGLE_PLACES_FIELD_MASK},
       body:JSON.stringify({input:query,includedRegionCodes:['us'],locationBias:{rectangle:{low:INDIANA_BOUNDS.low,high:INDIANA_BOUNDS.high}}})
     }).then(function(res){
-      if(!res.ok)throw new Error('Places request failed');
+      if(!res.ok)throw new Error('Places request failed: '+res.status);
       return res.json();
     }).then(function(data){
+      placesFailures=0;
       renderSuggestions(data.suggestions||[]);
-    }).catch(function(){closeList();});
+    }).catch(function(err){
+      console.warn('[Community Spark] Address autocomplete unavailable:',err.message);
+      closeList();
+      placesFailures++;
+      if(placesFailures>=2&&!placesDisabled){
+        placesDisabled=true;
+        fallbackNote.hidden=false;
+        inputEl.setAttribute('autocomplete','street-address');
+      }
+    });
   }
   inputEl.addEventListener('input',function(){
     var query=inputEl.value.trim();
     if(debounceTimer)clearTimeout(debounceTimer);
+    if(placesDisabled){fallbackNote.hidden=false;closeList();return;}
     if(query.length<3||!GOOGLE_PLACES_API_KEY){closeList();return;}
     debounceTimer=setTimeout(function(){fetchSuggestions(query);},250);
   });
@@ -109,6 +126,7 @@ function initLocationAutocomplete(inputEl){
 }
 initLocationAutocomplete(document.getElementById('bookLocation'));
 initLocationAutocomplete(document.getElementById('location'));
+initLocationAutocomplete(document.getElementById('sponsorArea'));
 if('IntersectionObserver' in window){
   var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
   document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
@@ -138,8 +156,63 @@ faqItems.forEach(function(d){
 var addonSelects=Array.from(document.querySelectorAll('.addon-qty')),addonTotal=document.getElementById('addonTotal');
 function updateTotal(){var sum=addonSelects.reduce(function(a,s){return a+(Number(s.value)*Number(s.dataset.unit||0));},0);if(addonTotal)addonTotal.textContent='$'+sum.toLocaleString('en-US');}
 addonSelects.forEach(function(s){s.addEventListener('change',updateTotal);});updateTotal();
-var form=document.getElementById('contactForm'),formResponse=document.getElementById('formResponse');
-if(form){form.addEventListener('submit',function(e){e.preventDefault();var req=Array.from(form.querySelectorAll('[required]')),first=req.find(function(f){return!String(f.value||'').trim();});if(first){first.focus();if(formResponse){formResponse.textContent='Please fill in all required fields before submitting.';formResponse.style.color='#c0392b';}return;}var submitBtn=form.querySelector('button[type="submit"]');if(submitBtn)submitBtn.disabled=true;fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form)).toString()}).then(function(res){if(!res.ok)throw new Error('Network response was not ok');if(formResponse){formResponse.textContent='✓ Thank you! Your custom event request has been received. Griffin will follow up with you shortly.';formResponse.style.color='var(--gold)';}form.reset();}).catch(function(){if(formResponse){formResponse.textContent='Something went wrong sending your request. Please try again or email us directly.';formResponse.style.color='#c0392b';}}).finally(function(){if(submitBtn)submitBtn.disabled=false;});});}
+function findFirstEmptyRequired(container){
+  return Array.from(container.querySelectorAll('[required]')).find(function(f){return f.type!=='radio'&&!String(f.value||'').trim();});
+}
+function submitNetlifyForm(form,responseEl,opts){
+  opts=opts||{};
+  form.noValidate=true;
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!opts.skipRequiredCheck){
+      var first=findFirstEmptyRequired(form);
+      if(first){first.focus();if(responseEl){responseEl.textContent='Please fill in all required fields before submitting.';responseEl.style.color='#c0392b';}return;}
+    }
+    if(opts.validate){
+      var err=opts.validate();
+      if(err){if(responseEl){responseEl.textContent=err;responseEl.style.color='#c0392b';}return;}
+    }
+    var submitBtn=form.querySelector('button[type="submit"]');
+    if(submitBtn)submitBtn.disabled=true;
+    var formData=opts.buildFormData?opts.buildFormData():new FormData(form);
+    fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(formData).toString()})
+      .then(function(res){
+        if(!res.ok)throw new Error('Network response was not ok');
+        if(opts.onSuccess){opts.onSuccess();}
+        else{
+          if(responseEl&&opts.successMessage){responseEl.textContent=opts.successMessage;responseEl.style.color='var(--gold)';}
+          form.reset();
+        }
+      })
+      .catch(function(){
+        if(responseEl){responseEl.textContent='Something went wrong sending your request. Please try again or email us directly.';responseEl.style.color='#c0392b';}
+      })
+      .finally(function(){if(submitBtn)submitBtn.disabled=false;});
+  });
+}
+var form=document.getElementById('contactForm'),formResponse=document.getElementById('formResponse'),eventDateInput=document.getElementById('eventDate');
+if(eventDateInput){eventDateInput.min=toISODate(minBookableDate());eventDateInput.max=toISODate(maxBookableDate());}
+if(form){
+  submitNetlifyForm(form,formResponse,{
+    successMessage:'✓ Thank you! Your custom event request has been received. Griffin will follow up with you shortly.',
+    validate:function(){
+      if(eventDateInput&&eventDateInput.value){
+        var minD=toISODate(minBookableDate()),maxD=toISODate(maxBookableDate());
+        if(eventDateInput.value<minD||eventDateInput.value>maxD){
+          eventDateInput.focus();
+          return "Please choose an event date between 2 weeks and 6 months from today — or leave it blank and we'll confirm timing with you.";
+        }
+      }
+      return null;
+    }
+  });
+}
+var sponsorForm=document.getElementById('sponsorForm'),sponsorResponse=document.getElementById('sponsorResponse');
+if(sponsorForm){
+  submitNetlifyForm(sponsorForm,sponsorResponse,{
+    successMessage:"✓ You're on the founding sponsor list. Griffin will follow up within 1–2 business days to confirm your details. When an event comes up that fits your business and your area, you'll hear from us with the specifics — and nothing is owed unless you approve it."
+  });
+}
 var bookEventSelect=document.getElementById('bookEventSelect');
 var bookingType='preset';
 var TIME_SLOTS=[];
@@ -148,6 +221,13 @@ for(var bookHour=10;bookHour<=18;bookHour++){
     if(bookHour===18&&m==='30')return;
     TIME_SLOTS.push((bookHour<10?'0'+bookHour:String(bookHour))+':'+m);
   });
+}
+function formatDateLong(iso){
+  var p=iso.split('-');
+  if(p.length!==3)return iso;
+  var d=new Date(Number(p[0]),Number(p[1])-1,Number(p[2]));
+  if(isNaN(d.getTime()))return iso;
+  return d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
 }
 function to12h(t){
   var parts=t.split(':'),hh=Number(parts[0]),mm=parts[1],suffix=hh>=12?'PM':'AM',h12=hh%12;
@@ -166,13 +246,19 @@ function pad2(n){return n<10?'0'+n:String(n);}
 function toISODate(d){return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate());}
 function minBookableDate(){var d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()+14);return d;}
 function maxBookableDate(){var d=new Date();d.setHours(0,0,0,0);d.setMonth(d.getMonth()+6);return d;}
+function isValidBooking(b){
+  if(!b||typeof b.date!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(b.date))return false;
+  if(b.allDay)return !isNaN(new Date(b.date+'T00:00:00').getTime());
+  if(typeof b.time!=='string'||!/^([01]\d|2[0-3]):[0-5]\d$/.test(b.time))return false;
+  return !isNaN(new Date(b.date+'T'+b.time+':00').getTime());
+}
 function bufferWindow(booking){
   if(booking.allDay){
     var dayStart=new Date(booking.date+'T00:00:00'),dayEnd=new Date(booking.date+'T23:59:59');
     return {blockStart:dayStart,blockEnd:dayEnd,startTime:dayStart,allDay:true};
   }
   var start=new Date(booking.date+'T'+booking.time+':00');
-  var durHrs=booking.durationHours!=null?booking.durationHours:1;
+  var durHrs=booking.durationHours!=null?booking.durationHours:3;
   var end=new Date(start.getTime()+durHrs*3600000);
   var blockStart=new Date(start.getTime()-1*3600000);
   var blockEnd=new Date(end.getTime()+1.5*3600000);
@@ -180,9 +266,15 @@ function bufferWindow(booking){
 }
 function findConflict(proposedDate,proposedTime,proposedDurationHrs){
   if(typeof CONFIRMED_BOOKINGS==='undefined')return null;
-  var sameDay=CONFIRMED_BOOKINGS.filter(function(b){return b.date===proposedDate;});
+  var sameDay=CONFIRMED_BOOKINGS.filter(function(b){return b&&b.date===proposedDate;});
   if(sameDay.length>=2){
     return {reason:'cap',message:'This date already has 2 confirmed events — please choose another date.'};
+  }
+  for(var vi=0;vi<sameDay.length;vi++){
+    if(!isValidBooking(sameDay[vi])){
+      console.error('[Community Spark] Malformed entry in bookings-data.js — blocking this date as a precaution:',sameDay[vi]);
+      return {reason:'invalid',message:'That date is unavailable — please choose another date.'};
+    }
   }
   var proposedStart=proposedDurationHrs===null?null:new Date(proposedDate+'T'+proposedTime+':00');
   for(var ci=0;ci<sameDay.length;ci++){
@@ -207,11 +299,15 @@ function findConflict(proposedDate,proposedTime,proposedDurationHrs){
 }
 function dailyBookingCount(dateStr){
   if(typeof CONFIRMED_BOOKINGS==='undefined')return 0;
-  return CONFIRMED_BOOKINGS.filter(function(b){return b.date===dateStr;}).length;
+  return CONFIRMED_BOOKINGS.filter(function(b){return b&&b.date===dateStr;}).length;
 }
 function dateHasAllDayBlock(dateStr){
   if(typeof CONFIRMED_BOOKINGS==='undefined')return false;
-  return CONFIRMED_BOOKINGS.some(function(b){return b.date===dateStr&&b.allDay;});
+  return CONFIRMED_BOOKINGS.some(function(b){return b&&b.date===dateStr&&b.allDay;});
+}
+function dateHasInvalidEntry(dateStr){
+  if(typeof CONFIRMED_BOOKINGS==='undefined')return false;
+  return CONFIRMED_BOOKINGS.some(function(b){return b&&b.date===dateStr&&!isValidBooking(b);});
 }
 var bookingEventNameEl=document.getElementById('bookingEventName'),
     bookingEventMetaEl=document.getElementById('bookingEventMeta');
@@ -278,7 +374,11 @@ var bookStep1=document.getElementById('bookStep1'),
     customInclusions=document.getElementById('customInclusions'),
     bookChanges=document.getElementById('bookChanges'),
     bookingTypeInput=document.getElementById('bookingType'),
-    customEventNameFallback=document.getElementById('customEventNameFallback');
+    customEventNameFallback=document.getElementById('customEventNameFallback'),
+    bookStep4=document.getElementById('bookStep4'),
+    bookStartOver=document.getElementById('bookStartOver'),
+    bookSuccessEvent=document.getElementById('bookSuccessEvent'),
+    bookSuccessDate=document.getElementById('bookSuccessDate');
 
 var calViewDate=null,selectedDateStr='',selectedTimeStr='';
 
@@ -325,6 +425,22 @@ function setBookingType(type){
 if(typePresetBtn)typePresetBtn.addEventListener('click',function(){setBookingType('preset');});
 if(typeCustomBtn)typeCustomBtn.addEventListener('click',function(){setBookingType('custom');});
 if(typePresetBtn||typeCustomBtn)setBookingType('preset');
+
+function resetBookingFlow(){
+  if(bookingForm)bookingForm.reset();
+  setBookingType('preset');
+  selectedDateStr='';selectedTimeStr='';
+  if(bookDateInput)bookDateInput.value='';
+  if(bookTimeInput)bookTimeInput.value='';
+  calViewDate=null;
+  if(bookStep1Response)bookStep1Response.textContent='';
+  if(bookingResponse)bookingResponse.textContent='';
+  if(bookingConflictNote)bookingConflictNote.style.display='none';
+  if(timeSlotWrap)timeSlotWrap.style.display='none';
+  if(timeSlotGrid)timeSlotGrid.innerHTML='';
+  if(bookToStep3)bookToStep3.disabled=true;
+  updateEventIntro();
+}
 
 function updateContinueState(){
   if(!bookToStep3)return;
@@ -408,7 +524,8 @@ function renderCalendar(){
       var capReached=dailyBookingCount(dateStr)>=2;
       var allDayBlocked=dateHasAllDayBlock(dateStr);
       var conflictIfAllDay=isAllDayEvent&&dailyBookingCount(dateStr)>0;
-      var disabled=tooEarly||tooLate||capReached||allDayBlocked||conflictIfAllDay;
+      var invalidEntry=dateHasInvalidEntry(dateStr);
+      var disabled=tooEarly||tooLate||capReached||allDayBlocked||conflictIfAllDay||invalidEntry;
       btn.disabled=disabled;
       if(dateStr===selectedDateStr)btn.classList.add('selected');
       if(!disabled){
@@ -440,8 +557,7 @@ if(calNext)calNext.addEventListener('click',function(){
 });
 if(bookScheduleBtn){
   bookScheduleBtn.addEventListener('click',function(){
-    var step1Fields=Array.from(bookStep1.querySelectorAll('[required]'));
-    var first=step1Fields.find(function(f){return f.type!=='radio'&&!String(f.value||'').trim();});
+    var first=findFirstEmptyRequired(bookStep1);
     if(first){
       first.focus();
       if(bookStep1Response){bookStep1Response.textContent='Please fill in all required fields before scheduling.';bookStep1Response.style.color='#c0392b';}
@@ -479,50 +595,46 @@ if(bookToStep3){
   });
 }
 if(bookBackTo2)bookBackTo2.addEventListener('click',function(){bookStep3.hidden=true;bookStep2.hidden=false;});
+if(bookStartOver)bookStartOver.addEventListener('click',function(){
+  if(bookStep4)bookStep4.hidden=true;
+  resetBookingFlow();
+  bookStep1.hidden=false;
+  bookStep1.scrollIntoView({behavior:'smooth',block:'start'});
+});
 
 var bookingForm=document.getElementById('bookingForm'),bookingResponse=document.getElementById('bookingResponse');
 if(bookingForm){
-  bookingForm.addEventListener('submit',function(e){
-    e.preventDefault();
-    var bDate=bookDateInput?bookDateInput.value:'';
-    var minDate=toISODate(minBookableDate());
-    var maxDate=toISODate(maxBookableDate());
-    if(!bDate||bDate<minDate){
-      if(bookingResponse){bookingResponse.textContent='Please pick a date at least 2 weeks out.';bookingResponse.style.color='#c0392b';}
-      return;
+  submitNetlifyForm(bookingForm,bookingResponse,{
+    skipRequiredCheck:true,
+    validate:function(){
+      var bDate=bookDateInput?bookDateInput.value:'';
+      var minDate=toISODate(minBookableDate());
+      var maxDate=toISODate(maxBookableDate());
+      if(!bDate||bDate<minDate)return 'Please pick a date at least 2 weeks out.';
+      if(bDate>maxDate)return 'Please pick a date within the next 6 months.';
+      var bInfo=getActiveEventInfo();
+      if(!bInfo.isAllDay&&!selectedTimeStr)return 'Please pick a start time.';
+      var bConflict=findConflict(bDate,bInfo.isAllDay?null:selectedTimeStr,bInfo.durationHours);
+      if(bConflict)return bConflict.message+' Please go back and choose a different date or time.';
+      return null;
+    },
+    buildFormData:function(){
+      var bFormData=new FormData(bookingForm);
+      if(bookingType==='preset'){
+        var bSelectedOpt=selectedEventOption();
+        if(bSelectedOpt&&bSelectedOpt.value)bFormData.set('eventName',bSelectedOpt.textContent.trim());
+      }
+      return bFormData;
+    },
+    onSuccess:function(){
+      var doneLabel=getActiveEventInfo().label;
+      var doneDate=formatDateLong(bookDateInput?bookDateInput.value:'');
+      if(bookSuccessEvent)bookSuccessEvent.textContent=doneLabel;
+      if(bookSuccessDate)bookSuccessDate.textContent=doneDate;
+      resetBookingFlow();
+      bookStep1.hidden=true;bookStep2.hidden=true;bookStep3.hidden=true;
+      if(bookStep4){bookStep4.hidden=false;bookStep4.scrollIntoView({behavior:'smooth',block:'center'});}
     }
-    if(bDate>maxDate){
-      if(bookingResponse){bookingResponse.textContent='Please pick a date within the next 6 months.';bookingResponse.style.color='#c0392b';}
-      return;
-    }
-    var bInfo=getActiveEventInfo();
-    var bIsAllDay=bInfo.isAllDay;
-    if(!bIsAllDay&&!selectedTimeStr){
-      if(bookingResponse){bookingResponse.textContent='Please pick a start time.';bookingResponse.style.color='#c0392b';}
-      return;
-    }
-    var bDurationHrs=bInfo.durationHours;
-    var bConflict=findConflict(bDate,bIsAllDay?null:selectedTimeStr,bDurationHrs);
-    if(bConflict){
-      if(bookingResponse){bookingResponse.textContent=bConflict.message+' Please go back and choose a different date or time.';bookingResponse.style.color='#c0392b';}
-      return;
-    }
-    var bookSubmitBtn=bookingForm.querySelector('button[type="submit"]');
-    if(bookSubmitBtn)bookSubmitBtn.disabled=true;
-    fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(bookingForm)).toString()})
-      .then(function(res){
-        if(!res.ok)throw new Error('Network response was not ok');
-        if(bookingResponse){bookingResponse.textContent='✓ Request received! No deposit is required right now — Griffin will follow up within 1–2 business days to confirm your date, and a deposit will only be collected once your event is fully confirmed.';bookingResponse.style.color='var(--gold)';}
-        bookingForm.reset();
-        selectedDateStr='';selectedTimeStr='';
-        bookStep3.hidden=true;
-        bookStep1.hidden=false;
-        updateEventIntro();
-      })
-      .catch(function(){
-        if(bookingResponse){bookingResponse.textContent='Something went wrong sending your request. Please try again or email us directly.';bookingResponse.style.color='#c0392b';}
-      })
-      .finally(function(){if(bookSubmitBtn)bookSubmitBtn.disabled=false;});
   });
 }
 })();
