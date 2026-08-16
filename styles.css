@@ -271,7 +271,7 @@ nav a.active{color:var(--gold)}
 .faq-item summary::-webkit-details-marker{display:none}
 .faq-item summary:after{content:"+";position:absolute;right:18px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--cream);color:var(--gold);font-size:20px;font-weight:400;transition:all .2s}
 .faq-item[open] summary:after{content:"–";background:var(--ink);color:var(--gold-light)}
-.faq-item p{padding:0 22px 20px;color:var(--muted);margin:0;font-size:14px;line-height:1.7}
+.faq-item p{padding:0 22px 20px;color:var(--muted);margin:0;font-size:14px;line-height:1.7;overflow:hidden}
 .policy-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
 .policy-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:26px}
 .policy-num{font-family:"Cormorant Garamond",serif;font-size:44px;font-weight:700;color:var(--cream);margin-bottom:12px;line-height:1}
