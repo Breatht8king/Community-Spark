@@ -127,10 +127,6 @@ function initLocationAutocomplete(inputEl){
 initLocationAutocomplete(document.getElementById('bookLocation'));
 initLocationAutocomplete(document.getElementById('location'));
 initLocationAutocomplete(document.getElementById('sponsorArea'));
-if('IntersectionObserver' in window){
-  var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
-  document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
-}else{document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});}
 var searchInput=document.getElementById('catalogSearch'),filterBtns=Array.from(document.querySelectorAll('[data-filter]')),priceFilterBtns=Array.from(document.querySelectorAll('[data-price-filter]')),eventCards=Array.from(document.querySelectorAll('.event-card')),emptyMsg=document.getElementById('catalog-empty'),activeFilter='all',activePriceFilter='all';
 function updateCatalog(){var term=searchInput?searchInput.value.trim().toLowerCase():'',count=0;eventCards.forEach(function(card){var cats=card.dataset.category||'',name=card.dataset.name||'',priceBand=card.dataset.priceBand||'',show=(activeFilter==='all'||cats.indexOf(activeFilter)>-1)&&(activePriceFilter==='all'||priceBand===activePriceFilter)&&(!term||name.indexOf(term)>-1);card.hidden=!show;if(show)count++;});if(emptyMsg)emptyMsg.style.display=count===0?'block':'none';}
 filterBtns.forEach(function(btn){btn.addEventListener('click',function(){filterBtns.forEach(function(b){b.classList.remove('active');});btn.classList.add('active');activeFilter=btn.dataset.filter||'all';updateCatalog();});});
