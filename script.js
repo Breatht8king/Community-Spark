@@ -326,8 +326,8 @@ function updateEventIntro(){
     bookingEventNameEl.textContent='Booking: '+opt.textContent;
     bookingEventMetaEl.textContent=(opt.dataset.price||'')+(opt.dataset.duration?' · '+opt.dataset.duration:'');
   }else{
-    bookingEventNameEl.textContent='Select an event above to begin';
-    bookingEventMetaEl.textContent='Pick "Book This Event" on any event card, or choose one below.';
+    bookingEventNameEl.textContent='Choose an event to book';
+    bookingEventMetaEl.textContent='Select a preset event below, or browse the full catalog to compare options.';
   }
 }
 if(bookEventSelect)bookEventSelect.addEventListener('change',updateEventIntro);
@@ -425,6 +425,8 @@ function setBookingType(type){
 if(typePresetBtn)typePresetBtn.addEventListener('click',function(){setBookingType('preset');});
 if(typeCustomBtn)typeCustomBtn.addEventListener('click',function(){setBookingType('custom');});
 if(typePresetBtn||typeCustomBtn)setBookingType('preset');
+var typeParam=new URLSearchParams(window.location.search).get('type');
+if(typeParam==='custom'&&(typePresetBtn||typeCustomBtn))setBookingType('custom');
 
 function resetBookingFlow(){
   if(bookingForm)bookingForm.reset();
