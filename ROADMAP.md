@@ -6,11 +6,11 @@ Living list of what's next. Update this file whenever priorities shift or someth
 - [x] Push new site design across all 8 pages (2026-08-20)
 - [x] Fix Contact/Sponsor form confirmation — was resetting silently instead of showing a clear "sent" panel (2026-08-20)
 - [ ] Visual QA pass on the redesign — mobile/tablet check across all 8 pages, nobody's actually looked yet
-- [ ] Sign off on flagged content items from the redesign port:
-  - Partnerships page was restructured more heavily than the others (old pricing-teaser/founder-teaser sections dropped) — worth a look
+- [~] Content items from the redesign port — treated as accepted-as-is per a general "yes" (2026-08-20), not individually confirmed, revisit if something looks off:
+  - Partnerships page was restructured more heavily than the others (old pricing-teaser/founder-teaser sections dropped)
   - Contact form gained a 4th budget option ("Not sure yet — recommend something")
   - Sponsors page: one contact link now points property managers to `partnerships.html` instead of `contact.html`
-- [ ] Image optimization — photos in `images/` are full-size unoptimized JPEGs (flagged by the redesign handoff itself as unfinished)
+- [x] Image optimization — photos now served as WebP with JPEG fallback + explicit width/height (2026-08-20). Actual win was ~23% smaller total image weight (876KB→~678KB for WebP-capable browsers) — the originals were already reasonably compressed, so this was a real but modest gain, not the dramatic one first estimated.
 
 ## Later — fix but not urgent
 - [ ] Confirm Netlify email notifications are configured for form submissions (Site settings → Forms → Notifications) — submissions are landing in Netlify fine, just double-check the email-notify step is on
