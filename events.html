@@ -33,14 +33,21 @@
   <nav class="drawer-panel"><button class="drawer-close" id="drawerClose">✕</button><a href="index.html">Home</a><a href="events.html" class="active">Event Catalog</a><a href="pricing.html">Pricing</a><a href="partnerships.html">For Apartment Communities</a><a href="sponsors.html">Sponsor an Event</a><a href="gallery.html">Gallery</a><a href="about.html">About & Contact</a><a class="btn btn-primary nav-cta" href="contact.html">Plan an Event</a></nav>
 </div>
 <main>
+<section class="hero" id="catalog-hero">
+  <div class="hero-bg loaded" style="background-image:url('images/photo-1.jpg')"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content reveal">
+    <p class="eyebrow">Event catalog</p>
+    <h1>Twenty events your residents will actually show up for.</h1>
+    <p class="hero-desc">Each one lists exactly what's included, what it costs, and what you can add — so you can pick a date instead of chasing a quote.</p>
+    <div class="hero-actions"><a class="btn btn-primary" href="#events">Browse the Catalog</a><a class="btn btn-outline" href="contact.html">Request a Custom Event</a></div>
+    <div class="hero-proof"><span class="proof-item">Three price plans</span><span class="proof-item">Every event customizable</span><span class="proof-item">Sponsor support available</span></div>
+  </div>
+</section>
 <section class="section section-soft" id="events">
   <div class="section-head reveal">
     <div><p class="section-label">Event catalog</p><h2>Find an event that fits your community.</h2></div>
     <p>20 ready-to-book events, each with listed supplies, optional upgrades, and an up-front planning estimate.</p>
-  </div>
-  <div class="budget-banner reveal">
-    <div><p class="section-label" style="color:rgba(255,255,255,.6);align-items:flex-start">Not seeing the right fit?</p><h3 style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#fff;margin-bottom:8px">Request a fully custom event.</h3><p>Same date-picking process as any preset — tell us what you have in mind and we'll build it around your budget.</p></div>
-    <a class="btn btn-outline" href="book.html?type=custom">Request a Custom Event</a>
   </div>
   <div class="catalog-controls reveal">
     <div class="search-wrap"><span class="search-icon">⌕</span><input type="search" id="catalogSearch" placeholder="Search events…" aria-label="Search events"/></div>
@@ -592,7 +599,18 @@
     </article>
   </div>
   <div id="catalog-empty" style="display:none;text-align:center;padding:60px 20px;color:var(--muted)"><h3 style="font-family:'Cormorant Garamond',serif;font-size:28px;margin-bottom:8px">No events match your search.</h3><p>Try a different keyword or clear the filters to see all 20 events.</p></div>
-  <div class="budget-banner reveal">
+  <div class="closing-panel reveal" style="margin-top:44px">
+    <div>
+      <span class="closing-label">Not seeing the right fit?</span>
+      <h2>Request a fully custom event.</h2>
+      <p>Same process as any preset — tell us what you have in mind and the budget you're working with, and we'll build the concept, inclusions, and vendor plan around it.</p>
+    </div>
+    <div class="closing-action">
+      <a class="btn btn-primary" href="book.html?type=custom">Request a Custom Event</a>
+      <a class="closing-link" href="pricing.html">Or see how pricing works</a>
+    </div>
+  </div>
+  <div class="budget-banner reveal" style="margin-top:22px">
     <div><p class="section-label" style="color:rgba(255,255,255,.6)">Local business?</p><h3 style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#fff;margin-bottom:8px">You can sponsor any event in this catalog.</h3><p>Fund a piece of an event and get your name in front of a few hundred nearby households — attending is optional. Sponsorships start at $250.</p></div>
     <a class="btn btn-outline" href="sponsors.html">See Sponsorship Levels</a>
   </div>

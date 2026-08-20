@@ -33,8 +33,20 @@
   <nav class="drawer-panel"><button class="drawer-close" id="drawerClose">✕</button><a href="index.html">Home</a><a href="events.html">Event Catalog</a><a href="pricing.html" class="active">Pricing</a><a href="partnerships.html">For Apartment Communities</a><a href="sponsors.html">Sponsor an Event</a><a href="gallery.html">Gallery</a><a href="about.html">About & Contact</a><a class="btn btn-primary nav-cta" href="contact.html">Plan an Event</a></nav>
 </div>
 <main>
+<section class="hero" id="pricing-hero">
+  <div class="hero-bg loaded" style="background-image:url('images/photo-4.jpg')"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content reveal">
+    <p class="eyebrow">Transparent pricing</p>
+    <h1>Pricing you can take straight into a budget meeting.</h1>
+    <p class="hero-desc">Three event tiers, real Indianapolis-area add-on pricing, and a live estimate that updates as you build it — before you ever send an inquiry.</p>
+    <div class="hero-actions"><a class="btn btn-primary" href="#pricing">See the Event Tiers</a><a class="btn btn-outline" href="#estimate">Build My Estimate</a></div>
+    <div class="hero-proof"><span class="proof-item">Setup and breakdown included</span><span class="proof-item">No resident headcount limits</span><span class="proof-item">Indiana-based team</span></div>
+  </div>
+</section>
+
 <section class="section" id="pricing">
-  <div class="section-center reveal"><p class="section-label">Transparent pricing</p><h2>Clear event tiers with room to customize.</h2><p>Pricing is based on scope, production level, and selected services — not a published resident headcount limit.</p></div>
+  <div class="section-center reveal"><p class="section-label">Event tiers</p><h2>Three starting points, room to customize.</h2><p>Pricing is based on scope, production level, and selected services — not a published resident headcount limit. Every tier includes planning, setup, on-site coordination, and breakdown.</p></div>
   <div class="pricing-grid reveal">
     <div class="price-card">
       <div class="price-tier">Polished Essentials</div><h3>The Spark</h3>
@@ -59,13 +71,19 @@
       <a class="btn btn-ghost" href="contact.html">Plan a Radiance Event</a>
     </div>
   </div>
-  <div class="budget-banner reveal">
-    <div><p class="section-label" style="color:rgba(255,255,255,.6)">Working with a set budget?</p><h3 style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#fff;margin-bottom:8px">We can build the strongest event within your budget.</h3><p>Tell us your budget and top priorities. We'll recommend the best event format, inclusions, and enhancements for that amount.</p></div>
-    <a class="btn btn-outline" href="contact.html">Build Around My Budget</a>
+  <div class="pricing-included reveal">
+    <span class="pricing-included-label">Included in every tier</span>
+    <div class="pricing-included-items">
+      <span class="pricing-included-item"><span>✦</span>Concept and planning</span>
+      <span class="pricing-included-item"><span>✦</span>Décor styling and setup</span>
+      <span class="pricing-included-item"><span>✦</span>On-site coordination</span>
+      <span class="pricing-included-item"><span>✦</span>Vendor communication</span>
+      <span class="pricing-included-item"><span>✦</span>Full breakdown and cleanup</span>
+    </div>
   </div>
 </section>
 
-<section class="section section-soft">
+<section class="section section-soft" id="estimate">
   <div class="section-head reveal"><div><p class="section-label">Indiana event add-ons</p><h2>Build the experience one enhancement at a time.</h2></div><p>Prices are planning estimates based on publicly available Indianapolis-area vendor benchmarks. Final quotes may change based on event date, location, delivery, duration, availability, and taxes.</p></div>
   <div class="estimate-notice reveal"><strong>Planning estimates only.</strong> Choose a quantity to see a live estimate. Final vendor quotes required before booking.</div>
   <div class="addons-grid reveal">
@@ -82,6 +100,20 @@
     <div class="addon-item"><div><span class="addon-name">Resident Prize Pack</span><span class="addon-desc">Gift cards or prizes in $25 increments</span></div><div class="addon-controls"><select class="addon-qty" data-unit="25" aria-label="Prize pack value"><option value="0">$0</option><option value="1">$25</option><option value="2">$50</option><option value="4">$100</option><option value="6">$150</option><option value="8">$200</option><option value="10">$250</option></select><span class="addon-price">$25 increments</span></div></div>
     <div class="addon-item"><div><span class="addon-name">Additional Event Staff</span><span class="addon-desc">Extra setup, guest support, or activity staffing</span></div><div class="addon-controls"><select class="addon-qty" data-unit="45" aria-label="Staff hours"><option value="0">0</option><option value="2">2 staff-hours</option><option value="4">4 staff-hours</option><option value="6">6 staff-hours</option><option value="8">8 staff-hours</option></select><span class="addon-price">$45 / staff-hour</span></div></div>
     <div class="addon-total"><div><span class="addon-total-label">Estimated add-on total<small>Planning estimate only. Final vendor quote required.</small></span></div><span class="addon-total-amount" id="addonTotal">$0</span></div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="closing-panel reveal">
+    <div>
+      <span class="closing-label">Working with a set budget?</span>
+      <h2>We can build the strongest event within your number.</h2>
+      <p>Tell us the budget and the two or three things that matter most to your residents. We'll recommend the event format, inclusions, and enhancements that get the most out of it — and let you know if a local sponsor could extend it further.</p>
+    </div>
+    <div class="closing-action">
+      <a class="btn btn-primary" href="contact.html">Build Around My Budget</a>
+      <a class="closing-link" href="events.html">Or browse the full event catalog</a>
+    </div>
   </div>
 </section>
 </main>
