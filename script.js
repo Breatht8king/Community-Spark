@@ -1,7 +1,7 @@
 (function(){
 "use strict";
 var heroBg=document.getElementById('heroBg');
-if(heroBg){heroBg.style.backgroundImage='url("images/photo-7.jpg")';heroBg.style.backgroundSize='cover';heroBg.style.backgroundPosition='center';setTimeout(function(){heroBg.classList.add('loaded');},100);}
+if(heroBg){heroBg.style.backgroundImage='url("images/photo-7.jpg")';heroBg.style.backgroundImage='image-set(url("images/photo-7.webp") type("image/webp"),url("images/photo-7.jpg") type("image/jpeg"))';heroBg.style.backgroundSize='cover';heroBg.style.backgroundPosition='center';setTimeout(function(){heroBg.classList.add('loaded');},100);}
 var header=document.getElementById('site-header');
 window.addEventListener('scroll',function(){if(header)header.classList.toggle('scrolled',window.scrollY>20);},{passive:true});
 var toggle=document.getElementById('mobileToggle'),drawer=document.getElementById('mobileDrawer'),backdrop=document.getElementById('drawerBackdrop'),closeBtn=document.getElementById('drawerClose');

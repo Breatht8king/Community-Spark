@@ -6,6 +6,7 @@ body{font-family:"Inter",sans-serif;background:var(--paper);color:var(--ink);lin
 body.lock{overflow:hidden}
 a{text-decoration:none;color:inherit}
 img{width:100%;display:block;object-fit:cover}
+picture{display:block;width:100%;height:100%}
 button,input,select,textarea{font:inherit;border:none;background:none;cursor:pointer}
 ul{list-style:none}
 h1,h2,h3{font-family:"Cormorant Garamond",serif;line-height:1.05;font-weight:600}
