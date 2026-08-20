@@ -188,9 +188,27 @@ function submitNetlifyForm(form,responseEl,opts){
 }
 var form=document.getElementById('contactForm'),formResponse=document.getElementById('formResponse'),eventDateInput=document.getElementById('eventDate');
 if(eventDateInput){eventDateInput.min=toISODate(minBookableDate());eventDateInput.max=toISODate(maxBookableDate());}
+function swapFormForConfirmation(form,successId,actionsId){
+  var successEl=document.getElementById(successId),actionsEl=document.getElementById(actionsId);
+  form.hidden=true;
+  if(successEl){successEl.hidden=false;successEl.scrollIntoView({behavior:'smooth',block:'center'});}
+  if(actionsEl)actionsEl.hidden=false;
+}
+function wireSendAnother(buttonId,form,responseEl,successId,actionsId){
+  var btn=document.getElementById(buttonId);
+  if(!btn)return;
+  btn.addEventListener('click',function(){
+    form.reset();
+    form.hidden=false;
+    var successEl=document.getElementById(successId),actionsEl=document.getElementById(actionsId);
+    if(successEl)successEl.hidden=true;
+    if(actionsEl)actionsEl.hidden=true;
+    if(responseEl)responseEl.textContent='';
+    form.scrollIntoView({behavior:'smooth',block:'center'});
+  });
+}
 if(form){
   submitNetlifyForm(form,formResponse,{
-    successMessage:'✓ Thank you! Your custom event request has been received. Griffin will follow up with you shortly.',
     validate:function(){
       if(eventDateInput&&eventDateInput.value){
         var minD=toISODate(minBookableDate()),maxD=toISODate(maxBookableDate());
@@ -200,14 +218,17 @@ if(form){
         }
       }
       return null;
-    }
+    },
+    onSuccess:function(){swapFormForConfirmation(form,'contactSuccess','contactSuccessActions');}
   });
+  wireSendAnother('contactSendAnother',form,formResponse,'contactSuccess','contactSuccessActions');
 }
 var sponsorForm=document.getElementById('sponsorForm'),sponsorResponse=document.getElementById('sponsorResponse');
 if(sponsorForm){
   submitNetlifyForm(sponsorForm,sponsorResponse,{
-    successMessage:"✓ You're on the founding sponsor list. Griffin will follow up within 1–2 business days to confirm your details. When an event comes up that fits your business and your area, you'll hear from us with the specifics — and nothing is owed unless you approve it."
+    onSuccess:function(){swapFormForConfirmation(sponsorForm,'sponsorSuccess','sponsorSuccessActions');}
   });
+  wireSendAnother('sponsorAddAnother',sponsorForm,sponsorResponse,'sponsorSuccess','sponsorSuccessActions');
 }
 var bookEventSelect=document.getElementById('bookEventSelect');
 var bookingType='preset';
