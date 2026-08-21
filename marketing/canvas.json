@@ -1,0 +1,15 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 816, "h": 1056 },
+    { "file": "TicketStub.dc.html", "x": 896, "y": 0, "w": 816, "h": 1056 },
+    { "file": "Blueprint.dc.html", "x": 1792, "y": 0, "w": 816, "h": 1056 },
+    { "file": "Gazette.dc.html", "x": 2688, "y": 0, "w": 816, "h": 1056 }
+  ],
+  "annotations": [
+    { "id": "golden-hour-label", "x": 0, "y": -84, "w": 500, "text": "Golden Hour — warm, organic" },
+    { "id": "ticket-stub-label", "x": 896, "y": -84, "w": 500, "text": "Admission Ticket — bold, scalloped-edge ticket" },
+    { "id": "blueprint-label", "x": 1792, "y": -84, "w": 500, "text": "Blueprint — precise, technical spec-sheet" },
+    { "id": "gazette-label", "x": 2688, "y": -84, "w": 500, "text": "Gazette — community-newspaper feel" }
+  ],
+  "launch": { "view": "canvas" }
+}
