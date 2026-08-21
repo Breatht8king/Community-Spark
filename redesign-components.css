@@ -576,6 +576,68 @@ textarea.form-field-control{resize:vertical;min-height:100px}
 .sponsor-tier li::before{content:'✓';position:absolute;left:0;color:var(--tier-accent,var(--sage));font-weight:var(--fw-bold)}
 
 /* ==========================================================================
+   components/layout — numbered item grid ("Why property teams book" /
+   "How it works" style sections on Partnerships and Sponsors). Plain white
+   bordered cards with a large gold number — distinct from StepCard below
+   (no colored top-border cycling, no circle-badge number).
+   ========================================================================== */
+.numbered-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;margin-top:44px}
+.numbered-item{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:26px}
+.numbered-item span{display:block;font-family:var(--font-display);font-size:34px;font-weight:var(--fw-bold);color:var(--gold);line-height:1;margin-bottom:12px}
+.numbered-item h3{font-family:var(--font-display);font-size:20px;font-weight:var(--fw-semibold);margin:0 0 8px}
+.numbered-item p{margin:0;font-size:var(--text-meta);color:var(--muted);line-height:1.6}
+
+/* ==========================================================================
+   components/cards — sample event teaser card (Partnerships "look at the
+   catalog" section). Plain bordered card: category+duration row, title,
+   one paragraph with a bold price prefix. No image.
+   ========================================================================== */
+.sample-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px;margin-top:44px}
+.sample-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:28px 26px}
+.sample-card-meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.sample-card-cat{font-size:var(--text-eyebrow);text-transform:uppercase;letter-spacing:var(--track-tier);font-weight:var(--fw-bold);color:var(--gold)}
+.sample-card-dur{font-size:var(--text-micro);color:var(--muted)}
+.sample-card h3{font-family:var(--font-display);font-size:22px;font-weight:var(--fw-semibold);margin:0 0 8px}
+.sample-card p{margin:0;font-size:var(--text-body-sm);color:var(--muted);line-height:1.6}
+.sample-card p strong{color:var(--ink)}
+
+/* ==========================================================================
+   components/cards/LevelCard.jsx (Sponsors — sponsorship level cards).
+   Distinct from PriceCard: shows a scope amount ("One event") + unit line
+   instead of a dollar figure — Sponsors intentionally does not publish
+   per-level pricing.
+   ========================================================================== */
+.level-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;align-items:start;margin-top:44px}
+.level-card{position:relative;display:flex;flex-direction:column;padding:34px 30px;border-radius:var(--r-lg);background:#fff;color:var(--ink);border:1px solid var(--line);box-shadow:var(--shadow-sm);font-family:var(--font-ui)}
+.level-card.featured{background:var(--ink);color:#fff;border-color:var(--ink);box-shadow:var(--shadow-lg)}
+.level-card .badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%)}
+.level-card-tier{font-size:var(--text-eyebrow);text-transform:uppercase;letter-spacing:var(--track-tier);font-weight:var(--fw-bold);color:var(--gold);margin-bottom:8px}
+.level-card.featured .level-card-tier{color:var(--gold-light)}
+.level-card h3{font-family:var(--font-display);font-size:25px;font-weight:var(--fw-semibold);margin:0 0 14px}
+.level-card-amount{font-family:var(--font-display);font-size:34px;font-weight:var(--fw-bold);line-height:1.05}
+.level-card-unit{display:block;font-size:var(--text-micro);color:var(--muted);margin-top:6px}
+.level-card.featured .level-card-unit{color:rgba(255,255,255,.6)}
+.level-card-features{list-style:none;margin:22px 0 26px;padding:0;flex:1;display:flex;flex-direction:column;gap:10px}
+.level-card-features li{position:relative;padding-left:22px;font-size:var(--text-body-sm);line-height:var(--lh-body);color:var(--muted)}
+.level-card.featured .level-card-features li{color:rgba(255,255,255,.74)}
+.level-card-features li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-weight:var(--fw-bold);font-size:12px}
+.level-card.featured .level-card-features li::before{color:var(--gold-light)}
+.level-card-action{margin-top:auto}
+
+/* ==========================================================================
+   components/forms — contact-line sidebar card (Sponsors "join the list"
+   form sidebar). Distinct from .contact-info-item: a standalone bordered
+   card per line, not a divided list.
+   ========================================================================== */
+.form-layout{display:grid;grid-template-columns:1fr 300px;gap:22px;align-items:start;margin-top:36px}
+.form-side{display:flex;flex-direction:column;gap:14px}
+.contact-line{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:20px 22px}
+.contact-line small{display:block;font-size:var(--text-eyebrow);text-transform:uppercase;letter-spacing:var(--track-section-label);font-weight:var(--fw-bold);color:var(--muted);margin-bottom:6px}
+.contact-line strong,.contact-line a{font-size:var(--text-body);font-weight:var(--fw-bold)}
+.contact-line span{font-size:var(--text-body-sm);color:var(--muted);line-height:var(--lh-body);display:block}
+@media(max-width:900px){.form-layout{grid-template-columns:1fr}}
+
+/* ==========================================================================
    components/cards/StepCard.jsx
    Two variants: default "flat" (large, no border — used for a 4-up "how it
    works" strip) and ".is-bordered" (compact, bordered card — used for a
