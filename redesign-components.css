@@ -576,6 +576,50 @@ textarea.form-field-control{resize:vertical;min-height:100px}
 .sponsor-tier li::before{content:'✓';position:absolute;left:0;color:var(--tier-accent,var(--sage));font-weight:var(--fw-bold)}
 
 /* ==========================================================================
+   Gallery page's actual photo grid. NOTE: distinct from the bundle's
+   GalleryItem component above (masonry, separate top-left badge) — the
+   real Gallery.html prototype does not use that component at all; it uses
+   this simpler page-specific pattern instead (uniform fixed-height grid,
+   caption + "Stock image" tag combined on one line).
+   ========================================================================== */
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;margin-top:36px}
+.photo-grid figure{margin:0;position:relative;border-radius:var(--r-md);overflow:hidden;background:var(--cream)}
+.photo-grid img{display:block;width:100%;height:280px;object-fit:cover;transition:transform .6s var(--ease-default)}
+.photo-grid figure:hover img{transform:var(--zoom-image)}
+.photo-grid figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 18px 14px;background:var(--overlay-caption);color:#fff;font-size:var(--text-meta);display:flex;justify-content:space-between;align-items:center;gap:12px}
+.photo-tag{font-size:var(--text-eyebrow);text-transform:uppercase;letter-spacing:var(--track-meta);font-weight:var(--fw-bold);color:rgba(255,255,255,.7)}
+
+/* ==========================================================================
+   About page's actual founder block. NOTE: distinct from the bundle's
+   FounderCard component above (cream bg, flex layout, plum 56px initials,
+   no border/shadow) — the real About.html prototype does not use that
+   component; it uses this page-specific pattern instead (white bg with
+   border+shadow, fixed 220px profile column, ink 88px initials with a
+   gold accent ring, larger ink-colored bio text).
+   ========================================================================== */
+.founder-block{display:grid;grid-template-columns:220px 1fr;gap:36px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:36px;box-shadow:var(--shadow-sm);font-family:var(--font-ui)}
+.founder-block-profile{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}
+.founder-block-initials{width:88px;height:88px;border-radius:var(--r-circle);background:var(--ink);color:var(--gold-light);display:grid;place-items:center;font-family:var(--font-display);font-size:30px;font-weight:var(--fw-bold);box-shadow:0 0 0 3px var(--paper),0 0 0 4px var(--gold)}
+.founder-block-role{font-size:var(--text-eyebrow);text-transform:uppercase;letter-spacing:var(--track-section-label);font-weight:var(--fw-bold);color:var(--muted)}
+.founder-block-name{font-family:var(--font-display);font-size:24px;font-weight:var(--fw-semibold)}
+.founder-block-bio{margin:0 0 16px;font-size:var(--text-body-lg);color:var(--ink);line-height:var(--lh-relaxed)}
+.founder-block-tags{display:flex;flex-wrap:wrap;gap:8px}
+.founder-block-tag{font-size:var(--text-micro);font-weight:var(--fw-semibold);color:var(--gold-dark);background:var(--cream);border-radius:var(--r-pill);padding:7px 14px}
+@media(max-width:900px){.founder-block{grid-template-columns:1fr;gap:24px}}
+
+/* ==========================================================================
+   About page's "planning policies" tiles. NOTE: distinct from the existing
+   .policy-card (large pale 44px watermark numeral) — the real About.html
+   prototype uses a small bold gold numeral badge instead, in a
+   responsive auto-fit grid rather than a fixed 4-column one.
+   ========================================================================== */
+.rule-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:44px}
+.rule-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:24px;font-family:var(--font-ui)}
+.rule-card span{font-size:var(--text-eyebrow);font-weight:var(--fw-bold);letter-spacing:var(--track-tier);color:var(--gold)}
+.rule-card h3{font-family:var(--font-display);font-size:19px;font-weight:var(--fw-semibold);margin:8px 0}
+.rule-card p{margin:0;font-size:var(--text-meta);color:var(--muted);line-height:1.6}
+
+/* ==========================================================================
    components/layout — numbered item grid ("Why property teams book" /
    "How it works" style sections on Partnerships and Sponsors). Plain white
    bordered cards with a large gold number — distinct from StepCard below

@@ -19,6 +19,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="redesign-components.css">
 </head>
 <body>
 <div class="announcement">Now booking fall and holiday 2026 events for apartment communities</div>
@@ -33,44 +34,48 @@
   <nav class="drawer-panel"><button class="drawer-close" id="drawerClose">✕</button><a href="index.html">Home</a><a href="events.html">Event Catalog</a><a href="pricing.html">Pricing</a><a href="partnerships.html">For Apartment Communities</a><a href="sponsors.html">Sponsor an Event</a><a href="gallery.html">Gallery</a><a href="about.html" class="active">About & Contact</a><a class="btn btn-primary nav-cta" href="contact.html">Plan an Event</a></nav>
 </div>
 <main>
-<section class="hero" id="about">
-  <div class="hero-bg loaded" style="background-image:url('images/photo-5.jpg');background-image:image-set(url('images/photo-5.webp') type('image/webp'),url('images/photo-5.jpg') type('image/jpeg'));background-size:cover;background-position:center"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content reveal">
-    <p class="eyebrow">About Community Spark</p>
+<section class="page-hero" id="about">
+  <div class="page-hero-bg loaded" style="background-image:url('images/photo-5.jpg');background-image:image-set(url('images/photo-5.webp') type('image/webp'),url('images/photo-5.jpg') type('image/jpeg'))"></div>
+  <div class="page-hero-scrim"></div>
+  <div class="page-hero-content reveal">
+    <p class="page-hero-eyebrow">About Community Spark</p>
     <h1>Events designed to help apartment communities feel more connected.</h1>
-    <p class="hero-desc">Community Spark was created to make resident events easier for property teams and more meaningful for the people who live there.</p>
-    <div class="hero-actions"><a class="btn btn-primary" href="events.html">Browse Events to Book</a><a class="btn btn-outline" href="contact.html">Request a Custom Event</a></div>
-    <div class="hero-proof"><span class="proof-item">Indiana-based</span><span class="proof-item">One point of contact</span><span class="proof-item">Resident-first standards</span></div>
+    <p class="page-hero-lead">Community Spark was created to make resident events easier for property teams and more meaningful for the people who live there.</p>
+    <div class="page-hero-actions"><a class="btn btn-primary" href="events.html">Browse Events to Book</a><a class="btn btn-outline" href="contact.html">Request a Custom Event</a></div>
+    <div class="page-hero-proof"><span><span>✦</span>Indiana-based</span><span><span>✦</span>One point of contact</span><span><span>✦</span>Resident-first standards</span></div>
   </div>
 </section>
 
 <section class="section">
-  <div class="section-center reveal"><p class="section-label">Meet the founder</p><h2>A single point of contact from first email to breakdown.</h2></div>
-  <div class="founder-card reveal" style="max-width:1000px;margin:0 auto">
-    <div class="founder-profile">
-      <div class="founder-initials" style="width:84px;height:84px;font-size:30px;box-shadow:0 0 0 3px var(--paper),0 0 0 4px var(--gold)">GN</div>
-      <div class="founder-role">Founder</div>
-      <div class="founder-name">Griffin Newton</div>
+  <div class="section-head reveal"><div><p class="section-label">Meet the founder</p><h2>A single point of contact from first email to breakdown.</h2></div></div>
+  <div class="founder-block reveal" style="margin-top:36px">
+    <div class="founder-block-profile">
+      <div class="founder-block-initials">GN</div>
+      <div class="founder-block-role">Founder</div>
+      <div class="founder-block-name">Griffin Newton</div>
     </div>
-    <div class="founder-details">
-      <p class="founder-bio">Indiana-based event professional focused on resident engagement, thoughtful presentation, clear communication, and dependable event-day execution.</p>
-      <div class="founder-tags"><span class="founder-tag">Apartment community events</span><span class="founder-tag">Custom event planning</span><span class="founder-tag">Local sponsor coordination</span></div>
+    <div>
+      <p class="founder-block-bio">Indiana-based event professional focused on resident engagement, thoughtful presentation, clear communication, and dependable event-day execution.</p>
+      <div class="founder-block-tags">
+        <span class="founder-block-tag">Apartment community events</span>
+        <span class="founder-block-tag">Custom event planning</span>
+        <span class="founder-block-tag">Local sponsor coordination</span>
+      </div>
     </div>
   </div>
 </section>
 
 <section class="section section-soft">
-  <div class="section-center reveal"><p class="section-label">Experience that carries over</p><h2>Broader event experience applied to resident life.</h2></div>
-  <div class="experience-row" data-stagger>
-    <div class="policy-card reveal"><div class="policy-num">01</div><h3>Setup &amp; Presentation</h3><p>Experience supporting event preparation, décor placement, room presentation, signage, and the details that help an event feel organized and intentional.</p></div>
-    <div class="policy-card reveal"><div class="policy-num">02</div><h3>Guest Experience &amp; Hospitality</h3><p>A resident event should feel welcoming from the moment people arrive. Community Spark prioritizes clear flow, thoughtful touchpoints, and approachable hospitality.</p></div>
-    <div class="policy-card reveal"><div class="policy-num">03</div><h3>On-Site Coordination</h3><p>Event-day support includes keeping timelines moving, communicating with vendors and property staff, solving small issues quickly, and protecting the guest experience.</p></div>
+  <div class="section-head reveal"><div><p class="section-label">Experience that carries over</p><h2>Broader event experience applied to resident life.</h2></div></div>
+  <div class="numbered-grid">
+    <div class="numbered-item reveal"><span>01</span><h3>Setup &amp; Presentation</h3><p>Experience supporting event preparation, décor placement, room presentation, signage, and the details that help an event feel organized and intentional.</p></div>
+    <div class="numbered-item reveal"><span>02</span><h3>Guest Experience &amp; Hospitality</h3><p>A resident event should feel welcoming from the moment people arrive. Community Spark prioritizes clear flow, thoughtful touchpoints, and approachable hospitality.</p></div>
+    <div class="numbered-item reveal"><span>03</span><h3>On-Site Coordination</h3><p>Event-day support includes keeping timelines moving, communicating with vendors and property staff, solving small issues quickly, and protecting the guest experience.</p></div>
   </div>
 </section>
 
 <section class="section">
-  <div class="section-center reveal"><p class="section-label">FAQ</p><h2>Clear answers before you begin planning.</h2><p>How Community Spark handles pricing, customization, vendors, weather, sponsorship, and the booking process.</p></div>
+  <div class="section-head reveal"><div><p class="section-label">FAQ</p><h2>Clear answers before you begin planning.</h2></div><p>How Community Spark handles pricing, customization, vendors, weather, sponsorship, and the booking process.</p></div>
   <div class="faq-grid reveal">
     <details class="faq-item"><summary>What does "starting at" pricing mean?</summary><p>The amount shown covers the base version of a preset event. Final pricing may change based on the event date, location, duration, staffing, delivery requirements, selected add-ons, vendor availability, and customization.</p></details>
     <details class="faq-item"><summary>Can a preset event be customized?</summary><p>Yes. Preset events provide a clear starting structure, but décor, activities, entertainment, food service, prizes, staffing, and other details can be adjusted to fit the community and budget.</p></details>
@@ -87,16 +92,16 @@
 </section>
 
 <section class="section section-soft" id="policies">
-  <div class="section-center reveal"><p class="section-label">Planning policies</p><h2>Simple expectations for a smoother event.</h2><p>This summary explains the general planning approach. The final proposal and signed agreement contain the specific terms for each event.</p></div>
-  <div class="policy-grid reveal">
-    <div class="policy-card"><div class="policy-num">01</div><h3>Starting Prices &amp; Quotes</h3><p>Website prices represent base event starting points. Community Spark will provide a written proposal showing the selected inclusions, add-ons, vendor expenses, responsibilities, and estimated total before booking.</p></div>
-    <div class="policy-card"><div class="policy-num">02</div><h3>Booking &amp; Date Confirmation</h3><p>Submitting an inquiry does not reserve a date. The event is confirmed only after the proposal is approved and the booking requirements listed in the agreement have been completed.</p></div>
-    <div class="policy-card"><div class="policy-num">03</div><h3>Vendor Pass-Through Costs</h3><p>Catering and other third-party vendor charges are passed through to the client at the confirmed vendor amount. Community Spark coordination fees, when applicable, are listed separately for transparency.</p></div>
-    <div class="policy-card"><div class="policy-num">04</div><h3>Changes &amp; Cancellations</h3><p>Event changes must be requested at least 7 calendar days before the event. Refunds: <strong>21+ days prior</strong> — 100%; <strong>8–20 days prior</strong> — 50%; <strong>7 days or fewer</strong> — nonrefundable. Vendor cancellation fees pass through separately.</p></div>
-    <div class="policy-card"><div class="policy-num">05</div><h3>Weather &amp; Outdoor Events</h3><p>The property should identify a backup location or approve a weather plan. Vendor availability, rental policies, and already-incurred expenses may affect rescheduling options.</p></div>
-    <div class="policy-card"><div class="policy-num">06</div><h3>Property Access &amp; Requirements</h3><p>The client is responsible for providing accurate access times, loading information, venue rules, utility availability, parking details, and any property-specific insurance or vendor requirements.</p></div>
-    <div class="policy-card"><div class="policy-num">07</div><h3>Community Partnerships</h3><p>Sponsors require property approval. Sponsor support is not guaranteed, and participation must remain tasteful, relevant, and consistent with Community Spark's resident-first standards.</p></div>
-    <div class="policy-card"><div class="policy-num">08</div><h3>Final Agreement</h3><p>The event proposal and signed agreement control the final scope, pricing, payment schedule, responsibilities, cancellation terms, and service details for each booking.</p></div>
+  <div class="section-head reveal"><div><p class="section-label">Planning policies</p><h2>Simple expectations for a smoother event.</h2></div><p>This summary explains the general planning approach. The final proposal and signed agreement contain the specific terms for each event.</p></div>
+  <div class="rule-grid">
+    <div class="rule-card reveal"><span>01</span><h3>Starting Prices &amp; Quotes</h3><p>Website prices represent base event starting points. Community Spark will provide a written proposal showing the selected inclusions, add-ons, vendor expenses, responsibilities, and estimated total before booking.</p></div>
+    <div class="rule-card reveal"><span>02</span><h3>Booking &amp; Date Confirmation</h3><p>Submitting an inquiry does not reserve a date. The event is confirmed only after the proposal is approved and the booking requirements listed in the agreement have been completed.</p></div>
+    <div class="rule-card reveal"><span>03</span><h3>Vendor Pass-Through Costs</h3><p>Catering and other third-party vendor charges are passed through to the client at the confirmed vendor amount. Community Spark coordination fees, when applicable, are listed separately for transparency.</p></div>
+    <div class="rule-card reveal"><span>04</span><h3>Changes &amp; Cancellations</h3><p>Event changes must be requested at least 7 calendar days before the event. Refunds: <strong>21+ days prior</strong> — 100%; <strong>8–20 days prior</strong> — 50%; <strong>7 days or fewer</strong> — nonrefundable. Vendor cancellation fees pass through separately.</p></div>
+    <div class="rule-card reveal"><span>05</span><h3>Weather &amp; Outdoor Events</h3><p>The property should identify a backup location or approve a weather plan. Vendor availability, rental policies, and already-incurred expenses may affect rescheduling options.</p></div>
+    <div class="rule-card reveal"><span>06</span><h3>Property Access &amp; Requirements</h3><p>The client is responsible for providing accurate access times, loading information, venue rules, utility availability, parking details, and any property-specific insurance or vendor requirements.</p></div>
+    <div class="rule-card reveal"><span>07</span><h3>Community Partnerships</h3><p>Sponsors require property approval. Sponsor support is not guaranteed, and participation must remain tasteful, relevant, and consistent with Community Spark's resident-first standards.</p></div>
+    <div class="rule-card reveal"><span>08</span><h3>Final Agreement</h3><p>The event proposal and signed agreement control the final scope, pricing, payment schedule, responsibilities, cancellation terms, and service details for each booking.</p></div>
   </div>
 </section>
 
