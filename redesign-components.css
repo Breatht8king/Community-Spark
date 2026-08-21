@@ -713,7 +713,7 @@ textarea.form-field-control{resize:vertical;min-height:100px}
    form sidebar). Distinct from .contact-info-item: a standalone bordered
    card per line, not a divided list.
    ========================================================================== */
-.form-layout{display:grid;grid-template-columns:1fr 300px;gap:22px;align-items:start;margin-top:36px}
+.form-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:22px;align-items:start;margin-top:36px}
 .form-side{display:flex;flex-direction:column;gap:14px}
 .contact-line{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:20px 22px}
 .contact-line small{display:block;font-size:var(--text-eyebrow);text-transform:uppercase;letter-spacing:var(--track-section-label);font-weight:var(--fw-bold);color:var(--muted);margin-bottom:6px}
