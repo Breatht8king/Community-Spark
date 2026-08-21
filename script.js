@@ -211,6 +211,20 @@ function wireSendAnother(buttonId,form,responseEl,successId,actionsId){
   });
 }
 if(form){
+  var cParams=new URLSearchParams(window.location.search);
+  var cEvent=cParams.get('event')||'';
+  var cAsking=cParams.get('intent')==='question';
+  if(cEvent){
+    var cPrefill=document.getElementById('contactPrefill'),cPrefillEvent=document.getElementById('contactPrefillEvent');
+    if(cPrefill&&cPrefillEvent){cPrefillEvent.textContent=cEvent;cPrefill.hidden=false;}
+    var cSectionLabel=document.getElementById('contactSectionLabel'),cSectionTitle=document.getElementById('contactSectionTitle'),cFormHeading=document.getElementById('contactFormHeading'),cSubmitBtn=document.getElementById('contactSubmitBtn');
+    if(cSectionLabel)cSectionLabel.textContent='Event inquiry';
+    if(cSectionTitle)cSectionTitle.textContent='Tell us about your community.';
+    if(cFormHeading)cFormHeading.textContent=cAsking?'Ask about this event':'Request this event';
+    if(cSubmitBtn)cSubmitBtn.textContent=cAsking?'Send My Request →':'Request This Event →';
+    var cEventDesc=document.getElementById('eventDesc');
+    if(cEventDesc&&!cEventDesc.value)cEventDesc.value=cAsking?('I have a question about '+cEvent+': '):('We’re interested in booking '+cEvent+'. ');
+  }
   submitNetlifyForm(form,formResponse,{
     validate:function(){
       if(eventDateInput&&eventDateInput.value){

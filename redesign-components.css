@@ -576,6 +576,15 @@ textarea.form-field-control{resize:vertical;min-height:100px}
 .sponsor-tier li::before{content:'✓';position:absolute;left:0;color:var(--tier-accent,var(--sage));font-weight:var(--fw-bold)}
 
 /* ==========================================================================
+   components/forms — deep-link prefill banner (Contact page, shown when
+   arriving via a ?event= link from an event card).
+   ========================================================================== */
+.prefill-banner{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:0 0 22px;padding:14px 18px;background:var(--cream);border:1px solid var(--gold);border-radius:var(--r-sm)}
+.prefill-banner span{font-size:var(--text-eyebrow);text-transform:uppercase;letter-spacing:var(--track-section-label);font-weight:var(--fw-bold);color:var(--gold-dark)}
+.prefill-banner strong{font-family:var(--font-display);font-size:20px;font-weight:var(--fw-semibold);flex:1}
+.prefill-banner a{font-size:var(--text-micro);font-weight:var(--fw-bold)}
+
+/* ==========================================================================
    Gallery page's actual photo grid. NOTE: distinct from the bundle's
    GalleryItem component above (masonry, separate top-left badge) — the
    real Gallery.html prototype does not use that component at all; it uses
