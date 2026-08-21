@@ -1,0 +1,4 @@
+/* Local stub for the Community Spark component-library base stylesheet.
+   Only the tokens are needed by this prototype — component visuals are inline in _ds_bundle.js. */
+*{box-sizing:border-box}
+body{margin:0}

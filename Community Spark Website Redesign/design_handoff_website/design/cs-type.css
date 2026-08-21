@@ -1,0 +1,13 @@
+/* Readability pass: nudges the UI type scale up across every page. */
+:root{
+--text-lead:19px;
+--text-body-lg:18px;
+--text-body:16px;
+--text-body-sm:15.5px;
+--text-meta:14.5px;
+--text-micro:13px;
+--text-label:11.5px;
+--text-eyebrow:11px;
+--lh-body:1.65;
+--lh-relaxed:1.72;
+}

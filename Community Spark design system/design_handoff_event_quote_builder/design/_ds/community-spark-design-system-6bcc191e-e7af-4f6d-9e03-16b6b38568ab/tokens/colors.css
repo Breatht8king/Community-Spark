@@ -1,0 +1,40 @@
+:root{
+/* Base palette — verbatim from Community-Spark/styles.css */
+--ink:#1a1714;
+--paper:#fdfaf6;
+--cream:#f3ece0;
+--warm:#e8ddd0;
+--gold:#c49a3c;
+--gold-light:#e8c97a;
+--gold-dark:#9a7628;
+--plum:#4a2d3e;
+--sage:#6b7c5e;
+--muted:#7a7068;
+--line:rgba(26,23,20,.11);
+--black:#0f0d0b;
+--white:#fff;
+/* Semantic aliases */
+--text-body:var(--ink);
+--text-muted:var(--muted);
+--text-accent:var(--gold);
+--text-on-dark:#fff;
+--text-on-dark-muted:rgba(255,255,255,.62);
+--surface-page:var(--paper);
+--surface-soft:var(--cream);
+--surface-card:#fff;
+--surface-dark:var(--plum);
+--surface-ink:var(--ink);
+--surface-footer:var(--black);
+--border-hairline:var(--line);
+--border-strong:var(--ink);
+--accent-primary:var(--gold);
+--accent-primary-hover:var(--gold-dark);
+--accent-on-dark:var(--gold-light);
+--accent-secondary:var(--sage);
+--accent-tertiary:var(--plum);
+--focus-ring:rgba(196,154,60,.5);
+--overlay-hero: /* @kind color */ linear-gradient(105deg,rgba(18,14,10,.88) 0%,rgba(18,14,10,.60) 55%,rgba(18,14,10,.25) 100%);
+--overlay-image: /* @kind color */ linear-gradient(to top,rgba(18,14,10,.78) 0%,transparent 55%);
+--overlay-caption: /* @kind color */ linear-gradient(transparent,rgba(18,14,10,.75));
+--scrim-drawer:rgba(18,14,10,.6);
+}

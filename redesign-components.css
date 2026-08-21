@@ -1,0 +1,593 @@
+/* ==========================================================================
+   Community Spark — redesign component library
+   ==========================================================================
+   A faithful, class-based port of every component in the prototype's design
+   system bundle:
+     _ds/community-spark-design-system-6bcc191e-e7af-4f6d-9e03-16b6b38568ab/_ds_bundle.js
+   (React.createElement + inline style objects) plus the SiteShell patterns in
+   cs-shell.jsx / cs-shell.css (page hero banner, closing CTA panel, mobile
+   drawer).
+
+   LOAD ORDER: this file must be linked AFTER styles.css. It relies on the
+   :root tokens already defined there (--ink, --paper, --gold, --line,
+   --shadow-sm/md/lg, --r-sm/md/lg, etc.) and only adds the tokens that are
+   missing (typography scale, font-weight/line-height/tracking tokens,
+   motion tokens, extra radii, overlay gradients). It does not redeclare any
+   token that already exists in styles.css.
+
+   WHAT'S INTENTIONALLY *NOT* HERE: several components already have a
+   faithful, pixel-matching implementation in the live styles.css under
+   different (already-correct) class names, so this file does not duplicate
+   them. See the "components already faithful — left alone" note block
+   below for the full list and the couple of tiny corrections applied here
+   instead of a full redefinition.
+   ========================================================================== */
+
+:root{
+  /* ---- design-system tokens not present in styles.css's :root block ---- */
+  --black:#0f0d0b;
+
+  /* fonts */
+  --font-display:"Cormorant Garamond",serif;
+  --font-ui:"Inter",sans-serif;
+
+  /* font weights */
+  --fw-regular:400;
+  --fw-medium:500;
+  --fw-semibold:600;
+  --fw-bold:700;
+
+  /* type scale (display) */
+  --text-h1:clamp(52px,7vw,96px);
+  --text-h2:clamp(34px,4.5vw,60px);
+  --text-h3:clamp(20px,2.5vw,28px);
+  --text-h4:18px;
+  --text-price:58px;
+  --text-stat:32px;
+
+  /* type scale (UI) */
+  --text-lead:18px;
+  --text-body-lg:17px;
+  --text-body:15px;
+  --text-body-sm:14px;
+  --text-meta:13px;
+  --text-micro:12px;
+  --text-label:11px;
+  --text-eyebrow:10px;
+
+  /* line heights */
+  --lh-display:1.05;
+  --lh-tight:1.15;
+  --lh-snug:1.35;
+  --lh-body:1.6;
+  --lh-relaxed:1.7;
+
+  /* letter-spacing (tracking) */
+  --track-eyebrow:.2em;
+  --track-section-label:.22em;
+  --track-tier:.18em;
+  --track-nav-small:.16em;
+  --track-meta:.1em;
+  --track-announcement:.08em;
+
+  /* motion */
+  --dur-fast:.15s;
+  --dur-base:.2s;
+  --dur-med:.3s;
+  --dur-slow:.6s;
+  --dur-drawer:.28s;
+  --dur-ken-burns:8s;
+  --ease-default:ease;
+  --lift-btn:translateY(-2px);
+  --lift-card:translateY(-6px);
+  --lift-nav:translateY(-1px);
+  --zoom-image:scale(1.04);
+
+  /* elevation additions */
+  --shadow-gold:0 8px 24px rgba(196,154,60,.3);
+  --ring-focus:0 0 0 3px rgba(196,154,60,.15);
+  --ring-field:0 0 0 3px rgba(196,154,60,.12);
+  --blur-header:blur(20px);
+  --blur-scrim:blur(8px);
+
+  /* radii additions (--r-sm/md/lg already exist in styles.css) */
+  --r-pill:999px;
+  --r-circle:50%;
+
+  /* layout rhythm referenced by component styles */
+  --hero-pad-x:clamp(24px,7vw,110px);
+  --header-height:72px;
+  --header-pad-x:clamp(20px,4vw,64px);
+  --measure-center:760px;
+
+  /* overlay / scrim gradients */
+  --overlay-hero:linear-gradient(105deg,rgba(18,14,10,.88) 0%,rgba(18,14,10,.60) 55%,rgba(18,14,10,.25) 100%);
+  --overlay-image:linear-gradient(to top,rgba(18,14,10,.78) 0%,transparent 55%);
+  --overlay-caption:linear-gradient(transparent,rgba(18,14,10,.75));
+  --scrim-drawer:rgba(18,14,10,.6);
+  --focus-ring:rgba(196,154,60,.5);
+}
+
+/* ==========================================================================
+   Components already faithful in styles.css — LEFT ALONE (not redefined here)
+   ==========================================================================
+   Button          -> .btn / .btn-primary / .btn-dark / .btn-outline /
+                      .btn-ghost / .btn-ink-ghost / .btn-sm            [MATCH]
+   Eyebrow         -> .eyebrow                                        [MATCH]
+   SectionLabel    -> .section-label (+ .section-dark .section-label) [MATCH]
+   Hero (layout)   -> .hero / .hero-bg / .hero-overlay / .hero-content/
+                      .hero-desc / .hero-actions / .hero-proof /
+                      .proof-item  (full-viewport home hero)          [MATCH]
+   SectionHead     -> .section-head (split) / .section-center         [MATCH]
+   TrustBar        -> .trust-bar / .trust-item                        [MATCH, tiny fix below]
+   AnnouncementBar -> .announcement                                   [MATCH]
+   BrandMark       -> .brand / .mark / .brand-text                    [MATCH, tiny fix below]
+   SiteHeader      -> header / nav a / .nav-cta                       [MATCH]
+   SiteFooter      -> footer / .footer-grid / .footer-col / etc.      [MATCH]
+   ClosingPanel    -> .closing-panel / .closing-label / etc.          [MATCH]
+   (cs-shell.jsx's ClosingPanel/Hero-shaped patterns above match the bundle
+   values already; see redesign-components.md for the side-by-side check.)
+
+   Two hairline drifts were found and are corrected here without touching
+   the rules above: */
+.brand-text small{letter-spacing:var(--track-nav-small)} /* prototype: .16em, live had .18em */
+.trust-item span{letter-spacing:var(--track-meta)}       /* prototype: .1em, live had .12em */
+
+/* The mobile drawer is the one navigation piece that genuinely drifted
+   (background, close-button size/position, missing exit animation, missing
+   current-page highlight, wrong CTA style) — corrected below using the
+   SAME ids/classes script.js already targets (#mobileToggle, #mobileDrawer,
+   #drawerBackdrop, #drawerClose, and the `.open` class script.js toggles). */
+
+/* ==========================================================================
+   components/navigation — mobile drawer (corrected)
+   ========================================================================== */
+.mobile-toggle{
+  display:none;
+  width:42px;height:42px;
+  align-items:center;justify-content:center;
+  border:1px solid var(--line);
+  border-radius:var(--r-pill);
+  background:var(--paper);
+  color:var(--ink);
+  font-size:17px;
+  cursor:pointer;
+}
+.mobile-drawer{
+  position:fixed;inset:0;z-index:200;
+  visibility:hidden;pointer-events:none;
+}
+.mobile-drawer.open{visibility:visible;pointer-events:auto}
+.drawer-backdrop{
+  position:absolute;inset:0;
+  background:var(--scrim-drawer);
+  backdrop-filter:var(--blur-scrim);
+  opacity:0;
+  transition:opacity var(--dur-drawer) ease;
+  cursor:pointer;
+}
+.mobile-drawer.open .drawer-backdrop{opacity:1}
+.drawer-panel{
+  position:absolute;top:0;right:0;height:100%;
+  width:min(340px,86vw);
+  background:var(--paper);
+  box-shadow:var(--shadow-lg);
+  padding:76px 26px 32px;
+  display:flex;flex-direction:column;gap:4px;
+  overflow-y:auto;
+  transform:translateX(100%);
+  transition:transform var(--dur-drawer) cubic-bezier(.22,1,.36,1);
+}
+.mobile-drawer.open .drawer-panel{transform:none}
+.drawer-panel a{
+  font-size:var(--text-body-lg);
+  font-weight:var(--fw-semibold);
+  color:var(--ink);
+  text-decoration:none;
+  padding:13px 12px;
+  border-radius:10px;
+  transition:color var(--dur-base),background var(--dur-base);
+}
+.drawer-panel a:hover{background:var(--cream)}
+.drawer-panel a.active{color:var(--gold)}
+.drawer-panel > a:last-of-type{margin-bottom:18px}
+.drawer-close{
+  position:absolute;top:22px;right:22px;
+  width:38px;height:38px;
+  border:1px solid var(--line);
+  border-radius:var(--r-pill);
+  background:var(--paper);
+  color:var(--ink);
+  font-size:14px;
+  cursor:pointer;
+}
+
+/* ==========================================================================
+   components/layout/Hero.jsx — "page hero" banner variant (cs-shell.jsx's
+   PageHero). This is a SEPARATE pattern from the full-viewport home .hero
+   already in styles.css: shorter, fixed padding, meant for interior pages
+   (Events, Pricing, Partnerships, Sponsors, Gallery, About, Contact, Book).
+   It did not exist anywhere in styles.css, so it is added fresh.
+   ========================================================================== */
+.page-hero{position:relative;overflow:hidden;color:#fff;padding:clamp(80px,10vw,132px) var(--hero-pad-x) clamp(70px,8vw,110px)}
+.page-hero-bg{position:absolute;inset:-8% 0;background-position:center;background-size:cover;will-change:transform}
+.page-hero-scrim{position:absolute;inset:0;background:var(--overlay-hero)}
+.page-hero-content{position:relative;z-index:2;max-width:820px}
+.page-hero-eyebrow{font-size:var(--text-eyebrow);text-transform:uppercase;letter-spacing:var(--track-eyebrow);font-weight:var(--fw-bold);color:var(--gold-light);margin:0 0 18px}
+.page-hero h1{font-family:var(--font-display);font-size:var(--text-h1);font-weight:var(--fw-semibold);line-height:var(--lh-display);margin:0 0 22px;text-shadow:0 2px 24px rgba(0,0,0,.32)}
+.page-hero h1 em{font-style:italic;color:var(--gold-light)}
+.page-hero-lead{font-size:var(--text-lead);color:rgba(255,255,255,.84);max-width:600px;line-height:var(--lh-relaxed);margin:0 0 32px}
+.page-hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:40px}
+.page-hero-proof{display:flex;flex-wrap:wrap;gap:10px 30px}
+.page-hero-proof span{font-size:var(--text-meta);color:rgba(255,255,255,.72);display:flex;align-items:center;gap:8px}
+.page-hero-proof span span{color:var(--gold-light);font-size:10px}
+
+/* ==========================================================================
+   components/core/Badge.jsx
+   Generic tone-based pill. Replaces the ad hoc one-off rules the live site
+   had (`.price-card .badge`, `.gallery-badge`) with a single reusable class.
+   ========================================================================== */
+.badge{
+  display:inline-block;
+  font-family:var(--font-ui);
+  font-size:10px;
+  font-weight:var(--fw-bold);
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  padding:5px 12px;
+  border-radius:var(--r-pill);
+  white-space:nowrap;
+  background:var(--gold);
+  color:#fff;
+}
+.badge.ink{background:rgba(26,23,20,.82);color:rgba(255,255,255,.9)}
+.badge.cream{background:var(--cream);color:var(--muted);border:1px solid var(--line)}
+
+/* ==========================================================================
+   components/forms/Calendar.jsx
+   ========================================================================== */
+.calendar{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:20px;font-family:var(--font-ui)}
+.calendar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.calendar-month{font-size:16px}
+.calendar-nav{background:var(--cream);border:1px solid var(--line);border-radius:var(--r-pill);width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:border-color var(--dur-base)}
+.calendar-nav:hover:not(:disabled){border-color:var(--ink)}
+.calendar-nav:disabled{opacity:.3;cursor:not-allowed}
+.calendar-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px;text-align:center;font-size:var(--text-label);font-weight:var(--fw-bold);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.calendar-day{aspect-ratio:1;border:1px solid transparent;border-radius:var(--r-sm);background:var(--cream);font-size:var(--text-body-sm);font-weight:var(--fw-semibold);cursor:pointer;color:var(--ink);font-family:inherit;transition:all var(--dur-base)}
+.calendar-day:hover:not(:disabled){border-color:var(--gold)}
+.calendar-day:disabled{background:transparent;color:var(--line);cursor:not-allowed}
+.calendar-day.selected{background:var(--ink);border-color:var(--ink);color:#fff}
+
+/* ==========================================================================
+   components/forms/FilterChip.jsx
+   ========================================================================== */
+.filter-chip{padding:9px 18px;border-radius:var(--r-pill);font-size:var(--text-meta);font-weight:var(--fw-semibold);cursor:pointer;font-family:var(--font-ui);transition:all var(--dur-base);background:#fff;border:1px solid var(--line);color:var(--muted)}
+.filter-chip:hover{border-color:var(--ink);color:var(--ink)}
+.filter-chip.active{background:var(--ink);border-color:var(--ink);color:#fff}
+
+/* ==========================================================================
+   components/forms/FormField.jsx
+   ========================================================================== */
+.form-field{display:flex;flex-direction:column;gap:6px;font-family:var(--font-ui)}
+.form-field-label{font-size:var(--text-meta);font-weight:var(--fw-bold);color:var(--ink)}
+.form-field-control{
+  padding:13px 15px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--cream);
+  font-size:var(--text-body);color:var(--ink);font-family:var(--font-ui);outline:none;width:100%;
+  box-sizing:border-box;transition:border-color var(--dur-base),background var(--dur-base);
+}
+.form-field-control:focus{border-color:var(--gold);background:#fff;box-shadow:var(--ring-field)}
+textarea.form-field-control{resize:vertical;min-height:100px}
+.form-field-help{font-size:var(--text-micro);color:var(--muted);line-height:1.45}
+
+/* ==========================================================================
+   components/forms/SearchField.jsx
+   ========================================================================== */
+.search-field{display:flex;align-items:center;gap:12px;max-width:520px;padding:0 18px;background:#fff;border:1px solid var(--line);border-radius:var(--r-pill);transition:border-color var(--dur-base),box-shadow var(--dur-base)}
+.search-field:focus-within{border-color:var(--gold);box-shadow:var(--ring-focus)}
+.search-field-icon{color:var(--muted);font-size:16px;flex-shrink:0}
+.search-field-input{flex:1;min-height:50px;border:none;background:transparent;outline:none;font-size:var(--text-body);color:var(--ink);font-family:var(--font-ui)}
+
+/* ==========================================================================
+   components/forms/TimeSlot.jsx
+   ========================================================================== */
+.time-slot{padding:9px 16px;border-radius:var(--r-pill);font-size:var(--text-meta);font-weight:var(--fw-semibold);font-family:var(--font-ui);cursor:pointer;transition:all var(--dur-base);background:#fff;border:1px solid var(--line);color:var(--muted)}
+.time-slot:hover:not(:disabled){border-color:var(--ink);color:var(--ink)}
+.time-slot.selected{background:var(--ink);border-color:var(--ink);color:#fff}
+.time-slot:disabled{opacity:.4;text-decoration:line-through;cursor:not-allowed}
+
+/* ==========================================================================
+   components/layout/BudgetBanner.jsx
+   ========================================================================== */
+.budget-banner{margin-top:36px;background:var(--plum);color:#fff;border-radius:var(--r-lg);padding:36px 44px;display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap;font-family:var(--font-ui)}
+.budget-banner .section-label{color:rgba(255,255,255,.6)}
+.budget-banner h3{font-family:var(--font-display);font-size:30px;font-weight:var(--fw-semibold);color:#fff;margin-bottom:8px;line-height:var(--lh-tight)}
+.budget-banner p{color:rgba(255,255,255,.75);max-width:640px;font-size:var(--text-body);margin-top:8px;line-height:var(--lh-body)}
+
+/* ==========================================================================
+   components/layout/EstimateNotice.jsx
+   ========================================================================== */
+.estimate-notice{display:flex;gap:14px;align-items:flex-start;margin-bottom:28px;padding:16px 20px;border-left:3px solid var(--gold);background:#fff;border-radius:0 var(--r-sm) var(--r-sm) 0;color:var(--muted);font-family:var(--font-ui);font-size:var(--text-body-sm);line-height:var(--lh-body)}
+.estimate-notice p{margin:0}
+.estimate-notice-lead{color:var(--ink);margin-right:4px}
+
+/* ==========================================================================
+   components/cards/AddonItem.jsx + AddonTotal.jsx
+   ========================================================================== */
+.addon-item{
+  display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;
+  padding:20px;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);
+  font-family:var(--font-ui);
+}
+.addon-item-name{font-weight:var(--fw-bold);font-size:var(--text-body);margin-bottom:3px;display:block}
+.addon-item-desc{font-size:var(--text-micro);color:var(--muted);line-height:1.4;display:block}
+.addon-item-controls{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.addon-item-qty{
+  padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--cream);
+  font-size:var(--text-meta);font-weight:var(--fw-semibold);min-width:80px;cursor:pointer;
+  font-family:inherit;color:var(--ink);
+}
+.addon-item-qty:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:var(--gold)}
+.addon-item-price{font-weight:var(--fw-bold);font-size:var(--text-meta);color:var(--gold);text-align:right}
+
+.addon-total{
+  grid-column:1 / -1;
+  background:var(--ink);color:#fff;border-radius:var(--r-md);padding:22px 26px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--font-ui);
+}
+.addon-total-label{font-size:var(--text-meta);text-transform:uppercase;letter-spacing:var(--track-meta);color:rgba(255,255,255,.6);font-weight:var(--fw-bold)}
+.addon-total-note{display:block;font-size:var(--text-label);margin-top:3px;text-transform:none;letter-spacing:0;font-weight:var(--fw-regular)}
+.addon-total-amount{font-family:var(--font-display);font-size:42px;font-weight:var(--fw-bold);color:var(--gold-light)}
+
+/* ==========================================================================
+   components/cards/EventCard.jsx
+   Implemented as a native <details>/<summary> disclosure (see .md doc) —
+   no JS is required for the open/close animation itself.
+   ========================================================================== */
+.event-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  display:flex;flex-direction:column;
+  font-family:var(--font-ui);
+  transition:transform var(--dur-med),box-shadow var(--dur-med);
+}
+.event-card:hover{transform:var(--lift-card);box-shadow:var(--shadow-md)}
+.event-card-image{height:220px;overflow:hidden;flex-shrink:0}
+.event-card-image img{width:100%;height:100%;object-fit:cover;display:block}
+.event-card-body{padding:22px;display:flex;flex-direction:column;flex:1}
+.event-card-meta{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:var(--text-label);text-transform:uppercase;letter-spacing:var(--track-meta);
+  font-weight:var(--fw-bold);color:var(--gold);margin-bottom:12px;
+}
+.event-card-duration{color:var(--muted);font-weight:var(--fw-medium);text-transform:none;letter-spacing:0}
+.event-card h3{font-family:var(--font-display);font-size:22px;font-weight:var(--fw-semibold);margin-bottom:10px;line-height:var(--lh-tight)}
+.event-card-desc{color:var(--muted);font-size:var(--text-body-sm);line-height:var(--lh-body);margin-bottom:16px}
+.event-card-details{margin-top:auto;border-top:1px solid var(--line);padding-top:14px}
+.event-card-toggle{
+  list-style:none;cursor:pointer;
+  display:flex;width:100%;justify-content:space-between;align-items:center;
+  font-size:var(--text-meta);font-weight:var(--fw-bold);color:var(--gold);
+  padding:4px 0;transition:color var(--dur-base);
+}
+.event-card-toggle::-webkit-details-marker{display:none}
+.event-card-toggle:hover{color:var(--gold-dark)}
+/* two labels, toggled purely by [open] — no JS text-swap needed */
+.event-card-toggle-label-open{display:none}
+.event-card-details[open] .event-card-toggle-label-open{display:inline}
+.event-card-details[open] .event-card-toggle-label-closed{display:none}
+.event-card-toggle-icon{
+  width:26px;height:26px;border-radius:var(--r-circle);
+  background:var(--cream);color:var(--gold);
+  display:grid;place-items:center;font-size:16px;font-weight:var(--fw-bold);
+  transition:transform var(--dur-base),background var(--dur-base),color var(--dur-base);
+}
+.event-card-toggle-icon::after{content:'+'}
+.event-card-details[open] .event-card-toggle-icon{transform:rotate(45deg);background:var(--ink);color:#fff}
+.event-card-detail-content{padding:14px 0 4px}
+.event-card-facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.event-card-fact{background:var(--cream);border-radius:var(--r-sm);padding:12px 14px}
+.event-card-fact small{display:block;font-size:var(--text-eyebrow);text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-weight:var(--fw-bold);margin-bottom:4px}
+.event-card-fact strong{font-family:var(--font-display);font-size:20px;font-weight:var(--fw-bold)}
+.event-card-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.event-card-col{background:var(--cream);border-radius:var(--r-sm);padding:14px}
+.event-card-col h4{font-size:var(--text-micro);text-transform:uppercase;letter-spacing:var(--track-meta);font-weight:var(--fw-bold);color:var(--muted);margin-bottom:10px;font-family:var(--font-ui)}
+.event-card-col ul{list-style:none;margin:0;padding:0}
+.event-card-col li{font-size:var(--text-meta);color:var(--ink);padding:5px 0 5px 18px;position:relative;border-bottom:1px solid rgba(26,23,20,.07);line-height:1.4}
+.event-card-col li:last-child{border:none}
+.event-card-col.includes li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-weight:var(--fw-bold);font-size:12px}
+.event-card-col.addons li::before{content:'+';position:absolute;left:0;color:var(--sage);font-weight:var(--fw-bold);font-size:12px}
+.event-card-price-note{padding:12px 14px;border:1px solid var(--line);border-radius:var(--r-sm);background:#fff;font-size:var(--text-micro);color:var(--muted);line-height:1.5;margin-bottom:14px}
+.event-card-price-note strong{color:var(--ink)}
+.event-card-vendor-note{padding:10px 14px;background:rgba(107,124,94,.1);border-radius:var(--r-sm);margin-bottom:10px;font-size:var(--text-micro);color:var(--sage)}
+.event-card-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ==========================================================================
+   components/cards/ExperienceCard.jsx
+   ========================================================================== */
+.experience-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;font-family:var(--font-ui)}
+.experience-card-num{font-family:var(--font-display);font-size:48px;font-weight:var(--fw-bold);color:var(--cream);line-height:1;margin-bottom:14px}
+.experience-card h3{font-family:var(--font-display);font-size:18px;font-weight:var(--fw-semibold);margin-bottom:8px}
+.experience-card p{color:var(--muted);font-size:var(--text-body-sm);line-height:1.65;margin:0}
+
+/* ==========================================================================
+   components/cards/FaqItem.jsx
+   Implemented as a native <details>/<summary> disclosure — no JS required
+   for open/close; script.js only needs to add "close the others" behavior
+   if a single-open accordion is desired (see .md doc).
+   ========================================================================== */
+.faq-item{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  overflow:hidden;
+  transition:border-color var(--dur-base);
+}
+.faq-item[open]{border-color:var(--gold)}
+.faq-item-question{
+  list-style:none;
+  cursor:pointer;
+  font-weight:var(--fw-bold);
+  padding:20px 50px 20px 22px;
+  position:relative;
+  line-height:var(--lh-snug);
+  font-size:var(--text-body);
+}
+.faq-item-question::-webkit-details-marker{display:none}
+.faq-item-question::after{
+  content:'+';
+  position:absolute;right:18px;top:50%;
+  transform:translateY(-50%);
+  width:28px;height:28px;
+  border-radius:var(--r-circle);
+  display:grid;place-items:center;
+  background:var(--cream);
+  color:var(--gold);
+  font-size:20px;font-weight:var(--fw-regular);
+  transition:all var(--dur-base);
+}
+.faq-item[open] .faq-item-question::after{content:'–';background:var(--ink);color:var(--gold-light)}
+.faq-item-answer{
+  padding:0 22px 20px;
+  color:var(--muted);
+  margin:0;
+  font-size:var(--text-body-sm);
+  line-height:var(--lh-relaxed);
+}
+
+/* ==========================================================================
+   components/cards/FeatureTile.jsx
+   Note: the JS-driven `hover` state on the bundle's <img> is reproduced
+   with a plain :hover selector below — no JS needed for the zoom effect.
+   The `large` prop is a `.is-large` modifier; the tile itself needs an
+   external grid wrapper supplied by the page (e.g. a 2-col/2-row grid).
+   ========================================================================== */
+.feature-tile{position:relative;border-radius:var(--r-lg);overflow:hidden;font-family:var(--font-ui)}
+.feature-tile.is-large{grid-row:1 / span 2}
+.feature-tile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform var(--dur-slow) var(--ease-default)}
+.feature-tile:hover img{transform:var(--zoom-image)}
+.feature-tile-scrim{position:absolute;inset:0;background:var(--overlay-image)}
+.feature-tile-copy{position:absolute;z-index:2;left:24px;right:24px;bottom:22px;color:#fff}
+.feature-tile-tag{font-size:var(--text-eyebrow);text-transform:uppercase;letter-spacing:var(--track-nav-small);color:var(--gold-light);font-weight:var(--fw-bold)}
+.feature-tile h3{font-family:var(--font-display);margin:8px 0 6px;font-size:20px;font-weight:var(--fw-semibold);line-height:var(--lh-tight)}
+.feature-tile.is-large h3{font-size:26px}
+.feature-tile-body{color:rgba(255,255,255,.75);font-size:var(--text-meta);margin:0}
+
+/* ==========================================================================
+   components/cards/FounderCard.jsx
+   ========================================================================== */
+.founder-card{background:var(--cream);border-radius:var(--r-lg);padding:36px 40px;display:flex;gap:40px;align-items:center;font-family:var(--font-ui)}
+.founder-card-profile{flex:0 0 220px;border-right:1px solid var(--line);padding-right:40px}
+.founder-card-initials{width:56px;height:56px;border-radius:var(--r-circle);background:var(--plum);color:#fff;display:grid;place-items:center;font-family:var(--font-display);font-size:22px;font-weight:var(--fw-bold);margin-bottom:16px}
+.founder-card-role{font-size:var(--text-eyebrow);text-transform:uppercase;letter-spacing:var(--track-tier);color:var(--gold);font-weight:var(--fw-bold);margin-bottom:6px}
+.founder-card-name{font-family:var(--font-display);font-size:26px;font-weight:var(--fw-bold)}
+.founder-card-details{flex:1;min-width:0}
+.founder-card-bio{font-size:var(--text-body);color:var(--muted);line-height:var(--lh-relaxed);margin:0}
+.founder-card-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding:0;list-style:none}
+.founder-card-tag{background:#fff;border:1px solid var(--line);border-radius:var(--r-pill);padding:6px 14px;font-size:var(--text-micro);font-weight:var(--fw-semibold);color:var(--muted)}
+
+/* ==========================================================================
+   components/cards/GalleryItem.jsx
+   ========================================================================== */
+.gallery-item{break-inside:avoid;margin:0 0 18px;position:relative;border-radius:var(--r-md);overflow:hidden;font-family:var(--font-ui)}
+.gallery-item img{width:100%;height:260px;object-fit:cover;display:block;transition:transform .5s var(--ease-default)}
+.gallery-item:hover img{transform:var(--zoom-image)}
+.gallery-item.is-tall img{height:340px}
+.gallery-item .badge{position:absolute;top:12px;left:12px;z-index:2;font-size:10px;letter-spacing:.12em;padding:5px 10px}
+.gallery-item-caption{position:absolute;bottom:0;left:0;right:0;padding:20px 18px 16px;background:var(--overlay-caption);color:#fff;font-weight:var(--fw-semibold);font-size:var(--text-body-sm)}
+
+/* ==========================================================================
+   components/cards/PartnerCard.jsx
+   Default kind is "community" (sage accent); .sponsor is the modifier
+   (gold accent). .community is also accepted explicitly for parity with
+   how PriceCard/etc. name their modifiers.
+   ========================================================================== */
+.partner-card{border-radius:var(--r-lg);padding:40px;background:#fff;border:1px solid var(--line);border-top:4px solid var(--sage);font-family:var(--font-ui)}
+.partner-card .section-label{color:var(--sage)}
+.partner-card h3{font-family:var(--font-display);font-size:28px;font-weight:var(--fw-semibold);margin-bottom:10px}
+.partner-card-body{color:var(--muted);line-height:var(--lh-relaxed);margin:0;font-size:var(--text-body)}
+.partner-card-list{margin:20px 0;padding:0;list-style:none}
+.partner-card-list li{padding:10px 0 10px 24px;position:relative;border-bottom:1px solid var(--line);font-size:var(--text-body-sm);color:var(--muted)}
+.partner-card-list li:last-child{border:none}
+.partner-card-list li::before{content:'✦';position:absolute;left:0;color:var(--sage);font-size:11px;top:12px}
+.partner-card-split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0 18px}
+.partner-card-split-block{padding:16px;border-radius:var(--r-sm);background:rgba(107,124,94,.1)}
+.partner-card-split-block span{font-size:var(--text-eyebrow);text-transform:uppercase;letter-spacing:.14em;font-weight:var(--fw-bold);color:var(--sage)}
+.partner-card-split-block strong{display:block;font-family:var(--font-display);font-size:22px;font-weight:var(--fw-bold);margin-top:6px}
+.partner-card-note{padding:14px 16px;border-radius:var(--r-sm);background:rgba(107,124,94,.1);border-left:3px solid var(--sage);font-size:var(--text-meta);color:var(--muted);line-height:1.5}
+.partner-card-action{margin-top:20px}
+
+.partner-card.sponsor{border-top-color:var(--gold)}
+.partner-card.sponsor .section-label{color:var(--gold)}
+.partner-card.sponsor .partner-card-list li::before{color:var(--gold)}
+.partner-card.sponsor .partner-card-split-block{background:var(--cream)}
+.partner-card.sponsor .partner-card-split-block span{color:var(--gold)}
+.partner-card.sponsor .partner-card-note{background:var(--cream);border-left-color:var(--gold)}
+
+/* ==========================================================================
+   components/cards/PolicyCard.jsx
+   ========================================================================== */
+.policy-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:26px;font-family:var(--font-ui)}
+.policy-card-num{font-family:var(--font-display);font-size:44px;font-weight:var(--fw-bold);color:var(--cream);margin-bottom:12px;line-height:1}
+.policy-card h3{font-family:var(--font-display);font-size:20px;font-weight:var(--fw-semibold);margin-bottom:10px}
+.policy-card p{color:var(--muted);font-size:var(--text-body-sm);line-height:var(--lh-body);margin:0}
+.policy-card strong{color:var(--ink)}
+
+/* ==========================================================================
+   components/cards/PriceCard.jsx
+   ========================================================================== */
+.price-card{
+  display:flex;flex-direction:column;padding:36px;border-radius:var(--r-lg);position:relative;
+  font-family:var(--font-ui);background:#fff;color:var(--ink);border:1px solid var(--line);
+}
+.price-card.featured{background:var(--ink);color:#fff;border-color:var(--ink);transform:translateY(-14px);box-shadow:var(--shadow-lg)}
+.price-card .badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%)}
+.price-card-tier{font-size:var(--text-eyebrow);text-transform:uppercase;letter-spacing:var(--track-tier);font-weight:var(--fw-bold);color:var(--gold);margin-bottom:8px}
+.price-card.featured .price-card-tier{color:var(--gold-light)}
+.price-card h3{font-family:var(--font-display);font-size:24px;font-weight:var(--fw-semibold);margin-bottom:6px}
+.price-card-amount{font-family:var(--font-display);font-size:var(--text-price);font-weight:var(--fw-bold);line-height:1;margin:16px 0 4px;color:var(--ink)}
+.price-card.featured .price-card-amount{color:#fff}
+.price-card-amount-suffix{font-size:32px}
+.price-card-blurb{font-size:var(--text-meta);color:var(--muted);margin-bottom:20px;line-height:var(--lh-body)}
+.price-card.featured .price-card-blurb{color:rgba(255,255,255,.6)}
+.price-card-features{flex:1;margin:20px 0 28px;padding:0;list-style:none}
+.price-card-features li{padding:10px 0 10px 22px;position:relative;border-bottom:1px solid var(--line);font-size:var(--text-body-sm);color:var(--muted)}
+.price-card.featured .price-card-features li{border-color:rgba(255,255,255,.12);color:rgba(255,255,255,.72)}
+.price-card-features li:last-child{border:none}
+.price-card-features li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-weight:var(--fw-bold)}
+.price-card.featured .price-card-features li::before{color:var(--gold-light)}
+.price-card-action{margin-top:auto}
+
+/* ==========================================================================
+   components/cards/SponsorTier.jsx
+   `accent` is a per-instance CSS custom property with a sage fallback, e.g.:
+     <div class="sponsor-tier" style="--tier-accent:var(--gold)">
+   ========================================================================== */
+.sponsor-tier{background:#fff;color:var(--ink);border-radius:var(--r-md);padding:26px;border-top:4px solid var(--tier-accent,var(--sage));font-family:var(--font-ui)}
+.sponsor-tier h4{font-family:var(--font-display);font-size:22px;font-weight:var(--fw-semibold);margin-bottom:4px}
+.sponsor-tier-level{font-size:var(--text-eyebrow);text-transform:uppercase;letter-spacing:var(--track-nav-small);color:var(--tier-accent,var(--sage));font-weight:var(--fw-bold);margin-bottom:14px}
+.sponsor-tier p{color:var(--muted);font-size:var(--text-meta);margin-bottom:12px}
+.sponsor-tier ul{list-style:none;margin:0;padding:0}
+.sponsor-tier li{font-size:var(--text-meta);color:var(--muted);padding:6px 0 6px 18px;position:relative;border-bottom:1px solid var(--line)}
+.sponsor-tier li:last-child{border:none}
+.sponsor-tier li::before{content:'✓';position:absolute;left:0;color:var(--tier-accent,var(--sage));font-weight:var(--fw-bold)}
+
+/* ==========================================================================
+   components/cards/StepCard.jsx
+   Two variants: default "flat" (large, no border — used for a 4-up "how it
+   works" strip) and ".is-bordered" (compact, bordered card — used for a
+   5-up process strip). `accent` is a per-instance CSS custom property with
+   a gold fallback, e.g.: <div class="step-card is-bordered" style="--step-accent:var(--sage)">
+   ========================================================================== */
+.step-card{background:var(--paper);border:none;border-radius:0;padding:36px 28px;font-family:var(--font-ui)}
+.step-card-num{width:44px;height:44px;border-radius:var(--r-circle);background:var(--cream);border:1px solid var(--line);display:grid;place-items:center;font-family:var(--font-display);font-size:22px;font-weight:var(--fw-bold);color:var(--step-accent,var(--gold));margin-bottom:20px}
+.step-card h3{font-family:var(--font-display);font-size:22px;font-weight:var(--fw-semibold);margin-bottom:10px;line-height:var(--lh-tight)}
+.step-card p{color:var(--muted);font-size:var(--text-body-sm);line-height:1.65;margin:0}
+
+.step-card.is-bordered{background:#fff;border:1px solid var(--line);border-top:3px solid var(--step-accent,var(--gold));border-radius:var(--r-md);padding:24px 20px}
+.step-card.is-bordered .step-card-num{margin-bottom:16px}
+.step-card.is-bordered h3{font-family:var(--font-ui);font-size:15px;margin-bottom:6px}
+.step-card.is-bordered p{font-size:var(--text-meta);line-height:1.5}

@@ -1,0 +1,15 @@
+:root{
+--space-1:4px;--space-2:6px;--space-3:8px;--space-4:10px;--space-5:12px;--space-6:14px;--space-7:16px;--space-8:20px;--space-9:22px;--space-10:24px;--space-12:28px;--space-14:32px;--space-16:36px;--space-18:40px;--space-20:44px;--space-24:52px;--space-28:56px;--space-32:64px;--space-40:80px;--space-48:100px;
+/* Layout rhythm */
+--section-pad-y:100px;
+--section-pad-x:clamp(24px,6vw,96px);
+--hero-pad-x:clamp(24px,7vw,110px);
+--header-height:72px;
+--header-pad-x:clamp(20px,4vw,64px);
+--grid-gap:22px;
+--grid-gap-tight:14px;
+--content-max: /* @kind spacing */ 1100px;
+--measure-center: /* @kind spacing */ 760px;
+/* Radii */
+--r-sm:12px;--r-md:20px;--r-lg:28px;--r-pill:999px;--r-circle:50%;
+}

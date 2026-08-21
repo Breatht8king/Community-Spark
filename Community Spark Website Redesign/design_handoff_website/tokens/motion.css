@@ -1,0 +1,8 @@
+:root{
+--dur-fast: /* @kind other */ .15s;--dur-base: /* @kind other */ .2s;--dur-med: /* @kind other */ .3s;--dur-slow: /* @kind other */ .6s;--dur-drawer: /* @kind other */ .28s;--dur-ken-burns: /* @kind other */ 8s;
+--ease-default: /* @kind other */ ease;
+--lift-btn: /* @kind other */ translateY(-2px);
+--lift-card: /* @kind other */ translateY(-6px);
+--lift-nav: /* @kind other */ translateY(-1px);
+--zoom-image: /* @kind other */ scale(1.04);
+}

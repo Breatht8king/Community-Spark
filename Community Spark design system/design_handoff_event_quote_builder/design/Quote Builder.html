@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Community Spark | Event Quote Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="_ds/community-spark-design-system-6bcc191e-e7af-4f6d-9e03-16b6b38568ab/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/community-spark-design-system-6bcc191e-e7af-4f6d-9e03-16b6b38568ab/tokens/colors.css">
+<link rel="stylesheet" href="_ds/community-spark-design-system-6bcc191e-e7af-4f6d-9e03-16b6b38568ab/tokens/typography.css">
+<link rel="stylesheet" href="_ds/community-spark-design-system-6bcc191e-e7af-4f6d-9e03-16b6b38568ab/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/community-spark-design-system-6bcc191e-e7af-4f6d-9e03-16b6b38568ab/tokens/elevation.css">
+<link rel="stylesheet" href="_ds/community-spark-design-system-6bcc191e-e7af-4f6d-9e03-16b6b38568ab/tokens/motion.css">
+<link rel="stylesheet" href="_ds/community-spark-design-system-6bcc191e-e7af-4f6d-9e03-16b6b38568ab/styles.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-ui);-webkit-font-smoothing:antialiased}
+a{color:var(--gold-dark);text-decoration:underline;text-underline-offset:3px}
+a:hover{color:var(--ink)}
+input[type=number]{-moz-appearance:textfield}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.qb-wrap{max-width:1680px;margin:0 auto;padding:0 clamp(20px,3vw,52px)}
+.qb-grid{display:grid;grid-template-columns:minmax(0,1fr) 344px;gap:clamp(36px,4vw,60px);align-items:start}
+.qb-rail{position:sticky;top:calc(var(--header-height) + 34px);display:flex;flex-direction:column;gap:20px}
+.qb-row{display:grid;grid-template-columns:minmax(0,1fr) 84px 104px 116px 96px 180px 116px 30px;gap:16px;align-items:center}
+.qb-head{padding:0 12px 10px;border-bottom:1px solid var(--line);font-size:var(--text-eyebrow);text-transform:uppercase;letter-spacing:var(--track-section-label);font-weight:var(--fw-bold);color:var(--muted)}
+.qb-line{border-radius:var(--r-sm);transition:background var(--dur-base)}
+.qb-line+.qb-line{border-top:1px solid var(--line)}
+.qb-totals{margin-top:30px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0;border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;background:var(--cream)}
+.qb-totals-parts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(18px,3vw,34px);padding:24px clamp(20px,2.5vw,30px)}
+.qb-totals-sum{display:flex;flex-direction:column;justify-content:center;gap:8px;padding:24px clamp(24px,3vw,40px);min-width:280px;background:var(--ink)}
+@media(max-width:900px){.qb-totals{grid-template-columns:1fr}.qb-totals-sum{min-width:0}}
+@media(max-width:520px){.qb-totals-parts{grid-template-columns:1fr;gap:16px}.qb-totals-parts>div{padding-left:0!important;border-left:none!important}}
+.qb-line:hover{background:var(--cream)}
+.qb-line .qb-row{padding:14px 12px}
+.qb-print{display:none}
+@media(max-width:1080px){.qb-grid{grid-template-columns:1fr}.qb-rail{position:static}}
+@media(max-width:1440px){.qb-row{grid-template-columns:minmax(0,1fr) 76px 92px 100px 88px 152px 100px 28px;gap:12px}}
+@media(max-width:1140px){.qb-row{grid-template-columns:minmax(0,1fr) 72px 88px 96px 140px 96px 26px;gap:10px}.qb-perunit{display:none}}
+@media(max-width:940px){.qb-row{grid-template-columns:minmax(0,1fr) 70px 86px 92px 92px 26px;gap:10px}.qb-store{display:none}}
+@media(max-width:820px){.qb-head{display:none}.qb-row{grid-template-columns:minmax(0,1fr) 84px 108px;row-gap:12px}.qb-perunit,.qb-store{display:block}}
+@media print{
+  .qb-screen{display:none!important}
+  .qb-print{display:block;padding:0}
+  body{background:#fff}
+  @page{margin:0.75in}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="_ds/community-spark-design-system-6bcc191e-e7af-4f6d-9e03-16b6b38568ab/_ds_bundle.js"></script>
+<script src="quote-data.js"></script>
+<script type="text/babel" src="quote-parts.jsx"></script>
+<script type="text/babel" src="quote-app.jsx"></script>
+</body>
+</html>

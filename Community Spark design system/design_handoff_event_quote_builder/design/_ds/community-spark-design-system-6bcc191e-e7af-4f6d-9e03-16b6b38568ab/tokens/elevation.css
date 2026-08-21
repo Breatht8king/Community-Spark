@@ -1,0 +1,10 @@
+:root{
+--shadow-sm:0 4px 16px rgba(26,23,20,.08);
+--shadow-md:0 12px 40px rgba(26,23,20,.12);
+--shadow-lg:0 28px 80px rgba(26,23,20,.16);
+--shadow-gold:0 8px 24px rgba(196,154,60,.3);
+--ring-focus:0 0 0 3px rgba(196,154,60,.15);
+--ring-field:0 0 0 3px rgba(196,154,60,.12);
+--blur-header: /* @kind other */ blur(20px);
+--blur-scrim: /* @kind other */ blur(8px);
+}
