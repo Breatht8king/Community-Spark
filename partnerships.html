@@ -19,6 +19,22 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="redesign-components.css">
+<style>
+.numbered-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;margin-top:44px}
+.numbered-item{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:26px}
+.numbered-item span{display:block;font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:700;color:var(--gold);line-height:1;margin-bottom:12px}
+.numbered-item h3{font-size:20px;margin:0 0 8px}
+.numbered-item p{margin:0;font-size:var(--text-meta);color:var(--muted);line-height:1.6}
+.sample-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px;margin-top:44px}
+.sample-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:28px 26px}
+.sample-card-meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.sample-card-cat{font-size:var(--text-eyebrow);text-transform:uppercase;letter-spacing:var(--track-tier);font-weight:var(--fw-bold);color:var(--gold)}
+.sample-card-dur{font-size:var(--text-micro);color:var(--muted)}
+.sample-card h3{font-size:22px;margin:0 0 8px}
+.sample-card p{margin:0;font-size:var(--text-body-sm);color:var(--muted);line-height:1.6}
+.sample-card p strong{color:var(--ink)}
+</style>
 </head>
 <body>
 <div class="announcement">Now booking fall and holiday 2026 events for apartment communities</div>
@@ -33,15 +49,15 @@
   <nav class="drawer-panel"><button class="drawer-close" id="drawerClose">✕</button><a href="index.html">Home</a><a href="events.html">Event Catalog</a><a href="pricing.html">Pricing</a><a href="partnerships.html" class="active">For Apartment Communities</a><a href="sponsors.html">Sponsor an Event</a><a href="gallery.html">Gallery</a><a href="about.html">About & Contact</a><a class="btn btn-primary nav-cta" href="contact.html">Plan an Event</a></nav>
 </div>
 <main>
-<section class="hero" id="partnerships-hero">
-  <div class="hero-bg loaded" style="background-image:url('images/photo-6.jpg');background-image:image-set(url('images/photo-6.webp') type('image/webp'),url('images/photo-6.jpg') type('image/jpeg'))"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content reveal">
-    <p class="eyebrow">For Indiana apartment communities</p>
+<section class="page-hero" id="partnerships-hero">
+  <div class="page-hero-bg loaded" style="background-image:url('images/photo-6.jpg');background-image:image-set(url('images/photo-6.webp') type('image/webp'),url('images/photo-6.jpg') type('image/jpeg'))"></div>
+  <div class="page-hero-scrim"></div>
+  <div class="page-hero-content reveal">
+    <p class="page-hero-eyebrow">For Indiana apartment communities</p>
     <h1>Resident events your team doesn't have to run.</h1>
-    <p class="hero-desc">Community Spark plans, sources, sets up, staffs, and breaks down resident events for apartment communities across Indiana — with pricing published up front and an optional local sponsor to help cover it.</p>
-    <div class="hero-actions"><a class="btn btn-primary" href="contact.html">Plan an Event</a><a class="btn btn-outline" href="events.html">Browse the Catalog</a></div>
-    <div class="hero-proof"><span class="proof-item">20 preset events</span><span class="proof-item">Setup and breakdown included</span><span class="proof-item">You approve every sponsor</span></div>
+    <p class="page-hero-lead">Community Spark plans, sources, sets up, staffs, and breaks down resident events for apartment communities across Indiana — with pricing published up front and an optional local sponsor to help cover it.</p>
+    <div class="page-hero-actions"><a class="btn btn-primary" href="contact.html">Plan an Event</a><a class="btn btn-outline" href="events.html">Browse the Catalog</a></div>
+    <div class="page-hero-proof"><span><span>✦</span>20 preset events</span><span><span>✦</span>Setup and breakdown included</span><span><span>✦</span>You approve every sponsor</span></div>
   </div>
 </section>
 
@@ -55,11 +71,11 @@
 
 <section class="section section-soft" style="padding-top:0">
   <div class="section-head reveal"><div><p class="section-label">Why property teams book</p><h2>Resident programming without the workload.</h2></div></div>
-  <div class="process-steps cols-4 reveal">
-    <div class="process-step"><div class="step-num">1</div><h4>Your team stops running events</h4><p>Concept, sourcing, vendor calls, setup, event-day coordination, and breakdown are handled. Your staff greets residents instead of hauling tables.</p></div>
-    <div class="process-step"><div class="step-num">2</div><h4>Residents actually turn out</h4><p>Events are built around what people show up for — food, activity, and a reason to stand around talking — not a folding table with a sign-up sheet.</p></div>
-    <div class="process-step"><div class="step-num">3</div><h4>The number is on the website</h4><p>Three planning tiers and published add-on packages. You can price an event for your budget meeting before you ever send an inquiry.</p></div>
-    <div class="process-step"><div class="step-num">4</div><h4>A local sponsor can offset the cost</h4><p>When a nearby business backs your event, part of their contribution credits your invoice and part upgrades the event. Entirely optional, and you approve every detail.</p></div>
+  <div class="numbered-grid">
+    <div class="numbered-item reveal"><span>01</span><h3>Your team stops running events</h3><p>Concept, sourcing, vendor calls, setup, event-day coordination, and breakdown are handled. Your staff greets residents instead of hauling tables.</p></div>
+    <div class="numbered-item reveal"><span>02</span><h3>Residents actually turn out</h3><p>Events are built around what people show up for — food, activity, and a reason to stand around talking — not a folding table with a sign-up sheet.</p></div>
+    <div class="numbered-item reveal"><span>03</span><h3>The number is on the website</h3><p>Three planning tiers and published add-on packages. You can price an event for your budget meeting before you ever send an inquiry.</p></div>
+    <div class="numbered-item reveal"><span>04</span><h3>A local sponsor can offset the cost</h3><p>When a nearby business backs your event, part of their contribution credits your invoice and part upgrades the event. Entirely optional, and you approve every detail.</p></div>
   </div>
 </section>
 
@@ -93,12 +109,12 @@
 
 <section class="section section-soft">
   <div class="section-head reveal"><div><p class="section-label">How it works</p><h2>From first email to post-event recap.</h2></div></div>
-  <div class="process-steps reveal">
-    <div class="process-step"><div class="step-num">1</div><h4>You send the basics</h4><p>Your community, a date you have in mind, rough attendance, and the budget you are working with. Two minutes, no commitment.</p></div>
-    <div class="process-step"><div class="step-num">2</div><h4>You get a written plan</h4><p>The event concept, inclusions, add-ons, vendor expenses, responsibilities, and an estimated total — in writing, before anything is owed.</p></div>
-    <div class="process-step"><div class="step-num">3</div><h4>You approve the details</h4><p>Adjust the scope, swap inclusions, or set it against a different budget. The date is not reserved until you approve the proposal.</p></div>
-    <div class="process-step"><div class="step-num">4</div><h4>We run the event</h4><p>Setup, vendor management, on-site coordination, and breakdown. Your team shows up to greet residents and nothing else.</p></div>
-    <div class="process-step"><div class="step-num">5</div><h4>You get a recap</h4><p>A short summary of the event, turnout, and anything worth changing next time. No resident data is ever handed to a sponsor.</p></div>
+  <div class="numbered-grid">
+    <div class="numbered-item reveal"><span>1</span><h3>You send the basics</h3><p>Your community, a date you have in mind, rough attendance, and the budget you are working with. Two minutes, no commitment.</p></div>
+    <div class="numbered-item reveal"><span>2</span><h3>You get a written plan</h3><p>The event concept, inclusions, add-ons, vendor expenses, responsibilities, and an estimated total — in writing, before anything is owed.</p></div>
+    <div class="numbered-item reveal"><span>3</span><h3>You approve the details</h3><p>Adjust the scope, swap inclusions, or set it against a different budget. The date is not reserved until you approve the proposal.</p></div>
+    <div class="numbered-item reveal"><span>4</span><h3>We run the event</h3><p>Setup, vendor management, on-site coordination, and breakdown. Your team shows up to greet residents and nothing else.</p></div>
+    <div class="numbered-item reveal"><span>5</span><h3>You get a recap</h3><p>A short summary of the event, turnout, and anything worth changing next time. No resident data is ever handed to a sponsor.</p></div>
   </div>
 </section>
 
@@ -137,31 +153,22 @@
 
 <section class="section section-soft" id="events-teaser">
   <div class="section-head reveal"><div><p class="section-label">A look at the catalog</p><h2>What a Community Spark event actually looks like.</h2></div><p>Twenty ready-to-book resident events span three planning tiers — $800, $1,250, and $1,750. Here's one from each.</p></div>
-  <div class="catalog-grid">
-    <article class="event-card reveal">
-      <div class="event-photo-wrap"><div class="event-photo-placeholder" style="background:linear-gradient(135deg,#f3ece0,#e8ddd0)">🎯</div></div>
-      <div class="event-body">
-        <div class="event-meta"><span>Games &amp; Social</span><span class="event-duration">1–2 hours</span></div>
-        <h3>Trivia Night</h3>
-        <p class="event-desc">About <strong>$1,250.</strong> Snacks, drinks, a big-screen display setup, and prizes for the top three tables.</p>
-      </div>
-    </article>
-    <article class="event-card reveal">
-      <div class="event-photo-wrap"><div class="event-photo-placeholder" style="background:linear-gradient(135deg,#edf5ee,#ddeede)">🐾</div></div>
-      <div class="event-body">
-        <div class="event-meta"><span>Pet-Friendly</span><span class="event-duration">1–2 hours</span></div>
-        <h3>Dog Adoption &amp; Pet Appreciation Day</h3>
-        <p class="event-desc">About <strong>$800.</strong> Treat stations, pet gift bags, and take-home bowls for every four-legged resident.</p>
-      </div>
-    </article>
-    <article class="event-card reveal">
-      <div class="event-photo-wrap"><div class="event-photo-placeholder" style="background:linear-gradient(135deg,#eef0fa,#dee2f5)">🎒</div></div>
-      <div class="event-body">
-        <div class="event-meta"><span>Community Support</span><span class="event-duration">1–2 hours</span></div>
-        <h3>Back-to-School Supply Event</h3>
-        <p class="event-desc">About <strong>$1,750.</strong> Fully stocked supply bags for about 100 kids, plus five backpack giveaways.</p>
-      </div>
-    </article>
+  <div class="sample-grid">
+    <div class="sample-card reveal">
+      <div class="sample-card-meta"><span class="sample-card-cat">Games &amp; Social</span><span class="sample-card-dur">1–2 hours</span></div>
+      <h3>Trivia Night</h3>
+      <p><strong>About $1,250.</strong> Snacks, drinks, a big-screen display setup, and prizes for the top three tables.</p>
+    </div>
+    <div class="sample-card reveal">
+      <div class="sample-card-meta"><span class="sample-card-cat">Pet-Friendly</span><span class="sample-card-dur">1–2 hours</span></div>
+      <h3>Dog Adoption &amp; Pet Appreciation Day</h3>
+      <p><strong>About $800.</strong> Treat stations, pet gift bags, and take-home bowls for every four-legged resident.</p>
+    </div>
+    <div class="sample-card reveal">
+      <div class="sample-card-meta"><span class="sample-card-cat">Community Support</span><span class="sample-card-dur">1–2 hours</span></div>
+      <h3>Back-to-School Supply Event</h3>
+      <p><strong>About $1,750.</strong> Fully stocked supply bags for about 100 kids, plus five backpack giveaways.</p>
+    </div>
   </div>
   <p class="features-link reveal"><a href="events.html">Browse all 20 events →</a></p>
 </section>

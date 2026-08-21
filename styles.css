@@ -191,14 +191,14 @@ nav a.active{color:var(--gold)}
 .partner-list li:before{content:"✦";position:absolute;left:0;color:var(--gold);font-size:11px;top:12px}
 .partner-card.community .partner-list li:before{color:var(--sage)}
 .partner-card.sponsor .partner-list li:before{color:var(--gold)}
-.funding-split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0 18px}
-.funding-block{padding:16px;border-radius:var(--r-sm);background:var(--cream)}
+.funding-split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+.funding-block{padding:16px 18px;border-radius:var(--r-sm);background:var(--cream)}
 .partner-card.community .funding-block{background:rgba(107,124,94,.1)}
 .partner-card.sponsor .funding-block{background:var(--cream)}
-.funding-block span{font-size:10px;text-transform:uppercase;letter-spacing:.14em;font-weight:700;color:var(--gold)}
+.funding-block span{font-size:10px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;color:var(--muted)}
 .partner-card.community .funding-block span{color:var(--sage)}
 .partner-card.sponsor .funding-block span{color:var(--gold)}
-.funding-block strong{display:block;font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:700;margin-top:6px}
+.funding-block strong{display:block;font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:700;margin-top:6px}
 .partner-note{padding:14px 16px;border-radius:var(--r-sm);background:var(--cream);font-size:13px;color:var(--muted);line-height:1.5}
 .partner-card.community .partner-note{background:rgba(107,124,94,.1);border-left:3px solid var(--sage)}
 .partner-card.sponsor .partner-note{background:var(--cream);color:var(--muted);border-left:3px solid var(--gold)}

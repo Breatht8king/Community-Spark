@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Community Spark | Pricing</title>
-<meta name="description" content="Clear event pricing tiers plus an à la carte add-ons calculator for Community Spark resident events."/>
+<meta name="description" content="Clear event pricing tiers plus curated add-on packages for Community Spark resident events."/>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
 <link rel="canonical" href="https://communitysparkevents.netlify.app/pricing.html"/>
 <meta name="theme-color" content="#1a1714"/>
@@ -12,13 +12,30 @@
 <meta property="og:site_name" content="Community Spark"/>
 <meta property="og:url" content="https://communitysparkevents.netlify.app/pricing.html"/>
 <meta property="og:title" content="Community Spark | Pricing"/>
-<meta property="og:description" content="Clear event pricing tiers plus an à la carte add-ons calculator for Community Spark resident events."/>
+<meta property="og:description" content="Clear event pricing tiers plus curated add-on packages for Community Spark resident events."/>
 <meta property="og:image" content="https://communitysparkevents.netlify.app/images/photo-1.jpg"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="redesign-components.css">
+<style>
+.bundle-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.bundle-card{display:flex;flex-direction:column;padding:26px 26px 24px;border-radius:var(--r-md);background:#fff;border:1px solid var(--line);box-shadow:var(--shadow-sm);transition:transform .25s ease,box-shadow .25s ease}
+.bundle-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.bundle-kicker{font-size:var(--text-eyebrow);text-transform:uppercase;letter-spacing:var(--track-tier);font-weight:var(--fw-bold);color:var(--gold);margin-bottom:8px}
+.bundle-card h3{font-size:23px;margin:0 0 6px}
+.bundle-summary{font-size:var(--text-body-sm);color:var(--muted);line-height:1.6;margin:0 0 18px}
+.bundle-items{list-style:none;margin:0 0 22px;padding:0;display:flex;flex-direction:column;gap:8px;flex:1}
+.bundle-items li{position:relative;padding-left:20px;font-size:var(--text-body-sm);color:var(--ink)}
+.bundle-items li:before{content:'✦';position:absolute;left:0;top:4px;color:var(--gold);font-size:10px}
+.bundle-foot{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:16px}
+.bundle-price{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--ink)}
+.bundle-rate{font-size:var(--text-meta);font-weight:700;color:var(--muted)}
+.bundle-note{grid-column:1/-1;margin:6px 0 0;font-size:var(--text-body-sm);color:var(--muted);line-height:1.6}
+@media(max-width:900px){.bundle-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 <div class="announcement">Now booking fall and holiday 2026 events for apartment communities</div>
@@ -33,42 +50,45 @@
   <nav class="drawer-panel"><button class="drawer-close" id="drawerClose">✕</button><a href="index.html">Home</a><a href="events.html">Event Catalog</a><a href="pricing.html" class="active">Pricing</a><a href="partnerships.html">For Apartment Communities</a><a href="sponsors.html">Sponsor an Event</a><a href="gallery.html">Gallery</a><a href="about.html">About & Contact</a><a class="btn btn-primary nav-cta" href="contact.html">Plan an Event</a></nav>
 </div>
 <main>
-<section class="hero" id="pricing-hero">
-  <div class="hero-bg loaded" style="background-image:url('images/photo-4.jpg');background-image:image-set(url('images/photo-4.webp') type('image/webp'),url('images/photo-4.jpg') type('image/jpeg'))"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content reveal">
-    <p class="eyebrow">Transparent pricing</p>
+<section class="page-hero" id="pricingHero">
+  <div class="page-hero-bg loaded" style="background-image:url('images/photo-4.jpg');background-image:image-set(url('images/photo-4.webp') type('image/webp'),url('images/photo-4.jpg') type('image/jpeg'))"></div>
+  <div class="page-hero-scrim"></div>
+  <div class="page-hero-content reveal">
+    <p class="page-hero-eyebrow">Transparent pricing</p>
     <h1>Pricing you can take straight into a budget meeting.</h1>
-    <p class="hero-desc">Three event tiers, real Indianapolis-area add-on pricing, and a live estimate that updates as you build it — before you ever send an inquiry.</p>
-    <div class="hero-actions"><a class="btn btn-primary" href="#pricing">See the Event Tiers</a><a class="btn btn-outline" href="#estimate">Build My Estimate</a></div>
-    <div class="hero-proof"><span class="proof-item">Setup and breakdown included</span><span class="proof-item">No resident headcount limits</span><span class="proof-item">Indiana-based team</span></div>
+    <p class="page-hero-lead">Three event tiers and curated add-on packages, published up front — so you know the range before you ever send an inquiry.</p>
+    <div class="page-hero-actions"><a class="btn btn-primary" href="#pricing">See the Event Tiers</a><a class="btn btn-outline" href="#estimate">Build My Estimate</a></div>
+    <div class="page-hero-proof"><span><span>✦</span>Setup and breakdown included</span><span><span>✦</span>No resident headcount limits</span><span><span>✦</span>Indiana-based team</span></div>
   </div>
 </section>
 
 <section class="section" id="pricing">
-  <div class="section-center reveal"><p class="section-label">Event tiers</p><h2>Three starting points, room to customize.</h2><p>Pricing is based on scope, production level, and selected services — not a published resident headcount limit. Every tier includes planning, setup, on-site coordination, and breakdown.</p></div>
+  <div class="section-head reveal">
+    <div><p class="section-label">Event tiers</p><h2>Three starting points, room to customize.</h2></div>
+    <p>Pricing is based on scope, production level, and selected services — not a published resident headcount limit. Every tier includes planning, setup, on-site coordination, and breakdown.</p>
+  </div>
   <div class="pricing-grid reveal">
     <div class="price-card">
-      <div class="price-tier">Polished Essentials</div><h3>The Spark</h3>
-      <div class="price-amount" style="color:var(--ink)">$800</div>
-      <p class="price-sub">A streamlined event with essentials needed for a professional resident experience.</p>
-      <ul class="price-features"><li>Up to 1 hour</li><li>One featured activity</li><li>Planning and coordination</li><li>Standard décor</li><li>Setup and breakdown</li></ul>
-      <a class="btn btn-ghost" href="contact.html">Plan a Spark Event</a>
+      <div class="price-card-tier">Polished Essentials</div><h3>The Spark</h3>
+      <div class="price-card-amount" style="color:var(--ink)">$800</div>
+      <p class="price-card-blurb">A streamlined event with the essentials needed for a professional resident experience.</p>
+      <ul class="price-card-features"><li>Up to 1 hour</li><li>One featured activity</li><li>Planning and coordination</li><li>Standard décor</li><li>Setup and breakdown</li></ul>
+      <div class="price-card-action"><a class="btn btn-ghost" style="width:100%" href="contact.html">Plan a Spark Event</a></div>
     </div>
     <div class="price-card featured">
-      <div class="badge">Most Popular</div>
-      <div class="price-tier">Elevated Experience</div><h3>The Glow</h3>
-      <div class="price-amount">$1,250</div>
-      <p class="price-sub">An elevated event with upgraded décor, multiple engagement elements, and expanded planning.</p>
-      <ul class="price-features"><li>1 to 2 hours</li><li>Multiple event elements</li><li>Expanded planning</li><li>Upgraded décor</li><li>Additional staffing as needed</li></ul>
-      <a class="btn btn-primary" href="contact.html">Plan a Glow Event</a>
+      <span class="badge">Most Popular</span>
+      <div class="price-card-tier">Elevated Experience</div><h3>The Glow</h3>
+      <div class="price-card-amount">$1,250</div>
+      <p class="price-card-blurb">An elevated event with upgraded décor, multiple engagement elements, and expanded planning.</p>
+      <ul class="price-card-features"><li>1 to 2 hours</li><li>Multiple event elements</li><li>Expanded planning</li><li>Upgraded décor</li><li>Additional staffing as needed</li></ul>
+      <div class="price-card-action"><a class="btn btn-primary" style="width:100%" href="contact.html">Plan a Glow Event</a></div>
     </div>
     <div class="price-card">
-      <div class="price-tier">Premium Production</div><h3>The Radiance</h3>
-      <div class="price-amount" style="color:var(--ink)">$1,750<span style="font-size:32px">+</span></div>
-      <p class="price-sub">A high-impact experience with full-service production, elevated styling, and entertainment.</p>
-      <ul class="price-features"><li>1 to 3 hours</li><li>Full event management</li><li>Premium décor</li><li>Entertainment options</li><li>Enhanced production</li></ul>
-      <a class="btn btn-ghost" href="contact.html">Plan a Radiance Event</a>
+      <div class="price-card-tier">Premium Production</div><h3>The Radiance</h3>
+      <div class="price-card-amount" style="color:var(--ink)">$1,750<span class="price-card-amount-suffix">+</span></div>
+      <p class="price-card-blurb">A high-impact experience with full-service production, elevated styling, and entertainment.</p>
+      <ul class="price-card-features"><li>1 to 3 hours</li><li>Full event management</li><li>Premium décor</li><li>Entertainment options</li><li>Enhanced production</li></ul>
+      <div class="price-card-action"><a class="btn btn-ghost" style="width:100%" href="contact.html">Plan a Radiance Event</a></div>
     </div>
   </div>
   <div class="pricing-included reveal">
@@ -84,22 +104,41 @@
 </section>
 
 <section class="section section-soft" id="estimate">
-  <div class="section-head reveal"><div><p class="section-label">Indiana event add-ons</p><h2>Build the experience one enhancement at a time.</h2></div><p>Prices are planning estimates based on publicly available Indianapolis-area vendor benchmarks. Final quotes may change based on event date, location, delivery, duration, availability, and taxes.</p></div>
-  <div class="estimate-notice reveal"><strong>Planning estimates only.</strong> Choose a quantity to see a live estimate. Final vendor quotes required before booking.</div>
-  <div class="addons-grid reveal">
-    <div class="addon-item"><div><span class="addon-name">Balloon Garland</span><span class="addon-desc">Organic balloon installation in 5-foot sections</span></div><div class="addon-controls"><select class="addon-qty" data-unit="225" aria-label="Balloon garland quantity"><option value="0">0</option><option value="1">5 ft</option><option value="2">10 ft</option><option value="3">15 ft</option><option value="4">20 ft</option></select><span class="addon-price">$225 / 5 ft</span></div></div>
-    <div class="addon-item"><div><span class="addon-name">Premium Photo Backdrop</span><span class="addon-desc">Greenery, floral, shimmer, or specialty wall</span></div><div class="addon-controls"><select class="addon-qty" data-unit="325" aria-label="Photo backdrop quantity"><option value="0">0</option><option value="1">1 backdrop</option><option value="2">2 backdrops</option></select><span class="addon-price">$325 each</span></div></div>
-    <div class="addon-item"><div><span class="addon-name">360 Photo Booth</span><span class="addon-desc">Two-hour booth rental with basic event setup</span></div><div class="addon-controls"><select class="addon-qty" data-unit="550" aria-label="Photo booth quantity"><option value="0">0</option><option value="1">1 booth</option><option value="2">2 booths</option></select><span class="addon-price">$550 each</span></div></div>
-    <div class="addon-item"><div><span class="addon-name">Mobile Coffee Bar</span><span class="addon-desc">Two-hour specialty coffee service block</span></div><div class="addon-controls"><select class="addon-qty" data-unit="750" aria-label="Coffee bar quantity"><option value="0">0</option><option value="1">1 block (2 hrs)</option><option value="2">2 blocks (4 hrs)</option></select><span class="addon-price">$750 / 2 hrs</span></div></div>
-    <div class="addon-item"><div><span class="addon-name">Ice Cream Social Package</span><span class="addon-desc">Cart or cooler service in 50-serving groups</span></div><div class="addon-controls"><select class="addon-qty" data-unit="350" aria-label="Ice cream quantity"><option value="0">0</option><option value="1">50 servings</option><option value="2">100 servings</option><option value="3">150 servings</option><option value="4">200 servings</option></select><span class="addon-price">$350 / 50 servings</span></div></div>
-    <div class="addon-item"><div><span class="addon-name">Lawn Game Set</span><span class="addon-desc">Cornhole or comparable resident-friendly game</span></div><div class="addon-controls"><select class="addon-qty" data-unit="50" aria-label="Lawn game quantity"><option value="0">0</option><option value="1">1 set</option><option value="2">2 sets</option><option value="3">3 sets</option><option value="4">4 sets</option><option value="5">5 sets</option><option value="6">6 sets</option></select><span class="addon-price">$50 each</span></div></div>
-    <div class="addon-item"><div><span class="addon-name">Event Photographer</span><span class="addon-desc">Professional coverage and edited digital gallery</span></div><div class="addon-controls"><select class="addon-qty" data-unit="400" aria-label="Photographer hours"><option value="0">0</option><option value="1">1 hour</option><option value="2">2 hours</option><option value="3">3 hours</option><option value="4">4 hours</option></select><span class="addon-price">$400 / hr</span></div></div>
-    <div class="addon-item"><div><span class="addon-name">DJ and Sound</span><span class="addon-desc">DJ service with basic sound equipment</span></div><div class="addon-controls"><select class="addon-qty" data-unit="175" aria-label="DJ hours"><option value="0">0</option><option value="2">2 hours</option><option value="3">3 hours</option><option value="4">4 hours</option></select><span class="addon-price">$175 / hr</span></div></div>
-    <div class="addon-item"><div><span class="addon-name">Custom Welcome Sign</span><span class="addon-desc">Full-color event sign with community branding</span></div><div class="addon-controls"><select class="addon-qty" data-unit="95" aria-label="Sign quantity"><option value="0">0</option><option value="1">1 sign</option><option value="2">2 signs</option><option value="3">3 signs</option><option value="4">4 signs</option></select><span class="addon-price">$95 each</span></div></div>
-    <div class="addon-item"><div><span class="addon-name">Lighted Sign or Marquee Accent</span><span class="addon-desc">Decorative illuminated sign element</span></div><div class="addon-controls"><select class="addon-qty" data-unit="75" aria-label="Light sign quantity"><option value="0">0</option><option value="1">1 sign</option><option value="2">2 signs</option><option value="3">3 signs</option></select><span class="addon-price">$75 each</span></div></div>
-    <div class="addon-item"><div><span class="addon-name">Resident Prize Pack</span><span class="addon-desc">Gift cards or prizes in $25 increments</span></div><div class="addon-controls"><select class="addon-qty" data-unit="25" aria-label="Prize pack value"><option value="0">$0</option><option value="1">$25</option><option value="2">$50</option><option value="4">$100</option><option value="6">$150</option><option value="8">$200</option><option value="10">$250</option></select><span class="addon-price">$25 increments</span></div></div>
-    <div class="addon-item"><div><span class="addon-name">Additional Event Staff</span><span class="addon-desc">Extra setup, guest support, or activity staffing</span></div><div class="addon-controls"><select class="addon-qty" data-unit="45" aria-label="Staff hours"><option value="0">0</option><option value="2">2 staff-hours</option><option value="4">4 staff-hours</option><option value="6">6 staff-hours</option><option value="8">8 staff-hours</option></select><span class="addon-price">$45 / staff-hour</span></div></div>
-    <div class="addon-total"><div><span class="addon-total-label">Estimated add-on total<small>Planning estimate only. Final vendor quote required.</small></span></div><span class="addon-total-amount" id="addonTotal">$0</span></div>
+  <div class="section-head reveal">
+    <div><p class="section-label">Add-on packages</p><h2>Build the experience one package at a time.</h2></div>
+    <p>Curated groupings of the enhancements property teams request most, priced at published planning rates. Every package is customizable — swap, scale, or combine elements during booking.</p>
+  </div>
+  <div class="estimate-notice reveal"><strong>Planning estimates only.</strong> Package rates are current planning estimates for Indianapolis-area vendors. Final vendor quotes are confirmed before booking.</div>
+  <div class="bundle-grid reveal">
+    <div class="bundle-card">
+      <div class="bundle-kicker">Package 01</div>
+      <h3>Décor Refresh</h3>
+      <p class="bundle-summary">The smallest upgrade that makes a room feel intentional.</p>
+      <ul class="bundle-items"><li>5 ft organic balloon garland</li><li>Custom full-color welcome sign</li></ul>
+      <div class="bundle-foot"><span class="bundle-price">$295</span><span class="bundle-rate">Starting rate</span></div>
+    </div>
+    <div class="bundle-card">
+      <div class="bundle-kicker">Package 02</div>
+      <h3>Photo Corner</h3>
+      <p class="bundle-summary">A styled spot residents actually stop and take pictures in.</p>
+      <ul class="bundle-items"><li>Premium photo backdrop</li><li>Lighted marquee accent</li><li>Custom welcome sign</li></ul>
+      <div class="bundle-foot"><span class="bundle-price">$420</span><span class="bundle-rate">Starting rate</span></div>
+    </div>
+    <div class="bundle-card">
+      <div class="bundle-kicker">Package 03</div>
+      <h3>Sweet Social</h3>
+      <p class="bundle-summary">A light service element that keeps residents at the event.</p>
+      <ul class="bundle-items"><li>Ice cream social — 50 servings</li><li>One lawn game set</li></ul>
+      <div class="bundle-foot"><span class="bundle-price">$395</span><span class="bundle-rate">Starting rate</span></div>
+    </div>
+    <div class="bundle-card">
+      <div class="bundle-kicker">Package 04</div>
+      <h3>Game Day</h3>
+      <p class="bundle-summary">Active entertainment for outdoor or large-turnout events.</p>
+      <ul class="bundle-items"><li>360° photo booth — 2-hour rental</li><li>Two lawn game sets</li><li>5 ft balloon garland</li></ul>
+      <div class="bundle-foot"><span class="bundle-price">$795</span><span class="bundle-rate">Starting rate</span></div>
+    </div>
+    <p class="bundle-note reveal">Photography coverage, resident prize packs, additional staffing, catering, and custom requests are added during booking rather than priced here — they depend on your date, headcount, and vendor availability. <a href="sponsors.html" style="color:var(--gold-dark);font-weight:700">A local sponsor can also offset part of your event cost.</a></p>
   </div>
 </section>
 
