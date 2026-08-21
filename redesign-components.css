@@ -576,6 +576,37 @@ textarea.form-field-control{resize:vertical;min-height:100px}
 .sponsor-tier li::before{content:'✓';position:absolute;left:0;color:var(--tier-accent,var(--sage));font-weight:var(--fw-bold)}
 
 /* ==========================================================================
+   Home page's actual "Built for property teams" step tiles. NOTE: distinct
+   from the existing .steps-grid/.step (a single hairline-divided block via
+   background-color trick, fixed 4-col, 44px number circle with a border) —
+   the real Home.html prototype uses individually gapped/bordered cards
+   instead (auto-fit grid, 38px number circle, no border on the circle).
+   ========================================================================== */
+.step-tile-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px;margin-top:44px}
+.step-tile{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:28px 26px;font-family:var(--font-ui)}
+.step-tile-num{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:var(--r-circle);background:var(--cream);color:var(--gold-dark);font-size:var(--text-meta);font-weight:var(--fw-bold);margin-bottom:16px}
+.step-tile h3{font-family:var(--font-display);font-size:22px;font-weight:var(--fw-semibold);margin:0 0 8px}
+.step-tile p{margin:0;font-size:var(--text-body-sm);color:var(--muted);line-height:1.6}
+
+/* ==========================================================================
+   Home page's actual "Featured experiences" showcase. NOTE: distinct from
+   both the existing .feature-grid (asymmetric 1.4fr/.6fr 2x2, one large
+   spanning tile) and the unused bundle FeatureTile component (.feature-tile)
+   above — the real Home.html prototype uses a plain equal 3-column grid;
+   its "is-large" modifier is a no-op in the prototype's own CSS.
+   ========================================================================== */
+.feature-showcase{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px}
+.feature-showcase-item{position:relative;display:block;overflow:hidden;border-radius:var(--r-lg);min-height:300px}
+.feature-showcase-item picture{position:absolute;inset:0;display:block;width:100%;height:100%}
+.feature-showcase-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease-default)}
+.feature-showcase-item:hover img{transform:var(--zoom-image)}
+.feature-showcase-scrim{position:absolute;inset:0;background:var(--overlay-image)}
+.feature-showcase-copy{position:absolute;z-index:2;left:24px;right:24px;bottom:22px;display:flex;flex-direction:column;gap:8px}
+.feature-showcase-tag{font-size:var(--text-eyebrow);text-transform:uppercase;letter-spacing:var(--track-tier);font-weight:var(--fw-bold);color:var(--gold-light)}
+.feature-showcase-title{font-family:var(--font-display);font-size:24px;font-weight:var(--fw-semibold);color:#fff;line-height:var(--lh-tight)}
+@media(max-width:900px){.feature-showcase{grid-template-columns:1fr}}
+
+/* ==========================================================================
    components/forms — deep-link prefill banner (Contact page, shown when
    arriving via a ?event= link from an event card).
    ========================================================================== */
