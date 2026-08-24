@@ -121,7 +121,7 @@
    SectionHead     -> .section-head (split) / .section-center         [MATCH]
    TrustBar        -> .trust-bar / .trust-item                        [MATCH, tiny fix below]
    AnnouncementBar -> .announcement                                   [MATCH]
-   BrandMark       -> .brand / .mark / .brand-text                    [MATCH, tiny fix below]
+   BrandMark       -> .brand / .brand-lockup (image lockup, replaced the text mark) [MATCH]
    SiteHeader      -> header / nav a / .nav-cta                       [MATCH]
    SiteFooter      -> footer / .footer-grid / .footer-col / etc.      [MATCH]
    ClosingPanel    -> .closing-panel / .closing-label / etc.          [MATCH]
@@ -130,7 +130,6 @@
 
    Two hairline drifts were found and are corrected here without touching
    the rules above: */
-.brand-text small{letter-spacing:var(--track-nav-small)} /* prototype: .16em, live had .18em */
 .trust-item span{letter-spacing:var(--track-meta)}       /* prototype: .1em, live had .12em */
 
 /* The mobile drawer is the one navigation piece that genuinely drifted
