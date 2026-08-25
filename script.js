@@ -252,18 +252,31 @@ var bookingType='preset';
 var bookEventAddonsGroup=document.getElementById('bookEventAddonsGroup'),
     bookEventAddonsList=document.getElementById('bookEventAddonsList'),
     bookPackageAddonsList=document.getElementById('bookPackageAddonsList');
-function addonCheckboxLabel(text,fieldName,detail){
+function addonCheckboxLabel(text,fieldName,opts){
+  opts=opts||{};
   var label=document.createElement('label');
   label.className='addon-check';
   var input=document.createElement('input');
   input.type='checkbox';
   input.name=fieldName;
-  input.value=text;
+  input.value=opts.price?(text+' — '+opts.price):text;
   label.appendChild(input);
-  var span=document.createElement('span');
-  span.appendChild(document.createTextNode(text));
-  if(detail){var small=document.createElement('small');small.textContent=detail;span.appendChild(small);}
-  label.appendChild(span);
+  if(opts.price){
+    var body=document.createElement('span');
+    body.className='addon-check-body';
+    var nameEl=document.createElement('span');
+    nameEl.className='addon-check-name';
+    nameEl.textContent=text;
+    body.appendChild(nameEl);
+    if(opts.detail){var small=document.createElement('small');small.textContent=opts.detail;body.appendChild(small);}
+    label.appendChild(body);
+    var priceEl=document.createElement('span');
+    priceEl.className='addon-check-price';
+    priceEl.textContent=opts.price;
+    label.appendChild(priceEl);
+  }else{
+    label.appendChild(document.createTextNode(text));
+  }
   return label;
 }
 function renderEventAddons(){
@@ -279,7 +292,7 @@ function renderPackageAddons(){
   if(!bookPackageAddonsList||typeof GENERAL_ADDON_PACKAGES==='undefined')return;
   bookPackageAddonsList.innerHTML='';
   GENERAL_ADDON_PACKAGES.forEach(function(pkg){
-    bookPackageAddonsList.appendChild(addonCheckboxLabel(pkg.name+' — '+pkg.price,'packageAddons',pkg.detail));
+    bookPackageAddonsList.appendChild(addonCheckboxLabel(pkg.name,'packageAddons',{price:pkg.price,detail:pkg.detail}));
   });
 }
 renderPackageAddons();

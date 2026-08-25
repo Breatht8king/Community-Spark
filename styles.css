@@ -304,10 +304,16 @@ nav a.active{color:var(--gold)}
 .sponsor-choice{display:flex;gap:28px;margin-top:8px}
 .sponsor-choice label{display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:600;color:var(--ink);font-size:14px}
 .sponsor-choice input{width:18px;height:18px;accent-color:var(--gold)}
-.addon-checklist{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px 16px;margin-top:8px;padding:14px;background:var(--cream);border-radius:var(--r-sm)}
-.addon-check{display:flex;align-items:flex-start;gap:8px;cursor:pointer;font-size:14px;color:var(--ink);line-height:1.4;padding:4px 0}
+.addon-checklist{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:2px 16px;margin-top:8px;padding:6px 14px;background:var(--cream);border-radius:var(--r-sm)}
+.addon-check{display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:14px;color:var(--ink);line-height:1.4;padding:8px 0}
 .addon-check input{width:16px;height:16px;margin-top:2px;flex-shrink:0;accent-color:var(--gold)}
-.addon-check small{display:block;color:var(--muted);font-size:12px;margin-top:1px}
+.addon-checklist-packages{grid-template-columns:1fr}
+.addon-checklist-packages .addon-check{border-bottom:1px solid rgba(26,23,20,.08)}
+.addon-checklist-packages .addon-check:last-child{border-bottom:none}
+.addon-check-body{flex:1;min-width:0}
+.addon-check-name{font-weight:700}
+.addon-check small{display:block;color:var(--muted);font-size:12px;font-weight:400;margin-top:2px}
+.addon-check-price{flex-shrink:0;white-space:nowrap;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--gold-dark)}
 .calendar{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:20px}
 .calendar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .calendar-header strong{font-size:16px}
