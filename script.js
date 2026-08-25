@@ -249,6 +249,40 @@ if(sponsorForm){
 }
 var bookEventSelect=document.getElementById('bookEventSelect');
 var bookingType='preset';
+var bookEventAddonsGroup=document.getElementById('bookEventAddonsGroup'),
+    bookEventAddonsList=document.getElementById('bookEventAddonsList'),
+    bookPackageAddonsList=document.getElementById('bookPackageAddonsList');
+function addonCheckboxLabel(text,fieldName,detail){
+  var label=document.createElement('label');
+  label.className='addon-check';
+  var input=document.createElement('input');
+  input.type='checkbox';
+  input.name=fieldName;
+  input.value=text;
+  label.appendChild(input);
+  var span=document.createElement('span');
+  span.appendChild(document.createTextNode(text));
+  if(detail){var small=document.createElement('small');small.textContent=detail;span.appendChild(small);}
+  label.appendChild(span);
+  return label;
+}
+function renderEventAddons(){
+  if(!bookEventAddonsList||!bookEventAddonsGroup)return;
+  bookEventAddonsList.innerHTML='';
+  var opt=selectedEventOption();
+  var items=(opt&&opt.value&&typeof EVENT_ADDONS!=='undefined')?EVENT_ADDONS[opt.value]:null;
+  if(bookingType==='custom'||!items||!items.length){bookEventAddonsGroup.hidden=true;return;}
+  items.forEach(function(item){bookEventAddonsList.appendChild(addonCheckboxLabel(item,'eventAddons'));});
+  bookEventAddonsGroup.hidden=false;
+}
+function renderPackageAddons(){
+  if(!bookPackageAddonsList||typeof GENERAL_ADDON_PACKAGES==='undefined')return;
+  bookPackageAddonsList.innerHTML='';
+  GENERAL_ADDON_PACKAGES.forEach(function(pkg){
+    bookPackageAddonsList.appendChild(addonCheckboxLabel(pkg.name+' — '+pkg.price,'packageAddons',pkg.detail));
+  });
+}
+renderPackageAddons();
 var TIME_SLOTS=[];
 for(var bookHour=10;bookHour<=18;bookHour++){
   ['00','30'].forEach(function(m){
@@ -349,6 +383,7 @@ function selectedEventOption(){
   return bookEventSelect&&bookEventSelect.selectedOptions?bookEventSelect.selectedOptions[0]:null;
 }
 function updateEventIntro(){
+  renderEventAddons();
   if(!bookingEventNameEl||!bookingEventMetaEl)return;
   if(bookingType==='custom'){
     bookingEventNameEl.textContent='Booking: Custom Event';
