@@ -279,13 +279,26 @@ function addonCheckboxLabel(text,fieldName,opts){
   }
   return label;
 }
+function addonChip(text,fieldName){
+  var label=document.createElement('label');
+  label.className='addon-chip';
+  var input=document.createElement('input');
+  input.type='checkbox';
+  input.name=fieldName;
+  input.value=text;
+  label.appendChild(input);
+  var span=document.createElement('span');
+  span.textContent=text;
+  label.appendChild(span);
+  return label;
+}
 function renderEventAddons(){
   if(!bookEventAddonsList||!bookEventAddonsGroup)return;
   bookEventAddonsList.innerHTML='';
   var opt=selectedEventOption();
   var items=(opt&&opt.value&&typeof EVENT_ADDONS!=='undefined')?EVENT_ADDONS[opt.value]:null;
   if(bookingType==='custom'||!items||!items.length){bookEventAddonsGroup.hidden=true;return;}
-  items.forEach(function(item){bookEventAddonsList.appendChild(addonCheckboxLabel(item,'eventAddons'));});
+  items.forEach(function(item){bookEventAddonsList.appendChild(addonChip(item,'eventAddons'));});
   bookEventAddonsGroup.hidden=false;
 }
 function renderPackageAddons(){

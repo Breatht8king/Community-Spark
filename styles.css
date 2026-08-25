@@ -314,6 +314,13 @@ nav a.active{color:var(--gold)}
 .addon-check-name{font-weight:700}
 .addon-check small{display:block;color:var(--muted);font-size:12px;font-weight:400;margin-top:2px}
 .addon-check-price{flex-shrink:0;white-space:nowrap;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--gold-dark)}
+.addon-chip-group{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.addon-chip{position:relative;display:inline-flex;cursor:pointer}
+.addon-chip input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.addon-chip span{padding:9px 18px;border-radius:999px;font-size:13px;font-weight:600;background:#fff;border:1px solid var(--line);color:var(--muted);transition:all .2s}
+.addon-chip:hover span{border-color:var(--ink);color:var(--ink)}
+.addon-chip input:checked~span{background:var(--ink);border-color:var(--ink);color:#fff}
+.addon-chip input:focus-visible~span{outline:2px solid var(--gold);outline-offset:2px}
 .calendar{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:20px}
 .calendar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .calendar-header strong{font-size:16px}
