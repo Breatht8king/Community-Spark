@@ -45,15 +45,15 @@
   --text-price:58px;
   --text-stat:32px;
 
-  /* type scale (UI) */
-  --text-lead:18px;
-  --text-body-lg:17px;
-  --text-body:15px;
-  --text-body-sm:14px;
-  --text-meta:13px;
-  --text-micro:12px;
-  --text-label:11px;
-  --text-eyebrow:10px;
+  /* type scale (UI) — readability bump: +1px across the scale vs. the prototype spec (2026-08-24) */
+  --text-lead:19px;
+  --text-body-lg:18px;
+  --text-body:16px;
+  --text-body-sm:15px;
+  --text-meta:14px;
+  --text-micro:13px;
+  --text-label:12px;
+  --text-eyebrow:11px;
 
   /* line heights */
   --lh-display:1.05;
