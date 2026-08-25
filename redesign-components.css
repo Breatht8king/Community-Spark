@@ -652,11 +652,6 @@ textarea.form-field-control{resize:vertical;min-height:100px}
    prototype uses a small bold gold numeral badge instead, in a
    responsive auto-fit grid rather than a fixed 4-column one.
    ========================================================================== */
-.rule-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:44px}
-.rule-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:24px;font-family:var(--font-ui)}
-.rule-card span{font-size:var(--text-eyebrow);font-weight:var(--fw-bold);letter-spacing:var(--track-tier);color:var(--gold)}
-.rule-card h3{font-family:var(--font-display);font-size:19px;font-weight:var(--fw-semibold);margin:8px 0}
-.rule-card p{margin:0;font-size:var(--text-meta);color:var(--muted);line-height:1.6}
 
 /* ==========================================================================
    components/layout — numbered item grid ("Why property teams book" /
