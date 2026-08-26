@@ -637,6 +637,13 @@ window.QB_FAMILIES = [
   { id: 'cocoa', cat: 'drinks', name: 'Hot cocoa service', unit: 'serving', perGuest: .3,
     variants: [{ id: 'classic', name: 'Classic' }, { id: 'saltedcaramel', name: 'Salted caramel', delta: 1.5 }],
     packs: [{ id: '100', label: '100 servings · mix + cups', per: 100, prices: P(null, null, null, null) }] },
+  { id: 'energydrink', cat: 'drinks', name: 'Energy drinks', unit: 'can', perGuest: .25,
+    variants: [{ id: 'redbull', name: 'Red Bull' }, { id: 'monster', name: 'Monster' }],
+    packs: [{ id: '24', label: '24 pack · 8.4 oz cans', per: 24, prices: P(41.99, null, null, 38.99) }] },
+  { id: 'coldbrew', cat: 'drinks', name: 'Cold brew coffee, bulk', unit: 'serving', perGuest: .3,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: 'concentrate', label: 'Concentrate jug/bottles · ~16 servings', per: 16, prices: P(15.97, null, 18.89, null) },
+            { id: 'rtd6', label: '6-pack RTD bottles · 11 oz', per: 6, prices: P(null, null, null, 16.40) }] },
   // -- Food
   { id: 'hotdogs', cat: 'food', name: 'Beef hot dogs', unit: 'hot dog', perGuest: 1.5,
     variants: [{ id: 'regular', name: 'Regular' }, { id: 'jumbo', name: 'Jumbo 1/4 lb', delta: 2.5 }],
@@ -659,7 +666,7 @@ window.QB_FAMILIES = [
             { id: '60', label: '60 ct', per: 60, prices: P(22.99, null, null, null) }] },
   { id: 'fruit', cat: 'food', name: 'Fruit tray', unit: 'serving', perGuest: .5,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '20', label: 'Serves 20', per: 20, prices: P(null, null, null, null) }] },
+    packs: [{ id: '20', label: 'Serves 20', per: 20, prices: P(9.99, null, 39.98, null) }] },
   { id: 'popcorn', cat: 'food', name: 'Popcorn kit', unit: 'serving', perGuest: 1,
     variants: [{ id: 'butter', name: 'Butter' }, { id: 'kettle', name: 'Kettle corn', delta: 2 }],
     packs: [{ id: '24', label: '24 servings · kernels + oil', per: 24, prices: P(null, null, null, null) }] },
@@ -677,6 +684,72 @@ window.QB_FAMILIES = [
     variants: [{ id: 'std', name: '' }],
     packs: [{ id: '30', label: '30 ct · full-size bars', per: 30, prices: P(null, 29.99, 29.98, null) },
             { id: 'jar', label: '62 oz · bulk jar (~40 servings)', per: 40, prices: P(null, 16.99, 16.98, null) }] },
+  { id: 'bagels', cat: 'food', name: 'Bagels, bulk variety', unit: 'bagel', perGuest: 1.5,
+    variants: [{ id: 'plain', name: 'Plain' }, { id: 'everything', name: 'Everything' }, { id: 'cinnamon-raisin', name: 'Cinnamon-Raisin' },
+               { id: 'blueberry', name: 'Blueberry' }, { id: 'glutenfree', name: 'Gluten-Free', only: ['gf6'] }],
+    packs: [{ id: '8', label: '8 ct', per: 8, prices: P(4.99, null, null, null) },
+            { id: '12', label: '12 ct', per: 12, prices: P(6.29, null, 9.97, null) },
+            { id: 'gf6', label: '6 ct (gluten-free)', per: 6, prices: P(null, null, null, null) }] },
+  { id: 'creamcheese', cat: 'food', name: 'Cream cheese, tubs', unit: 'oz', perGuest: 1.5,
+    variants: [{ id: 'plain', name: 'Plain/whipped' }, { id: 'flavored', name: 'Flavored (veggie, strawberry, etc.)', delta: 1.5 },
+               { id: 'dairyfree', name: 'Dairy-Free (Violife)', only: ['df8'] }],
+    packs: [{ id: '48', label: '48 oz tub (3 lb)', per: 48, prices: P(6.97, null, 6.63, null) },
+            { id: '32', label: '32 oz (2 x 16 oz tubs)', per: 32, prices: P(null, 13.29, null, null) },
+            { id: '288', label: '288 oz case (6 x 3 lb loaves)', per: 288, prices: P(null, null, null, 119.77) },
+            { id: 'df8', label: '8 oz tub (dairy-free)', per: 8, prices: P(null, null, null, 4.82) }] },
+  { id: 'nutella', cat: 'food', name: 'Nutella, bulk jar', unit: 'oz', perGuest: 1,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '67', label: '2 x 33.5 oz jars', per: 67, prices: P(10.99, null, null, null) },
+            { id: '53', label: '2 x 26.5 oz jars', per: 53, prices: P(null, null, 12.78, null) },
+            { id: '35', label: '1 x 35.3 oz jar', per: 35.3, prices: P(null, null, null, 12.10) }] },
+  { id: 'peanutbutter', cat: 'food', name: 'Peanut butter, bulk jar', unit: 'oz', perGuest: 1,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '56', label: '2 x 28 oz jars', per: 56, prices: P(9.79, null, null, null) },
+            { id: '80', label: '2 x 40 oz jars', per: 80, prices: P(null, null, 7.78, null) }] },
+  { id: 'jam', cat: 'food', name: 'Fruit jam/jelly, bulk', unit: 'oz', perGuest: .5,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: 'jar', label: '2 x 48 oz jars', per: 96, prices: P(6.99, null, null, null) },
+            { id: 'cups', label: '200 ct x 0.5 oz cups', per: 100, prices: P(null, null, null, 18.53) }] },
+  { id: 'guac', cat: 'food', name: 'Avocado spread / guacamole cups, bulk multi-pack', unit: 'oz', perGuest: .5,
+    variants: [{ id: 'std', name: 'Classic' }],
+    packs: [{ id: '1', label: '20 ct x 2 oz cups (Wholly Guacamole)', per: 40, prices: P(11.99, null, null, null) }] },
+  { id: 'cupcakes', cat: 'food', name: 'Cupcakes, bulk bakery', unit: 'cupcake', perGuest: 1,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '12', label: '12 ct · white/chocolate buttercream', per: 12, prices: P(8.99, null, null, null) },
+            { id: '30', label: '30 ct', per: 30, prices: P(null, null, 16.48, null) }] },
+  { id: 'ribs', cat: 'food', name: 'Pork loin back ribs, bulk (raw, to prepare)', unit: 'lb', perGuest: .25,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '15', label: '~15 lb (multiple racks)', per: 15, prices: P(50.85, null, 64.95, null) }] },
+  { id: 'wings', cat: 'food', name: 'Chicken wings, bulk frozen', unit: 'lb', perGuest: .3,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '10lb', label: '10 lb bag', per: 10, prices: P(null, null, 13.97, null) }] },
+  { id: 'pinwheels', cat: 'food', name: 'Pinwheel appetizer wraps, bulk deli tray', unit: 'wrap', perGuest: 1,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '40', label: '40 ct · assorted wraps', per: 40, prices: P(null, null, 29.98, null) }] },
+  { id: 'hummus', cat: 'food', name: 'Hummus, bulk tub', unit: 'oz', perGuest: 2,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '17', label: '17 oz tub', per: 17, prices: P(3.99, null, null, null) },
+            { id: '32', label: '32 oz tub', per: 32, prices: P(null, 5.99, 6.98, null) }] },
+  { id: 'wafflemix', cat: 'food', name: 'Waffle & pancake mix, bulk', unit: 'waffle', perGuest: 1.5,
+    variants: [{ id: 'buttermilk', name: 'Buttermilk/Belgian' }],
+    packs: [{ id: '10lb', label: 'Krusteaz Complete Buttermilk Pancake Mix, 10 lb · ~110 waffles', per: 110, prices: P(6.99, null, null, null) }] },
+  { id: 'syrup', cat: 'food', name: 'Maple/pancake syrup, bulk bottle', unit: 'oz', perGuest: .5,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: 'costco338', label: 'Kirkland Signature Organic Maple Syrup, 33.8 oz', per: 33.8, prices: P(12.59, null, null, null) },
+            { id: 'sams32', label: "Member's Mark Organic Maple Syrup, 32 oz", per: 32, prices: P(null, null, 12.98, null) }] },
+  { id: 'whipcream', cat: 'food', name: 'Whipped cream, canned, multi-pack', unit: 'can', perGuest: .05,
+    variants: [{ id: 'std', name: 'Original' }],
+    packs: [{ id: '3ct15', label: 'Reddi-wip Original, 15 oz, 3-count', per: 3, prices: P(7.97, null, null, null) }] },
+  { id: 'honey', cat: 'food', name: 'Honey, bulk bottle', unit: 'oz', perGuest: .35,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '1', label: '80 oz (5 lb) - Kirkland Wild Flower Honey', per: 80, prices: P(12.99, null, null, null) },
+            { id: '2', label: "48 oz - Member's Mark Wildflower Honey", per: 48, prices: P(null, null, 19.50, null) }] },
+  { id: 'strawberries', cat: 'food', name: 'Fresh strawberries, bulk clamshell', unit: 'oz', perGuest: 1.2,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '1', label: '2 lb (32 oz) clamshell', per: 32, prices: P(3.59, null, 7.87, null) }] },
+  { id: 'blueberries', cat: 'food', name: 'Fresh blueberries, bulk clamshell', unit: 'oz', perGuest: .5,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '1', label: '18 oz clamshell', per: 18, prices: P(3.99, null, null, null) }] },
   // -- Catering (Costco's national catering menu no longer includes these 4 items — see note at top of file)
   { id: 'tacobar', cat: 'catering', name: 'Taco bar package', unit: 'plate', perGuest: 1,
     variants: [{ id: 'chicken', name: 'Chicken' }, { id: 'beef', name: 'Beef', delta: 20 }, { id: 'both', name: 'Chicken & beef', delta: 35 }],
@@ -734,6 +807,44 @@ window.QB_FAMILIES = [
   { id: 'backdrop', cat: 'decor', name: 'Photo backdrop stand', unit: 'set', perGuest: 0,
     variants: [{ id: 'frame', name: 'Adjustable frame only' }, { id: 'drape', name: 'Frame + drape', delta: 15 }],
     packs: [{ id: '1', label: '1 set', per: 1, prices: P(null, null, null, 49.99) }] },
+  { id: 'roses', cat: 'decor', name: 'Roses, bulk bunch', unit: 'stem', perGuest: 1,
+    variants: [{ id: 'red', name: 'Red' }, { id: 'assorted', name: 'Assorted' }],
+    packs: [{ id: '50', label: '50 stems', per: 50, prices: P(57.99, null, 39.98, null) },
+            { id: '100', label: '100 stems · individually wrapped', per: 100, prices: P(189.99, null, null, null) },
+            { id: '125', label: '125 stems', per: 125, prices: P(null, null, 99.98, null) }] },
+  { id: 'lilies', cat: 'decor', name: 'Lilies, bulk bunch', unit: 'stem', perGuest: .5,
+    variants: [{ id: 'assorted', name: 'Assorted (Asiatic/Oriental)' }],
+    packs: [{ id: '40', label: '40 stems', per: 40, prices: P(59.99, null, null, null) },
+            { id: '50', label: '50 stems', per: 50, prices: P(null, null, 98.77, 202.98) }] },
+  { id: 'sunflowers', cat: 'decor', name: 'Sunflowers, bulk bunch', unit: 'stem', perGuest: .5,
+    variants: [{ id: 'yellow', name: 'Yellow' }],
+    packs: [{ id: '40', label: '40 stems', per: 40, prices: P(59.99, null, null, null) },
+            { id: '80', label: '80 stems', per: 80, prices: P(null, null, null, null) }] },
+  { id: 'filler', cat: 'decor', name: 'Filler flowers & greenery, bulk bunch', unit: 'stem', perGuest: 1,
+    variants: [{ id: 'babysbreath', name: "Baby's breath", only: ['100bb'] }, { id: 'mixedgreens', name: 'Mixed fillers & greens', only: ['100mix'] }],
+    packs: [{ id: '100bb', label: "100 stems · Baby's breath", per: 100, prices: P(74.99, null, null, null) },
+            { id: '100mix', label: '100 stems · Mixed fillers & greens', per: 100, prices: P(72.99, null, null, null) }] },
+  { id: 'rosepetals', cat: 'decor', name: 'Rose petals, bulk bag', unit: 'bag', perGuest: 0,
+    variants: [{ id: 'silk', name: 'Silk petals (red)' }],
+    packs: [{ id: '1', label: '1 bag · 1,000 petals, 2"x2"', per: 1, prices: P(null, null, null, 4.99) }] },
+  { id: 'ribbon', cat: 'decor', name: 'Curling ribbon, bulk multi-pack', unit: 'roll', perGuest: 1,
+    variants: [{ id: 'assorted', name: 'Assorted colors (15)' }],
+    packs: [{ id: '30', label: '30 rolls · 15 colors, 11 yds/roll', per: 30, prices: P(null, null, null, 5.79) }] },
+  { id: 'twine', cat: 'decor', name: 'Twine, bulk spool', unit: 'spool', perGuest: .02,
+    variants: [{ id: 'jute', name: 'Natural jute' }],
+    packs: [{ id: '1', label: '1 spool · 805 ft, 2mm natural jute', per: 1, prices: P(null, null, null, 5.98) }] },
+  { id: 'bouquetwrap', cat: 'decor', name: 'Bouquet wrapping paper, bulk pack', unit: 'sheet', perGuest: 1,
+    variants: [{ id: 'kraft', name: 'Kraft paper' }],
+    packs: [{ id: '50', label: '50 sheets · A4 size, coffee/kraft vintage wrap', per: 50, prices: P(null, null, null, 16.19) }] },
+  { id: 'postcards', cat: 'decor', name: 'Blank postcards + envelopes, bulk pack', unit: 'card', perGuest: 1,
+    variants: [{ id: 'white', name: 'White blank' }],
+    packs: [{ id: '56', label: '56 pack · 4.2"x6.0" cardstock + envelopes', per: 56, prices: P(null, null, null, 8.99) }] },
+  { id: 'labels', cat: 'decor', name: 'Chalkboard tabletop signs / food labels, bulk pack', unit: 'sign', perGuest: 0,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '20', label: '20-pack · 4x3 chalkboard tent signs', per: 20, prices: P(null, null, null, 11.05) }] },
+  { id: 'bballdecor', cat: 'decor', name: 'Basketball tablecloths & decorations, party pack', unit: 'set', perGuest: 0,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '1', label: '1 set · tablecloth + tableware, serves 20', per: 1, prices: P(null, null, null, 12.99) }] },
   // -- Paper & Serving
   { id: 'plates', cat: 'paper', name: 'Heavy-duty paper plates', unit: 'plate', perGuest: 2,
     variants: [{ id: '10', name: '10 inch' }, { id: '9', name: '9 inch', delta: -3 }],
@@ -802,14 +913,17 @@ window.QB_FAMILIES = [
     packs: [{ id: '1', label: '1 set', per: 4, prices: P(null, null, null, null) }] },
   { id: 'ice', cat: 'addons', name: 'Ice, 20 lb bags', unit: 'bag', perGuest: .08,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '4', label: '4 bags', per: 4, prices: P(null, null, null, null) },
-            { id: '8', label: '8 bags', per: 8, prices: P(null, null, null, null) }] },
+    packs: [{ id: '4', label: '4 bags', per: 4, prices: P(7.96, 23.16, 8.00, null) },
+            { id: '8', label: '8 bags', per: 8, prices: P(15.92, 46.32, 16.00, null) }] },
   { id: 'bouncehouse', cat: 'addons', name: 'Bounce house rental', unit: 'day', perGuest: 0,
     variants: [{ id: 'standard', name: 'Standard 13x13' }, { id: 'combo', name: 'Combo with slide', delta: 150 }],
     packs: [{ id: '1', label: 'Per day', per: 1, flat: 175.00 }] },
   { id: 'snowcone', cat: 'addons', name: 'Snow cone machine kit', unit: 'kit', perGuest: 0,
     variants: [{ id: 'classic', name: 'Classic syrups' }, { id: 'tropical', name: 'Tropical syrups', delta: 5 }],
     packs: [{ id: '1', label: '1 kit · serves ~100', per: 1, prices: P(null, null, null, null) }] },
+  { id: 'arcadebball', cat: 'addons', name: 'Two-player arcade basketball game rental', unit: 'day', perGuest: 0,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '1', label: 'Per day', per: 1, flat: 175.00 }] },
   // -- Staffing & Equipment Rental (Community Spark's own in-house rates — set your real numbers via the price editor)
   { id: 'lead', cat: 'staffing', name: 'Event lead, on-site', unit: 'hour', perGuest: 0,
     variants: [{ id: 'std', name: '' }],
@@ -828,7 +942,10 @@ window.QB_FAMILIES = [
     packs: [{ id: '1', label: '1 tent, per day', per: 1, flat: 125.00 }] },
   { id: 'pa', cat: 'staffing', name: 'PA system + mic rental', unit: 'day', perGuest: 0,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '1', label: 'Per day', per: 1, flat: 85.00 }] }
+    packs: [{ id: '1', label: 'Per day', per: 1, flat: 85.00 }] },
+  { id: 'tvrental', cat: 'staffing', name: 'Portable TV/monitor + stand rental', unit: 'day', perGuest: 0,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '1', label: 'Per day', per: 1, flat: 100.00 }] }
 ];
 
 // Flatten the tree into priced line-item records: id = family.variant.pack
@@ -857,6 +974,79 @@ window.QB_SAMPLE = [
   { cat: 'decor', item: 'balloons.assorted.144', packs: 1 },
   { cat: 'prizes', item: 'basket.mid.1', packs: 2 },
   { cat: 'staffing', item: 'tables.6ft.4', packs: 2 }, { cat: 'staffing', item: 'tent.10x10.1', packs: 1 }
+];
+
+/* Catalog event presets: real supply lists for the first 5 events in the public Event Catalog (events.html),
+   costed at 65 guests using this file's real researched pricing (see catalog comment above for sourcing rules).
+   `charge` is that event's published "Planning estimate" price band from events.html, so loading a preset shows
+   real margin against the public price immediately. Each line uses store:'best' so it re-prices automatically
+   if the price editor or store toggles change.
+
+   Reusable-equipment rule: anything Community Spark can buy once and reuse at every future booking (a portable
+   TV/monitor, an arcade basketball game, reusable chalkboard signage, silk floral petals) is deliberately left
+   OUT of these presets' cost lines — it's a one-time purchase, not a per-event expense, so it shouldn't inflate
+   this event's margin math. The catalog items still exist (tvrental, arcadebball, labels, rosepetals) for the
+   rare case a real rental is genuinely needed; just add them from the category picker when that applies.
+
+   No staffing lines: event lead / event assistant hours are also left out of these presets by design — not
+   billed per event. The 'lead'/'assistant' staffing families still exist in the catalog for a booking that
+   genuinely needs contracted extra help; just add them from the category picker when that applies. */
+window.QB_EVENT_PRESETS = [
+  { id: 'trivia-night', name: 'Trivia Night', guests: 65, charge: 1250, lines: [
+    { cat: 'food', item: 'chips.classic.50', packs: 2 },
+    { cat: 'food', item: 'candy.std.jar', packs: 4 },
+    { cat: 'drinks', item: 'coke.classic.35', packs: 3 },
+    { cat: 'drinks', item: 'water.purified.40', packs: 4 },
+    { cat: 'drinks', item: 'energydrink.redbull.24', packs: 1 },
+    { cat: 'prizes', item: 'giftcards.25.4', packs: 1 }
+  ] },
+  { id: 'bagel-bar', name: 'National Bagel Day Bar', guests: 65, charge: 1250, lines: [
+    { cat: 'food', item: 'bagels.everything.12', packs: 9 },
+    { cat: 'food', item: 'creamcheese.plain.48', packs: 3 },
+    { cat: 'food', item: 'nutella.std.67', packs: 1 },
+    { cat: 'food', item: 'peanutbutter.std.80', packs: 1 },
+    { cat: 'food', item: 'jam.std.jar', packs: 1 },
+    { cat: 'food', item: 'guac.std.1', packs: 1 },
+    { cat: 'drinks', item: 'coldbrew.std.concentrate', packs: 2 },
+    { cat: 'addons', item: 'ice.std.4', packs: 2 },
+    { cat: 'food', item: 'fruit.std.20', packs: 2 },
+    { cat: 'paper', item: 'plates.10.100', packs: 2 },
+    { cat: 'paper', item: 'cups.18.240', packs: 1 },
+    { cat: 'paper', item: 'napkins.white.800', packs: 1 },
+    { cat: 'paper', item: 'cutlery.std.360', packs: 1 },
+  ] },
+  { id: 'valentines-bouquet-bar', name: "Valentine's Bouquet Bar", guests: 65, charge: 800, lines: [
+    { cat: 'decor', item: 'roses.assorted.50', packs: 2 },
+    { cat: 'decor', item: 'lilies.assorted.40', packs: 1 },
+    { cat: 'decor', item: 'sunflowers.yellow.40', packs: 1 },
+    { cat: 'decor', item: 'filler.mixedgreens.100mix', packs: 1 },
+    { cat: 'decor', item: 'ribbon.assorted.30', packs: 1 },
+    { cat: 'decor', item: 'twine.jute.1', packs: 2 },
+    { cat: 'decor', item: 'bouquetwrap.kraft.50', packs: 2 },
+    { cat: 'decor', item: 'postcards.white.56', packs: 2 },
+  ] },
+  { id: 'march-madness-watch-party', name: 'March Madness Watch Party', guests: 65, charge: 800, lines: [
+    { cat: 'food', item: 'cupcakes.std.30', packs: 3 },
+    { cat: 'food', item: 'ribs.std.15', packs: 2 },
+    { cat: 'food', item: 'wings.std.10lb', packs: 2 },
+    { cat: 'food', item: 'pinwheels.std.40', packs: 2 },
+    { cat: 'food', item: 'hummus.std.32', packs: 3 },
+    { cat: 'food', item: 'fruit.std.20', packs: 2 },
+    { cat: 'drinks', item: 'coke.classic.35', packs: 3 },
+    { cat: 'decor', item: 'bballdecor.std.1', packs: 4 },
+  ] },
+  { id: 'waffle-bar', name: 'Build-Your-Own Waffle Bar', guests: 65, charge: 1250, lines: [
+    { cat: 'food', item: 'wafflemix.buttermilk.10lb', packs: 1 },
+    { cat: 'food', item: 'nutella.std.67', packs: 1 },
+    { cat: 'food', item: 'syrup.std.costco338', packs: 2 },
+    { cat: 'food', item: 'whipcream.std.3ct15', packs: 2 },
+    { cat: 'food', item: 'honey.std.1', packs: 1 },
+    { cat: 'food', item: 'strawberries.std.1', packs: 3 },
+    { cat: 'food', item: 'blueberries.std.1', packs: 2 },
+    { cat: 'food', item: 'peanutbutter.std.80', packs: 1 },
+    { cat: 'paper', item: 'plates.10.100', packs: 2 },
+    { cat: 'paper', item: 'napkins.white.800', packs: 1 }
+  ] }
 ];
 
 </script>
@@ -1242,6 +1432,13 @@ Object.assign(window, {
 </script>
 <script type="text/babel">
 const QB_KEY = 'cs-event-quote-builder-v1';
+/* Cross-device sync, read side only: on load, the app fetches this file straight from the public GitHub
+   repo and — if it's there and well-formed — replaces the local Saved Quotes list with it. This means any
+   device opening the app always sees the latest committed quotes with zero setup on that device.
+   There is deliberately no write side: this page never pushes to GitHub itself (that would require a
+   write-capable token embedded in client-side code, which anyone opening the page could read out). To
+   share edits, use "Export saved quotes" (in the Saved Quotes card) and commit that file the normal way. */
+const QB_GITHUB_QUOTES_URL = 'https://raw.githubusercontent.com/Breatht8king/Community-Spark/main/quote-calculator/saved-quotes.json';
 
 function Button({ variant = 'primary', size = 'md', disabled, fullWidth, onClick, children, style }) {
   const cls = ['btn', variant === 'inkGhost' ? 'btn-ink-ghost' : 'btn-primary', size === 'sm' ? 'btn-sm' : ''].filter(Boolean).join(' ');
@@ -1319,6 +1516,21 @@ function QBLine({ line, allowed, onChange, onRemove }) {
   );
 }
 
+// Turns the built-in QB_EVENT_PRESETS into real Saved Quote entries the first time someone opens the
+// app on a given browser, so "Trivia Night" etc. show up as ordinary, fully editable saved quotes
+// (Load / Update / Duplicate / Rename / Delete) rather than a separate, code-only mechanism.
+function seedPresetQuotes() {
+  const allowedAll = window.QB_STORES.map(s => s.key);
+  return (window.QB_EVENT_PRESETS || []).map(p => {
+    const seededLines = p.lines.map((s, i) => ({ id: 'preset-' + p.id + '-' + i, cat: s.cat, item: s.item, packs: s.packs, store: 'best', note: '' }));
+    const goods = seededLines.reduce((sum, l) => sum + qbLineCalc(l, allowedAll).price, 0);
+    return {
+      id: p.id, name: p.name, date: 'Built-in preset', cost: goods + goods * 0.07, charge: p.charge,
+      lines: seededLines, guests: p.guests, taxPct: 7, delivery: 0, allowed: allowedAll, depositPct: 50
+    };
+  });
+}
+
 function QBApp() {
   const uid = useRef(Date.now());
   const [lines, setLines] = useState([]);
@@ -1333,6 +1545,7 @@ function QBApp() {
   const [allowed, setAllowed] = useState(window.QB_STORES.map(s => s.key));
   const [picker, setPicker] = useState(null);
   const [editorOpen, setEditorOpen] = useState(false);
+  const [loadedQuoteId, setLoadedQuoteId] = useState(null);
   const [, setTick] = useState(0);
   const bump = () => setTick(t => t + 1);
 
@@ -1343,9 +1556,21 @@ function QBApp() {
         setLines(saved_.lines || []); setName(saved_.name || ''); setGuests(saved_.guests ?? 60);
         setCharge(saved_.charge ?? 0); setTaxPct(saved_.taxPct ?? 7); setDelivery(saved_.delivery ?? 0);
         setTarget(saved_.target ?? 35); setDepositPct(saved_.depositPct ?? 50);
-        setSaved(saved_.saved || []); setAllowed(saved_.allowed || window.QB_STORES.map(s => s.key));
+        setSaved(saved_.saved && saved_.saved.length ? saved_.saved : seedPresetQuotes());
+        setAllowed(saved_.allowed || window.QB_STORES.map(s => s.key));
+      } else {
+        setSaved(seedPresetQuotes());
       }
     } catch (e) { }
+
+    // Background refresh from GitHub — silently keeps whatever loaded above if this fails (offline,
+    // nothing committed yet, blocked network) so it's never worse than not having this feature at all.
+    let cancelled = false;
+    fetch(QB_GITHUB_QUOTES_URL, { cache: 'no-store' })
+      .then(r => (r.ok ? r.json() : null))
+      .then(data => { if (!cancelled && Array.isArray(data) && data.length) setSaved(data); })
+      .catch(() => { });
+    return () => { cancelled = true; };
   }, []);
 
   useEffect(() => {
@@ -1380,18 +1605,37 @@ function QBApp() {
     uid.current += 1;
     setLines(window.QB_SAMPLE.map((s, i) => ({ id: 's' + uid.current + '-' + i, cat: s.cat, item: s.item, packs: s.packs, store: 'best', note: '' })));
   }
-  function clearAll() { setLines([]); setCharge(0); setDelivery(0); setName(''); }
+  function loadPreset(presetId) {
+    const preset = window.QB_EVENT_PRESETS.find(p => p.id === presetId);
+    if (!preset) return;
+    uid.current += 1;
+    setLines(preset.lines.map((s, i) => ({ id: 'p' + uid.current + '-' + i, cat: s.cat, item: s.item, packs: s.packs, store: 'best', note: '' })));
+    setName(preset.name);
+    setGuests(preset.guests);
+    setCharge(preset.charge);
+    setLoadedQuoteId(preset.id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function clearAll() { setLines([]); setCharge(0); setDelivery(0); setName(''); setLoadedQuoteId(null); }
   function toggleStore(k) { setAllowed(a => a.length > 1 ? (a.indexOf(k) >= 0 ? a.filter(x => x !== k) : [...a, k]) : a); }
 
   function saveQuote() {
     if (!lines.length) return;
-    const snap = { id: 'q' + Date.now(), name, date: new Date().toLocaleDateString('en-US'), cost, charge, lines, guests, taxPct, delivery, allowed, depositPct };
+    const id = 'q' + Date.now();
+    const snap = { id, name, date: new Date().toLocaleDateString('en-US'), cost, charge, lines, guests, taxPct, delivery, allowed, depositPct };
     setSaved(s => [snap, ...s].slice(0, 12));
+    setLoadedQuoteId(id);
+  }
+  function updateQuote() {
+    if (!lines.length || !loadedQuoteId) return;
+    const snap = { id: loadedQuoteId, name, date: new Date().toLocaleDateString('en-US'), cost, charge, lines, guests, taxPct, delivery, allowed, depositPct };
+    setSaved(s => s.some(q => q.id === loadedQuoteId) ? s.map(q => q.id === loadedQuoteId ? snap : q) : [snap, ...s].slice(0, 12));
   }
   function loadQuote(q) {
     setLines(q.lines || []); setName(q.name || ''); setCharge(q.charge ?? 0); setGuests(q.guests ?? 60);
     setTaxPct(q.taxPct ?? 7); setDelivery(q.delivery ?? 0); setAllowed(q.allowed || window.QB_STORES.map(s => s.key));
     if (q.depositPct != null) setDepositPct(q.depositPct);
+    setLoadedQuoteId(q.id);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   function duplicateQuote(q) {
@@ -1399,6 +1643,14 @@ function QBApp() {
   }
   function renameQuote(id, newName) { setSaved(s => s.map(q => q.id === id ? { ...q, name: newName } : q)); }
   function deleteQuote(id) { setSaved(s => s.filter(q => q.id !== id)); }
+
+  function exportSavedQuotes() {
+    const blob = new Blob([JSON.stringify(saved, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'saved-quotes.json';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  }
 
   function exportCSV() {
     const esc = v => '"' + String(v).replace(/"/g, '""') + '"';
@@ -1448,6 +1700,10 @@ function QBApp() {
                   <p>Add line items by category, then set the guest count, tax, delivery, and what you're charging the client. Totals, margin, and the store shopping list update instantly.</p>
                 </div>
                 <div className="qb-heading-actions">
+                  <select className="qb-store-select" style={{ minHeight: 40 }} value="" onChange={e => { if (e.target.value) loadPreset(e.target.value); }}>
+                    <option value="">Load event preset…</option>
+                    {window.QB_EVENT_PRESETS.map(p => <option key={p.id} value={p.id}>{p.name} · {p.guests} guests</option>)}
+                  </select>
                   <Button variant="inkGhost" size="sm" onClick={loadSample}>Load sample lines</Button>
                   <Button variant="inkGhost" size="sm" onClick={clearAll}>Clear all</Button>
                 </div>
@@ -1516,13 +1772,22 @@ function QBApp() {
               <div className="qb-card" style={qbCard}>
                 <span className="qb-card-label">This quote</span>
                 <input className="qb-name-input" placeholder="Event name" value={name} onChange={e => setName(e.target.value)} />
-                <Button size="sm" disabled={!lines.length} onClick={saveQuote}>Save quote</Button>
+                {loadedQuoteId ? (
+                  <>
+                    <Button size="sm" disabled={!lines.length} onClick={updateQuote}>Update saved quote</Button>
+                    <Button variant="inkGhost" size="sm" disabled={!lines.length} onClick={saveQuote}>Save as new copy</Button>
+                  </>
+                ) : (
+                  <Button size="sm" disabled={!lines.length} onClick={saveQuote}>Save quote</Button>
+                )}
                 <Button variant="inkGhost" size="sm" onClick={() => window.print()}>Print client quote</Button>
                 <Button variant="inkGhost" size="sm" onClick={exportCSV}>Export to Excel (CSV)</Button>
                 <Button variant="inkGhost" size="sm" onClick={() => setEditorOpen(true)}>Edit catalog prices</Button>
               </div>
               <div className="qb-card" style={qbCard}>
                 <span className="qb-card-label">Saved quotes</span>
+                <div className="qb-field-help">Refreshed from GitHub each time this page loads. To share changes with other devices, export this file and commit it to <code>quote-calculator/saved-quotes.json</code>.</div>
+                <Button variant="inkGhost" size="sm" fullWidth disabled={!saved.length} onClick={exportSavedQuotes}>Export saved quotes</Button>
                 <QBSavedQuotes saved={saved} onLoad={loadQuote} onDuplicate={duplicateQuote} onRename={renameQuote} onDelete={deleteQuote} />
               </div>
           </aside>

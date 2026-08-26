@@ -1,0 +1,457 @@
+[
+  {
+    "id": "trivia-night",
+    "name": "Trivia Night",
+    "date": "Built-in preset",
+    "cost": 310.46,
+    "charge": 1250,
+    "lines": [
+      {
+        "id": "preset-trivia-night-0",
+        "cat": "food",
+        "item": "chips.classic.50",
+        "packs": 2,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-trivia-night-1",
+        "cat": "food",
+        "item": "candy.std.jar",
+        "packs": 4,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-trivia-night-2",
+        "cat": "drinks",
+        "item": "coke.classic.35",
+        "packs": 3,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-trivia-night-3",
+        "cat": "drinks",
+        "item": "water.purified.40",
+        "packs": 4,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-trivia-night-4",
+        "cat": "drinks",
+        "item": "energydrink.redbull.24",
+        "packs": 1,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-trivia-night-5",
+        "cat": "prizes",
+        "item": "giftcards.25.4",
+        "packs": 1,
+        "store": "best",
+        "note": ""
+      }
+    ],
+    "guests": 65,
+    "taxPct": 7,
+    "delivery": 0,
+    "allowed": [
+      "costco",
+      "bjs",
+      "sams",
+      "amazon"
+    ],
+    "depositPct": 50
+  },
+  {
+    "id": "bagel-bar",
+    "name": "National Bagel Day Bar",
+    "date": "Built-in preset",
+    "cost": 250.74,
+    "charge": 1250,
+    "lines": [
+      {
+        "id": "preset-bagel-bar-0",
+        "cat": "food",
+        "item": "bagels.everything.12",
+        "packs": 9,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-bagel-bar-1",
+        "cat": "food",
+        "item": "creamcheese.plain.48",
+        "packs": 3,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-bagel-bar-2",
+        "cat": "food",
+        "item": "nutella.std.67",
+        "packs": 1,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-bagel-bar-3",
+        "cat": "food",
+        "item": "peanutbutter.std.80",
+        "packs": 1,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-bagel-bar-4",
+        "cat": "food",
+        "item": "jam.std.jar",
+        "packs": 1,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-bagel-bar-5",
+        "cat": "food",
+        "item": "guac.std.1",
+        "packs": 1,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-bagel-bar-6",
+        "cat": "drinks",
+        "item": "coldbrew.std.concentrate",
+        "packs": 2,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-bagel-bar-7",
+        "cat": "addons",
+        "item": "ice.std.4",
+        "packs": 2,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-bagel-bar-8",
+        "cat": "food",
+        "item": "fruit.std.20",
+        "packs": 2,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-bagel-bar-9",
+        "cat": "paper",
+        "item": "plates.10.100",
+        "packs": 2,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-bagel-bar-10",
+        "cat": "paper",
+        "item": "cups.18.240",
+        "packs": 1,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-bagel-bar-11",
+        "cat": "paper",
+        "item": "napkins.white.800",
+        "packs": 1,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-bagel-bar-12",
+        "cat": "paper",
+        "item": "cutlery.std.360",
+        "packs": 1,
+        "store": "best",
+        "note": ""
+      }
+    ],
+    "guests": 65,
+    "taxPct": 7,
+    "delivery": 0,
+    "allowed": [
+      "costco",
+      "bjs",
+      "sams",
+      "amazon"
+    ],
+    "depositPct": 50
+  },
+  {
+    "id": "valentines-bouquet-bar",
+    "name": "Valentine's Bouquet Bar",
+    "date": "Built-in preset",
+    "cost": 364.91,
+    "charge": 800,
+    "lines": [
+      {
+        "id": "preset-valentines-bouquet-bar-0",
+        "cat": "decor",
+        "item": "roses.assorted.50",
+        "packs": 2,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-valentines-bouquet-bar-1",
+        "cat": "decor",
+        "item": "lilies.assorted.40",
+        "packs": 1,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-valentines-bouquet-bar-2",
+        "cat": "decor",
+        "item": "sunflowers.yellow.40",
+        "packs": 1,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-valentines-bouquet-bar-3",
+        "cat": "decor",
+        "item": "filler.mixedgreens.100mix",
+        "packs": 1,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-valentines-bouquet-bar-4",
+        "cat": "decor",
+        "item": "ribbon.assorted.30",
+        "packs": 1,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-valentines-bouquet-bar-5",
+        "cat": "decor",
+        "item": "twine.jute.1",
+        "packs": 2,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-valentines-bouquet-bar-6",
+        "cat": "decor",
+        "item": "bouquetwrap.kraft.50",
+        "packs": 2,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-valentines-bouquet-bar-7",
+        "cat": "decor",
+        "item": "postcards.white.56",
+        "packs": 2,
+        "store": "best",
+        "note": ""
+      }
+    ],
+    "guests": 65,
+    "taxPct": 7,
+    "delivery": 0,
+    "allowed": [
+      "costco",
+      "bjs",
+      "sams",
+      "amazon"
+    ],
+    "depositPct": 50
+  },
+  {
+    "id": "march-madness-watch-party",
+    "name": "March Madness Watch Party",
+    "date": "Built-in preset",
+    "cost": 405.87,
+    "charge": 800,
+    "lines": [
+      {
+        "id": "preset-march-madness-watch-party-0",
+        "cat": "food",
+        "item": "cupcakes.std.30",
+        "packs": 3,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-march-madness-watch-party-1",
+        "cat": "food",
+        "item": "ribs.std.15",
+        "packs": 2,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-march-madness-watch-party-2",
+        "cat": "food",
+        "item": "wings.std.10lb",
+        "packs": 2,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-march-madness-watch-party-3",
+        "cat": "food",
+        "item": "pinwheels.std.40",
+        "packs": 2,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-march-madness-watch-party-4",
+        "cat": "food",
+        "item": "hummus.std.32",
+        "packs": 3,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-march-madness-watch-party-5",
+        "cat": "food",
+        "item": "fruit.std.20",
+        "packs": 2,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-march-madness-watch-party-6",
+        "cat": "drinks",
+        "item": "coke.classic.35",
+        "packs": 3,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-march-madness-watch-party-7",
+        "cat": "decor",
+        "item": "bballdecor.std.1",
+        "packs": 4,
+        "store": "best",
+        "note": ""
+      }
+    ],
+    "guests": 65,
+    "taxPct": 7,
+    "delivery": 0,
+    "allowed": [
+      "costco",
+      "bjs",
+      "sams",
+      "amazon"
+    ],
+    "depositPct": 50
+  },
+  {
+    "id": "waffle-bar",
+    "name": "Build-Your-Own Waffle Bar",
+    "date": "Built-in preset",
+    "cost": 132.24,
+    "charge": 1250,
+    "lines": [
+      {
+        "id": "preset-waffle-bar-0",
+        "cat": "food",
+        "item": "wafflemix.buttermilk.10lb",
+        "packs": 1,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-waffle-bar-1",
+        "cat": "food",
+        "item": "nutella.std.67",
+        "packs": 1,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-waffle-bar-2",
+        "cat": "food",
+        "item": "syrup.std.costco338",
+        "packs": 2,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-waffle-bar-3",
+        "cat": "food",
+        "item": "whipcream.std.3ct15",
+        "packs": 2,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-waffle-bar-4",
+        "cat": "food",
+        "item": "honey.std.1",
+        "packs": 1,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-waffle-bar-5",
+        "cat": "food",
+        "item": "strawberries.std.1",
+        "packs": 3,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-waffle-bar-6",
+        "cat": "food",
+        "item": "blueberries.std.1",
+        "packs": 2,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-waffle-bar-7",
+        "cat": "food",
+        "item": "peanutbutter.std.80",
+        "packs": 1,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-waffle-bar-8",
+        "cat": "paper",
+        "item": "plates.10.100",
+        "packs": 2,
+        "store": "best",
+        "note": ""
+      },
+      {
+        "id": "preset-waffle-bar-9",
+        "cat": "paper",
+        "item": "napkins.white.800",
+        "packs": 1,
+        "store": "best",
+        "note": ""
+      }
+    ],
+    "guests": 65,
+    "taxPct": 7,
+    "delivery": 0,
+    "allowed": [
+      "costco",
+      "bjs",
+      "sams",
+      "amazon"
+    ],
+    "depositPct": 50
+  }
+]
