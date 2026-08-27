@@ -62,7 +62,10 @@
       "costco",
       "bjs",
       "sams",
-      "amazon"
+      "amazon",
+      "kroger",
+      "meijer",
+      "walmart"
     ],
     "depositPct": 50
   },
@@ -185,7 +188,10 @@
       "costco",
       "bjs",
       "sams",
-      "amazon"
+      "amazon",
+      "kroger",
+      "meijer",
+      "walmart"
     ],
     "depositPct": 50
   },
@@ -268,7 +274,10 @@
       "costco",
       "bjs",
       "sams",
-      "amazon"
+      "amazon",
+      "kroger",
+      "meijer",
+      "walmart"
     ],
     "depositPct": 50
   },
@@ -276,7 +285,7 @@
     "id": "march-madness-watch-party",
     "name": "March Madness Watch Party",
     "date": "Built-in preset",
-    "cost": 405.87,
+    "cost": 395.6,
     "charge": 800,
     "lines": [
       {
@@ -351,7 +360,10 @@
       "costco",
       "bjs",
       "sams",
-      "amazon"
+      "amazon",
+      "kroger",
+      "meijer",
+      "walmart"
     ],
     "depositPct": 50
   },
@@ -450,7 +462,10 @@
       "costco",
       "bjs",
       "sams",
-      "amazon"
+      "amazon",
+      "kroger",
+      "meijer",
+      "walmart"
     ],
     "depositPct": 50
   },
@@ -501,7 +516,10 @@
       "costco",
       "bjs",
       "sams",
-      "amazon"
+      "amazon",
+      "kroger",
+      "meijer",
+      "walmart"
     ],
     "depositPct": 50
   },
@@ -544,7 +562,10 @@
       "costco",
       "bjs",
       "sams",
-      "amazon"
+      "amazon",
+      "kroger",
+      "meijer",
+      "walmart"
     ],
     "depositPct": 50
   },
@@ -579,7 +600,10 @@
       "costco",
       "bjs",
       "sams",
-      "amazon"
+      "amazon",
+      "kroger",
+      "meijer",
+      "walmart"
     ],
     "depositPct": 50
   },
@@ -606,7 +630,10 @@
       "costco",
       "bjs",
       "sams",
-      "amazon"
+      "amazon",
+      "kroger",
+      "meijer",
+      "walmart"
     ],
     "depositPct": 50
   },
@@ -614,7 +641,7 @@
     "id": "national-donut-day",
     "name": "National Donut Day",
     "date": "Built-in preset",
-    "cost": 187.9,
+    "cost": 170.78,
     "charge": 1250,
     "lines": [
       {
@@ -649,7 +676,10 @@
       "costco",
       "bjs",
       "sams",
-      "amazon"
+      "amazon",
+      "kroger",
+      "meijer",
+      "walmart"
     ],
     "depositPct": 50
   },
@@ -692,7 +722,10 @@
       "costco",
       "bjs",
       "sams",
-      "amazon"
+      "amazon",
+      "kroger",
+      "meijer",
+      "walmart"
     ],
     "depositPct": 50
   },
@@ -783,7 +816,10 @@
       "costco",
       "bjs",
       "sams",
-      "amazon"
+      "amazon",
+      "kroger",
+      "meijer",
+      "walmart"
     ],
     "depositPct": 50
   },
@@ -826,7 +862,10 @@
       "costco",
       "bjs",
       "sams",
-      "amazon"
+      "amazon",
+      "kroger",
+      "meijer",
+      "walmart"
     ],
     "depositPct": 50
   },
@@ -909,7 +948,10 @@
       "costco",
       "bjs",
       "sams",
-      "amazon"
+      "amazon",
+      "kroger",
+      "meijer",
+      "walmart"
     ],
     "depositPct": 50
   },
@@ -952,7 +994,10 @@
       "costco",
       "bjs",
       "sams",
-      "amazon"
+      "amazon",
+      "kroger",
+      "meijer",
+      "walmart"
     ],
     "depositPct": 50
   },
@@ -1019,7 +1064,10 @@
       "costco",
       "bjs",
       "sams",
-      "amazon"
+      "amazon",
+      "kroger",
+      "meijer",
+      "walmart"
     ],
     "depositPct": 50
   },
@@ -1027,7 +1075,7 @@
     "id": "halloween-costume-contest-photo-area",
     "name": "Halloween Costume Contest & Photo Area",
     "date": "Built-in preset",
-    "cost": 305.86,
+    "cost": 259.85,
     "charge": 800,
     "lines": [
       {
@@ -1086,7 +1134,10 @@
       "costco",
       "bjs",
       "sams",
-      "amazon"
+      "amazon",
+      "kroger",
+      "meijer",
+      "walmart"
     ],
     "depositPct": 50
   },
@@ -1177,7 +1228,10 @@
       "costco",
       "bjs",
       "sams",
-      "amazon"
+      "amazon",
+      "kroger",
+      "meijer",
+      "walmart"
     ],
     "depositPct": 50
   },
@@ -1185,7 +1239,7 @@
     "id": "halloween-dessert-bar",
     "name": "Halloween Dessert Bar",
     "date": "Built-in preset",
-    "cost": 401.26,
+    "cost": 400.51,
     "charge": 1250,
     "lines": [
       {
@@ -1268,7 +1322,10 @@
       "costco",
       "bjs",
       "sams",
-      "amazon"
+      "amazon",
+      "kroger",
+      "meijer",
+      "walmart"
     ],
     "depositPct": 50
   },
@@ -1343,7 +1400,10 @@
       "costco",
       "bjs",
       "sams",
-      "amazon"
+      "amazon",
+      "kroger",
+      "meijer",
+      "walmart"
     ],
     "depositPct": 50
   }

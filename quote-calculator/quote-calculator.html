@@ -147,6 +147,16 @@ header.qb-header .qb-wrap{display:flex;align-items:center;justify-content:space-
 .qb-toggle-row{display:flex;flex-wrap:wrap;gap:8px}
 .qb-toggle{border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600;border:1px solid var(--line);background:transparent;color:var(--muted)}
 .qb-toggle.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.qb-storepicker{position:relative;width:100%}
+.qb-storepicker-trigger{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;padding:10px 14px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--paper);color:var(--ink);font-size:13px;font-weight:600;font-family:inherit;text-align:left}
+.qb-storepicker-trigger:hover{border-color:var(--ink)}
+.qb-storepicker-caret{color:var(--muted);font-size:11px}
+.qb-storepicker-menu{position:absolute;z-index:20;top:calc(100% + 6px);left:0;right:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-sm);box-shadow:var(--shadow-lg);padding:6px;display:flex;flex-direction:column;gap:1px}
+.qb-storepicker-option{display:flex;align-items:center;gap:9px;padding:8px 8px;border-radius:10px;font-size:13px;color:var(--ink);cursor:pointer}
+.qb-storepicker-option:hover{background:var(--cream)}
+.qb-storepicker-option input{width:15px;height:15px;accent-color:var(--ink)}
+.qb-storepicker-clear{margin-top:4px;padding:8px;border-radius:10px;border:none;background:none;font-size:12px;font-weight:600;color:var(--gold-dark);text-align:left}
+.qb-storepicker-clear:hover{background:var(--cream)}
 .qb-field-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .qb-field-label{font-size:14px;color:var(--ink)}
 .qb-field-help{font-size:12px;color:var(--muted);margin-top:2px}
@@ -215,16 +225,17 @@ header.qb-header .qb-wrap{display:flex;align-items:center;justify-content:space-
 /* ===== Price editor ===== */
 .qb-editor-cat{margin-top:8px}
 .qb-editor-cat>h3{font-size:16px;font-weight:600;margin:22px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
-.qb-editor-row{display:grid;grid-template-columns:minmax(0,1fr) repeat(4,90px);gap:10px;align-items:center;padding:8px 0}
+.qb-editor-scroll{overflow-x:auto}
+.qb-editor-row{display:grid;grid-template-columns:minmax(150px,1fr) repeat(7,78px);gap:8px;align-items:center;padding:8px 0}
 .qb-editor-row+.qb-editor-row{border-top:1px solid var(--line)}
 .qb-editor-name{font-size:13px}
 .qb-editor-name small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
 .qb-editor-field{position:relative}
-.qb-editor-field input{width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:8px;font-size:12px;font-family:inherit}
+.qb-editor-field input{width:100%;padding:6px 6px;border:1px solid var(--line);border-radius:8px;font-size:12px;font-family:inherit}
 .qb-editor-field input.overridden{border-color:var(--gold);background:#fffaf0}
 .qb-editor-reset{position:absolute;top:-16px;right:0;font-size:9px;color:var(--gold-dark);background:none;border:none;padding:0;text-decoration:underline}
-.qb-editor-head-row{display:grid;grid-template-columns:minmax(0,1fr) repeat(4,90px);gap:10px;padding:0 0 8px;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);border-bottom:1px solid var(--ink)}
-.qb-editor-flat{grid-column:2/6}
+.qb-editor-head-row{display:grid;grid-template-columns:minmax(150px,1fr) repeat(7,78px);gap:8px;padding:0 0 8px;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);border-bottom:1px solid var(--ink)}
+.qb-editor-flat{grid-column:2/9}
 
 /* ===== Print sheet ===== */
 .qb-print{display:none}
@@ -566,7 +577,7 @@ var e,t,r="function"==typeof Symbol?Symbol:{},a=r.iterator||"@@iterator",n=r.toS
 </script>
 <script>
 /* Catalog tree: category -> brand/item family -> variant (flavor/style) -> pack size.
-   Pack prices are per pack, by warehouse: P(costco, bjs, sams, amazon).
+   Pack prices are per pack, by store: P(costco, bjs, sams, amazon, kroger, meijer, walmart).
 
    PRICING STATUS (researched 2026-08-21; Sam's Club/BJ's added 2026-08-23):
    - Sam's Club and BJ's Wholesale prices were added from a spreadsheet the user compiled from their own
@@ -595,32 +606,35 @@ window.QB_STORES = [
   { key: 'costco', name: 'Costco', deliveryMin: 75 },
   { key: 'bjs', name: "BJ's", deliveryMin: 50 },
   { key: 'sams', name: "Sam's Club", deliveryMin: 50 },
-  { key: 'amazon', name: 'Amazon', deliveryMin: 35 }
+  { key: 'amazon', name: 'Amazon', deliveryMin: 35 },
+  { key: 'kroger', name: 'Kroger', deliveryMin: 35 },
+  { key: 'meijer', name: 'Meijer', deliveryMin: 35 },
+  { key: 'walmart', name: 'Walmart', deliveryMin: 35 }
 ];
 window.QB_CATEGORIES = [
   { id: 'drinks', name: 'Drinks' }, { id: 'food', name: 'Food' }, { id: 'catering', name: 'Catering' }, { id: 'decor', name: 'Décor' },
   { id: 'paper', name: 'Paper & Serving' }, { id: 'prizes', name: 'Prizes & Giveaways' }, { id: 'addons', name: 'Add-Ons' }, { id: 'staffing', name: 'Staffing & Equipment Rental' }
 ];
-const P = (costco, bjs, sams, amazon) => ({ costco, bjs, sams, amazon });
+const P = (costco, bjs, sams, amazon, kroger, meijer, walmart) => ({ costco, bjs, sams, amazon, kroger, meijer, walmart });
 window.QB_FAMILIES = [
   // -- Drinks
   { id: 'coke', cat: 'drinks', name: 'Coca-Cola', unit: 'can', perGuest: 1.5,
     variants: [{ id: 'classic', name: 'Classic' }, { id: 'cherry', name: 'Cherry', only: ['24'], delta: .6 }, { id: 'zero', name: 'Zero Sugar' }, { id: 'vanilla', name: 'Vanilla', only: ['12'], delta: .4 }],
-    packs: [{ id: '12', label: '12 pack · 12 oz cans', per: 12, prices: P(null, null, null, 8.42) },
-            { id: '24', label: '24 pack · 12 oz cans', per: 24, prices: P(null, null, null, 14.77) },
+    packs: [{ id: '12', label: '12 pack · 12 oz cans', per: 12, prices: P(null, null, null, 8.42, null, 8.99, null) },
+            { id: '24', label: '24 pack · 12 oz cans', per: 24, prices: P(null, null, null, 14.77, null, 11.99, null) },
             { id: '35', label: '35 pack · 12 oz cans', per: 35, prices: P(null, 16.79, 18.48, null) }] },
   { id: 'pepsi', cat: 'drinks', name: 'Pepsi', unit: 'can', perGuest: 1.5,
     variants: [{ id: 'classic', name: 'Classic' }, { id: 'diet', name: 'Diet' }, { id: 'wild', name: 'Wild Cherry', only: ['24'], delta: .5 }],
-    packs: [{ id: '24', label: '24 pack · 12 oz cans', per: 24, prices: P(null, null, null, 24.79) },
+    packs: [{ id: '24', label: '24 pack · 12 oz cans', per: 24, prices: P(null, null, null, 24.79, null, 11.99, null) },
             { id: '36', label: '36 pack · 12 oz cans', per: 36, prices: P(null, 13.09, 15.58, 35.99) }] },
   { id: 'lemonlime', cat: 'drinks', name: 'Lemon-lime soda', unit: 'can', perGuest: 1,
     variants: [{ id: 'regular', name: 'Regular' }, { id: 'zero', name: 'Zero sugar' }],
-    packs: [{ id: '24', label: '24 pack · 12 oz cans', per: 24, prices: P(null, null, null, null) },
+    packs: [{ id: '24', label: '24 pack · 12 oz cans', per: 24, prices: P(12.99, null, null, null, null, 11.99, null) },
             { id: '35', label: '35 pack · 12 oz cans', per: 35, prices: P(null, 16.79, 18.48, null) }] },
   { id: 'water', cat: 'drinks', name: 'Bottled water', unit: 'bottle', perGuest: 2,
     variants: [{ id: 'purified', name: 'Purified' }, { id: 'spring', name: 'Spring', delta: .9 }],
-    packs: [{ id: '24', label: '24 pack · 16.9 oz', per: 24, prices: P(null, null, null, 13.98) },
-            { id: '40', label: '40 pack · 16.9 oz', per: 40, prices: P(null, 3.99, 3.98, 23.45) }] },
+    packs: [{ id: '24', label: '24 pack · 16.9 oz', per: 24, prices: P(null, null, null, 13.98, null, 3.69, null) },
+            { id: '40', label: '40 pack · 16.9 oz', per: 40, prices: P(null, 3.99, 3.98, 23.45, null, 5.89, null) }] },
   { id: 'juice', cat: 'drinks', name: 'Juice boxes', unit: 'box', perGuest: 1,
     variants: [{ id: 'apple', name: 'Apple' }, { id: 'punch', name: 'Fruit punch' }, { id: 'variety', name: 'Variety pack', delta: .75 }],
     packs: [{ id: '40', label: '40 pack · 6.75 oz', per: 40, prices: P(null, 9.99, null, 20.75) }] },
@@ -630,7 +644,7 @@ window.QB_FAMILIES = [
             { id: '18-20', label: '18 pack · 20 oz bottles', per: 18, prices: P(null, null, 18.48, null) }] },
   { id: 'lemonade', cat: 'drinks', name: 'Lemonade, gallon jugs', unit: 'gallon', perGuest: .08,
     variants: [{ id: 'classic', name: 'Classic' }, { id: 'strawberry', name: 'Strawberry', delta: .5 }],
-    packs: [{ id: '2', label: '2 pack · 1 gallon', per: 2, prices: P(null, null, null, null) }] },
+    packs: [{ id: '2', label: '2 pack · 96 fl oz jugs (0.75 gal each), Wellsley Farms', per: 2, prices: P(null, 8.69, null, null) }] },
   { id: 'coffee', cat: 'drinks', name: 'Coffee service', unit: 'serving', perGuest: .4,
     variants: [{ id: 'regular', name: 'Regular roast' }, { id: 'decaf', name: 'Decaf', delta: 1.5 }],
     packs: [{ id: '100', label: '100 servings · 3 lb ground + cups', per: 100, prices: P(null, null, null, 57.73) }] },
@@ -655,11 +669,11 @@ window.QB_FAMILIES = [
     packs: [{ id: '18', label: '18 pack · 8 oz cartons', per: 18, prices: P(15.49, null, 16.51, null) }] },
   { id: 'applecider', cat: 'drinks', name: 'Apple cider, gallon jugs', unit: 'gallon', perGuest: .08,
     variants: [{ id: 'std', name: 'Classic' }],
-    packs: [{ id: '1gal', label: '1 gallon jug', per: 1, prices: P(5.39, null, 6.47, null) },
-            { id: 'half', label: '64 oz (half gallon)', per: 0.5, prices: P(null, 6.99, null, null) }] },
+    packs: [{ id: '1gal', label: '1 gallon jug', per: 1, prices: P(5.39, null, 6.47, null, null, 6.99, null) },
+            { id: 'half', label: '64 oz (half gallon)', per: 0.5, prices: P(null, 6.99, null, null, null, 4.99, null) }] },
   { id: 'coffeepods', cat: 'drinks', name: 'Coffee pods, bulk box', unit: 'pod', perGuest: .5,
     variants: [{ id: 'medium', name: 'Medium roast' }],
-    packs: [{ id: '120', label: '120 ct · Kirkland Signature Summit Roast (organic, medium)', per: 120, prices: P(31.99, null, null, null) },
+    packs: [{ id: '120', label: '120 ct · Kirkland Signature Summit Roast (organic, medium)', per: 120, prices: P(31.99, null, null, null, null, 31.99, null) },
             { id: '100', label: '100 ct', per: 100, prices: P(null, null, 28.00, 42.97) }] },
   { id: 'pumpkinsyrup', cat: 'drinks', name: 'Flavored coffee syrup, bulk bottle (pumpkin spice)', unit: 'oz', perGuest: .4,
     variants: [{ id: 'pumpkinspice', name: 'Pumpkin spice' }],
@@ -675,10 +689,10 @@ window.QB_FAMILIES = [
             { id: '48', label: '48 ct', per: 48, prices: P(8.98, null, null, null) }] },
   { id: 'burgers', cat: 'food', name: 'Burger patties', unit: 'patty', perGuest: 1,
     variants: [{ id: 'beef', name: 'Beef, 1/4 lb' }, { id: 'veggie', name: 'Veggie', delta: 3 }],
-    packs: [{ id: '24', label: '24 ct · frozen', per: 24, prices: P(null, null, null, null) }] },
+    packs: [{ id: '24', label: '24 ct · frozen, 6 lb, Holten\'s Party Pack', per: 24, prices: P(null, null, 15.97, null) }] },
   { id: 'vegetables', cat: 'food', name: 'Vegetable tray', unit: 'serving', perGuest: .5,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '20', label: 'Serves 20 · 4 lb, incl. ranch dip', per: 20, prices: P(9.49, null, null, null) }] },
+    packs: [{ id: '20', label: 'Serves 20 · 4 lb, incl. ranch dip', per: 20, prices: P(9.49, null, null, null, 10.99, null, null) }] },
   { id: 'icecreamtubs', cat: 'food', name: 'Ice cream, bulk tub', unit: 'serving', perGuest: .5,
     variants: [{ id: 'vanilla', name: 'Vanilla' }, { id: 'chocolate', name: 'Chocolate' },
                { id: 'cookiescream', name: 'Cookies & cream' }, { id: 'specialty', name: 'Specialty flavor', delta: 2 }],
@@ -694,35 +708,34 @@ window.QB_FAMILIES = [
     packs: [{ id: '128oz', label: '128 oz jar', per: 1, prices: P(10.99, null, null, null) }] },
   { id: 'icecreamtoppings', cat: 'food', name: 'Ice cream topping assortment', unit: 'multi-pack', perGuest: .015,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '1', label: 'Multi-pack (sprinkles, nuts, etc.)', per: 1, prices: P(null, null, null, null) }] },
+    packs: [{ id: '1', label: 'Multi-pack — sprinkles, maraschino cherries, nut topping', per: 1, prices: P(null, null, null, 18.49) }] },
   { id: 'chips', cat: 'food', name: 'Chips, single-serve', unit: 'bag', perGuest: 1,
     variants: [{ id: 'classic', name: 'Classic mix' }, { id: 'cheesy', name: 'Cheesy mix' }, { id: 'kids', name: 'Kids favorites', delta: .75 }],
     packs: [{ id: '30', label: '30 bags', per: 30, prices: P(20.99, 18.49, null, null) },
             { id: '50', label: '50 bags', per: 50, prices: P(null, 18.49, 18.48, null) }] },
   { id: 'cookies', cat: 'food', name: 'Cookie tray', unit: 'cookie', perGuest: 1.5,
     variants: [{ id: 'assorted', name: 'Assorted' }, { id: 'chocchip', name: 'Chocolate chip' }],
-    packs: [{ id: '30', label: '30 ct', per: 30, prices: P(null, null, null, null) },
+    packs: [{ id: '30', label: '30 ct · 2oz bite-size, Sweet Serenity', per: 30, prices: P(15.99, null, null, null) },
             { id: '60', label: '60 ct', per: 60, prices: P(22.99, null, null, null) }] },
   { id: 'fruit', cat: 'food', name: 'Fruit tray', unit: 'serving', perGuest: .5,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '20', label: 'Serves 20', per: 20, prices: P(9.99, null, 39.98, null) }] },
+    packs: [{ id: '20', label: 'Serves 20', per: 20, prices: P(9.99, null, 39.98, null, 20.99, null, null) }] },
   { id: 'popcorn', cat: 'food', name: 'Popcorn kit', unit: 'serving', perGuest: 1,
     variants: [{ id: 'butter', name: 'Butter' }, { id: 'kettle', name: 'Kettle corn', delta: 2 }],
-    packs: [{ id: '24', label: '24 servings · kernels + oil', per: 24, prices: P(null, null, null, null) }] },
+    packs: [{ id: '24', label: '24 servings · kernels + oil, Great Northern Popcorn', per: 24, prices: P(null, null, null, 42.89) }] },
   { id: 'watermelon', cat: 'food', name: 'Watermelon, sliced tray', unit: 'serving', perGuest: .2,
     variants: [{ id: 'std', name: '' }],
     packs: [{ id: '20', label: 'Serves 20', per: 20, prices: P(null, null, null, null) }] },
   { id: 'pretzels', cat: 'food', name: 'Pretzels, single-serve', unit: 'bag', perGuest: 1,
-    variants: [{ id: 'original', name: 'Original' }, { id: 'honeymustard', name: 'Honey mustard', delta: .75 }],
-    packs: [{ id: '30', label: '30 bags', per: 30, prices: P(null, null, null, null) },
-            { id: '50', label: '50 bags', per: 50, prices: P(null, null, null, null) }] },
+    variants: [{ id: 'original', name: 'Original, Dot\'s Homestyle Seasoned Pretzel Twists' }, { id: 'honeymustard', name: 'Honey mustard', delta: .75 }],
+    packs: [{ id: '32', label: '32 bags · 1oz, variety pack', per: 32, prices: P(17.40, null, null, null) }] },
   { id: 'icecream', cat: 'food', name: 'Ice cream novelties', unit: 'bar', perGuest: 1,
     variants: [{ id: 'assorted', name: 'Assorted' }, { id: 'sandwiches', name: 'Ice cream sandwiches', delta: 1 }],
     packs: [{ id: '36', label: '36 ct · freezer case', per: 36, prices: P(null, null, null, null) }] },
   { id: 'candy', cat: 'food', name: 'Bulk candy', unit: 'piece', perGuest: 2,
     variants: [{ id: 'std', name: '' }],
     packs: [{ id: '30', label: '30 ct · full-size bars', per: 30, prices: P(null, 29.99, 29.98, null) },
-            { id: 'jar', label: '62 oz · bulk jar (~40 servings)', per: 40, prices: P(null, 16.99, 16.98, null) }] },
+            { id: 'jar', label: '62 oz · bulk jar (~40 servings)', per: 40, prices: P(null, 16.99, 16.98, null, 24.99, null, null) }] },
   { id: 'bagels', cat: 'food', name: 'Bagels, bulk variety', unit: 'bagel', perGuest: 1.5,
     variants: [{ id: 'plain', name: 'Plain' }, { id: 'everything', name: 'Everything' }, { id: 'cinnamon-raisin', name: 'Cinnamon-Raisin' },
                { id: 'blueberry', name: 'Blueberry' }, { id: 'glutenfree', name: 'Gluten-Free', only: ['gf6'] }],
@@ -738,13 +751,13 @@ window.QB_FAMILIES = [
             { id: 'df8', label: '8 oz tub (dairy-free)', per: 8, prices: P(null, null, null, 4.82) }] },
   { id: 'nutella', cat: 'food', name: 'Nutella, bulk jar', unit: 'oz', perGuest: 1,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '67', label: '2 x 33.5 oz jars', per: 67, prices: P(10.99, null, null, null) },
+    packs: [{ id: '67', label: '2 x 33.5 oz jars', per: 67, prices: P(10.99, null, null, null, null, null, 25.88) },
             { id: '53', label: '2 x 26.5 oz jars', per: 53, prices: P(null, null, 12.78, null) },
             { id: '35', label: '1 x 35.3 oz jar', per: 35.3, prices: P(null, null, null, 12.10) }] },
   { id: 'peanutbutter', cat: 'food', name: 'Peanut butter, bulk jar', unit: 'oz', perGuest: 1,
     variants: [{ id: 'std', name: '' }],
     packs: [{ id: '56', label: '2 x 28 oz jars', per: 56, prices: P(9.79, null, null, null) },
-            { id: '80', label: '2 x 40 oz jars', per: 80, prices: P(null, null, 7.78, null) }] },
+            { id: '80', label: '2 x 40 oz jars', per: 80, prices: P(null, null, 7.78, null, 14.99, null, 13.94) }] },
   { id: 'jam', cat: 'food', name: 'Fruit jam/jelly, bulk', unit: 'oz', perGuest: .5,
     variants: [{ id: 'std', name: '' }],
     packs: [{ id: 'jar', label: '2 x 48 oz jars', per: 96, prices: P(6.99, null, null, null) },
@@ -754,8 +767,8 @@ window.QB_FAMILIES = [
     packs: [{ id: '1', label: '20 ct x 2 oz cups (Wholly Guacamole)', per: 40, prices: P(11.99, null, null, null) }] },
   { id: 'cupcakes', cat: 'food', name: 'Cupcakes, bulk bakery', unit: 'cupcake', perGuest: 1,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '12', label: '12 ct · white/chocolate buttercream', per: 12, prices: P(8.99, null, null, null) },
-            { id: '30', label: '30 ct', per: 30, prices: P(null, null, 16.48, null) }] },
+    packs: [{ id: '12', label: '12 ct · white/chocolate buttercream', per: 12, prices: P(8.99, null, null, null, 8.99, null, 7.97) },
+            { id: '30', label: '30 ct', per: 30, prices: P(null, null, 16.48, null, null, null, 13.28) }] },
   { id: 'ribs', cat: 'food', name: 'Pork loin back ribs, bulk (raw, to prepare)', unit: 'lb', perGuest: .25,
     variants: [{ id: 'std', name: '' }],
     packs: [{ id: '15', label: '~15 lb (multiple racks)', per: 15, prices: P(50.85, null, 64.95, null) }] },
@@ -767,28 +780,28 @@ window.QB_FAMILIES = [
     packs: [{ id: '40', label: '40 ct · assorted wraps', per: 40, prices: P(null, null, 29.98, null) }] },
   { id: 'hummus', cat: 'food', name: 'Hummus, bulk tub', unit: 'oz', perGuest: 2,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '17', label: '17 oz tub', per: 17, prices: P(3.99, null, null, null) },
+    packs: [{ id: '17', label: '17 oz tub', per: 17, prices: P(3.99, null, null, null, 6.99, null, null) },
             { id: '32', label: '32 oz tub', per: 32, prices: P(null, 5.99, 6.98, null) }] },
   { id: 'wafflemix', cat: 'food', name: 'Waffle & pancake mix, bulk', unit: 'waffle', perGuest: 1.5,
     variants: [{ id: 'buttermilk', name: 'Buttermilk/Belgian' }],
-    packs: [{ id: '10lb', label: 'Krusteaz Complete Buttermilk Pancake Mix, 10 lb · ~110 waffles', per: 110, prices: P(6.99, null, null, null) }] },
+    packs: [{ id: '10lb', label: 'Krusteaz Complete Buttermilk Pancake Mix, 10 lb · ~110 waffles', per: 110, prices: P(6.99, null, null, null, null, null, 22.29) }] },
   { id: 'syrup', cat: 'food', name: 'Maple/pancake syrup, bulk bottle', unit: 'oz', perGuest: .5,
     variants: [{ id: 'std', name: '' }],
     packs: [{ id: 'costco338', label: 'Kirkland Signature Organic Maple Syrup, 33.8 oz', per: 33.8, prices: P(12.59, null, null, null) },
-            { id: 'sams32', label: "Member's Mark Organic Maple Syrup, 32 oz", per: 32, prices: P(null, null, 12.98, null) }] },
+            { id: 'sams32', label: "Member's Mark Organic Maple Syrup, 32 oz", per: 32, prices: P(null, null, 12.98, null, 16.99, null, 17.34) }] },
   { id: 'whipcream', cat: 'food', name: 'Whipped cream, canned, multi-pack', unit: 'can', perGuest: .05,
     variants: [{ id: 'std', name: 'Original' }],
     packs: [{ id: '3ct15', label: 'Reddi-wip Original, 15 oz, 3-count', per: 3, prices: P(7.97, null, null, null) }] },
   { id: 'honey', cat: 'food', name: 'Honey, bulk bottle', unit: 'oz', perGuest: .35,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '1', label: '80 oz (5 lb) - Kirkland Wild Flower Honey', per: 80, prices: P(12.99, null, null, null) },
-            { id: '2', label: "48 oz - Member's Mark Wildflower Honey", per: 48, prices: P(null, null, 19.50, null) }] },
+    packs: [{ id: '1', label: '80 oz (5 lb) - Kirkland Wild Flower Honey', per: 80, prices: P(12.99, null, null, null, null, null, 18.87) },
+            { id: '2', label: "48 oz - Member's Mark Wildflower Honey", per: 48, prices: P(null, null, 19.50, null, null, null, 18.93) }] },
   { id: 'strawberries', cat: 'food', name: 'Fresh strawberries, bulk clamshell', unit: 'oz', perGuest: 1.2,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '1', label: '2 lb (32 oz) clamshell', per: 32, prices: P(3.59, null, 7.87, null) }] },
+    packs: [{ id: '1', label: '2 lb (32 oz) clamshell', per: 32, prices: P(3.59, null, 7.87, null, 4.99, null, null) }] },
   { id: 'blueberries', cat: 'food', name: 'Fresh blueberries, bulk clamshell', unit: 'oz', perGuest: .5,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '1', label: '18 oz clamshell', per: 18, prices: P(3.99, null, null, null) }] },
+    packs: [{ id: '1', label: '18 oz clamshell', per: 18, prices: P(3.99, null, null, null, 5.99, null, null) }] },
   { id: 'caramelapples', cat: 'food', name: 'Caramel apples, bulk', unit: 'apple', perGuest: 1,
     variants: [{ id: 'std', name: 'Hand-dipped, gourmet' }],
     packs: [{ id: '2', label: '2 pack · hand-dipped gourmet', per: 2, prices: P(12.99, null, null, null) },
@@ -796,11 +809,11 @@ window.QB_FAMILIES = [
   { id: 'pumpkinpie', cat: 'food', name: 'Pumpkin pie, bulk bakery', unit: 'pie', perGuest: .08,
     variants: [{ id: 'std', name: 'Classic' }],
     packs: [{ id: '58oz', label: '1 pie · 12", 58 oz', per: 1, prices: P(5.99, null, 5.98, null) },
-            { id: '10in', label: '1 pie · 10"', per: 1, prices: P(null, 8.89, null, null) }] },
+            { id: '10in', label: '1 pie · 10"', per: 1, prices: P(null, 8.89, null, null, null, 9.99, null) }] },
   { id: 'pumpkindonuts', cat: 'food', name: 'Pumpkin donuts, bulk bakery', unit: 'donut', perGuest: 1,
     variants: [{ id: 'std', name: 'Pumpkin spice' }],
     packs: [{ id: 'costco-18', label: '18 ct · pumpkin donut muffins, 18 oz', per: 18, prices: P(6.89, null, null, null) },
-            { id: 'bjs-15oz', label: '15 oz bag · pumpkin donut holes', per: 1, prices: P(null, 6.39, null, null) },
+            { id: 'bjs-15oz', label: '15 oz bag · pumpkin donut holes', per: 1, prices: P(null, 6.39, null, null, null, 3.99, null) },
             { id: 'amz-4bx', label: '4-box pack · mini donuts', per: 4, prices: P(null, null, null, 22.00) }] },
   { id: 'oatcreamer', cat: 'food', name: 'Oat milk creamer, bulk case', unit: 'carton', perGuest: .15,
     variants: [{ id: 'std', name: '' }],
@@ -816,10 +829,10 @@ window.QB_FAMILIES = [
     packs: [{ id: '6ct', label: '6 ct · individually portioned mini bundt cakes', per: 6, prices: P(3.97, null, null, null) }] },
   { id: 'frostedcookies', cat: 'food', name: 'Frosted cookies, bulk bakery pack', unit: 'cookie', perGuest: 1,
     variants: [{ id: 'std', name: 'Fall sprinkles' }],
-    packs: [{ id: '24', label: '24 ct · butter sugar cookies with fall sprinkles', per: 24, prices: P(4.97, null, null, null) }] },
+    packs: [{ id: '24', label: '24 ct · butter sugar cookies with fall sprinkles', per: 24, prices: P(4.97, null, null, null, null, 6.79, null) }] },
   { id: 'halloweenoreos', cat: 'food', name: 'Halloween Oreos, bulk pack', unit: 'box', perGuest: .1,
     variants: [{ id: 'std', name: 'Orange creme, limited edition' }],
-    packs: [{ id: '18.71oz', label: '18.71 oz box · assorted spooky designs', per: 1, prices: P(null, null, null, 5.39) }] },
+    packs: [{ id: '18.71oz', label: '18.71 oz box · assorted spooky designs', per: 1, prices: P(null, null, null, 5.39, null, 5.29, null) }] },
   // -- Catering (Costco's national catering menu no longer includes these 4 items — see note at top of file)
   { id: 'tacobar', cat: 'catering', name: 'Taco bar package', unit: 'plate', perGuest: 1,
     variants: [{ id: 'chicken', name: 'Chicken' }, { id: 'beef', name: 'Beef', delta: 20 }, { id: 'both', name: 'Chicken & beef', delta: 35 }],
@@ -835,7 +848,7 @@ window.QB_FAMILIES = [
             { id: '6', label: '6 pies', per: 6, prices: P(59.70, null, null, null) }] },
   { id: 'sandwich', cat: 'catering', name: 'Deli sandwich platter', unit: 'serving', perGuest: 1,
     variants: [{ id: 'classic', name: 'Classic assortment' }, { id: 'wraps', name: 'Wraps', delta: 6 }],
-    packs: [{ id: '12-15', label: 'Serves 12–15', per: 14, prices: P(null, 39.99, null, null) },
+    packs: [{ id: '12-15', label: 'Serves 12–15', per: 14, prices: P(null, 39.99, null, null, null, 26.99, null) },
             { id: '20-25', label: 'Serves 20–25', per: 23, prices: P(null, 54.99, null, null) }] },
   { id: 'pastry', cat: 'catering', name: 'Breakfast pastries', unit: 'pastry', perGuest: 1,
     variants: [{ id: 'assorted', name: 'Assorted' }, { id: 'muffins', name: 'Muffins only' }],
@@ -854,7 +867,7 @@ window.QB_FAMILIES = [
     packs: [{ id: '12', label: '12 ct · individually wrapped, fixed 6 cheese + 6 pepperoni', per: 12, prices: P(8.99, null, null, null) }] },
   { id: 'donuts', cat: 'catering', name: 'Glazed donuts, bulk bakery pack', unit: 'donut', perGuest: 1.4,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '12', label: 'Dozen (12 ct)', per: 12, prices: P(7.49, 6.99, null, null) }] },
+    packs: [{ id: '12', label: 'Dozen (12 ct)', per: 12, prices: P(7.49, 6.99, null, null, null, 4.99, null) }] },
 
   // -- Qdoba Catering (real menu + pricing, QDOBA Mexican Eats, 14490 Clay Terrace Blvd, Carmel, IN —
   //    sourced live from ezCater on 2026-08-26; $30+ delivery fee, $100 delivery minimum, 25% fee if
@@ -2866,10 +2879,540 @@ window.QB_FAMILIES = [
       { id: 'bubbletea', name: 'Bubble Tea · Choice of tea and topping', delta: 6 },
     ],
     packs: [{ id: '1', label: 'Individually packaged', per: 1, flat: 1.00 }] },
+  // -- Noodles & Company Catering (real menu, 1 E Carmel Dr, Carmel, IN; ezcater.com, live 2026-08-26)
+  { id: 'noodleshotentree', cat: 'catering', name: 'Noodles and Company Hot Entree', unit: 'guest', perGuest: .3,
+    variants: [
+      { id: 'butteryparmesannoodles', name: 'Buttery Parmesan Noodles · Butter, Italian seasoning, parmesan cheese' },
+      { id: 'tortellonirosa', name: 'Tortelloni Rosa · Ricotta, mozzarella, parmesan tortelloni, mildly spicy tomato cream sauce, mushrooms, tomatoes, spinach', delta: 0 },
+      { id: 'glutensensitivepipettema', name: 'Gluten-Sensitive Pipette Mac and Cheese · GF pipette shells, cheddar, Jack cheeses, cream', delta: 4 },
+      { id: 'chickenparmesan', name: 'Chicken Parmesan · Rigatoni, crushed tomato marinara, parmesan-crusted chicken, oven baked mozzarella', delta: 10 },
+      { id: 'basilpestocavatappiwithg', name: 'Basil Pesto Cavatappi With Grilled Chicken · Cavatappi, grilled chicken, creamy basil pesto, tomatoes, mushrooms, parmesan', delta: 10 },
+      { id: 'spaghettiwithmeatballs', name: 'Spaghetti With Meatballs · Oven-roasted meatballs, crushed tomato marinara, parmesan', delta: 10 },
+      { id: 'crispychickenandbaconalf', name: 'Crispy Chicken and Bacon Alfredo · Fettuccine, creamy Alfredo, parmesan-crusted chicken, bacon, spinach, broccoli', delta: 10 },
+      { id: 'rigatonirosawithparmesan', name: 'Rigatoni Rosa With Parmesan Chicken · Mildly spiced tomato cream sauce, tomatoes, spinach, mushrooms, parmesan-crusted chicken', delta: 10 },
+      { id: 'pulledporkbbqmacandchees', name: 'Pulled Pork BBQ Mac and Cheese · Elbow noodles, cheddar and Jack cheese, smoky pulled pork, BBQ sauce, green onions, crispy onions', delta: 10 },
+      { id: 'buffalochickenranchmacan', name: 'Buffalo Chicken Ranch Mac and Cheese · Elbow noodles, cheddar and Jack cheese, parmesan-crusted chicken, Buffalo sauce, ranch drizzle', delta: 10 },
+      { id: 'creamycheddarmacandchees', name: 'Creamy Cheddar Mac and Cheese With Oven Roasted Meatballs · Elbow noodles, cheddar and Jack cheese, oven-roasted meatballs, shredded cheese', delta: 10 },
+      { id: 'pastafrescawithsauteedsh', name: 'Pasta Fresca With Sauteed Shrimp · Rigatoni, sauteed shrimp, balsamic vinaigrette, olive oil, roasted garlic, red onion, tomato, spinach', delta: 10 },
+      { id: 'spicykoreansteaknoodles', name: 'Spicy Korean Steak Noodles · Lo mein, marinated steak, sweet and spicy Korean Gochujang sauce, Napa and red cabbage, spinach, cucumber, cilantro', delta: 19 },
+      { id: 'padthaiwithsauteedshrimp', name: 'Pad Thai With Sauteed Shrimp · Rice noodles, sauteed shrimp, scrambled egg, Napa and red cabbage, lime, peanuts, green onions, cilantro', delta: 19 },
+      { id: 'lemongarlicscampiwithsau', name: 'Lemon Garlic Scampi With Sauteed Shrimp · Fettuccine, sauteed shrimp, garlic butter sauce, artichoke hearts, tomatoes, spinach, lemon, parmesan', delta: 19 },
+      { id: 'cajunshrimpfettuccine', name: 'Cajun Shrimp Fettuccine · Fettuccine, Cajun-spiced alfredo, shrimp, bacon, red peppers, parmesan, green onions', delta: 19 },
+    ],
+    packs: [{ id: '8', label: 'Serves 8', per: 8, flat: 55.95 }] },
+  { id: 'noodlessidesalad', cat: 'catering', name: 'Noodles and Company Side or Salad', unit: 'guest', perGuest: .3,
+    variants: [
+      { id: 'cheesygarlicbread', name: 'Cheesy Garlic Bread · Toasted ciabatta, parmesan, Italian seasoning, garlic butter, marinara on side' },
+      { id: 'gardensalad', name: 'Garden Salad · Mixed greens, grape tomatoes, cucumber, balsamic dressing', delta: 23 },
+      { id: 'caesarsalad', name: 'Caesar Salad · Romaine, Caesar dressing, garlic croutons, parmesan', delta: 23 },
+      { id: 'themedsaladwithgrilledch', name: 'The Med Salad With Grilled Chicken · Mixed greens, grilled chicken, tomatoes, Persian cucumbers, pickled red onion, Kalamata olives, cavatappi noodles, feta, spicy yogurt dressing', delta: 39 },
+      { id: 'chickencaesarsalad', name: 'Chicken Caesar Salad · Romaine, grilled chicken, garlic croutons, parmesan, traditional Caesar dressing', delta: 39 },
+    ],
+    packs: [{ id: '8', label: 'Serves 8', per: 8, flat: 20.95 }] },
+  { id: 'noodlesbev', cat: 'catering', name: 'Noodles and Company Gallon Beverage', unit: 'guest', perGuest: .15,
+    variants: [
+      { id: 'minutemaidlemonade', name: 'Minute Maid Lemonade' },
+      { id: 'freshbrewedhonesticedtea', name: 'Fresh Brewed Honest Iced Tea · Unsweetened Fair Trade organic black tea', delta: 0 },
+    ],
+    packs: [{ id: '8', label: 'Serves 8', per: 8, flat: 16.95 }] },
+  { id: 'noodlespackage', cat: 'catering', name: 'Noodles and Company Feed Package', unit: 'guest', perGuest: 1,
+    variants: [{ id: 'feedfew', name: 'Feed the Few · choice of noodles/salad, Caesar salad, cheesy garlic bread, drinks/dessert, hot hold kit' }, { id: 'macbar', name: 'Mac Bar · creamy cheddar mac & cheese, 2 proteins, 8 toppings, 2 sauces, hot hold kit', delta: 0 }],
+    packs: [{ id: '10', label: 'Serves 10', per: 10, flat: 135.95 }] },
+  { id: 'noodlesfeedmany', cat: 'catering', name: 'Noodles and Company Feed the Many', unit: 'guest', perGuest: 1,
+    variants: [{ id: 'std', name: 'Choice of 2 noodles/salads, Caesar Salad, cheesy garlic bread, drinks/dessert, 2 hot hold kits' }],
+    packs: [{ id: '15', label: 'Serves 15', per: 15, flat: 215.95 }] },
+  { id: 'noodlesdesserttray', cat: 'catering', name: 'Noodles and Company Dessert Tray', unit: 'guest', perGuest: .2,
+    variants: [{ id: 'std', name: 'Chocolate Chunk Cookies, Snoodle Doodle Cookies, Rice Crispie Treats' }],
+    packs: [{ id: '10', label: 'Serves 10', per: 10, flat: 16.95 }] },
+  { id: 'noodleshotholdkit', cat: 'catering', name: 'Noodles and Company Hot Food Hold Kit', unit: 'set', perGuest: .1,
+    variants: [{ id: 'std', name: 'Chafer rack, sternos, water pan, matches — accommodates two entree pans' }],
+    packs: [{ id: '10', label: 'Serves 10', per: 10, flat: 11.95 }] },
+  // -- Crumbl Cookies Catering (real menu, 9873 N Michigan Rd, Carmel, IN; ezcater.com, live 2026-08-26)
+  { id: 'crumbl4pack', cat: 'catering', name: 'Crumbl 4-Pack Cookies', unit: 'pack', perGuest: .3,
+    variants: [
+      { id: '4pack', name: '4-Pack · Assorted large cookies, flavors selected by staff, rotate weekly' },
+      { id: 'nutfriendly4pack', name: 'Nut-Friendly 4-Pack · Assorted nut-free large cookies — not a nut-free kitchen, cannot guarantee allergy safety', delta: 0 },
+    ],
+    packs: [{ id: '4', label: 'Serves 4, incl. cookie cutter', per: 4, flat: 21.49 }] },
+  { id: 'crumblbev', cat: 'catering', name: 'Crumbl Beverage', unit: 'drink', perGuest: .3,
+    variants: [
+      { id: 'milk', name: 'Milk · 8oz' },
+      { id: 'chocolatemilk', name: 'Chocolate Milk · 8oz', delta: 0 },
+      { id: 'bottledwater', name: 'Bottled Water', delta: 0.5 },
+    ],
+    packs: [{ id: '1', label: 'Individually packaged', per: 1, flat: 1.99 }] },
+  { id: 'crumbl12pack', cat: 'catering', name: 'Crumbl 12-Pack Cookies', unit: 'guest', perGuest: .3,
+    variants: [{ id: 'std', name: 'Assorted large cookies + cookie cutter, flavors selected by staff, rotate weekly' }],
+    packs: [{ id: '12', label: 'Serves 12', per: 12, flat: 54.99 }] },
+  { id: 'crumblmini24pack', cat: 'catering', name: 'Crumbl Mini 24-Pack Cookies', unit: 'guest', perGuest: .3,
+    variants: [{ id: 'std', name: 'Assorted mini cookies, flavors selected by staff, rotate weekly' }],
+    packs: [{ id: '12', label: 'Serves 12', per: 12, flat: 72.99 }] },
+  { id: 'crumbl24pack', cat: 'catering', name: 'Crumbl 24-Pack Cookies', unit: 'guest', perGuest: .3,
+    variants: [{ id: 'std', name: 'Assorted large cookies + 2 cookie cutters, flavors selected by staff, rotate weekly' }],
+    packs: [{ id: '24', label: 'Serves 24', per: 24, flat: 109.99 }] },
+  { id: 'crumblsingle', cat: 'catering', name: 'Crumbl Single Large Cookie', unit: 'cookie', perGuest: .3,
+    variants: [{ id: 'std', name: 'Flavor selected by staff, rotates weekly' }],
+    packs: [{ id: '1', label: 'Individually packaged', per: 1, flat: 4.49 }] },
+  // -- Cold Stone Creamery Catering (real menu, 14550 Clay Terrace Blvd, Carmel, IN; ezcater.com, live 2026-08-26)
+  { id: 'coldstonecreation', cat: 'catering', name: 'Cold Stone Ice Cream Creation', unit: 'serving', perGuest: .8,
+    variants: [
+      { id: 'createyourown', name: 'Create-Your-Own · choice of ice cream & mix-in' },
+      { id: 'birthdaycakeremix', name: 'Birthday Cake Remix · cake batter ice cream, rainbow sprinkles, brownies, fudge' },
+      { id: 'oreooverload', name: 'Oreo Overload · sweet cream ice cream, chocolate chips, double Oreo cookies, fudge' },
+      { id: 'chocolatedevotion', name: 'Chocolate Devotion · chocolate ice cream, chocolate chips, brownies, fudge' },
+      { id: 'cheesecakefantasy', name: 'Cheesecake Fantasy · cheesecake ice cream, graham cracker crust, blueberries, strawberries' },
+      { id: 'mintmintchocolatechocolatechip', name: 'Mint Mint Chocolate Chocolate Chip · mint ice cream, chocolate chips, brownies, fudge' },
+      { id: 'cookiedoughntyouwantsome', name: "Cookie Doughn't You Want Some · French vanilla ice cream, chocolate chips, cookie dough, fudge, caramel" },
+      { id: 'peanutbuttercupperfection', name: 'Peanut Butter Cup Perfection · chocolate ice cream, peanut butter, Reese\'s cups, fudge' },
+      { id: 'ourstrawberryblonde', name: 'Our Strawberry Blonde · strawberry ice cream, graham cracker crust, strawberries, caramel, whipped topping' },
+      { id: 'coffeeloversonly', name: 'Coffee Lovers Only · coffee ice cream, roasted almonds, Heath bar, caramel' },
+      { id: 'foundersfavorite', name: "Founder's Favorite · sweet cream ice cream, pecans, brownies, fudge, caramel" },
+      { id: 'surrendertostrawberry', name: 'Surrender to Strawberry · strawberry ice cream, strawberries, yellow cake, whipped topping' },
+      { id: 'berryberryberrygood', name: 'Berry Berry Berry Good · sweet cream ice cream, raspberries, strawberries, blueberries' },
+      { id: 'bananacaramelcrunch', name: 'Banana Caramel Crunch · French vanilla ice cream, roasted almonds, banana, caramel' },
+      { id: 'applepiealacoldstone', name: 'Apple Pie a la Cold Stone · French vanilla ice cream, cinnamon, graham cracker crust, apple pie filling, caramel' },
+      { id: 'germanchokolatekake', name: 'Germanchökolätekäke · chocolate ice cream, pecans, coconut, brownies, caramel' },
+      { id: 'onesmartbrookie', name: 'One Smart Brookie · classic cookie dough ice cream, brownies, cookie dough' },
+      { id: 'cookiesmakeeverythingbatter', name: 'Cookies Make Everything Batter · cake batter ice cream, Oreo cookies, golden Oreo cookies, whipped topping' },
+      { id: 'cookiemintster', name: 'Cookie Mintster · mint ice cream, double Oreo cookies, fudge' },
+      { id: 'doughforit', name: 'Dough For It! · classic cookie dough ice cream, chocolate chips, cookie dough, sugar crystals' },
+      { id: 'cakebatterbatterbatter', name: 'Cake Batter Batter Batter · cake batter ice cream, cookie dough, brownies' },
+      { id: 'reesespeanutbutterawesomesauce', name: "Reese's Peanut Butter Awesome Sauce · sweet cream ice cream, Reese's cups, Reese's peanut butter sauce" },
+      { id: 'somewhereovertheraindough', name: 'Somewhere Over the Rain-Dough · classic cookie dough ice cream, frosting, rainbow sprinkles, sugar crystals' },
+      { id: 'thewaythecookiecrumbles', name: 'The Way the Cookie Crumbles · classic cookie dough ice cream, double Oreo cookies, frosting' },
+      { id: 'mudpiemojo', name: 'Mud Pie Mojo · coffee ice cream, Oreo cookies, peanut butter, roasted almonds, fudge' },
+      { id: 'pbdoughdelight', name: "PB Dough Delight · peanut butter & cookie dough ice cream, Reese's cups, cookie dough, fudge" },
+      { id: 'doughlightfulpeanutbutter', name: 'Dough-lightful Peanut Butter · classic cookie dough ice cream, peanut butter, Reese\'s cups, sugar crystals' },
+    ],
+    packs: [{ id: '1', label: 'Individually packaged', per: 1, flat: 5.96 }, { id: '2', label: 'Mix & Go party tub · Serves 2', per: 2, flat: 10.99 }] },
+  { id: 'coldstonecake', cat: 'catering', name: 'Cold Stone Ice Cream Cake', unit: 'cake', perGuest: .8,
+    variants: [
+      { id: 'createyourown', name: 'Create-Your-Own · choice of cake, ice cream & 3 mix-ins, mid layer, frosting, topper, side crumbing', delta: -1.00 },
+      { id: 'cookiesandcreamery', name: "Cookies & Creamery · devil's food cake, sweet cream ice cream, Oreo cookies, white frosting" },
+      { id: 'strawberrypassion', name: 'Strawberry Passion · red velvet cake, strawberry puree, strawberry ice cream, graham cracker crust, strawberry frosting' },
+      { id: 'cakebatterconfetti', name: 'Cake Batter Confetti · red velvet cake, cake batter ice cream, rainbow sprinkles, white frosting' },
+      { id: 'cookiedoughdelirium', name: 'Cookie Dough Delirium · yellow cake, sweet cream ice cream, cookie dough, chocolate shavings, white frosting' },
+      { id: 'midnightdelight', name: "Midnight Delight · devil's food cake, fudge & chocolate ice cream, chocolate shavings, fudge ganache" },
+      { id: 'acheesecakenameddesire', name: 'A Cheesecake Named Desire · yellow cake, raspberry sauce, cheesecake ice cream, graham cracker crust, raspberry frosting' },
+      { id: 'talldarkanddelicious', name: "Tall, Dark & Delicious · devil's food cake, sweet cream & chocolate ice cream, brownies, Oreos, white frosting, fudge ganache" },
+      { id: 'coffeehousecrunch', name: "Coffeehouse Crunch · devil's food cake, coffee ice cream, Heath Bar, fudge ganache" },
+      { id: 'mmmmmmintchip', name: "MMMMMMint Chip · devil's food cake, mint ice cream, chocolate shavings, white frosting" },
+      { id: 'peanutbutterplayground', name: "Peanut Butter Playground · devil's food cake, peanut butter & chocolate ice cream, Reese's cups, fudge ganache" },
+      { id: 'caramelnutnirvana', name: "Caramel Nut Nirvana · devil's food cake, sweet cream ice cream, Snickers, fudge ganache" },
+      { id: 'chocolatechipper', name: "Chocolate Chipper · devil's food cake, sweet cream ice cream, chocolate shavings, fudge ganache" },
+    ],
+    packs: [{ id: '2', label: 'Serves 2', per: 2, flat: 14.99 }] },
+  { id: 'coldstonefamilypack', cat: 'catering', name: 'Cold Stone Family Pack', unit: 'guest', perGuest: .5,
+    variants: [{ id: 'std', name: 'Choice of ice creams (by the quart or pint) & mix-ins' }],
+    packs: [{ id: 'pint', label: 'Pint-Sized · 2 ice creams (2 pt) & 2 mix-ins · Serves 4', per: 4, flat: 19.98 },
+            { id: 'petite', label: 'Petite · 3 ice creams (3 qt) & 3 mix-ins · Serves 12', per: 12, flat: 52.98 },
+            { id: 'ultimate', label: 'Ultimate · 5 ice creams (5 qt) & 5 mix-ins · Serves 20', per: 20, flat: 84.98 }] },
+  { id: 'coldstonecupcakekit', cat: 'catering', name: 'Cold Stone DIY Ice Cream Cupcake Kit', unit: 'guest', perGuest: .5,
+    variants: [{ id: 'std', name: '6 assorted ice cream cupcakes + choice of 2 toppers & frosting' }],
+    packs: [{ id: '6', label: 'Serves 6', per: 6, flat: 16.99 }] },
+  { id: 'coldstonewater', cat: 'catering', name: 'Cold Stone Bottled Water', unit: 'bottle', perGuest: .3,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '1', label: 'Each', per: 1, flat: 2.50 }] },
+  // -- Dunkin' Catering (real menu, 2560 E 146th St, Carmel, IN; ezcater.com, live 2026-08-26)
+  { id: 'dunkinbev', cat: 'catering', name: 'Dunkin\' Box O\' Joe (serves 10)', unit: 'guest', perGuest: .15,
+    variants: [
+      { id: 'boxojoe', name: 'Box O Joe · Regular coffee' },
+      { id: 'boxojoehotchocolate', name: 'Box O Joe Hot Chocolate', delta: 0 },
+    ],
+    packs: [{ id: '10', label: 'Serves 10, incl. dairy, sweeteners, stirrers, cups, lids', per: 10, flat: 22.99 }] },
+  { id: 'dunkinpackage', cat: 'catering', name: "Dunkin' Combo Package", unit: 'guest', perGuest: 1,
+    variants: [{ id: 'std', name: 'Choice of donuts, bagels & muffins, cream cheese, choice of Box O\' Joe (w/ dairy, sweeteners, stirrers, cups & lids); larger combos add assorted Munchkins' }],
+    packs: [{ id: '10', label: 'Combo 1 · half-dozen donuts, half-dozen bagels, 4 muffins · Serves 10', per: 10, flat: 60.99 },
+            { id: '20', label: 'Combo 2 · dozen donuts, dozen bagels, 8 muffins, 25 Munchkins · Serves 20', per: 20, flat: 109.99 },
+            { id: '30', label: 'Combo 3 · 2 dozen donuts, 2 dozen bagels, 8 muffins · Serves 30', per: 30, flat: 199.99 }] },
+  { id: 'dunkindonuts', cat: 'catering', name: "Dunkin' Donuts", unit: 'donut', perGuest: 1,
+    variants: [{ id: 'std', name: 'Choice of donuts' }],
+    packs: [{ id: '6', label: 'Half-Dozen · Serves 6', per: 6, flat: 8.49 }, { id: '12', label: 'Dozen · Serves 12', per: 12, flat: 13.99 }] },
+  { id: 'dunkinmunchkins', cat: 'catering', name: "Dunkin' Munchkins", unit: 'piece', perGuest: 1,
+    variants: [{ id: 'std', name: 'Assorted donut holes' }],
+    packs: [{ id: '8', label: 'Serves 8', per: 8, flat: 8.49 }] },
+  { id: 'dunkinbagels', cat: 'catering', name: "Dunkin' Bagels", unit: 'bagel', perGuest: 1,
+    variants: [{ id: 'std', name: 'Choice of bagels' }],
+    packs: [{ id: '6', label: 'Half-Dozen · Serves 6', per: 6, flat: 12.99 }, { id: '12', label: 'Dozen · Serves 12', per: 12, flat: 26.99 }] },
+  { id: 'dunkinmuffins', cat: 'catering', name: "Dunkin' Muffins", unit: 'muffin', perGuest: 1,
+    variants: [{ id: 'std', name: 'Choice of muffins' }],
+    packs: [{ id: '4', label: 'Serves 4', per: 4, flat: 9.29 }, { id: '8', label: 'Serves 8', per: 8, flat: 16.99 }] },
+  { id: 'dunkincroissants', cat: 'catering', name: "Dunkin' Half-Dozen Croissants", unit: 'croissant', perGuest: 1,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '6', label: 'Serves 6', per: 6, flat: 13.74 }] },
+  { id: 'dunkincreamcheese', cat: 'catering', name: "Dunkin' Cream Cheese Tub", unit: 'tub', perGuest: .3,
+    variants: [{ id: 'std', name: 'Choice of cream cheese' }],
+    packs: [{ id: '7', label: 'Serves 7', per: 7, flat: 5.99 }] },
+  // -- McAlister's Deli Catering (real menu, 2550 E 146th St, Carmel, IN; ezcater.com, live 2026-08-26)
+  { id: 'mcalistersbreakfasttray', cat: 'catering', name: 'McAlister\'s Breakfast Sandwich Tray (per person, min 5)', unit: 'guest', perGuest: 1,
+    variants: [
+      { id: 'classicbreakfastsandwich', name: 'Classic Breakfast Sandwich Tray · Egg, cheddar, assorted protein (country ham, Black Forest ham, bacon, sausage), incl. cutlery' },
+      { id: 'signaturebreakfastsandwi', name: 'Signature Breakfast Sandwich Tray · Breakfast Club Royale, Eggs Florentine, Breakfast Veggie, Spicy Sausage & Egg, incl. cutlery', delta: 2 },
+    ],
+    packs: [{ id: '1', label: 'Per person, minimum 5', per: 1, flat: 7.19 }] },
+  { id: 'mcalistersbreakfastbox', cat: 'catering', name: 'McAlister\'s Breakfast Sandwich Box', unit: 'box', perGuest: 1,
+    variants: [
+      { id: 'classicsausagecroissantb', name: 'Classic Sausage Croissant Breakfast Box · Sausage, egg, cheese' },
+      { id: 'classicbaconcroissantbre', name: 'Classic Bacon Croissant Breakfast Box · Applewood bacon, egg, cheese', delta: 0 },
+      { id: 'classichamcroissantbreak', name: 'Classic Ham Croissant Breakfast Box · Ham, egg, cheese', delta: 0 },
+      { id: 'classiccountryhameggandc', name: 'Classic Country Ham Egg and Cheese Sandwich Box · Country ham, egg, cheese on baguette', delta: 0 },
+      { id: 'signaturebreakfastveggie', name: 'Signature Breakfast Veggie Sandwich Box · Scrambled eggs, spinach, tomatoes, red onions, roasted peppers, avocado, pepper-jack on 9-grain', delta: 1.2 },
+      { id: 'signaturebreakfastclubro', name: 'Signature Breakfast Club Royale Sandwich Box · Scrambled eggs, country ham, bacon, cheddar & Swiss on toasted croissant', delta: 1.2 },
+      { id: 'signatureeggflorentinesa', name: 'Signature Egg Florentine Sandwich Box · Scrambled eggs, spinach, tomatoes, parmesan & provolone on ciabatta', delta: 1.2 },
+      { id: 'signaturespicysausageand', name: 'Signature Spicy Sausage and Egg Sandwich Box · Scrambled eggs, double sausage, cheddar on spicy jalapeno roll', delta: 1.2 },
+    ],
+    packs: [{ id: '1', label: 'Individually packaged, incl. fruit cup, yogurt & cutlery', per: 1, flat: 9.69 }] },
+  { id: 'mcalisterscoffeeoj', cat: 'catering', name: 'McAlister\'s Coffee or OJ, The Works (serves 7)', unit: 'guest', perGuest: .3,
+    variants: [
+      { id: 'theworkscoffee', name: 'The Works Coffee · Includes cups, lids, creamers, sweeteners' },
+      { id: 'theworksorangejuice', name: 'The Works Orange Juice · Includes cups & lids', delta: -1.8 },
+    ],
+    packs: [{ id: '7', label: 'Serves 7', per: 7, flat: 18.19 }] },
+  { id: 'mcalistersbundle', cat: 'catering', name: 'McAlister\'s Sandwich Bundle (serves 10)', unit: 'guest', perGuest: 1,
+    variants: [
+      { id: 'classicsandwichandsaladb', name: 'Classic Sandwich and Salad Bundle With Sweet Tea · Classic Sandwich Tray, Garden Salad, Fresh Fruit Tray, Mini Cookie Tray, gallon sweet tea' },
+      { id: 'classicsandwichandsaladbunswt', name: 'Classic Sandwich and Salad Bundle With Unsweet Tea · Same, with unsweet tea', delta: 0 },
+      { id: 'classicsandwichandspudbu', name: 'Classic Sandwich and Spud Bundle With Sweet Tea · Classic Sandwich Tray, Classic Spud Bar, Fresh Fruit Tray, Mini Cookie Tray, gallon sweet tea', delta: 3 },
+      { id: 'signaturesandwichandsala', name: 'Signature Sandwich and Salad Bundle With Sweet Tea · Signature Sandwich Tray, Garden Salad, Fresh Fruit Tray, Mini Cookie Tray, gallon sweet tea', delta: 10 },
+      { id: 'signaturesandwichandsalaunswt', name: 'Signature Sandwich and Salad Bundle With Unsweet Tea · Same, with unsweet tea', delta: 10 },
+      { id: 'signaturesandwichandspud', name: 'Signature Sandwich and Spud Bundle With Sweet Tea · Signature Sandwich Tray, Spud Max Bar, Fresh Fruit Tray, Mini Cookie Tray, gallon sweet tea', delta: 43 },
+    ],
+    packs: [{ id: '10', label: 'Serves 10', per: 10, flat: 263.99 }] },
+  { id: 'mcalisterstray', cat: 'catering', name: 'McAlister\'s Sandwich or Wrap Tray (per person, min 5)', unit: 'guest', perGuest: 1,
+    variants: [
+      { id: 'classicsandwichtray', name: 'Classic Sandwich Tray · Black Angus roast beef, roasted turkey, Black Forest ham, pickle spears & chips' },
+      { id: 'wraptray', name: 'Wrap Tray · McAlister\'s Club Wrap, Turkey Bacon Ranch Wrap, Black Angus Club Wrap, Spicy Southwestern Chicken Wrap', delta: 0.9 },
+      { id: 'classicmcalistersclubtra', name: 'Classic McAlister\'s Club Tray · Turkey, ham, bacon, cheddar, Swiss, lettuce, tomato, honey mustard, mayo on wheat', delta: 0.8 },
+      { id: 'assortedclubtray', name: 'Assorted Club Tray · McAlister\'s Club, Black Angus Club, Grilled Chicken Club, Turkey Club Croissant', delta: 0.8 },
+      { id: 'signaturesandwichtray', name: 'Signature Sandwich Tray · McAlister\'s Club, Grilled Chicken Caesar Wrap, Harvest Chicken Salad, Memphian, Turkey Ranch BLT', delta: 1 },
+    ],
+    packs: [{ id: '1', label: 'Per person, minimum 5', per: 1, flat: 10.39 }] },
+  { id: 'mcalistersclassicbox', cat: 'catering', name: 'McAlister\'s Classic Box Lunch', unit: 'box', perGuest: .5,
+    variants: [
+      { id: 'roastedturkeyandprovolon', name: 'Roasted Turkey and Provolone Sandwich Box · Turkey, provolone, lettuce, tomatoes on baguette' },
+      { id: 'blackforesthamandswisssa', name: 'Black Forest Ham and Swiss Sandwich Box · Ham, Swiss, lettuce, tomatoes on baguette', delta: 0 },
+      { id: 'blackangusroastbeefandch', name: 'Black Angus Roast Beef and Cheddar Sandwich Box · Roast beef, cheddar, lettuce, tomato on baguette', delta: 0 },
+      { id: 'harvestchickensaladcrois', name: 'Harvest Chicken Salad Croissant Box Lunch · Chicken salad, pecans, spring mix, tomatoes on croissant', delta: 0 },
+      { id: 'theveggiebox', name: 'The Veggie Box · Spinach, tomatoes, cucumbers, red onions, roasted peppers, avocado, herb mayo on 9-grain', delta: 0 },
+    ],
+    packs: [{ id: '1', label: 'Individually packaged, incl. pickle spear, side & dessert choice, cutlery', per: 1, flat: 11.59 }] },
+  { id: 'mcalistersclubbox', cat: 'catering', name: 'McAlister\'s Club Sandwich Box', unit: 'box', perGuest: .5,
+    variants: [
+      { id: 'mcalistersclubbox', name: 'McAlister\'s Club Box · Turkey, ham, bacon, cheddar, Swiss, spring mix, tomato, mayo, honey mustard on wheat' },
+      { id: 'grilledchickenclubsandwi', name: 'Grilled Chicken Club Sandwich Box · Grilled chicken, bacon, cheddar, Swiss, spring mix, tomato, mayo, honey mustard on wheat', delta: 0.6 },
+      { id: 'turkeyclubcroissantbox', name: 'Turkey Club Croissant Box · Turkey, bacon, cheddar, Swiss, spring mix, tomato, mayo, honey mustard on croissant', delta: 0.6 },
+      { id: 'blackangusclubsandwichbo', name: 'Black Angus Club Sandwich Box · Roast beef, bacon, cheddar, Swiss, red onion, spring mix, tomato, horseradish, mayo on wheat', delta: 0.6 },
+      { id: 'kingclubbox', name: 'King Club Box · Double turkey, ham, bacon, cheddar, Swiss, spring mix, tomato, mayo, honey mustard on country white', delta: 4 },
+      { id: 'grilledchickenkingclubsa', name: 'Grilled Chicken King Club Sandwich Box · 12in double chicken, bacon, cheddar, Swiss, spring mix, tomato, mayo, honey mustard', delta: 4.2 },
+      { id: 'blackanguskingclubsandwi', name: 'Black Angus King Club Sandwich Box · 12in double roast beef, bacon, cheddar, Swiss, spring mix, tomato, mayo, honey mustard', delta: 4.2 },
+    ],
+    packs: [{ id: '1', label: 'Individually packaged, incl. pickle spear, side & dessert choice, cutlery', per: 1, flat: 12.19 }] },
+  { id: 'mcalisterswrapbox', cat: 'catering', name: 'McAlister\'s Wrap Box', unit: 'box', perGuest: .5,
+    variants: [
+      { id: 'grilledchickencaesarwrap', name: 'Grilled Chicken Caesar Wrap Box · Grilled chicken, romaine, parmesan, Caesar dressing in wheat wrap' },
+      { id: 'southwestchickenwrapbox', name: 'Southwest Chicken Wrap Box · Seasoned grilled chicken, roasted corn, poblano & black bean relish, pepperjack, chipotle ranch, avocado, tomato, spring mix', delta: 0 },
+      { id: 'theveggiewrapbox', name: 'The Veggie Wrap Box · Spinach, tomatoes, cucumbers, red onions, roasted peppers, avocado, herb mayo', delta: 0 },
+      { id: 'turkeybaconranchwrapbox', name: 'Turkey Bacon Ranch Wrap Box · Turkey, bacon, cheddar, tomatoes, lettuce, ranch', delta: 0 },
+      { id: 'clubwrapbox', name: 'Club Wrap Box · Turkey, ham, bacon, cheddar, Swiss, spring mix, tomato, mayo, honey mustard', delta: 0 },
+    ],
+    packs: [{ id: '1', label: 'Individually packaged, incl. pickle spear, side & dessert choice, cutlery', per: 1, flat: 11.99 }] },
+  { id: 'mcalisterspremiumbox', cat: 'catering', name: 'McAlister\'s Premium Sandwich Box', unit: 'box', perGuest: .5,
+    variants: [
+      { id: 'italiansandwichbox', name: 'Italian Sandwich Box · Ham, pepperoni, provolone, roasted peppers, spring mix, tomato, red onions, black olives, olive oil, balsamic, spicy brown mustard on baguette' },
+      { id: 'memphiansandwichbox', name: 'Memphian Sandwich Box · Turkey, ham, roast beef, provolone, spring mix, tomato, mayo, spicy brown mustard on baguette', delta: 0 },
+    ],
+    packs: [{ id: '1', label: 'Individually packaged, incl. pickle spear, side & dessert choice, cutlery', per: 1, flat: 15.39 }] },
+  { id: 'mcalisters2choicebox', cat: 'catering', name: 'McAlister\'s Choose-2 Box Lunch', unit: 'box', perGuest: .5,
+    variants: [
+      { id: 'classicsandwichandsoupbo', name: 'Classic Sandwich and Soup Box · Choice of half sandwich + cup of soup' },
+      { id: 'classicsandwichandsaladb', name: 'Classic Sandwich and Salad Box · Choice of half sandwich + salad + dressing', delta: 0 },
+      { id: 'signaturesandwichandsoup', name: 'Signature Sandwich and Soup Box · Choice of half sandwich + cup of soup', delta: 1 },
+      { id: 'signaturesandwichandsala', name: 'Signature Sandwich and Salad Box · Choice of half sandwich + salad + dressing', delta: 1 },
+    ],
+    packs: [{ id: '1', label: 'Individually packaged, incl. pickle spear, cookie, cutlery', per: 1, flat: 11.69 }] },
+  { id: 'mcalistersgroupsalad', cat: 'catering', name: 'McAlister\'s Group Salad (per person, min 5)', unit: 'guest', perGuest: 1,
+    variants: [
+      { id: 'groupgardensalad', name: 'Group Garden Salad · Greens, cucumbers, tomatoes, cheddar-Jack, croutons, choice of dressing' },
+      { id: 'groupcaesarsalad', name: 'Group Caesar Salad · Romaine, parmesan, croutons, Caesar dressing', delta: 0 },
+      { id: 'groupgrilledchickensalad', name: 'Group Grilled Chicken Salad · Greens, grilled chicken, bacon, cucumbers, tomatoes, cheddar-Jack, croutons', delta: 1.5 },
+      { id: 'groupgrilledchickencaesa', name: 'Group Grilled Chicken Caesar Salad · Romaine, grilled chicken, parmesan, croutons, Caesar dressing', delta: 1.5 },
+      { id: 'groupmcalisterschefsalad', name: 'Group McAlister\'s Chef Salad · Greens, smoked turkey, ham, bacon, cheddar-Jack, cucumbers, tomatoes, croutons', delta: 1.5 },
+      { id: 'grouppecanberrysalad', name: 'Group Pecanberry Salad · Greens, grilled chicken, strawberries, blueberries', delta: 2 },
+      { id: 'groupsavannahchoppedsala', name: 'Group Savannah Chopped Salad · Greens, grilled chicken, dried cranberries, honey roasted almonds, cucumbers, tomatoes, Gorgonzola, sherry-shallot dressing', delta: 2 },
+      { id: 'groupsouthwestchickenand', name: 'Group Southwest Chicken and Avocado Salad · Mixed greens, roasted corn, poblano & black bean relish, red onions, tomatoes, cheddar-Jack, tortilla chips, avocado, grilled chicken', delta: 2 },
+    ],
+    packs: [{ id: '1', label: 'Per person, minimum 5', per: 1, flat: 6.19 }] },
+  { id: 'mcalistersentreesalad', cat: 'catering', name: 'McAlister\'s Entree Salad', unit: 'salad', perGuest: .5,
+    variants: [
+      { id: 'entreegardensalad', name: 'Entree Garden Salad · Greens, cucumbers, tomatoes, cheddar-Jack, croutons' },
+      { id: 'entreecaesarsalad', name: 'Entree Caesar Salad · Romaine, parmesan, croutons, Caesar dressing', delta: 0 },
+      { id: 'entreemcalisterschefsala', name: 'Entree McAlister\'s Chef Salad · Greens, smoked turkey, ham, bacon, cheddar-Jack, cucumbers, tomatoes, croutons', delta: 2.9 },
+      { id: 'entreegrilledchickencaes', name: 'Entree Grilled Chicken Caesar Salad · Romaine, grilled chicken, parmesan, croutons, Caesar dressing', delta: 2.7 },
+      { id: 'entreesouthwestchickenan', name: 'Entree Southwest Chicken and Avocado Salad · Mixed greens, roasted corn, poblano & black bean relish, red onions, tomatoes, cheddar-Jack, tortilla chips, avocado, grilled chicken', delta: 3.7 },
+      { id: 'entreegrilledchickensala', name: 'Entree Grilled Chicken Salad · Greens, grilled chicken, bacon, cucumbers, tomatoes, cheddar-Jack, croutons', delta: 3.7 },
+      { id: 'entreesavannahchoppedsal', name: 'Entree Savannah Chopped Salad · Greens, grilled chicken, dried cranberries, honey roasted almonds, cucumbers, tomatoes, Gorgonzola, sherry-shallot dressing', delta: 4 },
+      { id: 'entreepecanberrysalad', name: 'Entree Pecanberry Salad · Greens, grilled chicken, strawberries, blueberries', delta: 4 },
+    ],
+    packs: [{ id: '1', label: 'Individually packaged, incl. cutlery', per: 1, flat: 8.49 }] },
+  { id: 'mcalistershotbar', cat: 'catering', name: 'McAlister\'s Hot Bar (per person, min 5)', unit: 'guest', perGuest: 1,
+    variants: [
+      { id: 'spudbar', name: 'Spud Bar · Fresh baked potatoes, sour cream, butter, cheddar-Jack, green onions' },
+      { id: 'nachobar', name: 'Nacho Bar · Tortilla chips, chili (traditional or veggie), RO*TEL cheese dip, jalapenos, diced tomatoes, black olives, sour cream', delta: 0.9 },
+      { id: 'macandcheesebar', name: 'Mac and Cheese Bar · Signature mac & cheese, choice of 2 proteins & 2 veggies, breadcrumb/parmesan/green onion topping', delta: 1.4 },
+    ],
+    packs: [{ id: '1', label: 'Per person, minimum 5', per: 1, flat: 6.49 }] },
+  { id: 'mcalistersbakedmac', cat: 'catering', name: 'McAlister\'s Baked Mac and Cheese (serves 10)', unit: 'guest', perGuest: .3,
+    variants: [
+      { id: 'bakedbbqchickenmacandche', name: 'Baked BBQ Chicken Mac and Cheese · Four cheese mac & cheese, BBQ sauce, grilled chicken, BBQ drizzle, crispy bacon, sliced toasted baguette' },
+      { id: 'bakedveggiemacandcheese', name: 'Baked Veggie Mac and Cheese · Four cheese mac & cheese with peppers, tomatoes, broccoli, onions, sliced toasted baguette', delta: 0 },
+    ],
+    packs: [{ id: '10', label: 'Serves 10', per: 10, flat: 78.99 }] },
+  { id: 'mcalistersbakedmacbundle', cat: 'catering', name: 'McAlister\'s Baked Mac and Cheese Bundle (serves 10)', unit: 'guest', perGuest: 1,
+    variants: [
+      { id: 'bakedbbqchickenmacandche', name: 'Baked BBQ Chicken Mac and Cheese Bundle · Baked BBQ Chicken Mac & Cheese, baguette, mini cookies, salad & beverage choice' },
+      { id: 'bakedveggiemacandcheeseb', name: 'Baked Veggie Mac and Cheese Bundle · Baked Veggie Mac & Cheese, baguette, mini cookies, salad & beverage choice', delta: 0 },
+    ],
+    packs: [{ id: '10', label: 'Serves 10', per: 10, flat: 138.99 }] },
+  { id: 'mcalisterssoup', cat: 'catering', name: 'McAlister\'s Soup or Chili', unit: 'cup', perGuest: .3,
+    variants: [
+      { id: 'cheddarbroccolisoup', name: 'Cheddar Broccoli Soup · Cheddar & Monterrey Jack, broccoli, creamy chicken broth base' },
+      { id: 'chickentortillasoup', name: 'Chicken Tortilla Soup · Chicken, tomato, cilantro, cheese, peppers', delta: 0 },
+      { id: 'countrypotatosoup', name: 'Country Potato Soup · Potato, onion, bacon, chives, cheese', delta: 0 },
+      { id: 'chili', name: 'Chili · Beef chili', delta: 0 },
+      { id: 'veggiechili', name: 'Veggie Chili · Meatless all-bean chili', delta: 0 },
+    ],
+    packs: [{ id: '1', label: 'Individually packaged, incl. cutlery', per: 1, flat: 5.39 }] },
+  { id: 'mcalisterssides', cat: 'catering', name: 'McAlister\'s Side', unit: 'side', perGuest: .2,
+    variants: [
+      { id: 'assortedpotatochips', name: 'Assorted Potato Chips' },
+      { id: 'potatosalad', name: 'Potato Salad', delta: 0 },
+      { id: 'freshfruit', name: 'Fresh Fruit', delta: 1.3 },
+      { id: 'macandcheese', name: 'Mac and Cheese', delta: 1.3 },
+    ],
+    packs: [{ id: '1', label: 'Individually packaged, incl. cutlery', per: 1, flat: 1.89 }] },
+  { id: 'mcalistersdesserttrayserves20', cat: 'catering', name: 'McAlister\'s Dessert Tray (serves 20)', unit: 'guest', perGuest: .2,
+    variants: [
+      { id: 'minicookietray', name: 'Mini Cookie Tray · Chocolate chip & sugar cookies' },
+      { id: 'minicombotray', name: 'Mini Combo Tray · Assorted mini cookies and brownies', delta: 4 },
+      { id: 'minibrownietray', name: 'Mini Brownie Tray · Mini double-chocolate brownies and Brookies', delta: 8 },
+    ],
+    packs: [{ id: '20', label: 'Serves 20, no plates/napkins', per: 20, flat: 22.99 }] },
+  { id: 'mcalistersdessertindividual', cat: 'catering', name: 'McAlister\'s Individual Dessert', unit: 'piece', perGuest: .2,
+    variants: [
+      { id: 'chocolatechipcookie', name: 'Chocolate Chip Cookie' },
+      { id: 'saltedcaramelcookie', name: 'Salted Caramel Cookie', delta: 0 },
+      { id: 'sugarcookie', name: 'Sugar Cookie', delta: 0 },
+      { id: 'brookie', name: 'Brookie', delta: 0.5 },
+      { id: 'brownie', name: 'Brownie', delta: 0.5 },
+    ],
+    packs: [{ id: '1', label: 'Individually packaged, no plates/napkins', per: 1, flat: 2.49 }] },
+  { id: 'mcalistersgallonbev', cat: 'catering', name: 'McAlister\'s Gallon Beverage, The Works (serves 7)', unit: 'guest', perGuest: .15,
+    variants: [
+      { id: 'theworksgallonsweettea', name: 'The Works Gallon Sweet Tea' },
+      { id: 'theworksgallonunsweettea', name: 'The Works Gallon Unsweet Tea', delta: 0 },
+      { id: 'theworksgallonlemonade', name: 'The Works Gallon Lemonade', delta: 0.6 },
+      { id: 'theworksgallonpineappleu', name: 'The Works Gallon Pineapple Upside Down Lemonade · Pineapple puree & black cherry puree lemonade', delta: 0.6 },
+    ],
+    packs: [{ id: '7', label: 'Serves 7, incl. cups, lids, straws, lemons, ice', per: 7, flat: 12.48 }] },
+  { id: 'mcalistersindividualbev', cat: 'catering', name: 'McAlister\'s Individual Beverage', unit: 'bottle', perGuest: .3,
+    variants: [
+      { id: 'bottledwater', name: 'Bottled Water' },
+      { id: 'assortedindividualcanned', name: 'Assorted Individual Canned Sodas', delta: -0.1 },
+    ],
+    packs: [{ id: '1', label: 'Individually packaged', per: 1, flat: 2.29 }] },
+  { id: 'mcalistersbreakfastbundle', cat: 'catering', name: "McAlister's Breakfast Bundle", unit: 'guest', perGuest: 1,
+    variants: [{ id: 'classic', name: 'Classic · Classic Breakfast Sandwich Tray + choice of Fresh Fruit Tray or Yogurt Bar + choice of coffee or OJ' }, { id: 'signature', name: 'Signature · Signature Breakfast Sandwich Tray + choice of Fresh Fruit Tray or Yogurt Bar + choice of coffee or OJ', delta: 21.00 }],
+    packs: [{ id: '10', label: 'Serves 10', per: 10, flat: 125.99 }] },
+  { id: 'mcalistersyogurtbar', cat: 'catering', name: "McAlister's Yogurt Bar (per person, min 5)", unit: 'guest', perGuest: 1,
+    variants: [{ id: 'std', name: 'Greek yogurt with seasonal fruits and assorted nuts' }],
+    packs: [{ id: '5', label: 'Per person, minimum 5', per: 1, flat: 5.69 }] },
+  { id: 'mcalistersbeveragebundle', cat: 'catering', name: "McAlister's Beverage Bundle", unit: 'guest', perGuest: .8,
+    variants: [{ id: 'std', name: 'Gallon Sweet Tea + gallon Unsweet Tea + gallon Lemonade, incl. "The Works" (cups, lemons, ice)' }],
+    packs: [{ id: '9', label: 'Serves 8-10', per: 9, flat: 32.99 }] },
+  { id: 'mcalisterssnacktray', cat: 'catering', name: "McAlister's Snack Tray", unit: 'guest', perGuest: .3,
+    variants: [{ id: 'fruit', name: 'Fresh Fruit Tray · assorted fresh-cut fruits, strawberry yogurt dip' }, { id: 'vegetable', name: 'Fresh Vegetable Tray · assorted seasonal vegetables, ranch dressing', delta: -12.00 }],
+    packs: [{ id: '10', label: 'Serves 10', per: 10, flat: 53.99 }] },
+  { id: 'mcalistersgrazingbox', cat: 'catering', name: "McAlister's Grazing Box", unit: 'guest', perGuest: .3,
+    variants: [{ id: 'std', name: 'Assorted meats, cheeses, spreads, fruits, vegetables, choice of dressing' }],
+    packs: [{ id: '15', label: 'Serves 15', per: 15, flat: 73.99 }] },
+  { id: 'mcalisterspinwheeltray', cat: 'catering', name: "McAlister's Pinwheel Tray", unit: 'guest', perGuest: .3,
+    variants: [{ id: 'std', name: 'Assorted pinwheels in wheat tortillas: McAlister\'s Club, Black Angus Club, Turkey Bacon Ranch' }],
+    packs: [{ id: '24', label: 'Serves 24', per: 24, flat: 41.99 }] },
+  { id: 'mcalistersclubquarterstray', cat: 'catering', name: "McAlister's Club Quarters Tray (per person, min 5)", unit: 'guest', perGuest: 1,
+    variants: [{ id: 'std', name: "McAlister's Club in smaller portions" }],
+    packs: [{ id: '5', label: 'Per person, minimum 5', per: 1, flat: 6.69 }] },
+  { id: 'mcalistersredbeansrice', cat: 'catering', name: "McAlister's Red Beans and Rice", unit: 'guest', perGuest: .3,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '6', label: 'Serves 6', per: 6, flat: 15.99 }] },
+  { id: 'mcalisterscookietray', cat: 'catering', name: "McAlister's Cookie Tray", unit: 'guest', perGuest: .2,
+    variants: [{ id: 'std', name: "Baker's dozen assorted sugar & chocolate chip cookies, no plates/napkins" }],
+    packs: [{ id: '13', label: 'Serves 13', per: 13, flat: 20.59 }] },
+  { id: 'mcalisterscanned12pack', cat: 'catering', name: "McAlister's Canned Drinks 12-Pack", unit: 'can', perGuest: .5,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '12', label: 'Serves 12', per: 12, flat: 20.39 }] },
+  // -- The Old Spaghetti Factory Catering (real menu, 918 S Rangeline Rd, Carmel, IN; ezcater.com, live 2026-08-26)
+  { id: 'oldspaghettiappetizer', cat: 'catering', name: 'Old Spaghetti Factory Appetizer (serves 4)', unit: 'guest', perGuest: .5,
+    variants: [
+      { id: 'olivetapenade', name: 'Olive Tapenade · Black and Kalamata olives, capers, garlic, olive oil, lemon juice, seasonings, toasted rustic bread' },
+      { id: 'siciliangarliccheesebrea', name: 'Sicilian Garlic Cheese Bread · Toasted bread, garlic, three melted cheeses, marinara', delta: 1 },
+    ],
+    packs: [{ id: '4', label: 'Serves 4', per: 4, flat: 15.75 }] },
+  { id: 'oldspaghettientree', cat: 'catering', name: 'Old Spaghetti Factory Hot Entree (serves 8)', unit: 'guest', perGuest: .3,
+    variants: [
+      { id: 'chickenparmigiana', name: 'Chicken Parmigiana · Seasoned chicken breast, melted cheese, pomodoro sauce, penne pasta in marinara' },
+      { id: 'chickenmarsala', name: 'Chicken Marsala · Seasoned chicken breast, mushroom & Marsala wine sauce, penne pasta with Mizithra cheese & browned butter', delta: 0.75 },
+    ],
+    packs: [{ id: '8', label: 'Serves 8', per: 8, flat: 68.25 }] },
+  { id: 'oldspaghettipasta', cat: 'catering', name: 'Old Spaghetti Factory Pasta (serves 8)', unit: 'guest', perGuest: .3,
+    variants: [
+      { id: 'pennewithmarinarasauce', name: 'Penne With Marinara Sauce · Onions, carrots, garlic, tomatoes, olive oil, Italian seasonings' },
+      { id: 'pennewithmizithracheesea', name: 'Penne With Mizithra Cheese and Browned Butter', delta: 8.25 },
+      { id: 'pennewithrichmeatsauce', name: 'Penne With Rich Meat Sauce · Ground beef, onions, celery, tomatoes, Italian spices', delta: 8.25 },
+      { id: 'pennewithmushroomsauce', name: 'Penne With Mushroom Sauce · Marinara sauce, sauteed seasoned mushrooms', delta: 2.5 },
+      { id: 'fettuccinealfredo', name: 'Fettuccine Alfredo · Butter cream sauce, shredded Romano cheese', delta: 9.75 },
+      { id: 'spinachandcheeseravioli', name: 'Spinach and Cheese Ravioli · Savory marinara sauce', delta: 10.5 },
+      { id: 'spinachtortelliniwithalf', name: 'Spinach Tortellini With Alfredo Sauce · Hat-shaped pasta stuffed with roasted chicken, mortadella, Romano cheese, Alfredo sauce', delta: 10.5 },
+      { id: 'pennewithwhiteclamsauce', name: 'Penne With White Clam Sauce · Wine, garlic, green peppers, onions, parsley', delta: 5.75 },
+      { id: 'pennewithsicilianmeatbal', name: 'Penne With Sicilian Meatballs · Roasted beef meatballs in marinara sauce', delta: 13.75 },
+      { id: 'pennewithitaliansausage', name: 'Penne With Italian Sausage · Zesty Italian sausage in rich meat sauce', delta: 13.75 },
+      { id: 'ourfamousbakedlasagna', name: 'Our Famous Baked Lasagna · Lasagna noodles, marinara sauce, ground beef & pork, four cheeses', delta: 16.25 },
+      { id: 'breastofchickenfettuccin', name: 'Breast of Chicken Fettuccine · Diced chicken breast, broccoli, mushrooms, shredded Romano cheese in Alfredo', delta: 17 },
+      { id: 'chickenpenne', name: 'Chicken Penne · Diced chicken breast, shredded Romano cheese in marinara & Alfredo sauces', delta: 17 },
+    ],
+    packs: [{ id: '8', label: 'Serves 8', per: 8, flat: 52.00 }] },
+  { id: 'oldspaghettisides', cat: 'catering', name: 'Old Spaghetti Factory Side (serves 8)', unit: 'guest', perGuest: .3,
+    variants: [
+      { id: 'breadandbutter', name: 'Bread and Butter · Three loaves of fresh baked bread, butter' },
+      { id: 'saladanddressing', name: 'Salad and Dressing · Choice of dressing', delta: 0 },
+      { id: '5ozmizithracheese', name: '5oz Mizithra Cheese', delta: -4.01 },
+      { id: 'caesarsalad', name: 'Caesar Salad · Romaine, shredded Romano cheese, croutons, Caesar dressing', delta: 12 },
+      { id: 'broccoliwithmizithrachee', name: 'Broccoli With Mizithra Cheese · Broccoli topped with Mizithra cheese and browned butter', delta: 22 },
+    ],
+    packs: [{ id: '8', label: 'Serves 8', per: 8, flat: 10.00 }] },
+  { id: 'oldspaghettidessertserves12', cat: 'catering', name: 'Old Spaghetti Factory Dessert (serves 12)', unit: 'guest', perGuest: .2,
+    variants: [
+      { id: 'dozencookies', name: 'Dozen Cookies · Choice of cookies' },
+      { id: 'wholenewyorkcheesecake', name: 'Whole New York Cheesecake · Graham cracker crust, strawberry puree garnish', delta: 63 },
+    ],
+    packs: [{ id: '12', label: 'Serves 12', per: 12, flat: 12.00 }] },
+  { id: 'oldspaghettibev', cat: 'catering', name: 'Old Spaghetti Factory Beverage', unit: 'bottle', perGuest: .3,
+    variants: [
+      { id: 'assortedcannedsodas', name: 'Assorted Canned Sodas' },
+      { id: 'bottledwater', name: 'Bottled Water', delta: 0 },
+    ],
+    packs: [{ id: '1', label: 'Individually packaged', per: 1, flat: 1.25 }] },
+  { id: 'oldspaghetticake', cat: 'catering', name: "Old Spaghetti Factory Whole Chocolate Cake", unit: 'guest', perGuest: .2,
+    variants: [{ id: 'std', name: 'Three layers of chocolate cake, fudge frosting, fine chocolate' }],
+    packs: [{ id: '14', label: 'Serves 14', per: 14, flat: 60.00 }] },
+  { id: 'oldspaghettiutensils', cat: 'catering', name: "Old Spaghetti Factory Utensils Kit", unit: 'kit', perGuest: 1,
+    variants: [{ id: 'std', name: 'Knife, fork, spoon, napkin' }],
+    packs: [{ id: '1', label: 'Individually packaged', per: 1, flat: 1.00 }] },
+  // -- Auntie Anne's Pretzels Catering (real menu, 6020 E 82nd St, Indianapolis, IN — nearest ezCater
+  //    location, no Carmel IN listing exists; ezcater.com, live 2026-08-26)
+  { id: 'auntieannespretzelpackage', cat: 'catering', name: "Auntie Anne's Pretzel Package", unit: 'pretzel', perGuest: 1,
+    variants: [{ id: 'std', name: 'Classic pretzel flavors, individually wrapped, by the dozen' }],
+    packs: [{ id: '12', label: '12 count · Serves 12', per: 12, flat: 69.00 },
+            { id: '24', label: '24 count · Serves 24', per: 24, flat: 130.00 },
+            { id: '48', label: '48 count · Serves 48', per: 48, flat: 245.00 },
+            { id: '96', label: '96 count · Serves 96', per: 96, flat: 491.00 }] },
+  { id: 'auntieannesdogpretzel', cat: 'catering', name: "Auntie Anne's Pretzel Dog Package", unit: 'pretzel', perGuest: 1,
+    variants: [{ id: 'std', name: "Classic pretzel dough wrapped around a Nathan's Famous all-beef hot dog, individually wrapped, by the dozen" }],
+    packs: [{ id: '12', label: 'Serves 12', per: 12, flat: 87.00 }] },
+  { id: 'auntieannespepperonipretzel', cat: 'catering', name: "Auntie Anne's Pepperoni Pretzel Package", unit: 'pretzel', perGuest: 1,
+    variants: [{ id: 'std', name: 'Individually wrapped pepperoni pretzels, by the dozen' }],
+    packs: [{ id: '12', label: 'Serves 12', per: 12, flat: 81.00 }] },
+  { id: 'auntieannespartytray', cat: 'catering', name: "Auntie Anne's Party Tray", unit: 'guest', perGuest: .5,
+    variants: [{ id: 'std', name: 'Tray of one flavor or a combination of bite-size products' }],
+    packs: [{ id: '10', label: 'Serves 10', per: 10, flat: 68.00 }] },
+  { id: 'auntieannespretzelbucket', cat: 'catering', name: "Auntie Anne's Pretzel Bucket", unit: 'guest', perGuest: .5,
+    variants: [{ id: 'std', name: 'Bite-sized favorites in a shareable bucket' }],
+    packs: [{ id: '9', label: 'Serves 8-10', per: 9, flat: 35.99 }] },
+  { id: 'auntieannesnuggetbucketflight', cat: 'catering', name: "Auntie Anne's Pretzel Nugget Bucket With Dip Flight", unit: 'guest', perGuest: .5,
+    variants: [{ id: 'std', name: 'Original Pretzel Nugget Bucket + full dip flight (cheese, sweet glaze, marinara, hot salsa cheese, honey mustard, caramel)' }],
+    packs: [{ id: '9', label: 'Serves 8-10', per: 9, flat: 46.00 }] },
+  { id: 'auntieannesmozznuggets', cat: 'catering', name: "Auntie Anne's Mozzarella Stuffed Pretzel Nuggets Bucket", unit: 'guest', perGuest: .5,
+    variants: [{ id: 'std', name: 'Gooey mozzarella wrapped in pretzel dough, baked in Italian breadcrumbs, 3 marinara dips' }],
+    packs: [{ id: '9', label: 'Serves 8-10', per: 9, flat: 40.99 }] },
+  { id: 'auntieannesfootballbucket', cat: 'catering', name: "Auntie Anne's Football Bucket", unit: 'guest', perGuest: .5,
+    variants: [{ id: 'savory', name: 'Savory · choice of 2 Pretzel Nugget or Mini Dog flavors + 3 dips' }, { id: 'classic', name: 'Classic · choice of Original or Cinnamon Sugar Pretzel Nuggets + 3 dips', delta: -4.00 }],
+    packs: [{ id: '9', label: 'Serves 8-10', per: 9, flat: 41.99 }] },
+  { id: 'auntieannessweetsaltybundle', cat: 'catering', name: "Auntie Anne's Sweet and Salty Classic Pretzel Bundle", unit: 'guest', perGuest: 1,
+    variants: [{ id: 'std', name: 'Mix of Cinnamon Sugar Pretzels & Original Pretzels + choice of dips' }],
+    packs: [{ id: '12', label: 'Serves 12', per: 12, flat: 81.00 }, { id: '24', label: 'Serves 24', per: 24, flat: 155.00 }] },
+  { id: 'auntieannesclassicbundle', cat: 'catering', name: "Auntie Anne's Classic Pretzel Bundle", unit: 'guest', perGuest: 1,
+    variants: [{ id: 'std', name: 'Choice of Original or Cinnamon Sugar Pretzel Nuggets bucket + 12 Original Pretzels + 2 gallons mixer + 20 dips' }],
+    packs: [{ id: '21', label: 'Serves 20-22', per: 21, flat: 132.00 }] },
+  { id: 'auntieannessavorybundle', cat: 'catering', name: "Auntie Anne's Savory Pretzel Bundle", unit: 'guest', perGuest: 1,
+    variants: [{ id: 'std', name: 'Choice of Mini Pretzel Dogs or Pepperoni Nuggets bucket + 12 Original Pretzels + 2 gallons mixer + 20 dips' }],
+    packs: [{ id: '21', label: 'Serves 20-22', per: 21, flat: 135.00 }] },
+  { id: 'auntieannessnackpack', cat: 'catering', name: "Auntie Anne's Bucket Snack Pack", unit: 'guest', perGuest: 1,
+    variants: [{ id: 'classic', name: 'Classic · 2 buckets of bite-sized pretzels + 1 gallon original lemonade + 10 dips' }, { id: 'savory', name: 'Savory · same, savory buckets', delta: 8.00 }],
+    packs: [{ id: '18', label: 'Serves 16-20', per: 18, flat: 94.00 }] },
+  { id: 'auntieannesdips', cat: 'catering', name: "Auntie Anne's 6 Dips Assortment", unit: 'dip', perGuest: 1,
+    variants: [{ id: 'std', name: 'Six assorted dip flavors' }],
+    packs: [{ id: '6', label: 'Serves 6', per: 6, flat: 10.00 }] },
+  { id: 'auntieannesdipindividual', cat: 'catering', name: "Auntie Anne's Individual Dip", unit: 'dip', perGuest: 1,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '1', label: 'Individually packaged', per: 1, flat: 1.89 }] },
+  { id: 'auntieannesbeverage', cat: 'catering', name: "Auntie Anne's Beverage (by the gallon)", unit: 'guest', perGuest: .2,
+    variants: [{ id: 'lemonade', name: 'Original Lemonade' }, { id: 'mixer', name: 'Lemonade Mixer', delta: 0 }],
+    packs: [{ id: '7', label: 'Serves 6-8', per: 7, flat: 3.39 }] },
+  // -- Freddy's Frozen Custard & Steakburgers Catering (real menu, 2740 E 146th St, Carmel, IN; ezcater.com, live 2026-08-26)
+  { id: 'freddysbar', cat: 'catering', name: 'Freddy\'s Build-Your-Own Bar (serves 10)', unit: 'guest', perGuest: 1,
+    variants: [
+      { id: 'standardhotdogbar', name: 'Standard Hot Dog Bar · 10 hot dogs, ketchup, mustard, relish, diced onions, 10 servings Kettle Chips' },
+      { id: 'deluxehotdogbar', name: 'Deluxe Hot Dog Bar · 10 hot dogs, ketchup, mustard, relish, diced onions, chili, shredded cheese, 10 servings Kettle Chips', delta: 20 },
+      { id: 'standardburgerbar', name: 'Standard Burger Bar · 10 doubles w/ cheese, ketchup, mustard, pickles, onions, 10 servings Kettle Chips', delta: 25 },
+      { id: 'deluxeburgerbar', name: 'Deluxe Burger Bar · 10 doubles w/ cheese, ketchup, mustard, mayo, pickles, onions, sliced tomatoes, shredded lettuce, jalapenos, fry sauce, 10 servings Kettle Chips', delta: 35 },
+    ],
+    packs: [{ id: '10', label: 'Serves 10', per: 10, flat: 94.99 }] },
+  { id: 'freddysbaggedlunch', cat: 'catering', name: 'Freddy\'s Bagged Lunch', unit: 'box', perGuest: .5,
+    variants: [
+      { id: 'classicbaggedlunchorigin', name: 'Classic Bagged Lunch - Original Double With Cheese · Two steakburger patties & cheese on toasted bun, mustard/onion/pickles on side' },
+      { id: 'classicbaggedlunchveggie', name: 'Classic Bagged Lunch - Veggie Burger · Black bean burger & cheese, toasted bun, onion/Thousand Island/lettuce/tomato on side', delta: 0 },
+      { id: 'classicbaggedlunchgluten', name: 'Classic Bagged Lunch - Gluten-Sensitive Lettuce Wrap · Two steakburger patties & cheese in lettuce wrap, mustard/onion/pickles on side', delta: 0 },
+      { id: 'classicbaggedlunchspicyc', name: 'Classic Bagged Lunch - Spicy Chicken Sandwich · Chicken breast, crunchy pickles, spicy jalapeno fry sauce, toasted bun', delta: 0 },
+      { id: 'classicbaggedlunchallbee', name: 'Classic Bagged Lunch - All-Beef Hot Dog · All-beef hot dog on toasted bun', delta: 0 },
+      { id: 'favoritebaggedlunchgrill', name: 'Favorite Bagged Lunch - Grilled Chicken Club · Grilled chicken breast, Swiss cheese, bacon, tomato, mayo, toasted bun', delta: 1 },
+      { id: 'favoritebaggedlunchcrisp', name: 'Favorite Bagged Lunch - Crispy Chicken Club · Crispy chicken breast, Swiss cheese, bacon, lettuce, tomato, mayo, toasted bun', delta: 1 },
+      { id: 'favoritebaggedlunchbacon', name: 'Favorite Bagged Lunch - Bacon and Cheese Double · Two steakburger patties, bacon & cheese, toasted bun, mustard/onion/pickles on side', delta: 1 },
+      { id: 'favoritebaggedlunchcalif', name: 'Favorite Bagged Lunch - California Style Double · Two steakburger patties & cheese, toasted bun, onion/Thousand Island/lettuce/tomato on side', delta: 1 },
+      { id: 'favoritebaggedlunchjalap', name: 'Favorite Bagged Lunch - Jalapeno Pepper Jack Double · Two steakburger patties & pepper jack cheese, sauteed jalapenos & spicy jalapeno fry sauce on side, toasted bun', delta: 1 },
+    ],
+    packs: [{ id: '1', label: 'Individually packaged, incl. Kettle Chips & brownie', per: 1, flat: 11.99 }] },
+  { id: 'freddysdessert', cat: 'catering', name: 'Freddy\'s Dessert', unit: 'guest', perGuest: .3,
+    variants: [
+      { id: 'brownietray', name: 'Brownie Tray' },
+      { id: 'createyourownsundaebar', name: 'Create Your Own Sundae Bar · 1qt chocolate + 1qt vanilla frozen custard, strawberries, OREO, hot fudge, Reese\'s cups, chocolate chip cookie dough', delta: 46 },
+    ],
+    packs: [{ id: '10', label: 'Serves 10', per: 10, flat: 23.99 }] },
+  { id: 'freddysgallonbev', cat: 'catering', name: 'Freddy\'s Gallon Beverage', unit: 'guest', perGuest: .15,
+    variants: [
+      { id: 'gallonsweettea', name: 'Gallon Sweet Tea' },
+      { id: 'gallonunsweettea', name: 'Gallon Unsweet Tea', delta: 0 },
+      { id: 'gallonlemonade', name: 'Gallon Lemonade', delta: 3 },
+    ],
+    packs: [{ id: '8', label: 'Serves 8', per: 8, flat: 9.99 }] },
+  { id: 'freddyssauce', cat: 'catering', name: 'Freddy\'s Sauce or Seasoning', unit: 'bottle', perGuest: .1,
+    variants: [
+      { id: 'freddysfamousfrysauce', name: 'Freddy\'s Famous Fry Sauce · A tangy twist on traditional ketchup' },
+      { id: 'freddysfamousjalapenofry', name: 'Freddy\'s Famous Jalapeno Fry Sauce · A tangy twist on traditional ketchup with a spicy kick', delta: 0 },
+      { id: 'freddysfamoussteakburger', name: 'Freddy\'s Famous Steakburger and Fry Seasoning · Authentic seasoning blend used on steakburgers & shoestring fries', delta: 0 },
+    ],
+    packs: [{ id: '1', label: 'Bottle', per: 1, flat: 5.99 }] },
+  { id: 'freddyschickentendertray', cat: 'catering', name: "Freddy's Chicken Tender Tray", unit: 'guest', perGuest: 1,
+    variants: [{ id: 'std', name: '25 tenders with ranch, BBQ sauce, honey mustard, and Freddy\'s Fry Sauce' }],
+    packs: [{ id: '5', label: 'Serves 5', per: 5, flat: 54.99 }] },
+  { id: 'freddyssalad', cat: 'catering', name: "Freddy's Garden Salad", unit: 'guest', perGuest: .5,
+    variants: [{ id: 'std', name: 'Shredded lettuce, sliced tomato, shredded cheese, onions, served with dressings' }],
+    packs: [{ id: '6', label: 'Serves 6', per: 6, flat: 54.99 }] },
+  { id: 'freddyswaterpack', cat: 'catering', name: "Freddy's Bottle Water Pack", unit: 'bottle', perGuest: .3,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '12', label: 'Serves 12', per: 12, flat: 24.00 }] },
   // -- Décor
   { id: 'balloons', cat: 'decor', name: 'Latex balloons', unit: 'balloon', perGuest: 2,
     variants: [{ id: 'assorted', name: 'Assorted colors' }, { id: 'goldwhite', name: 'Gold & white', delta: 2 }, { id: 'pastel', name: 'Pastel', delta: 1.5 }],
-    packs: [{ id: '72', label: '72 ct', per: 72, prices: P(null, null, null, 9.99) },
+    packs: [{ id: '72', label: '72 ct', per: 72, prices: P(null, null, null, 9.99, null, 7.99, null) },
             { id: '144', label: '144 ct', per: 144, prices: P(null, null, null, 14.07) }] },
   { id: 'linens', cat: 'decor', name: 'Disposable table linens', unit: 'linen', perGuest: .15,
     variants: [{ id: 'white', name: 'White' }, { id: 'black', name: 'Black' }, { id: 'kraft', name: 'Kraft', delta: 1 }],
@@ -2877,7 +3420,7 @@ window.QB_FAMILIES = [
             { id: '12', label: '12 pack · 54x108', per: 12, prices: P(null, null, null, 12.99) }] },
   { id: 'lights', cat: 'decor', name: 'Outdoor string lights', unit: 'strand', perGuest: 0,
     variants: [{ id: 'warm', name: 'Warm white, 48 ft' }, { id: 'cafe', name: 'Café bulb, 24 ft', delta: -6 }],
-    packs: [{ id: '2', label: '2 strands', per: 2, prices: P(null, null, null, null) }] },
+    packs: [{ id: '2', label: '2 strands · commercial grade, S14 shatterproof bulbs', per: 2, prices: P(null, null, null, 79.99) }] },
   { id: 'center', cat: 'decor', name: 'Centerpiece kit', unit: 'centerpiece', perGuest: .1,
     variants: [{ id: 'floral', name: 'Floral + vase' }, { id: 'lantern', name: 'Lantern + candle', delta: 4 }],
     packs: [{ id: '6', label: '6 ct', per: 6, prices: P(null, null, null, 69.99) }] },
@@ -2906,7 +3449,7 @@ window.QB_FAMILIES = [
   { id: 'sunflowers', cat: 'decor', name: 'Sunflowers, bulk bunch', unit: 'stem', perGuest: .5,
     variants: [{ id: 'yellow', name: 'Yellow' }],
     packs: [{ id: '40', label: '40 stems', per: 40, prices: P(59.99, null, null, null) },
-            { id: '80', label: '80 stems', per: 80, prices: P(null, null, null, null) }] },
+            { id: '80', label: '80 stems', per: 80, prices: P(null, null, 84.68, null) }] },
   { id: 'filler', cat: 'decor', name: 'Filler flowers & greenery, bulk bunch', unit: 'stem', perGuest: 1,
     variants: [{ id: 'babysbreath', name: "Baby's breath", only: ['100bb'] }, { id: 'mixedgreens', name: 'Mixed fillers & greens', only: ['100mix'] }],
     packs: [{ id: '100bb', label: "100 stems · Baby's breath", per: 100, prices: P(74.99, null, null, null) },
@@ -2919,7 +3462,7 @@ window.QB_FAMILIES = [
     packs: [{ id: '30', label: '30 rolls · 15 colors, 11 yds/roll', per: 30, prices: P(null, null, null, 5.79) }] },
   { id: 'twine', cat: 'decor', name: 'Twine, bulk spool', unit: 'spool', perGuest: .02,
     variants: [{ id: 'jute', name: 'Natural jute' }],
-    packs: [{ id: '1', label: '1 spool · 805 ft, 2mm natural jute', per: 1, prices: P(null, null, null, 5.98) }] },
+    packs: [{ id: '1', label: '1 spool · 805 ft, 2mm natural jute', per: 1, prices: P(null, null, null, 5.98, null, null, 7.46) }] },
   { id: 'bouquetwrap', cat: 'decor', name: 'Bouquet wrapping paper, bulk pack', unit: 'sheet', perGuest: 1,
     variants: [{ id: 'kraft', name: 'Kraft paper' }],
     packs: [{ id: '50', label: '50 sheets · A4 size, coffee/kraft vintage wrap', per: 50, prices: P(null, null, null, 16.19) }] },
@@ -2928,34 +3471,34 @@ window.QB_FAMILIES = [
     packs: [{ id: '56', label: '56 pack · 4.2"x6.0" cardstock + envelopes', per: 56, prices: P(null, null, null, 8.99) }] },
   { id: 'labels', cat: 'decor', name: 'Chalkboard tabletop signs / food labels, bulk pack', unit: 'sign', perGuest: 0,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '20', label: '20-pack · 4x3 chalkboard tent signs', per: 20, prices: P(null, null, null, 11.05) }] },
+    packs: [{ id: '20', label: '20-pack · 4x3 chalkboard tent signs', per: 20, prices: P(null, null, null, 11.05, null, null, 12.99) }] },
   { id: 'bballdecor', cat: 'decor', name: 'Basketball tablecloths & decorations, party pack', unit: 'set', perGuest: 0,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '1', label: '1 set · tablecloth + tableware, serves 20', per: 1, prices: P(null, null, null, 12.99) }] },
+    packs: [{ id: '1', label: '1 set · tablecloth + tableware, serves 20', per: 1, prices: P(null, null, null, 12.99, null, null, 17.09) }] },
   { id: 'pizzadecor', cat: 'decor', name: 'Pizza-themed party decor kit', unit: 'kit', perGuest: 0,
-    variants: [{ id: 'std', name: 'Banner, pennant, backdrop & balloons' }],
-    packs: [{ id: '1', label: '1 kit', per: 1, prices: P(null, null, null, null) }] },
+    variants: [{ id: 'std', name: 'Foil banner, Happy Birthday banner, 2 large pizza foil balloons, 18 latex balloons, 12 cupcake toppers' }],
+    packs: [{ id: '1', label: '1 kit', per: 1, prices: P(null, null, null, 13.99, null, null, 16.99) }] },
   { id: 'fittedcloths', cat: 'decor', name: 'Fitted tablecloths, reusable', unit: 'cloth', perGuest: 0,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '6', label: '6 pack · spandex, fits 6 ft tables', per: 6, prices: P(null, null, null, 26.45) }] },
+    packs: [{ id: '6', label: '6 pack · spandex, fits 6 ft tables', per: 6, prices: P(null, null, null, 26.45, null, null, 30.99) }] },
   { id: 'chalkboardsigns', cat: 'decor', name: 'Reusable chalkboard signs', unit: 'sign', perGuest: 0,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '20', label: '20 pack · framed, w/ easel stands', per: 20, prices: P(null, null, null, 12.99) }] },
+    packs: [{ id: '20', label: '20 pack · framed, w/ easel stands', per: 20, prices: P(null, null, null, 12.99, null, null, 18.43) }] },
   { id: 'falltablecloths', cat: 'decor', name: 'Fall-themed disposable tablecloths', unit: 'tablecloth', perGuest: .15,
     variants: [{ id: 'mapleleaf', name: 'Maple leaf print' }],
     packs: [{ id: '4', label: '4 pack · 54x108', per: 4, prices: P(null, null, null, 12.99) }] },
   { id: 'falldecor', cat: 'decor', name: 'Fall decorations kit', unit: 'kit', perGuest: 0,
     variants: [{ id: 'std', name: '23-piece autumn scatter set' }],
-    packs: [{ id: '1', label: '1 kit · mini pumpkins, acorns, pinecones', per: 1, prices: P(null, null, null, 13.99) }] },
+    packs: [{ id: '1', label: '1 kit · mini pumpkins, acorns, pinecones', per: 1, prices: P(null, null, null, 13.99, null, null, 14.99) }] },
   { id: 'haybales', cat: 'decor', name: 'Hay bales, for photo-area styling', unit: 'bale', perGuest: 0,
     variants: [{ id: 'faux', name: 'Decorative faux hay bale' }],
-    packs: [{ id: '8pk', label: '8-pack · mini faux hay bale boxes / photo props', per: 8, prices: P(null, null, null, 23.99) }] },
+    packs: [{ id: '8pk', label: '8-pack · mini faux hay bale boxes / photo props', per: 8, prices: P(null, null, null, 23.99, null, null, 7.79) }] },
   { id: 'treatbags', cat: 'decor', name: 'Halloween treat bags, bulk pack', unit: 'bag', perGuest: 1,
     variants: [{ id: 'ghost', name: 'Ghost print' }],
-    packs: [{ id: '100', label: '100 ct · trick-or-treat giveaway bags', per: 100, prices: P(null, null, null, 9.99) }] },
+    packs: [{ id: '100', label: '100 ct · trick-or-treat giveaway bags', per: 100, prices: P(null, null, null, 9.99, null, null, 9.39) }] },
   { id: 'halloweendecorkit', cat: 'decor', name: 'Halloween indoor decorations kit', unit: 'kit', perGuest: 0,
     variants: [{ id: 'std', name: 'Hanging swirls, bats, spiders & banners' }],
-    packs: [{ id: '1', label: '1 kit · ceiling & wall party decor set', per: 1, prices: P(null, null, null, 14.99) }] },
+    packs: [{ id: '1', label: '1 kit · ceiling & wall party decor set', per: 1, prices: P(null, null, null, 14.99, null, null, 9.99) }] },
   { id: 'minipumpkins', cat: 'decor', name: 'Small pumpkins, bulk', unit: 'pumpkin', perGuest: 1.25,
     variants: [{ id: 'std', name: '' }],
     packs: [{ id: '5ct', label: '5 ct produce pack', per: 5, prices: P(5.99, null, null, null) }] },
@@ -2980,8 +3523,8 @@ window.QB_FAMILIES = [
     packs: [{ id: '100', label: '100 ct', per: 100, prices: P(null, null, null, 8.24) },
             { id: '200', label: '200 ct', per: 200, prices: P(null, 18.49, 18.98, null) }] },
   { id: 'cups', cat: 'paper', name: 'Plastic cups', unit: 'cup', perGuest: 2,
-    variants: [{ id: '18', name: '18 oz' }, { id: '9', name: '9 oz', delta: -4 }],
-    packs: [{ id: '120', label: '120 ct', per: 120, prices: P(null, null, null, null) },
+    variants: [{ id: '18', name: '18 oz' }, { id: '9', name: '9 oz, gold-rimmed', delta: 13, only: ['120'] }],
+    packs: [{ id: '120', label: '120 ct', per: 120, prices: P(null, null, null, 9.99) },
             { id: '240', label: '240 ct', per: 240, prices: P(12.99, 11.29, 12.74, null) }] },
   { id: 'cutlery', cat: 'paper', name: 'Cutlery kits', unit: 'set', perGuest: 1.5,
     variants: [{ id: 'std', name: 'Fork, knife, spoon' }],
@@ -3000,7 +3543,7 @@ window.QB_FAMILIES = [
     packs: [{ id: '12', label: '12 piece', per: 12, prices: P(null, null, null, 17.99) }] },
   { id: 'trays', cat: 'paper', name: 'Disposable serving trays', unit: 'tray', perGuest: 0,
     variants: [{ id: 'halfsize', name: 'Foil, half-size' }, { id: 'fullsize', name: 'Foil, full-size', delta: 2 }],
-    packs: [{ id: '10', label: '10 ct', per: 10, prices: P(null, null, null, 15.99) }] },
+    packs: [{ id: '10', label: '10 ct', per: 10, prices: P(null, null, null, 15.99, null, 9.49, null) }] },
   { id: 'skirting', cat: 'paper', name: 'Table skirting', unit: 'roll', perGuest: 0,
     variants: [{ id: 'white', name: 'White' }, { id: 'black', name: 'Black' }],
     packs: [{ id: '1', label: '1 roll · 14 ft', per: 1, prices: P(null, null, null, 24.99) }] },
@@ -3017,34 +3560,34 @@ window.QB_FAMILIES = [
   { id: 'basket', cat: 'prizes', name: 'Raffle prize basket', unit: 'basket', perGuest: 0,
     variants: [{ id: 'mid', name: 'Mid-tier' }, { id: 'premium', name: 'Premium', delta: 45 }],
     packs: [{ id: '1', label: '1 basket', per: 1, prices: P(null, null, null, 49.95) }] },
-  { id: 'tumblers', cat: 'prizes', name: 'Branded tumblers, 20 oz', unit: 'tumbler', perGuest: .35,
-    variants: [{ id: 'std', name: 'Single-color print' }, { id: 'full', name: 'Full-color print', delta: 22 }],
-    packs: [{ id: '12', label: '12 pack', per: 12, prices: P(null, null, null, null) },
-            { id: '24', label: '24 pack', per: 24, prices: P(null, null, null, null) }] },
+  { id: 'tumblers', cat: 'prizes', name: 'Blank tumblers, 20 oz (for custom printing)', unit: 'tumbler', perGuest: .35,
+    variants: [{ id: 'std', name: 'Double-wall stainless, lid + straw — blank, add your own logo/print' }],
+    packs: [{ id: '12', label: '12 pack', per: 12, prices: P(null, null, null, 52.99) },
+            { id: '24', label: '24 pack, individually boxed', per: 24, prices: P(null, null, null, 89.91) }] },
   { id: 'goody', cat: 'prizes', name: 'Goody bag fillers', unit: 'piece', perGuest: 1,
-    variants: [{ id: 'kids', name: 'Kids assortment' }, { id: 'teen', name: 'Teen assortment', delta: 6 }],
-    packs: [{ id: '100', label: '100 piece', per: 100, prices: P(null, null, null, null) }] },
+    variants: [{ id: 'kids', name: 'Kids assortment · bendable toy mix' }, { id: 'teen', name: 'Teen assortment', delta: 6 }],
+    packs: [{ id: '100', label: '100 piece', per: 100, prices: P(null, null, null, 38.22) }] },
   { id: 'grand', cat: 'prizes', name: 'Grand prize', unit: 'prize', perGuest: 0,
     variants: [{ id: 'speaker', name: 'Bluetooth speaker' }, { id: 'tablet', name: 'Tablet', delta: 75 }],
-    packs: [{ id: '1', label: '1 prize', per: 1, prices: P(99.99, null, null, null) }] },
+    packs: [{ id: '1', label: '1 prize', per: 1, prices: P(99.99, null, null, null, null, 129.95, null) }] },
   { id: 'medals', cat: 'prizes', name: 'Custom medals & ribbons', unit: 'piece', perGuest: 0,
-    variants: [{ id: 'participation', name: 'Participation' }, { id: 'placement', name: '1st/2nd/3rd set', delta: 6 }],
-    packs: [{ id: '25', label: '25 ct', per: 25, prices: P(null, null, null, null) }] },
+    variants: [{ id: 'participation', name: 'Participation · 1.5in medal, 15.3in ribbon' }, { id: 'placement', name: '1st/2nd/3rd set', delta: 6 }],
+    packs: [{ id: '24', label: '24 ct', per: 24, prices: P(null, null, null, 22.99) }] },
   { id: 'raffle', cat: 'prizes', name: 'Raffle ticket roll & drum', unit: 'set', perGuest: 0,
-    variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '1', label: '1 set · 2,000 tickets + drum', per: 1, prices: P(null, null, null, null) }] },
+    variants: [{ id: 'std', name: 'Acrylic drum, ticket spinner cage, 2,000 red raffle tickets (double roll), 2 keys' }],
+    packs: [{ id: '1', label: '1 set · 2,000 tickets + drum', per: 1, prices: P(null, null, null, 42.99) }] },
   { id: 'gardentools', cat: 'prizes', name: 'Garden tool set (first-place bonus)', unit: 'set', perGuest: 0,
     variants: [{ id: 'std', name: '' }],
     packs: [{ id: '1', label: '1 set', per: 1, prices: P(59.99, null, null, 10.49) }] },
   { id: 'wateringcan', cat: 'prizes', name: 'Watering cans, bulk pack', unit: 'can', perGuest: .2,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '3', label: '3-pack · 1/2 gal each', per: 3, prices: P(null, null, null, null) }] },
+    packs: [{ id: '3', label: '3-pack · 1/2 gal each', per: 3, prices: P(null, null, null, 11.99) }] },
   { id: 'plantties', cat: 'prizes', name: 'Plant ties, bulk pack', unit: 'roll', perGuest: 0,
     variants: [{ id: 'std', name: 'Velcro, cut-to-length' }],
     packs: [{ id: '1', label: '1 roll · 50 ft x 1/2 in', per: 1, prices: P(null, null, null, 3.98) }] },
   { id: 'planttags', cat: 'prizes', name: 'Plant tags/markers, bulk pack', unit: 'tag', perGuest: .3,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '30', label: '30-pack', per: 30, prices: P(null, null, null, null) }] },
+    packs: [{ id: '30', label: '30-pack', per: 30, prices: P(null, null, null, 15.99) }] },
   { id: 'totebags', cat: 'prizes', name: 'Custom/blank tote bags', unit: 'bag', perGuest: 1,
     variants: [{ id: 'std', name: 'Blank canvas' }],
     packs: [{ id: '12', label: '12 pack · canvas', per: 12, prices: P(null, null, null, 38.99) }] },
@@ -3061,36 +3604,36 @@ window.QB_FAMILIES = [
     packs: [{ id: '24', label: '24 pack · 17"', per: 24, prices: P(null, null, 134.00, 89.00) }] },
   { id: 'leashes', cat: 'prizes', name: 'Dog leashes, bulk multi-pack (take-home)', unit: 'leash', perGuest: .3,
     variants: [{ id: 'std', name: '6 ft nylon slip lead, assorted colors' }],
-    packs: [{ id: '10', label: '10 pack · 6 ft', per: 10, prices: P(null, null, null, null) }] },
+    packs: [{ id: '10', label: '10 pack · 6 ft', per: 10, prices: P(null, null, null, 16.99) }] },
   { id: 'takehomebowls', cat: 'prizes', name: 'Take-home dog bowls, bulk multi-pack', unit: 'bowl', perGuest: .3,
     variants: [{ id: 'std', name: 'Stainless steel' }],
-    packs: [{ id: '12', label: '12 pack · stainless steel', per: 12, prices: P(null, null, null, null) }] },
+    packs: [{ id: '12', label: '12 pack · stainless steel', per: 12, prices: P(null, null, null, 23.99) }] },
   { id: 'petgiftfillers', cat: 'prizes', name: 'Pet gift bag fillers, bulk assortment', unit: 'piece', perGuest: 1,
     variants: [{ id: 'std', name: 'Mini plush dog toys' }],
-    packs: [{ id: '15', label: '15 pack · 4.3" plush puppies', per: 15, prices: P(null, null, null, null) }] },
+    packs: [{ id: '10', label: '10 pack · 4.3" plush puppies', per: 10, prices: P(null, null, null, 19.99) }] },
   // -- Add-Ons
   { id: 'photobooth', cat: 'addons', name: 'Photo booth kit', unit: 'kit', perGuest: 0,
     variants: [{ id: 'props', name: 'Props + backdrop' }, { id: 'instant', name: 'Props + instant camera', delta: 70 }],
-    packs: [{ id: '1', label: '1 kit', per: 1, prices: P(null, null, null, null) }] },
+    packs: [{ id: '1', label: '1 kit', per: 1, prices: P(null, null, null, 19.95) }] },
   { id: 'cottoncandy', cat: 'addons', name: 'Cotton candy supplies', unit: 'serving', perGuest: .6,
     variants: [{ id: 'classic', name: 'Classic flavors' }, { id: 'variety', name: 'Variety flavors', delta: 5 }],
-    packs: [{ id: '100', label: '100 servings', per: 100, prices: P(null, null, null, null) }] },
+    packs: [{ id: '100', label: '100 servings · 3x11oz floss sugar jars + 100 paper cones', per: 100, prices: P(null, null, null, 24.99) }] },
   { id: 'facepaint', cat: 'addons', name: 'Face painting kit', unit: 'kit', perGuest: 0,
-    variants: [{ id: 'std', name: 'Professional grade' }],
-    packs: [{ id: '1', label: '1 kit', per: 1, prices: P(null, null, null, null) }] },
+    variants: [{ id: 'std', name: 'Professional grade, 24 colors, w/ stencils, book, brushes, sponges' }],
+    packs: [{ id: '1', label: '1 kit', per: 1, prices: P(null, null, null, 18.99) }] },
   { id: 'lawngames', cat: 'addons', name: 'Lawn game set', unit: 'set', perGuest: 0,
-    variants: [{ id: '4', name: '4 games' }, { id: 'giant', name: 'Giant yard games', delta: 35 }],
-    packs: [{ id: '1', label: '1 set', per: 4, prices: P(null, null, null, null) }] },
+    variants: [{ id: '5', name: '5 games · Wild Sports 5 Game Combo Set' }, { id: 'giant', name: 'Giant yard games', delta: 35 }],
+    packs: [{ id: '1', label: '1 set', per: 4, prices: P(null, null, null, null, null, 39.99, null) }] },
   { id: 'ice', cat: 'addons', name: 'Ice, 20 lb bags', unit: 'bag', perGuest: .08,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '4', label: '4 bags', per: 4, prices: P(7.96, 23.16, 8.00, null) },
-            { id: '8', label: '8 bags', per: 8, prices: P(15.92, 46.32, 16.00, null) }] },
+    packs: [{ id: '4', label: '4 bags', per: 4, prices: P(7.96, 23.16, 8.00, null, null, 21.96, null) },
+            { id: '8', label: '8 bags', per: 8, prices: P(15.92, 46.32, 16.00, null, null, 43.92, null) }] },
   { id: 'bouncehouse', cat: 'addons', name: 'Bounce house rental', unit: 'day', perGuest: 0,
     variants: [{ id: 'standard', name: 'Standard 13x13' }, { id: 'combo', name: 'Combo with slide', delta: 150 }],
     packs: [{ id: '1', label: 'Per day', per: 1, flat: 175.00 }] },
   { id: 'snowcone', cat: 'addons', name: 'Snow cone machine kit', unit: 'kit', perGuest: 0,
     variants: [{ id: 'classic', name: 'Classic syrups' }, { id: 'tropical', name: 'Tropical syrups', delta: 5 }],
-    packs: [{ id: '1', label: '1 kit · serves ~100', per: 1, prices: P(null, null, null, null) }] },
+    packs: [{ id: '1', label: '1 kit · Hawaiian Shaved Ice S700, incl. 6x16oz syrups, cups & spoon straws — mfr. spec ~50 servings', per: 1, prices: P(null, null, null, 87.99) }] },
   { id: 'arcadebball', cat: 'addons', name: 'Two-player arcade basketball game rental', unit: 'day', perGuest: 0,
     variants: [{ id: 'std', name: '' }],
     packs: [{ id: '1', label: 'Per day', per: 1, flat: 175.00 }] },
@@ -3099,13 +3642,13 @@ window.QB_FAMILIES = [
     packs: [{ id: '15', label: '15 lb box', per: 15, prices: P(null, null, 21.94, null) }] },
   { id: 'greenies', cat: 'addons', name: 'Greenies dog dental treats, bulk box', unit: 'oz', perGuest: .3,
     variants: [{ id: 'std', name: 'Original, petite' }],
-    packs: [{ id: '36', label: '36 oz tub', per: 36, prices: P(32.99, null, null, null) }] },
+    packs: [{ id: '36', label: '36 oz tub', per: 36, prices: P(32.99, null, null, null, null, 39.99, null) }] },
   { id: 'poopbags', cat: 'addons', name: 'Poop bags, bulk rolls with dispenser', unit: 'bag', perGuest: 2,
     variants: [{ id: 'std', name: 'Unscented' }],
     packs: [{ id: '600', label: '600 ct · 40 rolls + canvas dispenser', per: 600, prices: P(28.99, null, null, null) }] },
   { id: 'dogbowlsdisp', cat: 'addons', name: 'Disposable dog bowls, bulk pack', unit: 'bowl', perGuest: .4,
     variants: [{ id: 'std', name: '16 oz paper' }],
-    packs: [{ id: '50', label: '50 ct · 16 oz paper', per: 50, prices: P(null, null, null, null) }] },
+    packs: [{ id: '50', label: '50 ct · 16 oz paper', per: 50, prices: P(null, null, null, 13.99) }] },
   // -- Staffing & Equipment Rental (Community Spark's own in-house rates — set your real numbers via the price editor)
   { id: 'lead', cat: 'staffing', name: 'Event lead, on-site', unit: 'hour', perGuest: 0,
     variants: [{ id: 'std', name: '' }],
@@ -3434,7 +3977,7 @@ function qbItem(id) {
   const ov = window.QB_OVERRIDES[id];
   if (!ov) return base;
   const item = { ...base, prices: { ...base.prices } };
-  ['costco', 'bjs', 'sams', 'amazon'].forEach(s => { if (ov[s] != null) item.prices[s] = ov[s]; });
+  window.QB_STORES.forEach(st => { if (ov[st.key] != null) item.prices[st.key] = ov[st.key]; });
   if (ov.flat != null) item.flat = ov.flat;
   return item;
 }
@@ -3493,6 +4036,43 @@ function QBNumber({ value, onChange, prefix, suffix, min = 0, step = 1, width = 
         onChange={e => onChange(e.target.value === '' ? 0 : +e.target.value)} />
       {suffix && <span>{suffix}</span>}
     </span>
+  );
+}
+
+function QBStorePicker({ allowed, onChange }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+  useEffect(() => {
+    function onDocClick(e) { if (ref.current && !ref.current.contains(e.target)) setOpen(false); }
+    document.addEventListener('mousedown', onDocClick);
+    return () => document.removeEventListener('mousedown', onDocClick);
+  }, []);
+  const allStores = window.QB_STORES;
+  const label = allowed.length === 0 ? 'All stores'
+    : allowed.length === allStores.length ? 'All stores selected'
+    : allowed.length === 1 ? allStores.find(s => s.key === allowed[0]).name
+    : allowed.length + ' stores selected';
+  function toggle(key) { onChange(allowed.indexOf(key) >= 0 ? allowed.filter(k => k !== key) : [...allowed, key]); }
+  return (
+    <div className="qb-storepicker" ref={ref}>
+      <button type="button" className="qb-storepicker-trigger" onClick={() => setOpen(o => !o)} aria-expanded={open}>
+        <span>{label}</span>
+        <span className="qb-storepicker-caret">{open ? '▴' : '▾'}</span>
+      </button>
+      {open && (
+        <div className="qb-storepicker-menu">
+          {allStores.map(s => (
+            <label key={s.key} className="qb-storepicker-option">
+              <input type="checkbox" checked={allowed.indexOf(s.key) >= 0} onChange={() => toggle(s.key)} />
+              <span>{s.name}</span>
+            </label>
+          ))}
+          {allowed.length > 0 && (
+            <button type="button" className="qb-storepicker-clear" onClick={() => onChange([])}>Clear · price all stores</button>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -3735,8 +4315,9 @@ function QBPriceEditor({ onClose, bump }) {
         </div>
         <div className="qb-modal-body">
           <div className="qb-search"><span>&#8981;</span><input autoFocus placeholder="Search items…" value={query} onChange={e => setQuery(e.target.value)} /></div>
+          <div className="qb-editor-scroll">
           <div className="qb-editor-head-row">
-            <span>Item</span><span>Costco</span><span>BJ's</span><span>Sam's</span><span>Amazon</span>
+            <span>Item</span>{window.QB_STORES.map(s => <span key={s.key}>{s.name}</span>)}
           </div>
           {window.QB_CATEGORIES.map(cat => {
             const items = window.QB_ITEMS.filter(it => it.cat === cat.id && (!q || it.name.toLowerCase().includes(q)));
@@ -3761,13 +4342,13 @@ function QBPriceEditor({ onClose, bump }) {
                   return (
                     <div className="qb-editor-row" key={base.id}>
                       <div className="qb-editor-name">{base.short}<small>{base.packLabel}</small></div>
-                      {['costco', 'bjs', 'sams', 'amazon'].map(s => (
-                        <div className="qb-editor-field" key={s}>
-                          {qbHasOverride(base.id, s) && <button className="qb-editor-reset" onClick={() => { qbSetOverride(base.id, s, null); bump(); }}>reset</button>}
-                          <input type="number" step="0.01" placeholder={eff.prices[s] == null ? 'n/a' : undefined}
-                            className={qbHasOverride(base.id, s) ? 'overridden' : ''}
-                            value={eff.prices[s] == null ? '' : eff.prices[s]}
-                            onChange={e => { qbSetOverride(base.id, s, e.target.value); bump(); }} />
+                      {window.QB_STORES.map(st => (
+                        <div className="qb-editor-field" key={st.key}>
+                          {qbHasOverride(base.id, st.key) && <button className="qb-editor-reset" onClick={() => { qbSetOverride(base.id, st.key, null); bump(); }}>reset</button>}
+                          <input type="number" step="0.01" placeholder={eff.prices[st.key] == null ? 'n/a' : undefined}
+                            className={qbHasOverride(base.id, st.key) ? 'overridden' : ''}
+                            value={eff.prices[st.key] == null ? '' : eff.prices[st.key]}
+                            onChange={e => { qbSetOverride(base.id, st.key, e.target.value); bump(); }} />
                         </div>
                       ))}
                     </div>
@@ -3776,6 +4357,7 @@ function QBPriceEditor({ onClose, bump }) {
               </div>
             );
           })}
+          </div>
         </div>
       </div>
     </div>
@@ -3908,7 +4490,7 @@ function QBApp() {
   const [target, setTarget] = useState(35);
   const [depositPct, setDepositPct] = useState(50);
   const [saved, setSaved] = useState([]);
-  const [allowed, setAllowed] = useState(window.QB_STORES.map(s => s.key));
+  const [allowed, setAllowed] = useState([]);
   const [picker, setPicker] = useState(null);
   const [editorOpen, setEditorOpen] = useState(false);
   const [loadedQuoteId, setLoadedQuoteId] = useState(null);
@@ -3923,7 +4505,7 @@ function QBApp() {
         setCharge(saved_.charge ?? 0); setTaxPct(saved_.taxPct ?? 7); setDelivery(saved_.delivery ?? 0);
         setTarget(saved_.target ?? 35); setDepositPct(saved_.depositPct ?? 50);
         setSaved(saved_.saved && saved_.saved.length ? saved_.saved : seedPresetQuotes());
-        setAllowed(saved_.allowed || window.QB_STORES.map(s => s.key));
+        setAllowed(saved_.allowed || []);
       } else {
         setSaved(seedPresetQuotes());
       }
@@ -3984,7 +4566,6 @@ function QBApp() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   function clearAll() { setLines([]); setCharge(0); setDelivery(0); setName(''); setLoadedQuoteId(null); }
-  function toggleStore(k) { setAllowed(a => a.length > 1 ? (a.indexOf(k) >= 0 ? a.filter(x => x !== k) : [...a, k]) : a); }
 
   function saveQuote() {
     if (!lines.length) return;
@@ -4000,7 +4581,7 @@ function QBApp() {
   }
   function loadQuote(q) {
     setLines(q.lines || []); setName(q.name || ''); setCharge(q.charge ?? 0); setGuests(q.guests ?? 60);
-    setTaxPct(q.taxPct ?? 7); setDelivery(q.delivery ?? 0); setAllowed(q.allowed || window.QB_STORES.map(s => s.key));
+    setTaxPct(q.taxPct ?? 7); setDelivery(q.delivery ?? 0); setAllowed(q.allowed || []);
     if (q.depositPct != null) setDepositPct(q.depositPct);
     setLoadedQuoteId(q.id);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -4116,12 +4697,8 @@ function QBApp() {
                 <span className="qb-card-label">The numbers</span>
                 <div>
                   <div className="qb-field-label" style={{ marginBottom: 6 }}>Shopping at</div>
-                  <div className="qb-field-help" style={{ marginBottom: 10 }}>Only these stores are priced</div>
-                  <div className="qb-toggle-row">
-                    {window.QB_STORES.map(s => (
-                      <button key={s.key} className={'qb-toggle' + (allowed.indexOf(s.key) >= 0 ? ' on' : '')} onClick={() => toggleStore(s.key)}>{s.name}</button>
-                    ))}
-                  </div>
+                  <div className="qb-field-help" style={{ marginBottom: 10 }}>Pick specific stores to price, or leave empty for the best price across all stores</div>
+                  <QBStorePicker allowed={allowed} onChange={setAllowed} />
                 </div>
                 <hr className="qb-divider" />
                 {railField('Guest count', <QBNumber value={guests} min={1} onChange={setGuests} width={84} align="right" />)}
