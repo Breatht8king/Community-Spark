@@ -1,0 +1,6 @@
+name = "community-spark-places-autocomplete"
+main = "src/index.js"
+compatibility_date = "2026-08-26"
+
+# Set the real key with: wrangler secret put GOOGLE_PLACES_API_KEY
+# Never put the key itself in this file.

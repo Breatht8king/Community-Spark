@@ -15,10 +15,14 @@
 <meta property="og:description" content="Request to book a preset Community Spark event — pick a date at least 2 weeks out and tell us how you would like it customized."/>
 <meta property="og:image" content="https://communitysparkevents.netlify.app/images/og-share.jpg"/>
 <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Community Spark | Book a Preset Event"/>
+<meta name="twitter:description" content="Request to book a preset Community Spark event — pick a date at least 2 weeks out and tell us how you would like it customized."/>
+<meta name="twitter:image" content="https://communitysparkevents.netlify.app/images/og-share.jpg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="redesign-components.css">
 </head>
 <body>
 <div class="announcement">Now booking fall and holiday 2026 events for apartment communities</div>
@@ -30,14 +34,26 @@
 </header>
 <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
   <div class="drawer-backdrop" id="drawerBackdrop"></div>
-  <nav class="drawer-panel"><button class="drawer-close" id="drawerClose">✕</button><a href="index.html">Home</a><a href="pricing.html">Pricing</a><a href="events.html">Event Catalog</a><a href="partnerships.html">For Apartment Communities</a><a href="sponsors.html">Sponsor an Event</a><a href="gallery.html">Gallery</a><a href="about.html">About & Contact</a><a class="btn btn-primary nav-cta" href="contact.html">Plan an Event</a></nav>
+  <nav class="drawer-panel"><button class="drawer-close" id="drawerClose" aria-label="Close navigation">✕</button><a href="index.html">Home</a><a href="pricing.html">Pricing</a><a href="events.html">Event Catalog</a><a href="partnerships.html">For Apartment Communities</a><a href="sponsors.html">Sponsor an Event</a><a href="gallery.html">Gallery</a><a href="about.html">About & Contact</a><a class="btn btn-primary nav-cta" href="contact.html">Plan an Event</a></nav>
 </div>
 <main>
+<section class="page-hero" id="bookHero">
+  <div class="page-hero-bg loaded" style="background-image:url('images/photo-3.jpg');background-image:image-set(url('images/photo-3.webp') type('image/webp'),url('images/photo-3.jpg') type('image/jpeg'))"></div>
+  <div class="page-hero-scrim"></div>
+  <div class="page-hero-content reveal">
+    <p class="page-hero-eyebrow">Request to book</p>
+    <h1>Book a preset event.</h1>
+    <p class="page-hero-lead">Pick a date below — Community Spark plans and executes the entire event on-site, start to finish, including setup and breakdown.</p>
+    <div class="page-hero-actions"><a class="btn btn-primary" href="#booking">Start Your Booking ↓</a><a class="btn btn-outline" href="events.html">Browse the Full Catalog</a></div>
+    <div class="page-hero-proof"><span><span>✦</span>We run every event</span><span><span>✦</span>Reply within 1–2 business days</span><span><span>✦</span>No deposit to request</span></div>
+  </div>
+</section>
+
 <section class="section" id="booking">
   <div class="about-grid reveal">
     <div>
-      <p class="section-label">Request to book</p>
-      <h2 style="font-size:clamp(34px,4vw,52px);margin-bottom:20px">Book a preset event.</h2>
+      <p class="section-label">How it works</p>
+      <h2 style="font-size:clamp(34px,4vw,52px);margin-bottom:20px">Choose your event and date.</h2>
       <p style="color:var(--muted);font-size:16px;line-height:1.75;margin-bottom:28px">Choose a date and time below. This <strong>requests</strong> the event — it is not an instant confirmation. Griffin will reply within 1–2 business days to confirm availability and finalize details.</p>
       <div class="contact-info">
         <div class="contact-info-item"><span>Email</span><strong><a href="mailto:Griffin.newton@indycollab.com">Griffin.newton@indycollab.com</a></strong></div>
@@ -58,15 +74,15 @@
 
         <div class="book-step" id="bookStep1">
           <div class="type-toggle" role="group" aria-label="Event type" style="margin-bottom:16px">
-            <button type="button" class="type-toggle-btn active" id="typePresetBtn">Preset Event</button>
-            <button type="button" class="type-toggle-btn" id="typeCustomBtn">Custom Event</button>
+            <button type="button" class="type-toggle-btn active" id="typePresetBtn" aria-pressed="true">Preset Event</button>
+            <button type="button" class="type-toggle-btn" id="typeCustomBtn" aria-pressed="false">Custom Event</button>
           </div>
           <div id="bookPresetFields">
           <div class="field-group" style="margin-bottom:14px">
             <label for="bookEventSelect">Event <span style="color:var(--gold)">*</span></label>
             <select id="bookEventSelect" name="eventName" required>
               <option value="">Select an event…</option>
-              <optgroup label="$800+ Events">
+              <optgroup label="$800+ Events — The Spark">
                 <option value="valentines bouquet bar" data-duration="1–2 hours" data-allday="false" data-price="About $800+">Valentine&#39;s Bouquet Bar</option>
                 <option value="march madness watch party" data-duration="1–2 hours" data-allday="false" data-price="About $800+">March Madness Watch Party</option>
                 <option value="dog adoption pet appreciation day" data-duration="1–2 hours" data-allday="false" data-price="About $800+">Dog Adoption &amp; Pet Appreciation Day</option>
@@ -74,7 +90,7 @@
                 <option value="halloween costume contest photo area" data-duration="1–2 hours" data-allday="false" data-price="About $800+">Halloween Costume Contest &amp; Photo Area</option>
                 <option value="hot cocoa bar" data-duration="Up to 1 hour" data-allday="false" data-price="About $800+">Hot Cocoa Bar</option>
               </optgroup>
-              <optgroup label="$1,250+ Events">
+              <optgroup label="$1,250+ Events — The Glow">
                 <option value="trivia night" data-duration="1–2 hours" data-allday="false" data-price="About $1,250+">Trivia Night</option>
                 <option value="national bagel day bar" data-duration="1–2 hours" data-allday="false" data-price="About $1,250+">National Bagel Day Bar</option>
                 <option value="build-your-own waffle bar" data-duration="Up to 1 hour" data-allday="false" data-price="About $1,250+">Build-Your-Own Waffle Bar</option>
@@ -87,7 +103,7 @@
                 <option value="pumpkin decorating fall hangout" data-duration="1–2 hours" data-allday="false" data-price="About $1,250+">Pumpkin Decorating &amp; Fall Hangout</option>
                 <option value="halloween dessert bar" data-duration="1–2 hours" data-allday="false" data-price="About $1,250+">Halloween Dessert Bar</option>
               </optgroup>
-              <optgroup label="$1,750+ Events">
+              <optgroup label="$1,750+ Events — The Radiance">
                 <option value="community farmers market" data-duration="2–3 hours" data-allday="false" data-price="About $1,750+">Community Farmers Market</option>
                 <option value="community pool party" data-duration="2–3 hours" data-allday="false" data-price="About $1,750+">Community Pool Party</option>
                 <option value="back-to-school supply event" data-duration="1–2 hours" data-allday="false" data-price="About $1,750+">Back-to-School Supply Event</option>
@@ -113,24 +129,30 @@
           </div>
           <div id="bookChangesGroup" class="field-group" style="margin-top:14px"><label for="bookChanges">What Would You Like to Add or Change About This Event?</label><textarea id="bookChanges" name="requestedChanges" placeholder="This preset already includes what's listed on the event card — tell us about any tweaks, upgrades, or swaps you'd like." rows="3"></textarea><span class="field-help">Leave blank to book the preset exactly as shown.</span></div>
           <div id="bookEventAddonsGroup" class="field-group" style="margin-top:14px" hidden>
-            <label>Optional Add-Ons For This Event</label>
-            <div class="addon-chip-group" id="bookEventAddonsList"></div>
+            <fieldset>
+            <legend>Optional Add-Ons For This Event</legend>
+            <div class="addon-checklist addon-checklist-packages" id="bookEventAddonsList"></div>
             <span class="field-help">Nothing here is priced automatically. Selecting an item doesn't commit you to it — Griffin will price it in your written proposal, and anything that doesn't fit your budget can be dropped before you approve it.</span>
+            </fieldset>
           </div>
           <div class="field-group" style="margin-top:14px">
-            <label>General Add-On Packages</label>
+            <fieldset>
+            <legend>General Add-On Packages</legend>
             <div class="addon-checklist addon-checklist-packages" id="bookPackageAddonsList"></div>
-            <span class="field-help">Shown prices are starting rates. Your written proposal will confirm the real total — remove anything that doesn't work for you before you approve it. See full package details on the <a href="pricing.html#estimate">Pricing page</a>.</span>
+            <span class="field-help">Shown prices are starting rates — the final rate depends mainly on your guest count and any customization you request. Your written proposal will confirm the real total; remove anything that doesn't work for you before you approve it. See full package details on the <a href="pricing.html#estimate">Pricing page</a>.</span>
+            </fieldset>
           </div>
           <div class="field-group" style="margin-top:14px">
-            <label>Are you open to a local sponsor helping cover part of this event's cost? <span style="color:var(--gold)">*</span></label>
+            <fieldset>
+            <legend>Are you open to a local sponsor helping cover part of this event's cost? <span style="color:var(--gold)">*</span></legend>
             <div class="sponsor-choice">
               <label><input type="radio" name="sponsorInterest" value="yes" required/> Yes</label>
               <label><input type="radio" name="sponsorInterest" value="no" required/> No</label>
             </div>
             <span class="field-help">Optional and subject to your approval — a sponsor can help offset the cost and add upgrades, but nothing is confirmed without your sign-off. See <a href="partnerships.html">Community Partnerships</a> for details.</span>
+            </fieldset>
           </div>
-          <div style="margin-top:22px"><button class="btn btn-primary" type="button" id="bookScheduleBtn" style="width:100%">Press Here to Schedule →</button></div>
+          <div style="margin-top:22px"><button class="btn btn-primary" type="button" id="bookScheduleBtn" style="width:100%">Choose a Date &amp; Time →</button></div>
           <p class="form-response" id="bookingStep1Response" role="alert" aria-live="polite"></p>
         </div>
 
@@ -162,7 +184,7 @@
           <div class="estimate-notice">
             <div>
               <strong id="bookEstimatePrice"></strong>
-              <p id="bookEstimateDescPreset" style="margin-top:4px">This is the base planning estimate for <span id="bookEstimateEventName"></span>, before any changes or additions you requested. Griffin will confirm final pricing when reviewing your request.</p>
+              <p id="bookEstimateDescPreset" style="margin-top:4px">This is the starting estimate for <span id="bookEstimateEventName"></span> — planning and on-site execution included — before any changes or additions you requested. Griffin will confirm final pricing when reviewing your request.</p>
               <p id="bookEstimateDescCustom" style="margin-top:4px" hidden>Pricing will be provided after a quote — Griffin needs the full event details before pricing it out, which can take a couple of days.</p>
             </div>
           </div>

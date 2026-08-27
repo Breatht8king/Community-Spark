@@ -5,12 +5,29 @@ if(heroBg){heroBg.style.backgroundImage='url("images/photo-7.jpg")';heroBg.style
 var header=document.getElementById('site-header');
 window.addEventListener('scroll',function(){if(header)header.classList.toggle('scrolled',window.scrollY>20);},{passive:true});
 var toggle=document.getElementById('mobileToggle'),drawer=document.getElementById('mobileDrawer'),backdrop=document.getElementById('drawerBackdrop'),closeBtn=document.getElementById('drawerClose');
-function openDrawer(){drawer.classList.add('open');drawer.setAttribute('aria-hidden','false');toggle.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';}
-function closeDrawer(){drawer.classList.remove('open');drawer.setAttribute('aria-hidden','true');toggle.setAttribute('aria-expanded','false');document.body.style.overflow='';}
+function drawerFocusable(){return drawer?Array.from(drawer.querySelectorAll('button,a[href]')):[];}
+function openDrawer(){
+  drawer.classList.add('open');drawer.setAttribute('aria-hidden','false');toggle.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';
+  if(closeBtn)closeBtn.focus();
+}
+function closeDrawer(){
+  drawer.classList.remove('open');drawer.setAttribute('aria-hidden','true');toggle.setAttribute('aria-expanded','false');document.body.style.overflow='';
+  if(toggle)toggle.focus();
+}
 if(toggle)toggle.addEventListener('click',openDrawer);
 if(backdrop)backdrop.addEventListener('click',closeDrawer);
 if(closeBtn)closeBtn.addEventListener('click',closeDrawer);
 (drawer?drawer.querySelectorAll('a'):[]).forEach(function(l){l.addEventListener('click',closeDrawer);});
+document.addEventListener('keydown',function(e){
+  if(!drawer||!drawer.classList.contains('open'))return;
+  if(e.key==='Escape'){closeDrawer();return;}
+  if(e.key!=='Tab')return;
+  var focusable=drawerFocusable();
+  if(!focusable.length)return;
+  var first=focusable[0],last=focusable[focusable.length-1];
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+});
 document.documentElement.classList.add('js');
 Array.from(document.querySelectorAll('input[type="tel"]')).forEach(function(input){
   input.addEventListener('input',function(){
@@ -22,10 +39,7 @@ Array.from(document.querySelectorAll('input[type="tel"]')).forEach(function(inpu
     input.value=out;
   });
 });
-var GOOGLE_PLACES_API_KEY='AIzaSyAB9pyD7Y_ib2FfXDyGr2mLrQa_Mq8SK98';
-var GOOGLE_PLACES_ENDPOINT='https://places.googleapis.com/v1/places:autocomplete';
-var GOOGLE_PLACES_FIELD_MASK='suggestions.placePrediction.text.text,suggestions.placePrediction.structuredFormat.mainText.text,suggestions.placePrediction.structuredFormat.secondaryText.text';
-var INDIANA_BOUNDS={low:{latitude:37.77,longitude:-88.10},high:{latitude:41.76,longitude:-84.78}};
+var PLACES_AUTOCOMPLETE_ENDPOINT='https://community-spark-places-autocomplete.YOUR-SUBDOMAIN.workers.dev';
 var placesFailures=0,placesDisabled=false;
 function initLocationAutocomplete(inputEl){
   if(!inputEl)return;
@@ -72,10 +86,10 @@ function initLocationAutocomplete(inputEl){
     list.hidden=false;
   }
   function fetchSuggestions(query){
-    fetch(GOOGLE_PLACES_ENDPOINT,{
+    fetch(PLACES_AUTOCOMPLETE_ENDPOINT,{
       method:'POST',
-      headers:{'Content-Type':'application/json','X-Goog-Api-Key':GOOGLE_PLACES_API_KEY,'X-Goog-FieldMask':GOOGLE_PLACES_FIELD_MASK},
-      body:JSON.stringify({input:query,includedRegionCodes:['us'],locationBias:{rectangle:{low:INDIANA_BOUNDS.low,high:INDIANA_BOUNDS.high}}})
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({input:query})
     }).then(function(res){
       if(!res.ok)throw new Error('Places request failed: '+res.status);
       return res.json();
@@ -97,7 +111,7 @@ function initLocationAutocomplete(inputEl){
     var query=inputEl.value.trim();
     if(debounceTimer)clearTimeout(debounceTimer);
     if(placesDisabled){fallbackNote.hidden=false;closeList();return;}
-    if(query.length<3||!GOOGLE_PLACES_API_KEY){closeList();return;}
+    if(query.length<3){closeList();return;}
     debounceTimer=setTimeout(function(){fetchSuggestions(query);},250);
   });
   inputEl.addEventListener('keydown',function(e){
@@ -128,10 +142,10 @@ initLocationAutocomplete(document.getElementById('bookLocation'));
 initLocationAutocomplete(document.getElementById('location'));
 initLocationAutocomplete(document.getElementById('sponsorArea'));
 var searchInput=document.getElementById('catalogSearch'),filterBtns=Array.from(document.querySelectorAll('[data-filter]')),priceFilterBtns=Array.from(document.querySelectorAll('[data-price-filter]')),eventCards=Array.from(document.querySelectorAll('.event-card')),emptyMsg=document.getElementById('catalog-empty'),catalogCount=document.getElementById('catalogCount'),catalogClear=document.getElementById('catalogClear'),catalogEmptyClear=document.getElementById('catalogEmptyClear'),activeFilter='all',activePriceFilter='all';
-function clearCatalogFilters(){if(searchInput)searchInput.value='';activeFilter='all';activePriceFilter='all';filterBtns.forEach(function(b){b.classList.toggle('active',b.dataset.filter==='all');});priceFilterBtns.forEach(function(b){b.classList.toggle('active',b.dataset.priceFilter==='all');});updateCatalog();}
+function clearCatalogFilters(){if(searchInput)searchInput.value='';activeFilter='all';activePriceFilter='all';filterBtns.forEach(function(b){var on=b.dataset.filter==='all';b.classList.toggle('active',on);b.setAttribute('aria-pressed',on?'true':'false');});priceFilterBtns.forEach(function(b){var on=b.dataset.priceFilter==='all';b.classList.toggle('active',on);b.setAttribute('aria-pressed',on?'true':'false');});updateCatalog();}
 function updateCatalog(){var term=searchInput?searchInput.value.trim().toLowerCase():'',count=0;eventCards.forEach(function(card){var cats=card.dataset.category||'',name=card.dataset.name||'',priceBand=card.dataset.priceBand||'',show=(activeFilter==='all'||cats.indexOf(activeFilter)>-1)&&(activePriceFilter==='all'||priceBand===activePriceFilter)&&(!term||name.indexOf(term)>-1);card.hidden=!show;if(show)count++;});if(emptyMsg)emptyMsg.style.display=count===0?'block':'none';if(catalogCount)catalogCount.textContent=count;if(catalogClear)catalogClear.hidden=!(term||activeFilter!=='all'||activePriceFilter!=='all');}
-filterBtns.forEach(function(btn){btn.addEventListener('click',function(){filterBtns.forEach(function(b){b.classList.remove('active');});btn.classList.add('active');activeFilter=btn.dataset.filter||'all';updateCatalog();});});
-priceFilterBtns.forEach(function(btn){btn.addEventListener('click',function(){priceFilterBtns.forEach(function(b){b.classList.remove('active');});btn.classList.add('active');activePriceFilter=btn.dataset.priceFilter||'all';updateCatalog();});});
+filterBtns.forEach(function(btn){btn.addEventListener('click',function(){filterBtns.forEach(function(b){b.classList.remove('active');b.setAttribute('aria-pressed','false');});btn.classList.add('active');btn.setAttribute('aria-pressed','true');activeFilter=btn.dataset.filter||'all';updateCatalog();});});
+priceFilterBtns.forEach(function(btn){btn.addEventListener('click',function(){priceFilterBtns.forEach(function(b){b.classList.remove('active');b.setAttribute('aria-pressed','false');});btn.classList.add('active');btn.setAttribute('aria-pressed','true');activePriceFilter=btn.dataset.priceFilter||'all';updateCatalog();});});
 if(searchInput)searchInput.addEventListener('input',updateCatalog);
 if(catalogClear)catalogClear.addEventListener('click',clearCatalogFilters);
 if(catalogEmptyClear)catalogEmptyClear.addEventListener('click',clearCatalogFilters);
@@ -165,11 +179,11 @@ function submitNetlifyForm(form,responseEl,opts){
     e.preventDefault();
     if(!opts.skipRequiredCheck){
       var first=findFirstEmptyRequired(form);
-      if(first){first.focus();if(responseEl){responseEl.textContent='Please fill in all required fields before submitting.';responseEl.style.color='#c0392b';}return;}
+      if(first){first.focus();if(responseEl){responseEl.textContent='Please fill in all required fields before submitting.';responseEl.style.color='var(--error)';}return;}
     }
     if(opts.validate){
       var err=opts.validate();
-      if(err){if(responseEl){responseEl.textContent=err;responseEl.style.color='#c0392b';}return;}
+      if(err){if(responseEl){responseEl.textContent=err;responseEl.style.color='var(--error)';}return;}
     }
     var submitBtn=form.querySelector('button[type="submit"]');
     if(submitBtn)submitBtn.disabled=true;
@@ -184,7 +198,7 @@ function submitNetlifyForm(form,responseEl,opts){
         }
       })
       .catch(function(){
-        if(responseEl){responseEl.textContent='Something went wrong sending your request. Please try again or email us directly.';responseEl.style.color='#c0392b';}
+        if(responseEl){responseEl.textContent='Something went wrong sending your request. Please try again or email us directly.';responseEl.style.color='var(--error)';}
       })
       .finally(function(){if(submitBtn)submitBtn.disabled=false;});
   });
@@ -261,35 +275,25 @@ function addonCheckboxLabel(text,fieldName,opts){
   input.name=fieldName;
   input.value=opts.price?(text+' — '+opts.price):text;
   label.appendChild(input);
+  var body=document.createElement('span');
+  body.className='addon-check-body';
+  var nameEl=document.createElement('span');
+  nameEl.className='addon-check-name';
+  nameEl.textContent=text;
+  body.appendChild(nameEl);
+  if(opts.detail){var small=document.createElement('small');small.textContent=opts.detail;body.appendChild(small);}
+  label.appendChild(body);
   if(opts.price){
-    var body=document.createElement('span');
-    body.className='addon-check-body';
-    var nameEl=document.createElement('span');
-    nameEl.className='addon-check-name';
-    nameEl.textContent=text;
-    body.appendChild(nameEl);
-    if(opts.detail){var small=document.createElement('small');small.textContent=opts.detail;body.appendChild(small);}
-    label.appendChild(body);
     var priceEl=document.createElement('span');
     priceEl.className='addon-check-price';
     priceEl.textContent=opts.price;
     label.appendChild(priceEl);
-  }else{
-    label.appendChild(document.createTextNode(text));
+  }else if(opts.pendingLabel){
+    var pendingEl=document.createElement('span');
+    pendingEl.className='addon-check-price-pending';
+    pendingEl.textContent=opts.pendingLabel;
+    label.appendChild(pendingEl);
   }
-  return label;
-}
-function addonChip(text,fieldName){
-  var label=document.createElement('label');
-  label.className='addon-chip';
-  var input=document.createElement('input');
-  input.type='checkbox';
-  input.name=fieldName;
-  input.value=text;
-  label.appendChild(input);
-  var span=document.createElement('span');
-  span.textContent=text;
-  label.appendChild(span);
   return label;
 }
 function renderEventAddons(){
@@ -298,7 +302,7 @@ function renderEventAddons(){
   var opt=selectedEventOption();
   var items=(opt&&opt.value&&typeof EVENT_ADDONS!=='undefined')?EVENT_ADDONS[opt.value]:null;
   if(bookingType==='custom'||!items||!items.length){bookEventAddonsGroup.hidden=true;return;}
-  items.forEach(function(item){bookEventAddonsList.appendChild(addonChip(item,'eventAddons'));});
+  items.forEach(function(item){bookEventAddonsList.appendChild(addonCheckboxLabel(item,'eventAddons',{pendingLabel:'Priced in proposal'}));});
   bookEventAddonsGroup.hidden=false;
 }
 function renderPackageAddons(){
@@ -503,8 +507,8 @@ function setBookingType(type){
   bookingType=type;
   if(bookingTypeInput)bookingTypeInput.value=type;
   var isCustom=type==='custom';
-  if(typePresetBtn)typePresetBtn.classList.toggle('active',!isCustom);
-  if(typeCustomBtn)typeCustomBtn.classList.toggle('active',isCustom);
+  if(typePresetBtn){typePresetBtn.classList.toggle('active',!isCustom);typePresetBtn.setAttribute('aria-pressed',isCustom?'false':'true');}
+  if(typeCustomBtn){typeCustomBtn.classList.toggle('active',isCustom);typeCustomBtn.setAttribute('aria-pressed',isCustom?'true':'false');}
   if(bookPresetFields)bookPresetFields.hidden=isCustom;
   if(bookCustomFields)bookCustomFields.hidden=!isCustom;
   if(bookChangesGroup)bookChangesGroup.hidden=isCustom;
@@ -580,7 +584,7 @@ function renderTimeSlots(){
   if(bookingConflictNote){
     if(allDisabled){
       bookingConflictNote.textContent='That date is fully booked — please choose another date.';
-      bookingConflictNote.style.color='#c0392b';
+      bookingConflictNote.style.color='var(--error)';
       bookingConflictNote.style.display='block';
     }else{
       bookingConflictNote.style.display='none';
@@ -624,6 +628,16 @@ function renderCalendar(){
       var invalidEntry=dateHasInvalidEntry(dateStr);
       var disabled=tooEarly||tooLate||capReached||allDayBlocked||conflictIfAllDay||invalidEntry;
       btn.disabled=disabled;
+      var weekdayNames=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      var fullDateLabel=weekdayNames[cellDate.getDay()]+', '+monthNames[month]+' '+day+', '+year;
+      var reason='';
+      if(tooEarly)reason=' — too soon, needs at least 2 weeks notice';
+      else if(tooLate)reason=' — too far out, within 6 months only';
+      else if(capReached)reason=' — fully booked';
+      else if(allDayBlocked||conflictIfAllDay)reason=' — unavailable due to another booking';
+      else if(invalidEntry)reason=' — unavailable';
+      btn.setAttribute('aria-label',fullDateLabel+reason);
+      if(disabled)btn.title=fullDateLabel+reason;
       if(dateStr===selectedDateStr)btn.classList.add('selected');
       if(!disabled){
         btn.addEventListener('click',function(){
@@ -657,12 +671,12 @@ if(bookScheduleBtn){
     var first=findFirstEmptyRequired(bookStep1);
     if(first){
       first.focus();
-      if(bookStep1Response){bookStep1Response.textContent='Please fill in all required fields before scheduling.';bookStep1Response.style.color='#c0392b';}
+      if(bookStep1Response){bookStep1Response.textContent='Please fill in all required fields before scheduling.';bookStep1Response.style.color='var(--error)';}
       return;
     }
     var sponsorRadios=Array.from(bookStep1.querySelectorAll('input[name="sponsorInterest"]'));
     if(sponsorRadios.length&&!sponsorRadios.some(function(r){return r.checked;})){
-      if(bookStep1Response){bookStep1Response.textContent="Please answer whether you're open to a sponsor before scheduling.";bookStep1Response.style.color='#c0392b';}
+      if(bookStep1Response){bookStep1Response.textContent="Please answer whether you're open to a sponsor before scheduling.";bookStep1Response.style.color='var(--error)';}
       return;
     }
     if(bookStep1Response)bookStep1Response.textContent='';

@@ -14,39 +14,40 @@ inView('[data-stagger]', function(info){
   animate(items, { opacity: 1, transform: 'translateY(0px)' }, Object.assign({ delay: stagger(0.08) }, spring));
 }, trigger);
 
+// FAQ accordion smooth open/close — every page's .faq-item, not just about.html
+var faqEase = { duration: 0.3, easing: [0.22, 1, 0.36, 1] };
+
+document.querySelectorAll('.faq-item').forEach(function(item){
+  var summary = item.querySelector('summary');
+  var content = item.querySelector('p');
+  if (!summary || !content) return;
+  var busy = false;
+  summary.addEventListener('click', function(e){
+    e.preventDefault();
+    if (busy) return;
+    busy = true;
+    if (item.open) {
+      var openHeight = content.scrollHeight;
+      content.style.height = openHeight + 'px';
+      content.offsetHeight; // force reflow so the browser registers the starting height before animating
+      animate(content, { height: [openHeight + 'px', '0px'], opacity: [1, 0] }, faqEase).finished.then(function(){
+        item.open = false;
+        content.style.height = '';
+        busy = false;
+      });
+    } else {
+      item.open = true;
+      var targetHeight = content.scrollHeight;
+      animate(content, { height: [0, targetHeight + 'px'], opacity: [0, 1] }, faqEase).finished.then(function(){
+        content.style.height = '';
+        busy = false;
+      });
+    }
+  });
+});
+
 // About-page-only enhancements below (guarded on the #about section, unique to about.html)
 if (document.getElementById('about')) {
-  var faqEase = { duration: 0.3, easing: [0.22, 1, 0.36, 1] };
-
-  document.querySelectorAll('.faq-item').forEach(function(item){
-    var summary = item.querySelector('summary');
-    var content = item.querySelector('p');
-    if (!summary || !content) return;
-    var busy = false;
-    summary.addEventListener('click', function(e){
-      e.preventDefault();
-      if (busy) return;
-      busy = true;
-      if (item.open) {
-        var openHeight = content.scrollHeight;
-        content.style.height = openHeight + 'px';
-        content.offsetHeight; // force reflow so the browser registers the starting height before animating
-        animate(content, { height: [openHeight + 'px', '0px'], opacity: [1, 0] }, faqEase).finished.then(function(){
-          item.open = false;
-          content.style.height = '';
-          busy = false;
-        });
-      } else {
-        item.open = true;
-        var targetHeight = content.scrollHeight;
-        animate(content, { height: [0, targetHeight + 'px'], opacity: [0, 1] }, faqEase).finished.then(function(){
-          content.style.height = '';
-          busy = false;
-        });
-      }
-    });
-  });
-
   var pressSpring = { type: 'spring', stiffness: 400, damping: 25 };
   document.querySelectorAll('#about .btn').forEach(function(btn){
     var pressAnim = null;

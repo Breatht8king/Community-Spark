@@ -15,6 +15,9 @@
 <meta property="og:description" content="Local Indiana businesses can sponsor apartment community resident events — levels, and the founding sponsor list."/>
 <meta property="og:image" content="https://communitysparkevents.netlify.app/images/og-share.jpg"/>
 <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Community Spark | Sponsor a Resident Event"/>
+<meta name="twitter:description" content="Local Indiana businesses can sponsor apartment community resident events — levels, and the founding sponsor list."/>
+<meta name="twitter:image" content="https://communitysparkevents.netlify.app/images/og-share.jpg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
@@ -31,7 +34,7 @@
 </header>
 <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
   <div class="drawer-backdrop" id="drawerBackdrop"></div>
-  <nav class="drawer-panel"><button class="drawer-close" id="drawerClose">✕</button><a href="index.html">Home</a><a href="pricing.html">Pricing</a><a href="events.html">Event Catalog</a><a href="partnerships.html">For Apartment Communities</a><a href="sponsors.html" class="active">Sponsor an Event</a><a href="gallery.html">Gallery</a><a href="about.html">About & Contact</a><a class="btn btn-primary nav-cta" href="contact.html">Plan an Event</a></nav>
+  <nav class="drawer-panel"><button class="drawer-close" id="drawerClose" aria-label="Close navigation">✕</button><a href="index.html">Home</a><a href="pricing.html">Pricing</a><a href="events.html">Event Catalog</a><a href="partnerships.html">For Apartment Communities</a><a href="sponsors.html" class="active">Sponsor an Event</a><a href="gallery.html">Gallery</a><a href="about.html">About & Contact</a><a class="btn btn-primary nav-cta" href="contact.html">Plan an Event</a></nav>
 </div>
 <main>
 <section class="page-hero" id="sponsor-hero">
@@ -42,7 +45,7 @@
     <h1>Put your name on something residents <em>actually</em> enjoy.</h1>
     <p class="page-hero-lead">Community Spark runs resident events at apartment communities across Indiana. Local businesses fund pieces of those events and get their name in front of a few hundred neighbors at a time — whether or not you show up.</p>
     <div class="page-hero-actions"><a class="btn btn-primary" href="#sponsor-form">Get on the Founding List</a><a class="btn btn-outline" href="#levels">See Sponsorship Levels</a></div>
-    <div class="page-hero-proof"><span><span>✦</span>Set your own amount</span><span><span>✦</span>Attending is optional</span><span><span>✦</span>You approve every match</span></div>
+    <div class="page-hero-proof"><span><span>✦</span>Choose your level</span><span><span>✦</span>Attending is optional</span><span><span>✦</span>You approve every match</span></div>
   </div>
 </section>
 
@@ -172,7 +175,7 @@
         </div>
         <div class="field-group" style="margin-top:14px"><label for="sponsorPresence">Would You Like to Attend Events? <span style="color:var(--gold)">*</span></label><select id="sponsorPresence" name="presence" required><option value="">Select an option</option><option value="I'd like to attend and meet residents">I'd like to attend and meet residents</option><option value="Name and materials only — I won't attend">Name and materials only — I won't attend</option><option value="Either works, depending on the event">Either works, depending on the event</option></select><span class="field-help">Both cost the same. Plenty of our sponsors never attend.</span></div>
         <div class="field-group" style="margin-top:14px"><label for="sponsorNotes">Anything Else We Should Know?</label><textarea id="sponsorNotes" name="notes" placeholder="Specific communities, seasonal timing, a resident offer you'd like to extend…" rows="3"></textarea></div>
-        <div class="form-check"><input type="checkbox" id="sponsorRosterOptIn" name="rosterOptIn" checked/><label for="sponsorRosterOptIn"><strong>You may include my business name on the list of local sponsors we show to apartment communities.</strong> This helps us tell properties that local businesses are ready to support their events. Your contact details are never shared.</label></div>
+        <div class="form-check"><input type="checkbox" id="sponsorRosterOptIn" name="rosterOptIn"/><label for="sponsorRosterOptIn"><strong>You may include my business name on the list of local sponsors we show to apartment communities.</strong> This helps us tell properties that local businesses are ready to support their events. Your contact details are never shared.</label></div>
         <div style="margin-top:22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap"><button class="btn btn-primary" type="submit">Add My Business to the List →</button><span style="font-size:var(--text-micro);color:var(--muted)">No payment. No commitment.</span></div>
         <p class="form-response" id="sponsorResponse" role="alert" aria-live="polite"></p>
       </form>

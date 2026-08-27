@@ -243,51 +243,6 @@
 .badge.cream{background:var(--cream);color:var(--muted);border:1px solid var(--line)}
 
 /* ==========================================================================
-   components/forms/Calendar.jsx
-   ========================================================================== */
-.calendar{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:20px;font-family:var(--font-ui)}
-.calendar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.calendar-month{font-size:16px}
-.calendar-nav{background:var(--cream);border:1px solid var(--line);border-radius:var(--r-pill);width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:border-color var(--dur-base)}
-.calendar-nav:hover:not(:disabled){border-color:var(--ink)}
-.calendar-nav:disabled{opacity:.3;cursor:not-allowed}
-.calendar-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px;text-align:center;font-size:var(--text-label);font-weight:var(--fw-bold);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
-.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-.calendar-day{aspect-ratio:1;border:1px solid transparent;border-radius:var(--r-sm);background:var(--cream);font-size:var(--text-body-sm);font-weight:var(--fw-semibold);cursor:pointer;color:var(--ink);font-family:inherit;transition:all var(--dur-base)}
-.calendar-day:hover:not(:disabled){border-color:var(--gold)}
-.calendar-day:disabled{background:transparent;color:var(--line);cursor:not-allowed}
-.calendar-day.selected{background:var(--ink);border-color:var(--ink);color:#fff}
-
-/* ==========================================================================
-   components/forms/FilterChip.jsx
-   ========================================================================== */
-.filter-chip{padding:9px 18px;border-radius:var(--r-pill);font-size:var(--text-meta);font-weight:var(--fw-semibold);cursor:pointer;font-family:var(--font-ui);transition:all var(--dur-base);background:#fff;border:1px solid var(--line);color:var(--muted)}
-.filter-chip:hover{border-color:var(--ink);color:var(--ink)}
-.filter-chip.active{background:var(--ink);border-color:var(--ink);color:#fff}
-
-/* ==========================================================================
-   components/forms/FormField.jsx
-   ========================================================================== */
-.form-field{display:flex;flex-direction:column;gap:6px;font-family:var(--font-ui)}
-.form-field-label{font-size:var(--text-meta);font-weight:var(--fw-bold);color:var(--ink)}
-.form-field-control{
-  padding:13px 15px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--cream);
-  font-size:var(--text-body);color:var(--ink);font-family:var(--font-ui);outline:none;width:100%;
-  box-sizing:border-box;transition:border-color var(--dur-base),background var(--dur-base);
-}
-.form-field-control:focus{border-color:var(--gold);background:#fff;box-shadow:var(--ring-field)}
-textarea.form-field-control{resize:vertical;min-height:100px}
-.form-field-help{font-size:var(--text-micro);color:var(--muted);line-height:1.45}
-
-/* ==========================================================================
-   components/forms/SearchField.jsx
-   ========================================================================== */
-.search-field{display:flex;align-items:center;gap:12px;max-width:520px;padding:0 18px;background:#fff;border:1px solid var(--line);border-radius:var(--r-pill);transition:border-color var(--dur-base),box-shadow var(--dur-base)}
-.search-field:focus-within{border-color:var(--gold);box-shadow:var(--ring-focus)}
-.search-field-icon{color:var(--muted);font-size:16px;flex-shrink:0}
-.search-field-input{flex:1;min-height:50px;border:none;background:transparent;outline:none;font-size:var(--text-body);color:var(--ink);font-family:var(--font-ui)}
-
-/* ==========================================================================
    components/forms/TimeSlot.jsx
    ========================================================================== */
 .time-slot{padding:9px 16px;border-radius:var(--r-pill);font-size:var(--text-meta);font-weight:var(--fw-semibold);font-family:var(--font-ui);cursor:pointer;transition:all var(--dur-base);background:#fff;border:1px solid var(--line);color:var(--muted)}
@@ -341,8 +296,9 @@ textarea.form-field-control{resize:vertical;min-height:100px}
 
 /* ==========================================================================
    components/cards/EventCard.jsx
-   Implemented as a native <details>/<summary> disclosure (see .md doc) —
-   no JS is required for the open/close animation itself.
+   Only the base card + h3 are actually used (events.html's real cards use
+   styles.css's own .event-body/.event-price/etc. for everything else) —
+   this file doesn't define its own h3 rule so this one is load-bearing.
    ========================================================================== */
 .event-card{
   background:#fff;
@@ -354,55 +310,7 @@ textarea.form-field-control{resize:vertical;min-height:100px}
   transition:transform var(--dur-med),box-shadow var(--dur-med);
 }
 .event-card:hover{transform:var(--lift-card);box-shadow:var(--shadow-md)}
-.event-card-image{height:220px;overflow:hidden;flex-shrink:0}
-.event-card-image img{width:100%;height:100%;object-fit:cover;display:block}
-.event-card-body{padding:22px;display:flex;flex-direction:column;flex:1}
-.event-card-meta{
-  display:flex;justify-content:space-between;align-items:center;
-  font-size:var(--text-label);text-transform:uppercase;letter-spacing:var(--track-meta);
-  font-weight:var(--fw-bold);color:var(--gold);margin-bottom:12px;
-}
-.event-card-duration{color:var(--muted);font-weight:var(--fw-medium);text-transform:none;letter-spacing:0}
 .event-card h3{font-family:var(--font-display);font-size:22px;font-weight:var(--fw-semibold);margin-bottom:10px;line-height:var(--lh-tight)}
-.event-card-desc{color:var(--muted);font-size:var(--text-body-sm);line-height:var(--lh-body);margin-bottom:16px}
-.event-card-details{margin-top:auto;border-top:1px solid var(--line);padding-top:14px}
-.event-card-toggle{
-  list-style:none;cursor:pointer;
-  display:flex;width:100%;justify-content:space-between;align-items:center;
-  font-size:var(--text-meta);font-weight:var(--fw-bold);color:var(--gold);
-  padding:4px 0;transition:color var(--dur-base);
-}
-.event-card-toggle::-webkit-details-marker{display:none}
-.event-card-toggle:hover{color:var(--gold-dark)}
-/* two labels, toggled purely by [open] — no JS text-swap needed */
-.event-card-toggle-label-open{display:none}
-.event-card-details[open] .event-card-toggle-label-open{display:inline}
-.event-card-details[open] .event-card-toggle-label-closed{display:none}
-.event-card-toggle-icon{
-  width:26px;height:26px;border-radius:var(--r-circle);
-  background:var(--cream);color:var(--gold);
-  display:grid;place-items:center;font-size:16px;font-weight:var(--fw-bold);
-  transition:transform var(--dur-base),background var(--dur-base),color var(--dur-base);
-}
-.event-card-toggle-icon::after{content:'+'}
-.event-card-details[open] .event-card-toggle-icon{transform:rotate(45deg);background:var(--ink);color:#fff}
-.event-card-detail-content{padding:14px 0 4px}
-.event-card-facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
-.event-card-fact{background:var(--cream);border-radius:var(--r-sm);padding:12px 14px}
-.event-card-fact small{display:block;font-size:var(--text-eyebrow);text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-weight:var(--fw-bold);margin-bottom:4px}
-.event-card-fact strong{font-family:var(--font-display);font-size:20px;font-weight:var(--fw-bold)}
-.event-card-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
-.event-card-col{background:var(--cream);border-radius:var(--r-sm);padding:14px}
-.event-card-col h4{font-size:var(--text-micro);text-transform:uppercase;letter-spacing:var(--track-meta);font-weight:var(--fw-bold);color:var(--muted);margin-bottom:10px;font-family:var(--font-ui)}
-.event-card-col ul{list-style:none;margin:0;padding:0}
-.event-card-col li{font-size:var(--text-meta);color:var(--ink);padding:5px 0 5px 18px;position:relative;border-bottom:1px solid rgba(26,23,20,.07);line-height:1.4}
-.event-card-col li:last-child{border:none}
-.event-card-col.includes li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-weight:var(--fw-bold);font-size:12px}
-.event-card-col.addons li::before{content:'+';position:absolute;left:0;color:var(--sage);font-weight:var(--fw-bold);font-size:12px}
-.event-card-price-note{padding:12px 14px;border:1px solid var(--line);border-radius:var(--r-sm);background:#fff;font-size:var(--text-micro);color:var(--muted);line-height:1.5;margin-bottom:14px}
-.event-card-price-note strong{color:var(--ink)}
-.event-card-vendor-note{padding:10px 14px;background:rgba(107,124,94,.1);border-radius:var(--r-sm);margin-bottom:10px;font-size:var(--text-micro);color:var(--sage)}
-.event-card-actions{display:flex;gap:8px;flex-wrap:wrap}
 
 /* ==========================================================================
    components/cards/ExperienceCard.jsx
