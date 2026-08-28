@@ -202,6 +202,10 @@ header.qb-header .qb-wrap{display:flex;align-items:center;justify-content:space-
 .qb-brand-chip{padding:7px 14px;border-radius:999px;font-size:12.5px;font-weight:600;font-family:inherit;cursor:pointer;background:#fff;border:1px solid var(--line);color:var(--muted);transition:all .15s}
 .qb-brand-chip:hover{border-color:var(--ink);color:var(--ink)}
 .qb-brand-chip.active{background:var(--ink);border-color:var(--ink);color:#fff}
+.qb-brand-back{background:none;border:none;font-family:inherit;font-size:12.5px;font-weight:700;color:var(--gold-dark);cursor:pointer;padding:0 0 12px;display:block}
+.qb-subcat-group{margin-bottom:22px}
+.qb-subcat-group:last-child{margin-bottom:0}
+.qb-subcat-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold-dark);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
 
 .qb-family-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
 .qb-family-card{text-align:left;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:16px 18px;transition:transform .2s,border-color .2s}
@@ -3977,6 +3981,48 @@ function qbMoney(n) {
   return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 function qbNum(n) { return (n || 0).toLocaleString('en-US'); }
+
+// Which cuisine bucket each restaurant sits under for the picker's top-level filter. Restaurants that
+// don't share a clean category with anything else just get their own (Chick-fil-A, Fresh Indian Grill).
+const QB_BRAND_CUISINE = {
+  'Qdoba': 'Mexican', 'Condado Tacos': 'Mexican',
+  "Jersey Mike's Subs": 'Sandwiches & Subs', "Jimmy John's": 'Sandwiches & Subs', "McAlister's Deli": 'Sandwiches & Subs',
+  'City Barbeque': 'BBQ',
+  'Olive Garden': 'Pizza & Italian', 'Donatos Pizza': 'Pizza & Italian', 'The Old Spaghetti Factory': 'Pizza & Italian',
+  'Roots Burger Bar': 'Burgers', "Freddy's Frozen Custard & Steakburgers": 'Burgers',
+  'Bar Louie': 'Bar & Grill', 'Buffalo Wild Wings': 'Bar & Grill',
+  'Outback Steakhouse': 'Steakhouse & American', 'MCL Restaurant and Bakery': 'Steakhouse & American',
+  'Chick-fil-A': 'Chicken',
+  'BIBIBOP Asian Grill': 'Asian', 'Nara Hibachi & Sushi': 'Asian', 'Noodles & Company': 'Asian',
+  'The Great Greek Mediterranean Grill': 'Mediterranean & Middle Eastern', 'Naf Naf Middle Eastern Grill': 'Mediterranean & Middle Eastern',
+  'Fresh Indian Grill': 'Indian',
+  'Just Love Coffee Cafe': 'Coffee & Cafe', "Dunkin'": 'Coffee & Cafe', 'Panera Bread': 'Coffee & Cafe',
+  'Everbowl': 'Smoothies & Bowls', 'Tropical Smoothie Cafe': 'Smoothies & Bowls',
+  'Crumbl Cookies': 'Bakery & Dessert', 'Cold Stone Creamery': 'Bakery & Dessert', "Auntie Anne's Pretzels": 'Bakery & Dessert',
+  'Costco': 'Other',
+};
+const QB_CUISINE_ORDER = ['Mexican', 'Sandwiches & Subs', 'BBQ', 'Pizza & Italian', 'Burgers', 'Bar & Grill', 'Steakhouse & American', 'Chicken', 'Asian', 'Mediterranean & Middle Eastern', 'Indian', 'Coffee & Cafe', 'Smoothies & Bowls', 'Bakery & Dessert', 'Other'];
+function qbBrandCuisine(brand) { return QB_BRAND_CUISINE[brand] || 'Other'; }
+
+// Best-effort menu-section guess for a catering family, from its name — mirrors how an ezCater
+// restaurant page groups its own menu (Appetizers, Entrees, Sides, ...). Inferred from keywords,
+// not a curated field, so a handful of items may land in an unexpected section.
+const QB_SUBCAT_ORDER = ['Breakfast', 'Appetizers', 'Soups', 'Salads', 'Sandwiches & Wraps', 'Entrées', 'Sides', 'Bundles & Boxed Meals', 'Desserts', 'Beverages', 'Extras & Add-Ons', 'Other'];
+function qbCateringSubcat(name) {
+  const n = (name || '').toLowerCase();
+  if (/breakfast|\bbagel\b|\bpastry\b|pastries|croissant/.test(n)) return 'Breakfast';
+  if (/appetizer|\bdip\b|\bwings?\b|mozzarella|pretzel|nachos|spanakopita|rangoon|egg roll|hummus/.test(n)) return 'Appetizers';
+  if (/\bsoup\b/.test(n)) return 'Soups';
+  if (/\bsalad\b/.test(n)) return 'Salads';
+  if (/sandwich|\bsub\b|\bwrap\b|\bgyro\b|calzato/.test(n)) return 'Sandwiches & Wraps';
+  if (/entr[eé]e|\bchicken\b|\bburger\b|\bpizza\b|lasagna|\bpasta\b|\bsteak\b|\bribs\b|meatball|tenders|hibachi|hot bar|\btaco\b/.test(n)) return 'Entrées';
+  if (/\bside\b|\bfries\b|\bchips\b|\brice\b|\bbeans\b|veggies|vegetable|\bslaw\b|mac.{0,4}cheese|\bpotato\b|greens|corn pudding/.test(n)) return 'Sides';
+  if (/boxed|\bbundle\b|\bbar\b|\bpackage\b|\bkit\b|\bpack\b|platter|\btray\b|\bfeast\b|\bspread\b|catering pan|buffet/.test(n)) return 'Bundles & Boxed Meals';
+  if (/dessert|\bcookie\b|\bcake\b|brownie|\bpie\b|baklava|\bscone\b|cheesecake|cobbler|pudding|churro|oreo/.test(n)) return 'Desserts';
+  if (/beverage|\bcola\b|\bsoda\b|iced tea|lemonade|\bwater\b|smoothie|\bcoffee\b|\blatte\b|cold brew|2-liter|\b2l\b|\bgallon\b|bottled/.test(n)) return 'Beverages';
+  if (/sauce|dressing|topping|chafing|utensil|\bice\b|extra protein|cream cheese|condiment/.test(n)) return 'Extras & Add-Ons';
+  return 'Other';
+}
 function qbStoreName(k) { const s = window.QB_STORES.find(s => s.key === k); return s ? s.name : k; }
 function qbStore(k) { return window.QB_STORES.find(s => s.key === k); }
 
@@ -4038,12 +4084,28 @@ const qbLabel = { fontFamily: 'var(--font-ui)', fontSize: 10, fontWeight: 700, l
 const qbCard = { background: '#fff', border: '1px solid var(--line)', borderRadius: 'var(--r-md)' };
 
 function QBNumber({ value, onChange, prefix, suffix, min = 0, step = 1, width = 84, align = 'left' }) {
+  // Tracks the raw text the user is typing separately from the committed numeric value, so clearing the
+  // field to type a new number doesn't get instantly snapped back to `min` on every keystroke (it used to
+  // be impossible to type e.g. "5" over a "1" without it becoming "15" first).
+  const [raw, setRaw] = useState(null);
+  const shown = raw !== null ? raw : String(value);
+  function handleChange(v) {
+    setRaw(v);
+    if (v === '' || v === '-') return;
+    const n = +v;
+    if (Number.isFinite(n)) onChange(Math.max(min, n));
+  }
+  function handleBlur() {
+    if (raw === '') onChange(min);
+    setRaw(null);
+  }
   return (
     <span className="qb-input" style={{ width }}>
       {prefix && <span>{prefix}</span>}
-      <input type="number" value={value} min={min} step={step}
+      <input type="number" value={shown} min={min} step={step}
         style={{ textAlign: align }}
-        onChange={e => onChange(e.target.value === '' ? 0 : +e.target.value)} />
+        onChange={e => handleChange(e.target.value)}
+        onBlur={handleBlur} />
       {suffix && <span>{suffix}</span>}
     </span>
   );
@@ -4091,6 +4153,7 @@ function QBPicker({ category, onClose, onAdd }) {
   const [fam, setFam] = useState(null);
   const [variant, setVariant] = useState(null);
   const [query, setQuery] = useState('');
+  const [cuisine, setCuisine] = useState(null);
   const [brand, setBrand] = useState(null);
   const [packs, setPacks] = useState({});
   const [added, setAdded] = useState({});
@@ -4103,11 +4166,15 @@ function QBPicker({ category, onClose, onAdd }) {
 
   const families = window.QB_FAMILIES.filter(f => f.cat === category.id);
   const brands = Array.from(new Set(families.filter(f => f.brand).map(f => f.brand))).sort();
+  const cuisines = QB_CUISINE_ORDER.filter(c => brands.some(b => qbBrandCuisine(b) === c));
   const q = query.trim().toLowerCase();
-  const filtered = families.filter(f =>
-    (!q || f.name.toLowerCase().includes(q) || f.variants.some(v => (v.name || '').toLowerCase().includes(q))) &&
-    (!brand || f.brand === brand)
-  );
+  const filtered = families.filter(f => {
+    const matchesQuery = !q || f.name.toLowerCase().includes(q) || f.variants.some(v => (v.name || '').toLowerCase().includes(q));
+    if (brand) return f.brand === brand && matchesQuery;
+    if (cuisine) return qbBrandCuisine(f.brand) === cuisine && matchesQuery;
+    if (q) return matchesQuery;
+    return false;
+  });
 
   const named = fam ? fam.variants.filter(v => v.name) : [];
   const step = !fam ? 1 : (named.length > 1 && !variant ? 2 : 3);
@@ -4118,6 +4185,19 @@ function QBPicker({ category, onClose, onAdd }) {
   function back() {
     if (step === 3 && named.length > 1) setVariant(null);
     else { setFam(null); setVariant(null); }
+  }
+
+  function familyCard(f) {
+    const packCount = f.packs.length;
+    const varCount = f.variants.length;
+    const items = window.QB_ITEMS.filter(it => it.family === f.id);
+    const cheapest = items.reduce((min, it) => { const b = qbBest(it, null); return (min == null || b.price < min) ? b.price : min; }, null);
+    return (
+      <button key={f.id} className="qb-family-card" onClick={() => setFam(f)}>
+        <strong>{f.name}</strong>
+        <span>{f.brand && !brand ? f.brand + ' · ' : ''}{varCount} option{varCount !== 1 ? 's' : ''} · {packCount} pack size{packCount !== 1 ? 's' : ''}{cheapest != null ? ' · from ' + qbMoney(cheapest) : ''}</span>
+      </button>
+    );
   }
 
   return (
@@ -4141,28 +4221,47 @@ function QBPicker({ category, onClose, onAdd }) {
           {step === 1 && (
             <>
               <div className="qb-search"><span>&#8981;</span><input autoFocus placeholder="Search…" value={query} onChange={e => setQuery(e.target.value)} /></div>
-              {brands.length > 1 && (
+
+              {brands.length > 1 && !q && !cuisine && !brand && (
                 <div className="qb-brand-row">
-                  <button type="button" className={'qb-brand-chip' + (brand === null ? ' active' : '')} onClick={() => setBrand(null)}>All ({families.length})</button>
-                  {brands.map(b => (
-                    <button type="button" key={b} className={'qb-brand-chip' + (brand === b ? ' active' : '')} onClick={() => setBrand(b)}>{b}</button>
+                  {cuisines.map(c => (
+                    <button type="button" key={c} className="qb-brand-chip" onClick={() => setCuisine(c)}>{c}</button>
                   ))}
                 </div>
               )}
-              <div className="qb-family-grid">
-                {filtered.map(f => {
-                  const packCount = f.packs.length;
-                  const varCount = f.variants.length;
-                  const items = window.QB_ITEMS.filter(it => it.family === f.id);
-                  const cheapest = items.reduce((min, it) => { const b = qbBest(it, null); return (min == null || b.price < min) ? b.price : min; }, null);
+
+              {brands.length > 1 && !q && cuisine && !brand && (
+                <>
+                  <button type="button" className="qb-brand-back" onClick={() => setCuisine(null)}>&larr; All cuisines</button>
+                  <div className="qb-brand-row">
+                    {brands.filter(b => qbBrandCuisine(b) === cuisine).map(b => (
+                      <button type="button" key={b} className="qb-brand-chip" onClick={() => setBrand(b)}>{b}</button>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              {brands.length > 1 && brand && (
+                <button type="button" className="qb-brand-back" onClick={() => setBrand(null)}>&larr; {cuisine || 'Restaurants'}</button>
+              )}
+              {brands.length > 1 && !brand && cuisine && q && (
+                <button type="button" className="qb-brand-back" onClick={() => setCuisine(null)}>&larr; All cuisines</button>
+              )}
+
+              {brand ? (
+                QB_SUBCAT_ORDER.map(label => {
+                  const group = filtered.filter(f => qbCateringSubcat(f.name) === label);
+                  if (!group.length) return null;
                   return (
-                    <button key={f.id} className="qb-family-card" onClick={() => setFam(f)}>
-                      <strong>{f.name}</strong>
-                      <span>{f.brand && !brand ? f.brand + ' · ' : ''}{varCount} option{varCount !== 1 ? 's' : ''} · {packCount} pack size{packCount !== 1 ? 's' : ''}{cheapest != null ? ' · from ' + qbMoney(cheapest) : ''}</span>
-                    </button>
+                    <div key={label} className="qb-subcat-group">
+                      <div className="qb-subcat-label">{label}</div>
+                      <div className="qb-family-grid">{group.map(f => familyCard(f))}</div>
+                    </div>
                   );
-                })}
-              </div>
+                })
+              ) : (q || brands.length <= 1) ? (
+                <div className="qb-family-grid">{filtered.map(f => familyCard(f))}</div>
+              ) : null}
             </>
           )}
           {step === 2 && (
@@ -4517,31 +4616,43 @@ function QBApp() {
   const [picker, setPicker] = useState(null);
   const [editorOpen, setEditorOpen] = useState(false);
   const [loadedQuoteId, setLoadedQuoteId] = useState(null);
+  const [saveMsg, setSaveMsg] = useState('');
+  useEffect(() => {
+    if (!saveMsg) return;
+    const t = setTimeout(() => setSaveMsg(''), 2500);
+    return () => clearTimeout(t);
+  }, [saveMsg]);
   const [, setTick] = useState(0);
   const bump = () => setTick(t => t + 1);
 
   useEffect(() => {
+    let hadLocalSaved = false;
     try {
       const saved_ = JSON.parse(localStorage.getItem(QB_KEY));
       if (saved_) {
         setLines(saved_.lines || []); setName(saved_.name || ''); setGuests(saved_.guests ?? 60);
         setCharge(saved_.charge ?? 0); setTaxPct(saved_.taxPct ?? 7); setDelivery(saved_.delivery ?? 0);
         setTarget(saved_.target ?? 35); setDepositPct(saved_.depositPct ?? 50);
-        setSaved(saved_.saved && saved_.saved.length ? saved_.saved : seedPresetQuotes());
+        hadLocalSaved = !!(saved_.saved && saved_.saved.length);
+        setSaved(hadLocalSaved ? saved_.saved : seedPresetQuotes());
         setAllowed(saved_.allowed || []);
       } else {
         setSaved(seedPresetQuotes());
       }
     } catch (e) { }
 
-    // Background refresh from GitHub — silently keeps whatever loaded above if this fails (offline,
-    // nothing committed yet, blocked network) so it's never worse than not having this feature at all.
-    let cancelled = false;
-    fetch(QB_GITHUB_QUOTES_URL, { cache: 'no-store' })
-      .then(r => (r.ok ? r.json() : null))
-      .then(data => { if (!cancelled && Array.isArray(data) && data.length) setSaved(data); })
-      .catch(() => { });
-    return () => { cancelled = true; };
+    // Only bootstrap saved quotes from GitHub on a fresh browser/device that has nothing saved locally
+    // yet — once anything has been saved here, that always wins. There's no write side (this page never
+    // pushes to GitHub), so treating the remote file as always-authoritative would silently overwrite a
+    // local-only save on every reload — that was the bug behind "I click Save and nothing happens."
+    if (!hadLocalSaved) {
+      let cancelled = false;
+      fetch(QB_GITHUB_QUOTES_URL, { cache: 'no-store' })
+        .then(r => (r.ok ? r.json() : null))
+        .then(data => { if (!cancelled && Array.isArray(data) && data.length) setSaved(data); })
+        .catch(() => { });
+      return () => { cancelled = true; };
+    }
   }, []);
 
   useEffect(() => {
@@ -4596,11 +4707,13 @@ function QBApp() {
     const snap = { id, name, date: new Date().toLocaleDateString('en-US'), cost, charge, lines, guests, taxPct, delivery, allowed, depositPct };
     setSaved(s => [snap, ...s].slice(0, 12));
     setLoadedQuoteId(id);
+    setSaveMsg('Saved.');
   }
   function updateQuote() {
     if (!lines.length || !loadedQuoteId) return;
     const snap = { id: loadedQuoteId, name, date: new Date().toLocaleDateString('en-US'), cost, charge, lines, guests, taxPct, delivery, allowed, depositPct };
     setSaved(s => s.some(q => q.id === loadedQuoteId) ? s.map(q => q.id === loadedQuoteId ? snap : q) : [snap, ...s].slice(0, 12));
+    setSaveMsg('Updated.');
   }
   function loadQuote(q) {
     setLines(q.lines || []); setName(q.name || ''); setCharge(q.charge ?? 0); setGuests(q.guests ?? 60);
@@ -4752,13 +4865,14 @@ function QBApp() {
                 ) : (
                   <Button size="sm" disabled={!lines.length} onClick={saveQuote}>Save quote</Button>
                 )}
+                {saveMsg && <div className="qb-field-help" style={{ color: 'var(--gold-dark)', fontWeight: 700 }}>{saveMsg}</div>}
                 <Button variant="inkGhost" size="sm" onClick={() => window.print()}>Print client quote</Button>
                 <Button variant="inkGhost" size="sm" onClick={exportCSV}>Export to Excel (CSV)</Button>
                 <Button variant="inkGhost" size="sm" onClick={() => setEditorOpen(true)}>Edit catalog prices</Button>
               </div>
               <div className="qb-card" style={qbCard}>
                 <span className="qb-card-label">Saved quotes</span>
-                <div className="qb-field-help">Updates automatically from the shared file each time you open this page. To carry a change over to another device, use Export below, then save and push that file the way you normally do.</div>
+                <div className="qb-field-help">Saved quotes stay on this device once you click Save or Update above. A brand-new device with nothing saved yet will start from whatever was last exported and pushed here.</div>
                 <Button variant="inkGhost" size="sm" fullWidth disabled={!saved.length} onClick={exportSavedQuotes}>Export saved quotes</Button>
                 <QBSavedQuotes saved={saved} onLoad={loadQuote} onDuplicate={duplicateQuote} onRename={renameQuote} onDelete={deleteQuote} />
               </div>
