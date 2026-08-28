@@ -39,7 +39,7 @@ Array.from(document.querySelectorAll('input[type="tel"]')).forEach(function(inpu
     input.value=out;
   });
 });
-var PLACES_AUTOCOMPLETE_ENDPOINT='https://community-spark-places-autocomplete.YOUR-SUBDOMAIN.workers.dev';
+var PLACES_AUTOCOMPLETE_ENDPOINT='https://community-spark-places-autocomplete.newtongriffinjames.workers.dev';
 var placesFailures=0,placesDisabled=false;
 function initLocationAutocomplete(inputEl){
   if(!inputEl)return;

@@ -2,3 +2,7 @@
 
 # Local Netlify folder
 .netlify
+
+# Local Wrangler cache/state (not deployment config — that's wrangler.jsonc/cloudflare-worker/wrangler.toml)
+.wrangler
+cloudflare-worker/.wrangler

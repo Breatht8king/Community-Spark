@@ -1,0 +1,16 @@
+.git
+.netlify
+.claude
+.wrangler
+.assetsignore
+.gitignore
+cloudflare-worker
+marketing
+quote-calculator
+Community Spark Website Redesign
+Community Spark design system
+ROADMAP.md
+redesign-components.md
+Design Previews (open me).md
+Community Spark.code-workspace
+wrangler.jsonc
