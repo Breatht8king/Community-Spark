@@ -322,9 +322,9 @@
 
 /* ==========================================================================
    components/cards/FaqItem.jsx
-   Implemented as a native <details>/<summary> disclosure — no JS required
-   for open/close; script.js only needs to add "close the others" behavior
-   if a single-open accordion is desired (see .md doc).
+   Native <details>/<summary> disclosure. script.js caps it at 2 simultaneously
+   open items sitewide (closes the oldest once a 3rd opens); motion-effects.js
+   adds the height/opacity animation for both user-driven and forced closes.
    ========================================================================== */
 .faq-item{
   background:#fff;
@@ -553,13 +553,6 @@
 .founder-block-tags{display:flex;flex-wrap:wrap;gap:8px}
 .founder-block-tag{font-size:var(--text-micro);font-weight:var(--fw-semibold);color:var(--gold-dark);background:var(--cream);border-radius:var(--r-pill);padding:7px 14px}
 @media(max-width:900px){.founder-block{grid-template-columns:1fr;gap:24px}}
-
-/* ==========================================================================
-   About page's "planning policies" tiles. NOTE: distinct from the existing
-   .policy-card (large pale 44px watermark numeral) — the real About.html
-   prototype uses a small bold gold numeral badge instead, in a
-   responsive auto-fit grid rather than a fixed 4-column one.
-   ========================================================================== */
 
 /* ==========================================================================
    components/layout — numbered item grid ("Why property teams book" /

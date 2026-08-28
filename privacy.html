@@ -38,7 +38,7 @@
 </div>
 <main>
 <section class="section section-soft" id="privacy">
-  <div class="section-center reveal"><p class="section-label">Legal</p><h2>Privacy Policy</h2><p>Last updated August 26, 2026. This page explains what information Community Spark collects through this website, how it's used, and who receives it.</p></div>
+  <div class="section-center reveal"><p class="section-label">Legal</p><h2>Privacy Policy</h2><p>Last updated August 27, 2026. This page explains what information Community Spark collects through this website, how it's used, and who receives it.</p></div>
   <div class="reveal" style="max-width:760px;margin:0 auto;color:var(--muted);font-size:15px;line-height:1.75">
 
     <h3 style="color:var(--ink);margin-bottom:10px">What we collect</h3>
@@ -50,16 +50,17 @@
     <h3 style="color:var(--ink);margin-bottom:10px">Who receives it</h3>
     <p style="margin-bottom:10px">A few outside services help run this site, and each receives some information as a result:</p>
     <ul style="margin:0 0 28px;padding-left:20px">
-      <li style="margin-bottom:8px"><strong style="color:var(--ink)">Netlify</strong> — hosts this site and processes form submissions. Netlify's servers log standard technical information such as your IP address.</li>
+      <li style="margin-bottom:8px"><strong style="color:var(--ink)">Netlify</strong> — hosts this site (or a backup copy of it). Netlify's servers log standard technical information such as your IP address, but no longer receive form submissions.</li>
+      <li style="margin-bottom:8px"><strong style="color:var(--ink)">Web3Forms</strong> — the service that actually receives and delivers every form submission (general inquiry, booking request, or sponsor sign-up) to us by email. Web3Forms briefly handles the same information listed above under "What we collect" in order to deliver it.</li>
       <li style="margin-bottom:8px"><strong style="color:var(--ink)">Google Fonts</strong> — the typefaces on this site are loaded from Google's servers, which receive your IP address like any web request.</li>
       <li style="margin-bottom:8px"><strong style="color:var(--ink)">Google Places API</strong> — see below.</li>
     </ul>
 
     <h3 style="color:var(--ink);margin-bottom:10px">How we protect it</h3>
-    <p style="margin-bottom:28px">This site is served entirely over HTTPS, so information you submit is encrypted in transit between your browser and our hosting provider. We don't store form submissions in a separate database of our own — they're read directly from Netlify's form dashboard.</p>
+    <p style="margin-bottom:28px">This site is served entirely over HTTPS, so information you submit is encrypted in transit. We don't store form submissions in a separate database of our own — completed forms are delivered to us directly by email through Web3Forms, the third-party service that handles form delivery.</p>
 
     <h3 style="color:var(--ink);margin-bottom:10px">Address autocomplete</h3>
-    <p style="margin-bottom:28px">The event-location and service-area fields on our booking, contact, and sponsor forms suggest matching addresses as you type. To do this, what you type is sent to Google's Places API as you're typing it — before you submit the form. This only happens in that one field; it's a convenience feature, not something you need to use, and typing a plain address without selecting a suggestion works just as well.</p>
+    <p style="margin-bottom:28px">The event-location and service-area fields on our booking, contact, and sponsor forms suggest matching addresses as you type. To do this, what you type is sent to a small proxy we run on Cloudflare, which forwards it to Google's Places API and returns suggestions — this keeps our Google credentials private without exposing them in the page itself. Google still receives what you type, the same as if you queried it directly; our proxy doesn't store or log it. This only happens in that one field; it's a convenience feature, not something you need to use, and typing a plain address without selecting a suggestion works just as well.</p>
 
     <h3 style="color:var(--ink);margin-bottom:10px">Cookies and tracking</h3>
     <p style="margin-bottom:28px">This site does not set cookies, run analytics, or use advertising trackers of any kind. There is nothing to opt out of, because nothing is being tracked.</p>

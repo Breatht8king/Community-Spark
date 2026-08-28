@@ -206,6 +206,7 @@ header.qb-header .qb-wrap{display:flex;align-items:center;justify-content:space-
 .qb-subcat-group{margin-bottom:22px}
 .qb-subcat-group:last-child{margin-bottom:0}
 .qb-subcat-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold-dark);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.qb-empty-note{padding:28px 16px;text-align:center;color:var(--muted);font-size:14px}
 
 .qb-family-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
 .qb-family-card{text-align:left;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:16px 18px;transition:transform .2s,border-color .2s}
@@ -606,11 +607,17 @@ var e,t,r="function"==typeof Symbol?Symbol:{},a=r.iterator||"@@iterator",n=r.toS
      BBQ platter, pasta bar, or continental breakfast package as an orderable item — those 4 "Catering"
      families below are priced null everywhere for that reason, not a research gap. If you want real
      numbers there, they'd need to come from an actual local caterer, not Costco/Amazon.
-   - The "Catering" category also holds real menu items from 22 local restaurants (via ezCater), each
-     priced from that restaurant's own published menu. All 20 catalog events are now costed as one-click
-     presets in QB_EVENT_PRESETS below. The "Staffing & Equipment Rental" category holds reusable/durable
-     equipment (tents, tables, serving gear) — those are near-$0 marginal cost per event once owned; see
-     the flat-rate note further down for how that's represented.
+   - The "Catering" category also holds real menu items from 30 local restaurants (via ezCater) plus
+     Costco's own generic catering line — 435 families total, grouped in the item picker by cuisine, then
+     by restaurant, then by menu section (see QB_BRAND_CUISINE and qbCateringSubcat further down). Each
+     item is priced from that restaurant's own published menu. All 20 catalog events are now costed as
+     one-click presets in QB_EVENT_PRESETS below. The "Staffing & Equipment Rental" category holds
+     reusable/durable equipment (tents, tables, serving gear) — those are near-$0 marginal cost per event
+     once owned; see the flat-rate note further down for how that's represented.
+   - Known gap (2026-08-27): Costco pricing for Coca-Cola and Pepsi (both under Drinks, not Catering) is
+     null at every pack size, despite Costco generally having competitive soda pricing — this was never
+     actually researched, not a case of no listing existing. Worth filling in via the price editor from a
+     real receipt or Costco.com if you use those items often.
 
    variant.only limits which packs a variant comes in; variant.delta shifts the pack price for that
    variant (a small, un-verified differential on top of the real base price — not independently sourced).
@@ -4172,8 +4179,10 @@ function QBPicker({ category, onClose, onAdd }) {
     const matchesQuery = !q || f.name.toLowerCase().includes(q) || f.variants.some(v => (v.name || '').toLowerCase().includes(q));
     if (brand) return f.brand === brand && matchesQuery;
     if (cuisine) return qbBrandCuisine(f.brand) === cuisine && matchesQuery;
-    if (q) return matchesQuery;
-    return false;
+    // Categories with no brand/cuisine pill system (everything except Catering) always show their
+    // full flat list, even with an empty search box — only Catering hides items behind pills first.
+    if (brands.length <= 1) return matchesQuery;
+    return q ? matchesQuery : false;
   });
 
   const named = fam ? fam.variants.filter(v => v.name) : [];
@@ -4249,7 +4258,7 @@ function QBPicker({ category, onClose, onAdd }) {
               )}
 
               {brand ? (
-                QB_SUBCAT_ORDER.map(label => {
+                filtered.length ? QB_SUBCAT_ORDER.map(label => {
                   const group = filtered.filter(f => qbCateringSubcat(f.name) === label);
                   if (!group.length) return null;
                   return (
@@ -4258,9 +4267,11 @@ function QBPicker({ category, onClose, onAdd }) {
                       <div className="qb-family-grid">{group.map(f => familyCard(f))}</div>
                     </div>
                   );
-                })
+                }) : <p className="qb-empty-note">No items match "{query}" at {brand}.</p>
               ) : (q || brands.length <= 1) ? (
-                <div className="qb-family-grid">{filtered.map(f => familyCard(f))}</div>
+                filtered.length
+                  ? <div className="qb-family-grid">{filtered.map(f => familyCard(f))}</div>
+                  : <p className="qb-empty-note">No items match "{query}".</p>
               ) : null}
             </>
           )}

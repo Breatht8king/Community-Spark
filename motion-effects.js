@@ -22,20 +22,28 @@ document.querySelectorAll('.faq-item').forEach(function(item){
   var content = item.querySelector('p');
   if (!summary || !content) return;
   var busy = false;
+  function closeAnimated(){
+    if (busy || !item.open) return;
+    busy = true;
+    var openHeight = content.scrollHeight;
+    content.style.height = openHeight + 'px';
+    content.offsetHeight; // force reflow so the browser registers the starting height before animating
+    animate(content, { height: [openHeight + 'px', '0px'], opacity: [1, 0] }, faqEase).finished.then(function(){
+      item.open = false;
+      content.style.height = '';
+      busy = false;
+    });
+  }
+  // Exposed so script.js's "only 2 open at once" cap can close the oldest one with the
+  // same animation as a user click, instead of snapping it shut via item.open = false.
+  item.faqCloseAnimated = closeAnimated;
   summary.addEventListener('click', function(e){
     e.preventDefault();
     if (busy) return;
-    busy = true;
     if (item.open) {
-      var openHeight = content.scrollHeight;
-      content.style.height = openHeight + 'px';
-      content.offsetHeight; // force reflow so the browser registers the starting height before animating
-      animate(content, { height: [openHeight + 'px', '0px'], opacity: [1, 0] }, faqEase).finished.then(function(){
-        item.open = false;
-        content.style.height = '';
-        busy = false;
-      });
+      closeAnimated();
     } else {
+      busy = true;
       item.open = true;
       var targetHeight = content.scrollHeight;
       animate(content, { height: [0, targetHeight + 'px'], opacity: [0, 1] }, faqEase).finished.then(function(){

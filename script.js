@@ -158,7 +158,7 @@ faqItems.forEach(function(d){
       openFaqQueue.push(d);
       if(openFaqQueue.length>2){
         var oldest=openFaqQueue.shift();
-        if(oldest!==d)oldest.open=false;
+        if(oldest!==d){if(oldest.faqCloseAnimated)oldest.faqCloseAnimated();else oldest.open=false;}
       }
     }else{
       var idx=openFaqQueue.indexOf(d);
@@ -171,6 +171,18 @@ function updateTotal(){var sum=addonSelects.reduce(function(a,s){return a+(Numbe
 addonSelects.forEach(function(s){s.addEventListener('change',updateTotal);});updateTotal();
 function findFirstEmptyRequired(container){
   return Array.from(container.querySelectorAll('[required]')).find(function(f){return f.type!=='radio'&&!String(f.value||'').trim();});
+}
+function formDataToObject(formData){
+  var obj={};
+  formData.forEach(function(val,key){
+    if(Object.prototype.hasOwnProperty.call(obj,key)){
+      obj[key]=(Array.isArray(obj[key])?obj[key]:[obj[key]]).concat(val);
+    }else{
+      obj[key]=val;
+    }
+  });
+  for(var k in obj){if(Array.isArray(obj[k]))obj[k]=obj[k].join(', ');}
+  return obj;
 }
 function submitWeb3Form(form,responseEl,opts){
   opts=opts||{};
@@ -188,7 +200,7 @@ function submitWeb3Form(form,responseEl,opts){
     var submitBtn=form.querySelector('button[type="submit"]');
     if(submitBtn)submitBtn.disabled=true;
     var formData=opts.buildFormData?opts.buildFormData():new FormData(form);
-    fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(Object.fromEntries(formData))})
+    fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(formDataToObject(formData))})
       .then(function(res){return res.json().then(function(data){return {ok:res.ok&&data.success,data:data};});})
       .then(function(result){
         if(!result.ok)throw new Error((result.data&&result.data.message)||'Submission failed');
@@ -343,6 +355,12 @@ function durationToHours(text){
 }
 function pad2(n){return n<10?'0'+n:String(n);}
 function toISODate(d){return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate());}
+var WEEKDAY_NAMES=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+var MONTH_NAMES=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function friendlyDate(dateStr){
+  var parts=dateStr.split('-'),d=new Date(Number(parts[0]),Number(parts[1])-1,Number(parts[2]));
+  return WEEKDAY_NAMES[d.getDay()]+', '+MONTH_NAMES[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();
+}
 function minBookableDate(){var d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()+14);return d;}
 function maxBookableDate(){var d=new Date();d.setHours(0,0,0,0);d.setMonth(d.getMonth()+6);return d;}
 function isValidBooking(b){
@@ -569,6 +587,8 @@ function renderTimeSlots(){
     btn.className='time-slot';
     btn.textContent=to12h(slot);
     btn.disabled=!!conflict;
+    btn.setAttribute('aria-label',to12h(slot)+' on '+friendlyDate(selectedDateStr)+(conflict?' — unavailable, already booked':''));
+    if(conflict)btn.title='Unavailable — already booked';
     if(!conflict){
       allDisabled=false;
       btn.addEventListener('click',function(){
@@ -629,8 +649,7 @@ function renderCalendar(){
       var invalidEntry=dateHasInvalidEntry(dateStr);
       var disabled=tooEarly||tooLate||capReached||allDayBlocked||conflictIfAllDay||invalidEntry;
       btn.disabled=disabled;
-      var weekdayNames=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-      var fullDateLabel=weekdayNames[cellDate.getDay()]+', '+monthNames[month]+' '+day+', '+year;
+      var fullDateLabel=WEEKDAY_NAMES[cellDate.getDay()]+', '+monthNames[month]+' '+day+', '+year;
       var reason='';
       if(tooEarly)reason=' — too soon, needs at least 2 weeks notice';
       else if(tooLate)reason=' — too far out, within 6 months only';
