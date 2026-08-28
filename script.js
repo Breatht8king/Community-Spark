@@ -172,7 +172,7 @@ addonSelects.forEach(function(s){s.addEventListener('change',updateTotal);});upd
 function findFirstEmptyRequired(container){
   return Array.from(container.querySelectorAll('[required]')).find(function(f){return f.type!=='radio'&&!String(f.value||'').trim();});
 }
-function submitNetlifyForm(form,responseEl,opts){
+function submitWeb3Form(form,responseEl,opts){
   opts=opts||{};
   form.noValidate=true;
   form.addEventListener('submit',function(e){
@@ -188,9 +188,10 @@ function submitNetlifyForm(form,responseEl,opts){
     var submitBtn=form.querySelector('button[type="submit"]');
     if(submitBtn)submitBtn.disabled=true;
     var formData=opts.buildFormData?opts.buildFormData():new FormData(form);
-    fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(formData).toString()})
-      .then(function(res){
-        if(!res.ok)throw new Error('Network response was not ok');
+    fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(Object.fromEntries(formData))})
+      .then(function(res){return res.json().then(function(data){return {ok:res.ok&&data.success,data:data};});})
+      .then(function(result){
+        if(!result.ok)throw new Error((result.data&&result.data.message)||'Submission failed');
         if(opts.onSuccess){opts.onSuccess();}
         else{
           if(responseEl&&opts.successMessage){responseEl.textContent=opts.successMessage;responseEl.style.color='var(--gold)';}
@@ -239,7 +240,7 @@ if(form){
     var cEventDesc=document.getElementById('eventDesc');
     if(cEventDesc&&!cEventDesc.value)cEventDesc.value=cAsking?('I have a question about '+cEvent+': '):('We’re interested in booking '+cEvent+'. ');
   }
-  submitNetlifyForm(form,formResponse,{
+  submitWeb3Form(form,formResponse,{
     validate:function(){
       if(eventDateInput&&eventDateInput.value){
         var minD=toISODate(minBookableDate()),maxD=toISODate(maxBookableDate());
@@ -256,7 +257,7 @@ if(form){
 }
 var sponsorForm=document.getElementById('sponsorForm'),sponsorResponse=document.getElementById('sponsorResponse');
 if(sponsorForm){
-  submitNetlifyForm(sponsorForm,sponsorResponse,{
+  submitWeb3Form(sponsorForm,sponsorResponse,{
     onSuccess:function(){swapFormForConfirmation(sponsorForm,'sponsorSuccess','sponsorSuccessActions');}
   });
   wireSendAnother('sponsorAddAnother',sponsorForm,sponsorResponse,'sponsorSuccess','sponsorSuccessActions');
@@ -715,7 +716,7 @@ if(bookStartOver)bookStartOver.addEventListener('click',function(){
 
 var bookingForm=document.getElementById('bookingForm'),bookingResponse=document.getElementById('bookingResponse');
 if(bookingForm){
-  submitNetlifyForm(bookingForm,bookingResponse,{
+  submitWeb3Form(bookingForm,bookingResponse,{
     skipRequiredCheck:true,
     validate:function(){
       var bDate=bookDateInput?bookDateInput.value:'';

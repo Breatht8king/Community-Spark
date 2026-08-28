@@ -64,13 +64,14 @@
       <div class="form-intro"><h3 id="bookingEventName">Choose an event to book</h3><p id="bookingEventMeta">Select a preset event below, or browse the full catalog to compare options.</p></div>
       <p class="field-help" style="margin-bottom:16px"><a href="events.html">← Browse the full event catalog</a></p>
       <noscript><p class="field-help" style="margin-bottom:16px;color:#c0392b">Booking a date requires JavaScript. If you can't enable it, please use our <a href="contact.html">contact form</a>, email <a href="mailto:Griffin.newton@indycollab.com">Griffin.newton@indycollab.com</a>, or call <a href="tel:3173545880">(317) 354-5880</a> instead.</p></noscript>
-      <form id="bookingForm" name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="booking"/>
+      <form id="bookingForm" name="booking" method="POST">
+        <input type="hidden" name="access_key" value="21c73be0-b5fd-4578-9732-82f489dc18c2"/>
+        <input type="hidden" name="subject" value="New Booking Request — Community Spark"/>
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off"/>
         <input type="hidden" id="bookDate" name="eventDate"/>
         <input type="hidden" id="bookTime" name="eventTime"/>
         <input type="hidden" id="bookingType" name="bookingType" value="preset"/>
         <input type="hidden" id="customEventNameFallback" name="eventName" value="Custom Event" disabled/>
-        <p style="position:absolute;left:-9999px" aria-hidden="true"><label>Don't fill this out if you're human: <input name="bot-field" tabindex="-1" autocomplete="off"/></label></p>
 
         <div class="book-step" id="bookStep1">
           <div class="type-toggle" role="group" aria-label="Event type" style="margin-bottom:16px">

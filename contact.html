@@ -47,9 +47,10 @@
       <div class="form-intro"><h3 id="contactFormHeading">Request a custom event</h3><p>Griffin will follow up personally to discuss availability, event details, and next steps. Submitting this form does not reserve a date.</p></div>
       <div class="prefill-banner" id="contactPrefill" hidden><span>Event you're asking about</span><strong id="contactPrefillEvent"></strong><a href="events.html">Change</a></div>
       <noscript><p class="field-help" style="margin-bottom:16px;color:#c0392b">This form works best with JavaScript enabled. If you can't enable it, please email <a href="mailto:Griffin.newton@indycollab.com">Griffin.newton@indycollab.com</a> or call <a href="tel:3173545880">(317) 354-5880</a> instead.</p></noscript>
-      <form id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="contact"/>
-        <p style="position:absolute;left:-9999px" aria-hidden="true"><label>Don't fill this out if you're human: <input name="bot-field" tabindex="-1" autocomplete="off"/></label></p>
+      <form id="contactForm" name="contact" method="POST">
+        <input type="hidden" name="access_key" value="21c73be0-b5fd-4578-9732-82f489dc18c2"/>
+        <input type="hidden" name="subject" value="New Contact Form Submission — Community Spark"/>
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off"/>
         <div class="form-grid">
           <div class="field-group"><label for="contactName">Contact name <span style="color:var(--gold)">*</span></label><input type="text" id="contactName" name="contactName" required placeholder="Your name" autocomplete="name"/></div>
           <div class="field-group"><label for="communityName">Apartment community name <span style="color:var(--gold)">*</span></label><input type="text" id="communityName" name="communityName" required placeholder="Community name"/></div>
