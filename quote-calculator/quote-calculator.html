@@ -836,6 +836,9 @@ window.QB_FAMILIES = [
   { id: 'tonicwater', cat: 'drinks', name: 'Schweppes Tonic & Club Soda', unit: 'can', perGuest: .2,
     variants: [{ id: 'tonic', name: 'Tonic Water' }, { id: 'clubsoda', name: 'Club Soda' }, { id: 'diettonic', name: 'Diet Tonic' }],
     packs: [{ id: '6', label: '6 pack · 7.5 oz cans, Schweppes Zero Sugar', per: 6, prices: P(null, null, null, null, 2.39, null, null) }] },
+  { id: 'cannedlemonade', cat: 'drinks', name: 'Minute Maid Lemonade, canned', unit: 'can', perGuest: 1,
+    variants: [{ id: 'classic', name: 'Classic' }, { id: 'pink', name: 'Pink lemonade' }, { id: 'zero', name: 'Zero sugar' }],
+    packs: [{ id: '12', label: '12 pack · 12 oz cans', per: 12, prices: P(null, null, null, null, 11.99, null, 8.42) }] },
   // -- Food
   { id: 'hotdogs', cat: 'food', name: 'Beef hot dogs', unit: 'hot dog', perGuest: 1.5,
     variants: [{ id: 'regular', name: 'Regular' }, { id: 'jumbo', name: 'Jumbo 1/4 lb', delta: 2.5 }],
@@ -4155,6 +4158,15 @@ window.QB_FAMILIES = [
   { id: 'firstaidkit', cat: 'staffing', name: 'First-aid kit', unit: 'kit', perGuest: 0,
     variants: [{ id: 'std', name: 'General use — keep in the equipment bag for every event' }],
     packs: [{ id: '1', label: '1 kit · 150 piece, compact bag', per: 1, prices: P(null, null, null, 14.88) }] },
+  { id: 'rentalfee', cat: 'staffing', name: 'Equipment rental fee (set your own rate)', unit: 'event', perGuest: 0,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '1', label: '1 event — whatever you rented beyond what you own, per this booking', per: 1, flat: 0.00 }] },
+  { id: 'triviawhiteboards', cat: 'staffing', name: 'zmybcpack Dry-Erase Lapboards', unit: 'board', perGuest: 0,
+    variants: [{ id: 'std', name: 'For: Trivia Night' }],
+    packs: [{ id: '12', label: '12-pack · 9x12in double-sided lapboards, markers & erasers included', per: 12, prices: P(null, null, null, 21.99, null, null, null) }] },
+  { id: 'scoreboard', cat: 'staffing', name: 'Maxtek Tripod Easel Whiteboard', unit: 'unit', perGuest: 0,
+    variants: [{ id: 'std', name: 'For: Trivia Night — team score tracking, visible room-wide' }],
+    packs: [{ id: '1', label: '1 unit · 36x24in magnetic dry-erase board, height-adjustable tripod stand', per: 1, prices: P(null, null, null, 52.99, null, null, null) }] },
   // -- More reusable equipment (added 2026-08-30)
   { id: 'chestcooler', cat: 'staffing', name: 'Large chest cooler', unit: 'unit', perGuest: 0,
     variants: [{ id: 'std', name: 'General use — extra beverage/food cold storage (distinct from the wheeled rolling cooler)' }],
@@ -4277,13 +4289,20 @@ window.QB_SAMPLE = [
    billed per event. The 'lead'/'assistant' staffing families still exist in the catalog for a booking that
    genuinely needs contracted extra help; just add them from the category picker when that applies. */
 window.QB_EVENT_PRESETS = [
-  { id: 'trivia-night', name: 'Trivia Night', guests: 65, charge: 1250, lines: [
-    { cat: 'food', item: 'chips.classic.50', packs: 2 },
-    { cat: 'food', item: 'candy.std.jar', packs: 4 },
-    { cat: 'drinks', item: 'coke.classic.35', packs: 3 },
-    { cat: 'drinks', item: 'water.purified.40', packs: 4 },
-    { cat: 'drinks', item: 'energydrink.redbull.24', packs: 1 },
-    { cat: 'prizes', item: 'giftcards.25.4', packs: 1 }
+  { id: 'trivia-night', name: 'Trivia Night', guests: 50, charge: 1250, lines: [
+    { cat: 'food', item: 'chips.classic.50', packs: 1 },
+    { cat: 'food', item: 'pretzels.original.32', packs: 2 },
+    { cat: 'food', item: 'candy.std.jar', packs: 3 },
+    { cat: 'drinks', item: 'coke.classic.35', packs: 1 },
+    { cat: 'drinks', item: 'pepsi.classic.24', packs: 1 },
+    { cat: 'drinks', item: 'rootbeer.classic.24', packs: 1 },
+    { cat: 'drinks', item: 'lemonlime.regular.24', packs: 1 },
+    { cat: 'drinks', item: 'cannedlemonade.classic.12', packs: 2 },
+    { cat: 'drinks', item: 'water.purified.40', packs: 3 },
+    { cat: 'paper', item: 'plates.10.100', packs: 1 },
+    { cat: 'paper', item: 'cutlery.std.180', packs: 1 },
+    { cat: 'paper', item: 'napkins.white.800', packs: 1 },
+    { cat: 'staffing', item: 'rentalfee.std.1', packs: 1 }
   ] },
   { id: 'bagel-bar', name: 'National Bagel Day Bar', guests: 65, charge: 1250, lines: [
     { cat: 'food', item: 'bagels.everything.12', packs: 9 },
@@ -4781,7 +4800,8 @@ const QB_SUBTYPES = {
     sweettea: 'Lemonade & Tea', instanticedtea: 'Lemonade & Tea', bottledtea: 'Lemonade & Tea',
     proteinshake: 'Sports & Energy', propelwater: 'Sports & Energy', gatoradepowder: 'Sports & Energy',
     bottledicedcoffee: 'Coffee & Cocoa', chailatte: 'Coffee & Cocoa', nitrocoldbrew: 'Coffee & Cocoa',
-    chocmilk: 'Milk', almondmilk: 'Milk' } },
+    chocmilk: 'Milk', almondmilk: 'Milk',
+    cannedlemonade: 'Lemonade & Tea' } },
   food: { order: ['Grill & Mains', 'Appetizers & Trays', 'Snacks', 'Fruit', 'Ice Cream', 'Bakery & Sweets', 'Breakfast', 'Spreads & Toppings'], map: {
     hotdogs: 'Grill & Mains', buns: 'Grill & Mains', burgers: 'Grill & Mains', ribs: 'Grill & Mains', wings: 'Grill & Mains',
     vegetables: 'Appetizers & Trays', pinwheels: 'Appetizers & Trays', hummus: 'Appetizers & Trays', guac: 'Appetizers & Trays',
@@ -4868,7 +4888,7 @@ const QB_SUBTYPES = {
     chestcooler: 'Food Equipment', waterdispenser: 'Food Equipment', beveragetub: 'Food Equipment',
     patioheater: 'Logistics & Safety', utilitywagon: 'Logistics & Safety', tarp: 'Logistics & Safety', cashbox: 'Logistics & Safety',
     stepladder: 'Logistics & Safety', barriertape: 'Logistics & Safety', countdowntimer: 'Logistics & Safety', trafficcones: 'Logistics & Safety',
-    garmentrack: 'Logistics & Safety' } },
+    garmentrack: 'Logistics & Safety', triviawhiteboards: 'Logistics & Safety', scoreboard: 'Logistics & Safety' } },
 };
 // Second facet, chosen per category for what it actually decides. Only Drinks cares how it's packaged.
 const QB_FACET2 = {
@@ -4948,7 +4968,8 @@ const QB_FACET2 = {
     tarp: 'Owned gear', cashbox: 'Owned gear', waterdispenser: 'Owned gear', cordreel: 'Owned gear', powerbank: 'Owned gear',
     marketumbrella: 'Owned gear', wirelessmic: 'Owned gear', cardtable: 'Owned gear', projectorscreen: 'Owned gear', megaphone: 'Owned gear',
     directorschair: 'Owned gear', stepladder: 'Owned gear', barriertape: 'Owned gear', countdowntimer: 'Owned gear', trafficcones: 'Owned gear',
-    beveragetub: 'Owned gear', walkietalkies: 'Owned gear', garmentrack: 'Owned gear', stringlightpole: 'Owned gear', tentlightkit: 'Owned gear' } },
+    beveragetub: 'Owned gear', walkietalkies: 'Owned gear', garmentrack: 'Owned gear', stringlightpole: 'Owned gear', tentlightkit: 'Owned gear',
+    triviawhiteboards: 'Owned gear', scoreboard: 'Owned gear' } },
 };
 function qbFacet2(fam) {
   const c = QB_FACET2[fam.cat];
