@@ -49,7 +49,12 @@ button{font-family:inherit;cursor:pointer}
 .section-label:before{content:"";display:inline-block;width:20px;height:1px;background:currentColor}
 
 .brand{display:flex;align-items:center;gap:12px;flex-shrink:0;text-decoration:none;cursor:default}
-.brand-lockup{display:block}
+.qb-unpriced{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--gold-dark);white-space:nowrap}
+.brand-ring{display:block;color:currentColor;overflow:visible}
+.brand-type{display:flex;flex-direction:column;align-items:stretch}
+.brand-rule{height:1px;background:var(--gold)}
+.brand-word{font-family:var(--font-display);font-weight:600;letter-spacing:.005em;line-height:1;white-space:nowrap}
+.brand-sub{font-family:var(--font-ui);font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);text-align:center;line-height:1}
 
 /* ===== Page shell / header / summary bar ===== */
 .qb-wrap{max-width:1680px;margin:0 auto;padding:0 clamp(20px,3vw,52px)}
@@ -186,7 +191,7 @@ header.qb-header .qb-wrap{display:flex;align-items:center;justify-content:space-
 .qb-rename-input{font-size:13px;padding:6px 8px;border:1px solid var(--gold);border-radius:var(--r-sm);font-family:inherit}
 
 /* ===== Modal shell (used by both the item picker and the price editor) ===== */
-.qb-modal-scrim{position:fixed;inset:0;background:var(--scrim-drawer);z-index:100;display:flex;align-items:center;justify-content:center;padding:24px}
+.qb-modal-scrim{overscroll-behavior:contain;position:fixed;inset:0;background:var(--scrim-drawer);z-index:100;display:flex;align-items:center;justify-content:center;padding:24px}
 .qb-modal{width:min(880px,100%);max-height:86vh;background:var(--paper);border-radius:var(--r-lg);box-shadow:var(--shadow-lg);display:flex;flex-direction:column;overflow:hidden}
 .qb-modal-head{padding:24px 28px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
 .qb-modal-crumb{font-size:10px;text-transform:uppercase;letter-spacing:.15em;line-height:1.5}
@@ -207,6 +212,62 @@ header.qb-header .qb-wrap{display:flex;align-items:center;justify-content:space-
 .qb-subcat-group:last-child{margin-bottom:0}
 .qb-subcat-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold-dark);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
 .qb-empty-note{padding:28px 16px;text-align:center;color:var(--muted);font-size:14px}
+/* ===== Catering browser: filter rail + restaurant cards + dish rows ===== */
+.qb-modal.qb-wide{width:min(1180px,100%);height:86vh}
+.qb-browse{flex:1;min-height:0;display:grid;grid-template-columns:250px 1fr}
+.qb-browse-rail{border-right:1px solid var(--line);background:var(--cream);padding:18px 18px 28px;overflow-y:auto;overscroll-behavior:contain}
+.qb-rail-sec{margin-bottom:20px}
+.qb-rail-sec:last-child{margin-bottom:0}
+.qb-rail-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);margin-bottom:8px}
+.qb-cuisine-list{display:flex;flex-direction:column;gap:1px}
+.qb-cuisine{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:none;font:inherit;font-size:13px;color:var(--ink);padding:6px 8px;border-radius:8px;cursor:pointer}
+.qb-cuisine:hover{background:#fff}
+.qb-cuisine.on{background:var(--ink);color:#fff}
+.qb-cuisine i{font-style:normal;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.qb-cuisine.on i{color:rgba(255,255,255,.6)}
+.qb-fchips{display:flex;flex-wrap:wrap;gap:6px}
+.qb-fchip{padding:6px 11px;border-radius:999px;font:inherit;font-size:12px;font-weight:600;background:#fff;border:1px solid var(--line);color:var(--muted);cursor:pointer}
+.qb-fchip:hover{border-color:var(--ink);color:var(--ink)}
+.qb-fchip.on{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.qb-rail-note{font-size:10.5px;line-height:1.5;color:var(--muted);margin-top:7px}
+.qb-clear{margin-top:4px;background:none;border:none;font:inherit;font-size:11.5px;font-weight:600;color:var(--gold-dark);text-decoration:underline;cursor:pointer;padding:0}
+.qb-results{overflow-y:auto;overscroll-behavior:contain;padding:20px 26px 30px;min-width:0}
+.qb-menu-row{display:flex;flex-wrap:wrap;gap:6px;padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid var(--line);max-height:104px;overflow-y:auto;overscroll-behavior:contain}
+.qb-menu-row.sub{padding-bottom:0;margin-bottom:16px;border-bottom:none;max-height:78px}
+.qb-menu-row.sub .qb-fchip{font-weight:500}
+.qb-menu-row .qb-fchip{display:inline-flex;align-items:center;gap:6px}
+.qb-menu-row .qb-fchip i{font-style:normal;font-size:10.5px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+.qb-menu-row .qb-fchip.on i{color:rgba(0,0,0,.45)}
+.qb-results-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:14px}
+.qb-results-head h3{margin:0;font-size:15px;font-weight:600}
+.qb-results-head span{font-size:12px;color:var(--muted);text-align:right}
+.qb-rest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:11px}
+.qb-rest{text-align:left;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:15px 16px;cursor:pointer;transition:border-color .18s,transform .18s;display:flex;flex-direction:column;gap:7px;min-height:118px}
+.qb-rest:hover{border-color:var(--gold);transform:translateY(-2px)}
+.qb-rest b{font-size:14.5px;font-weight:600;line-height:1.25}
+.qb-rest .cz{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-dark)}
+.qb-rest .mt{font-size:12px;color:var(--muted);line-height:1.5;margin-top:auto}
+.qb-dish{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);margin-bottom:9px;overflow:hidden}
+.qb-dish.open{border-color:var(--gold)}
+.qb-dish-row{display:grid;grid-template-columns:1fr minmax(150px,max-content);gap:18px;align-items:start;padding:14px 16px;cursor:pointer}
+.qb-dish-row:hover{background:var(--cream)}
+.qb-dish-name{font-size:14.5px;font-weight:600;line-height:1.3}
+.qb-dish-from{font-size:11px;color:var(--muted);font-weight:500}
+.qb-dish-ing{font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.qb-dish.open .qb-dish-ing{-webkit-line-clamp:unset;display:block}
+.qb-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.qb-tag{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:var(--cream);color:var(--gold-dark);border:1px solid var(--line)}
+.qb-tag.warn{color:var(--muted)}
+.qb-dish-price{text-align:right;white-space:nowrap}
+.qb-dish-price b{display:block;font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+.qb-dish-price>span{display:block;font-size:11.5px;color:var(--muted);margin-top:3px}
+.qb-dish-price span span,.qb-dish-name span,.qb-dish-from span{display:inline}
+.qb-dish-body{border-top:1px solid var(--line);padding:15px 16px;background:var(--cream)}
+.qb-opt-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:13px}
+.qb-opt{padding:7px 12px;border-radius:999px;font:inherit;font-size:12.5px;background:#fff;border:1px solid var(--line);color:var(--ink);cursor:pointer;text-align:left}
+.qb-opt:hover{border-color:var(--ink)}
+.qb-opt.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.qb-dish-body .qb-pack-card{background:#fff}
 
 .qb-family-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
 .qb-family-card{text-align:left;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:16px 18px;transition:transform .2s,border-color .2s}
@@ -609,7 +670,7 @@ var e,t,r="function"==typeof Symbol?Symbol:{},a=r.iterator||"@@iterator",n=r.toS
      numbers there, they'd need to come from an actual local caterer, not Costco/Amazon.
    - The "Catering" category also holds real menu items from 30 local restaurants (via ezCater) plus
      Costco's own generic catering line — 435 families total, grouped in the item picker by cuisine, then
-     by restaurant, then by menu section (see QB_BRAND_CUISINE and qbCateringSubcat further down). Each
+     by restaurant, then by menu section (see QB_CG and qbMealType further down). Each
      item is priced from that restaurant's own published menu. All 20 catalog events are now costed as
      one-click presets in QB_EVENT_PRESETS below. The "Staffing & Equipment Rental" category holds
      reusable/durable equipment (tents, tables, serving gear) — those are near-$0 marginal cost per event
@@ -699,6 +760,82 @@ window.QB_FAMILIES = [
   { id: 'pumpkinsyrup', cat: 'drinks', name: 'Flavored coffee syrup, bulk bottle (pumpkin spice)', unit: 'oz', perGuest: .4,
     variants: [{ id: 'pumpkinspice', name: 'Pumpkin spice' }],
     packs: [{ id: '750ml', label: '750 mL (25.4 oz) bottle · Torani', per: 25.4, prices: P(null, null, null, 19.99) }] },
+  // -- Drinks (added 2026-08-30)
+  { id: 'gingerale', cat: 'drinks', name: 'Canada Dry Ginger Ale', unit: 'can', perGuest: 1,
+    variants: [{ id: 'classic', name: 'Classic' }, { id: 'zero', name: 'Zero sugar' }],
+    packs: [{ id: '24', label: '24 pack · 12 oz cans, Canada Dry', per: 24, prices: P(null, null, null, null, null, null, 13.66) }] },
+  { id: 'rootbeer', cat: 'drinks', name: 'A&W Root Beer', unit: 'can', perGuest: 1,
+    variants: [{ id: 'classic', name: 'Classic' }, { id: 'diet', name: 'Diet' }],
+    packs: [{ id: '24', label: '24 pack · 12 oz cans, A&W', per: 24, prices: P(11.99, null, null, null, null, null, null) }] },
+  { id: 'orangesoda', cat: 'drinks', name: 'Crush Orange Soda', unit: 'can', perGuest: .75,
+    variants: [{ id: 'orange', name: 'Orange' }],
+    packs: [{ id: '12', label: '12 pack · 12 oz cans, Crush', per: 12, prices: P(null, null, null, null, null, null, 5.98) }] },
+  { id: 'kombucha', cat: 'drinks', name: 'Health-Ade Kombucha', unit: 'bottle', perGuest: .25,
+    variants: [{ id: 'variety', name: 'Variety pack (Pink Lady Apple, Berry Lemonade, Passion Fruit-Tangerine)' }],
+    packs: [{ id: '6', label: '6 pack · 16 oz bottles, Health-Ade Organic', per: 6, prices: P(9.27, null, null, null, null, null, null) }] },
+  { id: 'chocmilk', cat: 'drinks', name: 'Nesquik Chocolate Milk', unit: 'bottle', perGuest: .5,
+    variants: [{ id: 'std', name: 'Chocolate' }],
+    packs: [{ id: '12', label: '12 pack · 8 oz bottles, Nesquik', per: 12, prices: P(null, null, null, null, null, null, 12.34) }] },
+  { id: 'sweettea', cat: 'drinks', name: 'Gold Peak Sweet Tea', unit: 'gallon', perGuest: .08,
+    variants: [{ id: 'classic', name: 'Classic' }, { id: 'zero', name: 'Zero sugar' }],
+    packs: [{ id: '89oz', label: '89 fl oz bottle (~0.7 gal), Gold Peak', per: .7, prices: P(null, null, null, null, null, null, 4.24) }] },
+  { id: 'bottledicedcoffee', cat: 'drinks', name: 'Starbucks Doubleshot Iced Coffee', unit: 'can', perGuest: .3,
+    variants: [{ id: 'espressocream', name: 'Espresso & Cream' }, { id: 'mocha', name: 'Mocha' }],
+    packs: [{ id: '12', label: '12 pack · 6.5 oz cans, Starbucks Doubleshot', per: 12, prices: P(10.57, null, null, 19.98, null, null, null) }] },
+  { id: 'fruitpunch', cat: 'drinks', name: 'Hawaiian Punch', unit: 'can', perGuest: 1,
+    variants: [{ id: 'juicyred', name: 'Fruit Juicy Red' }],
+    packs: [{ id: '24', label: '24 pack · 12 oz cans, Hawaiian Punch', per: 24, prices: P(null, null, null, null, null, null, 6.98) }] },
+  { id: 'sparklingcider', cat: 'drinks', name: "Martinelli's Sparkling Cider (non-alcoholic, for toasts)", unit: 'bottle', perGuest: .15,
+    variants: [{ id: 'gold', name: 'Gold Medal' }, { id: 'organic', name: 'Organic', delta: 1.9 }],
+    packs: [{ id: '4', label: '4 pack · 25.4 oz bottles, Martinelli\'s', per: 4, prices: P(11.49, null, null, null, null, null, null) }] },
+  { id: 'proteinshake', cat: 'drinks', name: 'Premier Protein Shake', unit: 'bottle', perGuest: .2,
+    variants: [{ id: 'vanilla', name: 'Vanilla' }, { id: 'chocolate', name: 'Chocolate' }, { id: 'strawberriescream', name: 'Strawberries & Cream' }],
+    packs: [{ id: '18', label: '18 pack · 11 oz bottles, Premier Protein 30g', per: 18, prices: P(36.99, null, null, null, null, null, null) }] },
+  { id: 'powderdrinkmix', cat: 'drinks', name: 'Kool-Aid Powdered Drink Mix', unit: 'serving', perGuest: .3,
+    variants: [{ id: 'tropicalpunch', name: 'Tropical Punch' }, { id: 'cherry', name: 'Cherry' }, { id: 'grape', name: 'Grape' }],
+    packs: [{ id: '82.5oz', label: '82.5 oz canister · makes ~34 qt (136 servings), Kool-Aid', per: 136, prices: P(null, null, 9.88, null, null, null, null) }] },
+  { id: 'juicepouch', cat: 'drinks', name: 'Capri Sun Juice Pouches', unit: 'pouch', perGuest: 1,
+    variants: [{ id: 'variety', name: 'Variety pack (Fruit Punch, Pacific Cooler, Strawberry Kiwi)' }],
+    packs: [{ id: '40', label: '40 pack · 6 oz pouches, Capri Sun', per: 40, prices: P(15.99, null, null, null, null, null, null) }] },
+  { id: 'propelwater', cat: 'drinks', name: 'Propel Electrolyte Water', unit: 'bottle', perGuest: 1,
+    variants: [{ id: 'variety', name: 'Variety pack' }, { id: 'blackcherry', name: 'Black Cherry' }, { id: 'kiwistrawberry', name: 'Kiwi-Strawberry' }],
+    packs: [{ id: '24', label: '24 pack · 16.9 oz bottles, Propel', per: 24, prices: P(10.97, null, null, null, null, null, 9.97) }] },
+  { id: 'prebioticsoda', cat: 'drinks', name: 'Olipop Prebiotic Soda', unit: 'can', perGuest: .5,
+    variants: [{ id: 'variety', name: 'Variety pack' }, { id: 'cola', name: 'Vintage Cola' }, { id: 'gingerlemon', name: 'Ginger Lemon' }],
+    packs: [{ id: '15', label: '15 pack · 12 oz cans, Olipop', per: 15, prices: P(19.99, null, null, null, null, null, null) }] },
+  { id: 'instanticedtea', cat: 'drinks', name: 'Lipton Instant Iced Tea Mix', unit: 'serving', perGuest: .3,
+    variants: [{ id: 'unsweetened', name: 'Unsweetened' }, { id: 'sweetened', name: 'Sweetened' }, { id: 'lemon', name: 'Lemon' }],
+    packs: [{ id: '28qt', label: '1 canister · makes 28 qt (~112 servings), Lipton', per: 112, prices: P(null, null, null, null, null, null, 14.99) }] },
+  { id: 'cidermix', cat: 'drinks', name: 'Alpine Spiced Cider Mix', unit: 'packet', perGuest: .4,
+    variants: [{ id: 'original', name: 'Original' }, { id: 'caramelapple', name: 'Caramel Apple' }],
+    packs: [{ id: '10', label: '10 ct single-serve packets, Alpine', per: 10, prices: P(null, null, null, null, null, null, 2.87) }] },
+  { id: 'chailatte', cat: 'drinks', name: 'Big Train Chai Tea Latte Mix', unit: 'oz', perGuest: .5,
+    variants: [{ id: 'spiced', name: 'Spiced' }, { id: 'vanilla', name: 'Vanilla' }],
+    packs: [{ id: '3.5lb', label: '3.5 lb (56 oz) bulk container, Big Train', per: 56, prices: P(25.99, null, null, null, null, null, null) }] },
+  { id: 'bottledtea', cat: 'drinks', name: 'Snapple Variety Pack', unit: 'bottle', perGuest: .3,
+    variants: [{ id: 'lemon', name: 'Lemon' }, { id: 'peach', name: 'Peach' }, { id: 'raspberry', name: 'Raspberry' }],
+    packs: [{ id: '24', label: '24 pack · 20 oz bottles, Snapple', per: 24, prices: P(18.69, null, null, null, null, null, null) }] },
+  { id: 'nitrocoldbrew', cat: 'drinks', name: 'RISE Brewing Co. Nitro Cold Brew', unit: 'can', perGuest: .2,
+    variants: [{ id: 'original', name: 'Original Black' }, { id: 'oatmilklatte', name: 'Oat Milk Latte', delta: 1 }],
+    packs: [{ id: '12', label: '12 pack · 7 oz cans, RISE Brewing Co.', per: 12, prices: P(null, null, null, null, null, null, 34.98) }] },
+  { id: 'gatoradepowder', cat: 'drinks', name: 'Gatorade Powder Mix', unit: 'gallon', perGuest: .06,
+    variants: [{ id: 'lemonlime', name: 'Lemon-Lime' }, { id: 'fruitpunch', name: 'Fruit Punch' }, { id: 'orange', name: 'Orange' }],
+    packs: [{ id: '76.5oz', label: '76.5 oz canister · makes ~6 gallons, Gatorade', per: 6, prices: P(14.99, null, null, null, null, null, null) }] },
+  { id: 'creamsoda', cat: 'drinks', name: 'A&W Cream Soda', unit: 'can', perGuest: .75,
+    variants: [{ id: 'classic', name: 'Classic' }, { id: 'diet', name: 'Diet' }],
+    packs: [{ id: '24', label: '24 pack · 12 oz cans, A&W', per: 24, prices: P(null, null, null, null, null, null, 13.55) }] },
+  { id: 'grapefruitsoda', cat: 'drinks', name: 'Squirt Grapefruit Soda', unit: 'can', perGuest: .75,
+    variants: [{ id: 'squirt', name: 'Squirt' }, { id: 'fresca', name: 'Fresca' }],
+    packs: [{ id: '12', label: '12 pack · 12 oz cans, Squirt', per: 12, prices: P(null, null, null, null, null, null, 8.42) }] },
+  { id: 'almondmilk', cat: 'drinks', name: 'Silk Almond Milk', unit: 'carton', perGuest: .3,
+    variants: [{ id: 'vanilla', name: 'Vanilla' }, { id: 'original', name: 'Original' }, { id: 'chocolate', name: 'Chocolate' }],
+    packs: [{ id: '12', label: '12 pack · 8 oz single-serve cartons, Silk', per: 12, prices: P(null, null, null, null, null, null, 12.98) }] },
+  { id: 'horchata', cat: 'drinks', name: 'Klass Horchata Mix', unit: 'serving', perGuest: .15,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '2pk', label: '2 pack · 14.1 oz pouches (makes up to 16 qt / 64 servings), Klass', per: 64, prices: P(null, null, null, null, null, null, 18.96) }] },
+  { id: 'tonicwater', cat: 'drinks', name: 'Schweppes Tonic & Club Soda', unit: 'can', perGuest: .2,
+    variants: [{ id: 'tonic', name: 'Tonic Water' }, { id: 'clubsoda', name: 'Club Soda' }, { id: 'diettonic', name: 'Diet Tonic' }],
+    packs: [{ id: '6', label: '6 pack · 7.5 oz cans, Schweppes Zero Sugar', per: 6, prices: P(null, null, null, null, 2.39, null, null) }] },
   // -- Food
   { id: 'hotdogs', cat: 'food', name: 'Beef hot dogs', unit: 'hot dog', perGuest: 1.5,
     variants: [{ id: 'regular', name: 'Regular' }, { id: 'jumbo', name: 'Jumbo 1/4 lb', delta: 2.5 }],
@@ -854,6 +991,38 @@ window.QB_FAMILIES = [
   { id: 'halloweenoreos', cat: 'food', name: 'Halloween Oreos, bulk pack', unit: 'box', perGuest: .1,
     variants: [{ id: 'std', name: 'Orange creme, limited edition' }],
     packs: [{ id: '18.71oz', label: '18.71 oz box · assorted spooky designs', per: 1, prices: P(null, null, null, 5.39, null, 5.29, null) }] },
+  // -- Food (added 2026-08-30)
+  { id: 'rotisseriechicken', cat: 'food', name: 'Rotisserie chicken, whole', unit: 'chicken', perGuest: .25,
+    variants: [{ id: 'std', name: 'Classic seasoned' }],
+    packs: [{ id: '1', label: '1 whole chicken · ~2.25-3 lb, ready to eat', per: 1, prices: P(4.99, 4.99, 4.98, null, null, null, 5.97) }] },
+  { id: 'mozzsticks', cat: 'food', name: 'Farm Rich Mozzarella Sticks', unit: 'stick', perGuest: 1,
+    variants: [{ id: 'std', name: 'Breaded' }],
+    packs: [{ id: '6lb', label: '2 x 3 lb bags (6 lb total) · ~45 ct, Farm Rich, Costco', per: 45, prices: P(18.99, null, null, null, null, null, null) }] },
+  { id: 'pretzelbites', cat: 'food', name: 'Pretzilla Soft Pretzel Bites', unit: 'piece', perGuest: 1.5,
+    variants: [{ id: 'std', name: 'Salted, with cheese sauce' }],
+    packs: [{ id: '36.5oz', label: '36.5 oz party pack · ~70+ bites w/ cheese sauce & salt packets, Pretzilla, Costco', per: 70, prices: P(10.99, null, null, null, null, null, null) }] },
+  { id: 'tacokit', cat: 'food', name: 'Old El Paso Taco Dinner Kit', unit: 'taco', perGuest: 1,
+    variants: [{ id: 'hardsoft', name: 'Hard & Soft' }, { id: 'standnstuff', name: 'Stand \'N Stuff', delta: .5 }],
+    packs: [{ id: '11.4oz', label: '11.4 oz box · 12 shells + seasoning, Old El Paso', per: 12, prices: P(null, null, null, null, 3.99, null, 3.48) }] },
+  { id: 'bakedbeans', cat: 'food', name: "Bush's Baked Beans", unit: 'oz', perGuest: 4,
+    variants: [{ id: 'std', name: 'Original, Bush\'s' }],
+    packs: [{ id: '10can', label: '#10 can · 117 oz (7 lb 5 oz), Bush\'s Original, Costco', per: 117, prices: P(8.29, null, null, null, null, null, null) },
+            { id: '8pack', label: '8 x 16.5 oz cans, Bush\'s Original, Sam\'s Club', per: 132, prices: P(null, null, 5.98, null, null, null, null) }] },
+  { id: 'dinnerrolls', cat: 'food', name: "King's Hawaiian Sweet Rolls", unit: 'roll', perGuest: 1.5,
+    variants: [{ id: 'original', name: 'Original sweet' }],
+    packs: [{ id: '32', label: '32 ct twin pack (2 x 16 ct)', per: 32, prices: P(8.32, null, null, null, null, null, null) }] },
+  { id: 'cranberrysauce', cat: 'food', name: 'Ocean Spray Cranberry Sauce', unit: 'can', perGuest: .12,
+    variants: [{ id: 'jellied', name: 'Jellied' }, { id: 'whole', name: 'Whole berry', delta: 0 }],
+    packs: [{ id: '14oz', label: '14 oz can, Ocean Spray', per: 1, prices: P(null, null, null, null, null, 2.99, null) }] },
+  { id: 'turkeybreast', cat: 'food', name: 'Butterball Turkey Breast Roast', unit: 'lb', perGuest: .4,
+    variants: [{ id: 'std', name: 'Butterball' }],
+    packs: [{ id: '4.75lb', label: '4.75 lb roast, Butterball, Costco', per: 4.75, prices: P(16.99, null, null, null, null, null, null) }] },
+  { id: 'delitray', cat: 'food', name: 'Deli meat & cheese platter, bulk', unit: 'serving', perGuest: .5,
+    variants: [{ id: 'std', name: 'Assorted meats & cheeses' }],
+    packs: [{ id: '20', label: 'Special-order platter · serves 18-24, incl. fruit, meat & cheese, Costco deli', per: 20, prices: P(39.99, null, null, null, null, null, null) }] },
+  { id: 'patriotictreat', cat: 'food', name: 'Red, white & blue cookies, bulk bakery (July 4th)', unit: 'cookie', perGuest: 1,
+    variants: [{ id: 'std', name: 'Sugar cookie w/ white chocolate chunks' }],
+    packs: [{ id: '24', label: '24 ct, Costco bakery', per: 24, prices: P(9.99, null, null, null, null, null, null) }] },
   // -- Catering (Costco's national catering menu no longer includes these 4 items — see note at top of file)
   { id: 'tacobar', cat: 'catering', brand: 'Costco', name: 'Taco bar package', unit: 'plate', perGuest: 1,
     variants: [{ id: 'chicken', name: 'Chicken' }, { id: 'beef', name: 'Beef', delta: 20 }, { id: 'both', name: 'Chicken & beef', delta: 35 }],
@@ -3538,6 +3707,86 @@ window.QB_FAMILIES = [
   { id: 'hangingdecor', cat: 'decor', name: 'Halloween hanging decorations, bulk pack', unit: 'piece', perGuest: 0,
     variants: [{ id: 'std', name: 'Swirls — ghost, spider, witch, bat, pumpkin' }],
     packs: [{ id: '30', label: '30 pcs · pre-strung foil ceiling swirls', per: 30, prices: P(null, null, null, 13.99) }] },
+  // -- Décor (added 2026-08-30)
+  { id: 'christmaslights', cat: 'decor', name: 'Christmas string lights, LED mini', unit: 'strand', perGuest: 0,
+    variants: [{ id: 'warm', name: 'Warm white' }, { id: 'multi', name: 'Multicolor', delta: 1 }, { id: 'cool', name: 'Cool white' }],
+    packs: [{ id: '100', label: '100 ct · 24 ft, indoor/outdoor', per: 100, prices: P(null, null, null, null, null, null, 5.97) },
+            { id: '300', label: '300 ct · 62.3 ft, indoor/outdoor', per: 300, prices: P(null, null, null, null, null, null, 15.87) }] },
+  { id: 'christmasdecor', cat: 'decor', name: 'Christmas indoor decorations kit', unit: 'kit', perGuest: 0,
+    variants: [{ id: 'std', name: 'Merry Christmas banner & hanging swirls, red & green' }],
+    packs: [{ id: '1', label: '1 kit · banner + ceiling swirls', per: 1, prices: P(null, null, null, null, null, null, 14.99) }] },
+  { id: 'valentinedecor', cat: 'decor', name: 'Valentine\'s Day decorations kit', unit: 'kit', perGuest: 0,
+    variants: [{ id: 'std', name: 'Pink, gold & ivory — pom poms + paper lanterns' }],
+    packs: [{ id: '1', label: '1 kit · 22 pc', per: 1, prices: P(null, null, null, null, null, null, 24.99) }] },
+  { id: 'easterdecor', cat: 'decor', name: 'Easter / spring decorations kit', unit: 'kit', perGuest: 0,
+    variants: [{ id: 'std', name: 'Bunny, egg & carrot hanging swirl banner' }],
+    packs: [{ id: '1', label: '1 kit · hanging banner set', per: 1, prices: P(null, null, null, null, null, null, 7.66) }] },
+  { id: 'patrioticdecor', cat: 'decor', name: 'Patriotic July 4th bunting & garland kit', unit: 'kit', perGuest: 0,
+    variants: [{ id: 'std', name: 'Stars & stripes garland banner, 30 ft' }],
+    packs: [{ id: '1', label: '1 kit · 15-piece garland banner', per: 1, prices: P(null, null, null, null, null, null, 14.99) }] },
+  { id: 'birthdaydecor', cat: 'decor', name: 'Birthday banner & balloons decorations kit', unit: 'kit', perGuest: 0,
+    variants: [{ id: 'silverblack', name: 'Silver & black' }, { id: 'rosegold', name: 'Rose gold', delta: .7 }],
+    packs: [{ id: '1', label: '1 kit · 56 pc, banner + balloons', per: 1, prices: P(null, null, null, null, null, null, 10.99) }] },
+  { id: 'graddecor', cat: 'decor', name: 'Graduation room decorations kit', unit: 'kit', perGuest: 0,
+    variants: [{ id: 'green', name: 'Green — wall banner & table decor' }],
+    packs: [{ id: '1', label: '1 kit', per: 1, prices: P(null, null, null, null, null, null, 13.28) }] },
+  { id: 'plastictablecloths', cat: 'decor', name: 'Colored plastic tablecloths, bulk pack', unit: 'tablecloth', perGuest: .15,
+    variants: [{ id: 'navy', name: 'Navy blue' }, { id: 'lime', name: 'Lime green', delta: 2.7 }],
+    packs: [{ id: '12', label: '12 pack · 54x108', per: 12, prices: P(null, null, null, null, null, null, 19.99) }] },
+  { id: 'balloonweights', cat: 'decor', name: 'Balloon weights, bulk pack', unit: 'weight', perGuest: .1,
+    variants: [{ id: 'std', name: 'Primary colors, plastic anchor' }],
+    packs: [{ id: '100', label: '100 ct', per: 100, prices: P(null, null, null, null, null, null, 10.34) }] },
+  { id: 'confetti', cat: 'decor', name: 'Confetti, bulk bag', unit: 'bag', perGuest: 0,
+    variants: [{ id: 'gold', name: 'Metallic gold' }],
+    packs: [{ id: '300g', label: '300g / 10.6 oz bag', per: 1, prices: P(null, null, null, null, null, null, 10.99) }] },
+  { id: 'nyedecor', cat: 'decor', name: 'New Year\'s Eve decorations kit', unit: 'kit', perGuest: 0,
+    variants: [{ id: 'std', name: 'Gold & white — balloons, backdrop, banner' }],
+    packs: [{ id: '1', label: '1 kit · 20-piece DIY party essentials set', per: 1, prices: P(null, null, null, null, null, null, 11.99) }] },
+  { id: 'stpatrickdecor', cat: 'decor', name: 'St. Patrick\'s Day banner & garland set', unit: 'set', perGuest: 0,
+    variants: [{ id: 'std', name: 'Green felt pom-pom banner, shamrock garland' }],
+    packs: [{ id: '1', label: '1 set · 8.2 ft felt pom-pom banner + shamrock garland', per: 1, prices: P(null, null, null, null, null, null, 17.99) }] },
+  { id: 'babyshowerdecor', cat: 'decor', name: 'Baby shower balloon garland arch kit', unit: 'kit', perGuest: 0,
+    variants: [{ id: 'rosegold', name: 'Rose gold' }],
+    packs: [{ id: '1', label: '1 kit · 156-piece balloon garland arch', per: 1, prices: P(null, null, null, null, null, null, 12.99) }] },
+  { id: 'retirementdecor', cat: 'decor', name: 'Retirement party backdrop banner', unit: 'banner', perGuest: 0,
+    variants: [{ id: 'blackgold', name: 'Black & gold photo booth backdrop' }],
+    packs: [{ id: '1', label: '1 banner · giant photo booth backdrop', per: 1, prices: P(null, null, null, null, null, null, 10.99) }] },
+  { id: 'luaudecor', cat: 'decor', name: 'Luau / tropical party decorations kit', unit: 'kit', perGuest: 0,
+    variants: [{ id: 'std', name: 'Grass table skirt, balloon garland, honeycomb centerpiece' }],
+    packs: [{ id: '1', label: '1 kit · 153-piece Hawaiian Aloha set', per: 1, prices: P(null, null, null, null, null, null, 13.34) }] },
+  { id: 'underseadecor', cat: 'decor', name: 'Under-the-sea / pool party decorations kit', unit: 'kit', perGuest: 0,
+    variants: [{ id: 'mermaid', name: 'Mermaid — balloons, fish tail, jellyfish, banner' }],
+    packs: [{ id: '1', label: '1 kit · 55-piece underwater theme set', per: 1, prices: P(null, null, null, null, null, null, 16.99) }] },
+  { id: 'tablenumberstands', cat: 'decor', name: 'Table number stands, reusable', unit: 'stand', perGuest: 0,
+    variants: [{ id: 'gold', name: 'Gold wire' }],
+    packs: [{ id: '20', label: '20 pack · 2" mini place card holder stands', per: 20, prices: P(null, null, null, null, null, null, 8.01) }] },
+  { id: 'cakestandriser', cat: 'decor', name: 'Cake / dessert stand riser, reusable', unit: 'stand', perGuest: 0,
+    variants: [{ id: 'steel', name: '3-tier stainless steel' }],
+    packs: [{ id: '2pk', label: '2 pack · 3-tier stainless steel stand', per: 2, prices: P(null, null, null, null, null, null, 17.09) }] },
+  { id: 'marqueeletters', cat: 'decor', name: 'Marquee light-up letters/sign, reusable', unit: 'sign', perGuest: 0,
+    variants: [{ id: 'love', name: '"LOVE" 20" LED marquee sign' }],
+    packs: [{ id: '1', label: '1 sign · battery operated, 20"', per: 1, prices: P(null, null, null, null, null, null, 23.59) }] },
+  { id: 'fairylightcurtain', cat: 'decor', name: 'Fairy light curtain backdrop', unit: 'curtain', perGuest: 0,
+    variants: [{ id: 'warm', name: 'Warm white, 200 LED' }],
+    packs: [{ id: '1', label: '1 curtain · 7x6.2 ft, 200 LED, remote + USB', per: 1, prices: P(null, null, null, null, null, null, 9.88) }] },
+  { id: 'crepestreamers', cat: 'decor', name: 'Crepe paper streamers, bulk multi-pack', unit: 'roll', perGuest: 0,
+    variants: [{ id: 'assorted', name: 'Assorted colors' }],
+    packs: [{ id: '6', label: '6 rolls · 20 ft each, assorted colors', per: 6, prices: P(null, null, null, null, null, null, 2.97) },
+            { id: '8', label: '8 rolls · 656 ft total, 8 colors', per: 8, prices: P(null, null, null, null, null, null, 10.99) }] },
+  { id: 'hangingpaperfans', cat: 'decor', name: 'Hanging paper fans, bulk pack', unit: 'fan', perGuest: 0,
+    variants: [{ id: 'round', name: 'Round pattern, assorted' }, { id: 'navy', name: 'Navy blue, mini', delta: 0 }],
+    packs: [{ id: '12', label: '12 pack · round pattern hanging fans', per: 12, prices: P(null, null, null, null, null, null, 16.49) },
+            { id: '72', label: '72 pack · navy blue mini tissue fans', per: 72, prices: P(null, null, null, null, null, null, 58.99) }] },
+  { id: 'welcomeeasel', cat: 'decor', name: 'Welcome sign easel stand, reusable', unit: 'stand', perGuest: 0,
+    variants: [{ id: 'gold', name: 'Gold metal, adjustable, 46.5"' }],
+    packs: [{ id: '1', label: '1 stand · heavy duty metal floor easel w/ chain', per: 1, prices: P(null, null, null, null, null, null, 40.17) }] },
+  { id: 'chaircovers', cat: 'decor', name: 'Folding chair covers, bulk pack', unit: 'cover', perGuest: 1,
+    variants: [{ id: 'white', name: 'White spandex' }],
+    packs: [{ id: '30', label: '30 pack · stretch spandex, fits folding chairs', per: 30, prices: P(null, null, null, null, null, null, 48.99) },
+            { id: '50', label: '50 pack · stretch spandex, fits folding chairs', per: 50, prices: P(null, null, null, null, null, null, 75.99) }] },
+  { id: 'photoboothprops', cat: 'decor', name: 'Photo booth props on a stick, bulk pack', unit: 'prop', perGuest: 0,
+    variants: [{ id: 'tropical', name: 'Tropical Hawaiian, assorted' }],
+    packs: [{ id: '50', label: '50 pack · assorted props on sticks', per: 50, prices: P(null, null, null, null, null, null, 13.99) }] },
   // -- Paper & Serving
   { id: 'plates', cat: 'paper', name: 'Heavy-duty paper plates', unit: 'plate', perGuest: 2,
     variants: [{ id: '10', name: '10 inch' }, { id: '9', name: '9 inch', delta: -3 }],
@@ -3574,6 +3823,86 @@ window.QB_FAMILIES = [
   { id: 'insulatedcups', cat: 'paper', name: 'Insulated to-go cups with lids, bulk pack', unit: 'set', perGuest: 1,
     variants: [{ id: 'std', name: '' }],
     packs: [{ id: '80', label: 'Chinet Comfort 16 oz insulated cups + lids, 80 ct', per: 80, prices: P(15.99, 15.99, null, null) }] },
+  // -- Paper & Serving (added 2026-08-30)
+  { id: 'bowls', cat: 'paper', name: 'Paper bowls, bulk pack', unit: 'bowl', perGuest: 1,
+    variants: [{ id: '12oz', name: '12 oz' }],
+    packs: [{ id: '175', label: '175 ct · Dixie', per: 175, prices: P(12.99, null, null, null, null, null, null) },
+            { id: '200', label: '200 ct · Member\'s Mark', per: 200, prices: P(null, null, 13.98, null, null, null, null) },
+            { id: '1000', label: '1000 ct · Chinet', per: 1000, prices: P(null, null, null, 38.43, null, null, null) }] },
+  { id: 'stirrers', cat: 'paper', name: 'Coffee stirrers, bulk box', unit: 'stirrer', perGuest: 0,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '5000', label: '5,000 ct · 7 in, plastic', per: 5000, prices: P(9.99, null, null, null, null, null, null) },
+            { id: '10000', label: '10,000 ct · 5.25 in, plastic', per: 10000, prices: P(17.79, null, null, null, null, null, null) }] },
+  { id: 'straws', cat: 'paper', name: 'Drinking straws, bulk box', unit: 'straw', perGuest: 1,
+    variants: [{ id: 'std', name: 'Wrapped, clear, 10.25 in' }],
+    packs: [{ id: '2000', label: '2,000 ct', per: 2000, prices: P(13.49, null, null, null, null, null, null) }] },
+  { id: 'togoboxes', cat: 'paper', name: 'To-go boxes, foam clamshell', unit: 'box', perGuest: 0,
+    variants: [{ id: 'std', name: '1-compartment, hinged' }],
+    packs: [{ id: '125', label: '125 ct · Hefty Supreme, 9 in', per: 125, prices: P(null, null, 18.58, null, null, null, null) },
+            { id: '200', label: '200 ct · Dart, 8 in', per: 200, prices: P(24.49, null, null, null, null, null, null) }] },
+  { id: 'foil', cat: 'paper', name: 'Aluminum foil, bulk roll', unit: 'roll', perGuest: 0,
+    variants: [{ id: 'std', name: '12 in x 1000 ft, standard' }, { id: 'hd18', name: '18 in x 500 ft, heavy duty', delta: 7.8 }],
+    packs: [{ id: '1', label: '1 roll', per: 1, prices: P(null, null, 13.98, null, null, null, null) }] },
+  { id: 'trashbags', cat: 'paper', name: 'Trash bags, heavy duty', unit: 'bag', perGuest: 0,
+    variants: [{ id: 'std', name: '50 gallon, outdoor' }],
+    packs: [{ id: '70', label: '70 ct', per: 70, prices: P(28.99, null, null, null, null, null, null) }] },
+  { id: 'wipes', cat: 'paper', name: 'Hand sanitizing wipes, bulk', unit: 'wipe', perGuest: 0,
+    variants: [{ id: 'std', name: 'Antibacterial, travel packs' }],
+    packs: [{ id: '140', label: '140 ct · 7 packs of 20', per: 140, prices: P(10.99, null, null, null, null, null, null) }] },
+  { id: 'papertowels', cat: 'paper', name: 'Paper towel rolls, bulk case', unit: 'roll', perGuest: 0,
+    variants: [{ id: 'std', name: '2-ply' }],
+    packs: [{ id: '12', label: '12 rolls · 160 sheets each', per: 12, prices: P(23.99, null, null, null, null, null, null) }] },
+  { id: 'gloves', cat: 'paper', name: 'Disposable poly gloves, food-prep', unit: 'glove', perGuest: 0,
+    variants: [{ id: 'std', name: 'One size' }],
+    packs: [{ id: '2000', label: '2,000 ct', per: 2000, prices: P(12.99, null, null, null, null, null, null) }] },
+  { id: 'nitrilegloves', cat: 'paper', name: 'Disposable nitrile gloves, food-service', unit: 'glove', perGuest: 0,
+    variants: [{ id: 'std', name: 'Powder-free, latex-free' }],
+    packs: [{ id: '400', label: '400 ct · 2 boxes of 200', per: 400, prices: P(18.99, null, null, null, null, null, null) }] },
+  { id: 'clingwrap', cat: 'paper', name: 'Kirkland Signature Stretch-Tite Cling Wrap', unit: 'roll', perGuest: 0,
+    variants: [{ id: 'std', name: '12 in x 3,000 ft' }],
+    packs: [{ id: '1', label: '1 roll · Kirkland Signature Stretch-Tite', per: 1, prices: P(19.99, null, null, null, null, null, null) }] },
+  { id: 'parchmentpaper', cat: 'paper', name: "Member's Mark Parchment Paper", unit: 'roll', perGuest: 0,
+    variants: [{ id: 'std', name: '205 sq ft, unbleached' }],
+    packs: [{ id: '2', label: '2 rolls · Member\'s Mark, 205 sq ft each', per: 2, prices: P(null, null, 15.52, null, null, null, null) }] },
+  { id: 'disposableaprons', cat: 'paper', name: 'Xpose Safety Disposable Aprons', unit: 'apron', perGuest: 0,
+    variants: [{ id: 'std', name: '24 in x 48 in, waterproof' }],
+    packs: [{ id: '100', label: '100 ct · Xpose Safety, individually wrapped', per: 100, prices: P(null, null, null, null, null, null, 17.99) }] },
+  { id: 'compostablecutlery', cat: 'paper', name: 'Hefty ECOSAVE Compostable Cutlery (eco-friendly alternative)', unit: 'piece', perGuest: 1.5,
+    variants: [{ id: 'std', name: 'Fork, knife, spoon assortment' }],
+    packs: [{ id: '360', label: '360 ct · Hefty ECOSAVE, 180 fork/120 spoon/60 knife', per: 360, prices: P(null, null, null, null, null, null, 32.49) }] },
+  { id: 'compostableplates', cat: 'paper', name: 'Eco Raj Compostable Plates, bagasse/sugarcane (eco-friendly alternative)', unit: 'plate', perGuest: 2,
+    variants: [{ id: '9', name: '9 inch' }],
+    packs: [{ id: '500', label: '500 ct · Eco Raj bagasse', per: 500, prices: P(59.99, null, null, null, null, null, null) }] },
+  { id: 'squeezebottles', cat: 'paper', name: 'Chef Craft Squeeze Bottles', unit: 'bottle', perGuest: 0,
+    variants: [{ id: 'std', name: '12 oz, twist-on cap' }],
+    packs: [{ id: '4', label: '4 pack · Chef Craft', per: 4, prices: P(null, null, null, null, null, null, 9.56) }] },
+  { id: 'souffecups', cat: 'paper', name: 'EDI Souffle Cups with Lids', unit: 'cup', perGuest: 1,
+    variants: [{ id: '2oz', name: '2 oz' }],
+    packs: [{ id: '100', label: '100 ct · EDI, with lids', per: 100, prices: P(null, null, null, null, null, null, 7.49) }] },
+  { id: 'sandwichbags', cat: 'paper', name: 'Ziploc Sandwich Bags', unit: 'bag', perGuest: 0,
+    variants: [{ id: 'std', name: 'Seal-top' }],
+    packs: [{ id: '480', label: '480 ct · Ziploc', per: 480, prices: P(9.49, null, null, null, null, null, null) }] },
+  { id: 'freezerbags', cat: 'paper', name: 'Kirkland Signature Freezer Bags', unit: 'bag', perGuest: 0,
+    variants: [{ id: 'std', name: 'Gallon, double zipper' }],
+    packs: [{ id: '192', label: '192 ct · Kirkland Signature Gallon Plus', per: 192, prices: P(15.99, null, null, null, null, null, null) }] },
+  { id: 'placemats', cat: 'paper', name: 'SparkSettings Paper Placemats', unit: 'placemat', perGuest: 1,
+    variants: [{ id: 'std', name: 'Scalloped edge, 9.75x14 in' }],
+    packs: [{ id: '50', label: '50 ct · SparkSettings', per: 50, prices: P(null, null, null, null, null, null, 16.99) }] },
+  { id: 'beveragenapkins', cat: 'paper', name: 'Marathon Beverage Napkins', unit: 'napkin', perGuest: 2,
+    variants: [{ id: 'white', name: '9.5x9.5 in, white, 1-ply' }],
+    packs: [{ id: '3000', label: '3,000 ct · Marathon embossed', per: 3000, prices: P(null, null, 28.47, null, null, null, null) }] },
+  { id: 'buffetbowls', cat: 'paper', name: 'TOPtoper Buffet Serving Bowls', unit: 'bowl', perGuest: 0,
+    variants: [{ id: '25oz', name: '25 oz, with lids' }],
+    packs: [{ id: '50', label: '50 ct · TOPtoper kraft paper', per: 50, prices: P(null, null, null, 31.99, null, null, null) }] },
+  { id: 'foodcontainers', cat: 'paper', name: 'Hefty Food Storage Containers with Lids (for leftovers)', unit: 'container', perGuest: 0,
+    variants: [{ id: '28oz', name: '28 oz' }],
+    packs: [{ id: '60', label: '60 pc · Hefty, 30 containers + 30 lids', per: 60, prices: P(null, null, 9.48, null, null, null, null) }] },
+  { id: 'cuttingboardsheets', cat: 'paper', name: 'Crown Display Cutting Board Sheets', unit: 'sheet', perGuest: 0,
+    variants: [{ id: 'std', name: '10 in x 13.5 in, flexible plastic' }],
+    packs: [{ id: '100', label: '100 ct · Crown Display', per: 100, prices: P(null, null, null, 49.99, null, null, null) }] },
+  { id: 'foamplates', cat: 'paper', name: 'Dart Concorde Foam Plates', unit: 'plate', perGuest: 2,
+    variants: [{ id: '6', name: '6 inch' }],
+    packs: [{ id: '1000', label: '1,000 ct · Dart Concorde', per: 1000, prices: P(null, null, null, null, null, null, 36.68) }] },
   // -- Prizes & Giveaways
   { id: 'giftcards', cat: 'prizes', name: 'Gift cards', unit: 'card', perGuest: 0,
     variants: [{ id: '25', name: '$25 value' }, { id: '50', name: '$50 value', delta: 100 }],
@@ -3632,6 +3961,39 @@ window.QB_FAMILIES = [
   { id: 'petgiftfillers', cat: 'prizes', name: 'Pet gift bag fillers, bulk assortment', unit: 'piece', perGuest: 1,
     variants: [{ id: 'std', name: 'Mini plush dog toys' }],
     packs: [{ id: '10', label: '10 pack · 4.3" plush puppies', per: 10, prices: P(null, null, null, 19.99) }] },
+  // -- Prizes & Giveaways (added 2026-08-30)
+  { id: 'trophies', cat: 'prizes', name: 'Bulk trophy awards', unit: 'trophy', perGuest: 0,
+    variants: [{ id: 'star', name: '4.5in gold plastic star trophy' }, { id: 'cup', name: '5-6in gold plastic cup trophy' }],
+    packs: [{ id: '12', label: '12 pack', per: 12, prices: P(null, null, null, null, null, null, null) }] },
+  { id: 'certificates', cat: 'prizes', name: 'Blank award certificates, bulk pack', unit: 'certificate', perGuest: 0,
+    variants: [{ id: 'gold', name: 'Gold certificate paper, 8x10in' }],
+    packs: [{ id: '25', label: '25 pack', per: 25, prices: P(null, null, null, 14.99, null, null, null) }] },
+  { id: 'stickers', cat: 'prizes', name: 'Reward stickers, bulk roll', unit: 'sticker', perGuest: 1,
+    variants: [{ id: 'std', name: 'Assorted motivational/cartoon designs' }],
+    packs: [{ id: '72', label: '72 pack · 24 designs', per: 72, prices: P(null, null, null, null, null, null, 7.49) },
+            { id: '1008', label: '1,008 pack roll', per: 1008, prices: P(null, null, null, null, null, null, 8.99) }] },
+  { id: 'keychains', cat: 'prizes', name: 'Bulk keychains', unit: 'keychain', perGuest: 0,
+    variants: [{ id: 'std', name: 'Assorted cartoon/novelty designs' }],
+    packs: [{ id: '50', label: '50 pack', per: 50, prices: P(null, null, null, 24.99, null, null, null) }] },
+  { id: 'sunglasses', cat: 'prizes', name: 'Bulk sunglasses, summer prizes', unit: 'pair', perGuest: 0,
+    variants: [{ id: 'black', name: 'Retro black plastic' }, { id: 'animal', name: 'Safari animal print (kids)' }],
+    packs: [{ id: '12', label: '12 pack', per: 12, prices: P(null, null, null, null, null, null, 16.98) }] },
+  { id: 'waterbottles', cat: 'prizes', name: 'Reusable water bottles, bulk giveaway', unit: 'bottle', perGuest: 1,
+    variants: [{ id: 'std', name: 'Stainless steel, 24 oz, with lid' }, { id: 'insulated', name: 'Double-wall insulated, 24 oz', delta: 5 }],
+    packs: [{ id: '2', label: '2 pack · 24 oz stainless steel', per: 2, prices: P(null, null, 24.96, null, null, null, null) }] },
+  { id: 'bandanas', cat: 'prizes', name: 'Bandanas, bulk pack', unit: 'bandana', perGuest: .3,
+    variants: [{ id: 'std', name: '100% cotton, assorted/plain colors, 22x22in' }],
+    packs: [{ id: '12', label: '12 pack', per: 12, prices: P(null, null, null, null, null, null, 26.49) }] },
+  { id: 'coloringkit', cat: 'prizes', name: 'Coloring book & crayons kids prize set', unit: 'set', perGuest: 0,
+    variants: [{ id: 'generic', name: 'Zoo animal design, mini coloring book + crayons' }, { id: 'licensed', name: 'Licensed character design', delta: 19.99 }],
+    packs: [{ id: '12', label: '12 sets', per: 12, prices: P(null, null, null, null, null, null, 8.99) }] },
+  { id: 'stressballs', cat: 'prizes', name: 'Stress balls, bulk pack', unit: 'ball', perGuest: 0,
+    variants: [{ id: 'std', name: 'Smiley face, assorted colors, 2in' }],
+    packs: [{ id: '24', label: '24 pack', per: 24, prices: P(null, null, null, null, null, null, 20.99) }] },
+  { id: 'squirtguns', cat: 'prizes', name: 'Squirt guns, bulk pack (summer prize)', unit: 'gun', perGuest: 0,
+    variants: [{ id: 'std', name: 'Assorted colors, compact 4in style' }],
+    packs: [{ id: '24', label: '24 pack · compact 4in', per: 24, prices: P(null, null, null, null, null, null, 12.45) },
+            { id: '28', label: '28 pack · assorted/larger blasters', per: 28, prices: P(null, null, null, null, null, null, 28.99) }] },
   // -- Add-Ons
   { id: 'photobooth', cat: 'addons', name: 'Photo booth kit', unit: 'kit', perGuest: 0,
     variants: [{ id: 'props', name: 'Props + backdrop' }, { id: 'instant', name: 'Props + instant camera', delta: 70 }],
@@ -3670,6 +4032,37 @@ window.QB_FAMILIES = [
   { id: 'dogbowlsdisp', cat: 'addons', name: 'Disposable dog bowls, bulk pack', unit: 'bowl', perGuest: .4,
     variants: [{ id: 'std', name: '16 oz paper' }],
     packs: [{ id: '50', label: '50 ct · 16 oz paper', per: 50, prices: P(null, null, null, 13.99) }] },
+  // -- Add-Ons (added 2026-08-30)
+  { id: 'karaoke', cat: 'addons', name: 'Singing Machine Karaoke System', unit: 'kit', perGuest: 0,
+    variants: [{ id: 'std', name: 'Bluetooth party system w/ 2 wireless mics' }],
+    packs: [{ id: '1', label: '1 unit · Singing Machine Ultimate Karaoke Party System w/ vocal removal & 2 wireless charging mics', per: 1, prices: P(199.99, null, null, null, null, null, null) }] },
+  { id: 'btspeaker', cat: 'addons', name: 'Portable Bluetooth party speaker', unit: 'kit', perGuest: 0,
+    variants: [{ id: 'std', name: 'Consumer-grade, RGB lights' }],
+    packs: [{ id: '1', label: '1 speaker · 35W portable Bluetooth speaker, RGB lights, ~30 hr playtime', per: 1, prices: P(null, null, null, null, null, null, 69.99) }] },
+  { id: 'bubblemachine', cat: 'addons', name: 'Croove Bubble Machine', unit: 'kit', perGuest: 0,
+    variants: [{ id: 'std', name: 'Rechargeable, automatic' }],
+    packs: [{ id: '1', label: '1 machine · Croove rechargeable bubble machine, ~10,000 bubbles/min', per: 1, prices: P(null, null, null, null, null, null, 49.95) }] },
+  { id: 'popcornmachine', cat: 'addons', name: 'Popsmith Popcorn Popper Kit', unit: 'kit', perGuest: 0,
+    variants: [{ id: 'std', name: 'Stovetop-style, incl. seasoning kits' }],
+    packs: [{ id: '1', label: '1 kit · Popsmith Popcorn Popper Starter Kit, 6 qt stainless kettle + 10 seasoning kits', per: 1, prices: P(189.99, null, null, null, null, null, null) }] },
+  { id: 'cornhole', cat: 'addons', name: 'GoSports Gater Cornhole Set', unit: 'set', perGuest: 0,
+    variants: [{ id: 'std', name: 'Portable, 2 boards + 8 bean bags' }],
+    packs: [{ id: '1', label: '1 set · Go! Gater portable cornhole set, 24"x18" boards + 8 bean bags', per: 1, prices: P(null, null, null, null, null, null, 19.99) }] },
+  { id: 'giantjenga', cat: 'addons', name: 'Giant Jenga game set', unit: 'set', perGuest: 0,
+    variants: [{ id: 'std', name: 'Genuine hardwood, stacks 4+ ft' }],
+    packs: [{ id: '1', label: '1 set · 54 hardwood blocks w/ carry bag', per: 1, prices: P(null, null, null, null, null, null, 135.99) }] },
+  { id: 'ringtoss', cat: 'addons', name: 'Ring toss game set', unit: 'set', perGuest: 0,
+    variants: [{ id: 'std', name: '4 targets + 8 jute rings' }],
+    packs: [{ id: '1', label: '1 set · 4 ring targets + 8 color-coordinated jute rings', per: 1, prices: P(null, null, null, null, null, null, 20.52) }] },
+  { id: 'balloontwist', cat: 'addons', name: 'Balloon twisting kit', unit: 'kit', perGuest: 0,
+    variants: [{ id: 'std', name: '260Q twisting balloons, assorted colors' }],
+    packs: [{ id: '100', label: '100 ct 260Q balloons + hand pump', per: 100, prices: P(null, null, null, null, null, null, null) }] },
+  { id: 'smoresfirepit', cat: 'addons', name: 'S\'mores tabletop fire pit kit', unit: 'kit', perGuest: 0,
+    variants: [{ id: 'std', name: '4 roasting sticks included' }],
+    packs: [{ id: '1', label: '1 kit · tabletop fire pit + 4 marshmallow roasting sticks', per: 1, prices: P(null, null, null, null, null, null, 32.99) }] },
+  { id: 'pumpkinpatch', cat: 'addons', name: 'Pumpkin patch prop kit', unit: 'kit', perGuest: 0,
+    variants: [{ id: 'std', name: 'Assorted sizes, harvest orange' }],
+    packs: [{ id: '12', label: '12 ct · artificial pumpkins, assorted sizes, harvest decor', per: 12, prices: P(null, null, null, null, null, null, 8.28) }] },
   // -- Staffing & Equipment Rental (Community Spark's own in-house rates — set your real numbers via the price editor)
   { id: 'lead', cat: 'staffing', name: 'Event lead, on-site', unit: 'hour', perGuest: 0,
     variants: [{ id: 'std', name: '' }],
@@ -3761,7 +4154,83 @@ window.QB_FAMILIES = [
     packs: [{ id: '1', label: '1 unit · flexible, adjustable, w/ remote', per: 1, prices: P(null, null, null, 17.99) }] },
   { id: 'firstaidkit', cat: 'staffing', name: 'First-aid kit', unit: 'kit', perGuest: 0,
     variants: [{ id: 'std', name: 'General use — keep in the equipment bag for every event' }],
-    packs: [{ id: '1', label: '1 kit · 150 piece, compact bag', per: 1, prices: P(null, null, null, 14.88) }] }
+    packs: [{ id: '1', label: '1 kit · 150 piece, compact bag', per: 1, prices: P(null, null, null, 14.88) }] },
+  // -- More reusable equipment (added 2026-08-30)
+  { id: 'chestcooler', cat: 'staffing', name: 'Large chest cooler', unit: 'unit', perGuest: 0,
+    variants: [{ id: 'std', name: 'General use — extra beverage/food cold storage (distinct from the wheeled rolling cooler)' }],
+    packs: [{ id: '1', label: '1 unit · 70 qt hard-sided ice chest, holds ice up to 5 days', per: 1, prices: P(null, null, null, 63.99, null, null, null) }] },
+  { id: 'patioheater', cat: 'staffing', name: 'Portable outdoor propane patio heater', unit: 'unit', perGuest: 0,
+    variants: [{ id: 'std', name: 'General use — extends outdoor events into cooler evenings (Fall Festival, Trivia Night, Holiday Party)' }],
+    packs: [{ id: '1', label: '1 unit · 46,000 BTU, wheeled, w/ tank', per: 1, prices: P(null, null, null, 157.49, null, null, null) }] },
+  { id: 'generator', cat: 'staffing', name: 'Portable gas inverter generator', unit: 'unit', perGuest: 0,
+    variants: [{ id: 'std', name: 'General use — powers equipment (PA, waffle maker, coffee urn) at sites without outlets' }],
+    packs: [{ id: '1', label: '1 unit · ~2000W inverter, EPA/CARB compliant', per: 1, prices: P(null, null, 429.98, 278.99, null, null, null) }] },
+  { id: 'tentsidewalls', cat: 'staffing', name: 'Canopy tent sidewall panel', unit: 'panel', perGuest: 0,
+    variants: [{ id: 'std', name: 'For: the existing 10x10 canopy tent — wind/sun block or defined entry' }],
+    packs: [{ id: '1', label: '1 panel · 10x10 weatherproof, spliceable (buy 3 for a 3-sided enclosure)', per: 1, prices: P(null, null, null, 17.95, null, null, null) }] },
+  { id: 'utilitywagon', cat: 'staffing', name: 'Collapsible utility wagon', unit: 'unit', perGuest: 0,
+    variants: [{ id: 'std', name: 'General use — hauling bulk supplies across grass or gravel where the hand truck can\'t roll' }],
+    packs: [{ id: '1', label: '1 unit · foldable, all-terrain wheels, 150L', per: 1, prices: P(null, null, null, 79.88, null, null, 98.00) }] },
+  { id: 'tarp', cat: 'staffing', name: 'Heavy-duty ground tarp', unit: 'tarp', perGuest: 0,
+    variants: [{ id: 'std', name: 'General use — ground cover under the canopy tent, grill, or equipment table' }],
+    packs: [{ id: '1', label: '1 tarp · 9.5 x 11.3 ft, waterproof, reinforced corners', per: 1, prices: P(null, null, null, 18.68, null, null, null) }] },
+  { id: 'cashbox', cat: 'staffing', name: 'Lockable cash box', unit: 'unit', perGuest: 0,
+    variants: [{ id: 'std', name: 'General use — check-in table or any event with on-site cash sales (raffle tickets, concessions)' }],
+    packs: [{ id: '1', label: '1 unit · metal, key lock, removable money tray', per: 1, prices: P(null, null, null, 20.99, null, null, 16.97) }] },
+  { id: 'waterdispenser', cat: 'staffing', name: '5-gallon insulated beverage dispenser w/ spigot', unit: 'unit', perGuest: 0,
+    variants: [{ id: 'std', name: 'For: drink station at any event — water, lemonade, or iced tea service' }],
+    packs: [{ id: '1', label: '1 unit · stainless interior, spigot, insulated', per: 1, prices: P(null, null, null, 134.99, null, null, null) }] },
+  { id: 'cordreel', cat: 'staffing', name: 'Retractable extension cord reel', unit: 'unit', perGuest: 0,
+    variants: [{ id: 'std', name: 'General use — same events as the single extension cord; keeps longer runs coiled and untangled' }],
+    packs: [{ id: '1', label: '1 unit · ~45-50 ft, 12 AWG, 3 outlets, wall/ceiling mount', per: 1, prices: P(null, null, null, 89.99, null, null, 119.99) }] },
+  { id: 'powerbank', cat: 'staffing', name: 'Rechargeable power bank', unit: 'unit', perGuest: 0,
+    variants: [{ id: 'std', name: 'General use — keeps phones/tablets (check-in list, card reader, music) charged on-site' }],
+    packs: [{ id: '1', label: '1 unit · 20,000 mAh, fast charging', per: 1, prices: P(null, null, null, 25.98, null, null, 19.84) }] },
+  { id: 'marketumbrella', cat: 'staffing', name: 'Costway Market Umbrella with Weighted Base', unit: 'unit', perGuest: 0,
+    variants: [{ id: 'std', name: '9 ft umbrella only' }, { id: 'withbase', name: '9 ft umbrella + weighted steel base', delta: 79.99 }],
+    packs: [{ id: '1', label: '1 umbrella · Costway 9 ft 2-tier market patio umbrella', per: 1, prices: P(null, null, null, null, null, null, 69.99) }] },
+  { id: 'wirelessmic', cat: 'staffing', name: 'TONOR Wireless Microphone System (add-on to PA)', unit: 'system', perGuest: 0,
+    variants: [{ id: 'std', name: 'Dual UHF handheld mics + receiver' }],
+    packs: [{ id: '1', label: '1 system · TONOR TW-820, 2 handheld mics + receiver, 200 ft range', per: 1, prices: P(null, null, null, 79.99, null, null, null) }] },
+  { id: 'cardtable', cat: 'staffing', name: 'REDCAMP Folding Card Table', unit: 'table', perGuest: 0,
+    variants: [{ id: 'std', name: '34in square, resin top' }],
+    packs: [{ id: '1', label: '1 table · REDCAMP 34in square folding card table, resin top', per: 1, prices: P(null, null, null, null, null, null, 66.11) }] },
+  { id: 'projectorscreen', cat: 'staffing', name: 'Monster Vision Projector & Screen Kit', unit: 'kit', perGuest: 0,
+    variants: [{ id: 'std', name: 'Distinct from the portable TV/monitor rental' }],
+    packs: [{ id: '1', label: '1 kit · Monster Vision wireless 1080P projector, 120in screen, stand & carry case', per: 1, prices: P(null, null, null, null, null, null, 249.99) }] },
+  { id: 'megaphone', cat: 'staffing', name: 'Croove Bullhorn / Megaphone', unit: 'unit', perGuest: 0,
+    variants: [{ id: 'std', name: 'With siren, battery powered' }],
+    packs: [{ id: '1', label: '1 unit · Croove 30W bullhorn w/ siren', per: 1, prices: P(null, null, null, null, null, null, 23.99) }] },
+  { id: 'directorschair', cat: 'staffing', name: "Ozark Trail Director's Chair", unit: 'chair', perGuest: 0,
+    variants: [{ id: 'std', name: 'With side table (distinct from the white resin folding chairs)' }],
+    packs: [{ id: '1', label: '1 chair · Ozark Trail director\'s chair with side table, 400 lb capacity', per: 1, prices: P(null, null, null, null, null, null, 29.44) }] },
+  { id: 'stepladder', cat: 'staffing', name: 'Cosco Folding Step Ladder', unit: 'unit', perGuest: 0,
+    variants: [{ id: 'std', name: '3-step, steel' }],
+    packs: [{ id: '1', label: '1 unit · Cosco 3-step folding step stool', per: 1, prices: P(null, null, null, null, null, null, 28.99) }] },
+  { id: 'barriertape', cat: 'staffing', name: 'XFasten Caution Tape', unit: 'roll', perGuest: 0,
+    variants: [{ id: 'std', name: 'Yellow, non-adhesive' }],
+    packs: [{ id: '1', label: '1 roll · XFasten caution tape, 3in x 1000ft', per: 1, prices: P(null, null, null, null, null, null, 13.99) }] },
+  { id: 'countdowntimer', cat: 'staffing', name: 'Time Timer PLUS Countdown Timer', unit: 'unit', perGuest: 0,
+    variants: [{ id: 'std', name: 'For: games, contests, trivia rounds' }],
+    packs: [{ id: '1', label: '1 unit · Time Timer PLUS 20-minute visual countdown timer', per: 1, prices: P(null, null, null, null, null, null, 29.95) }] },
+  { id: 'trafficcones', cat: 'staffing', name: 'Traffic cones, bulk pack', unit: 'cone', perGuest: 0,
+    variants: [{ id: 'std', name: '18in, reflective collar' }],
+    packs: [{ id: '12', label: '12-pack · 18in, PVC base, reflective collar', per: 12, prices: P(null, null, null, null, null, null, 61.99) }] },
+  { id: 'beveragetub', cat: 'staffing', name: 'BREKX Insulated Beverage Tub', unit: 'unit', perGuest: 0,
+    variants: [{ id: 'std', name: 'Distinct from the chest cooler and 5-gallon dispenser — open-basin ice/bottle service' }],
+    packs: [{ id: '1', label: '1 tub · BREKX anchored hammered stainless steel insulated beverage tub', per: 1, prices: P(null, null, null, null, null, null, 79.99) }] },
+  { id: 'walkietalkies', cat: 'staffing', name: 'AWANFI Walkie-Talkies', unit: 'set', perGuest: 0,
+    variants: [{ id: 'std', name: 'General use — staff coordination across a site' }],
+    packs: [{ id: '4', label: '4-pack · AWANFI rechargeable 22-channel long-range radios', per: 4, prices: P(null, null, null, null, null, null, 44.98) }] },
+  { id: 'garmentrack', cat: 'staffing', name: 'Mr. IRONSTONE Rolling Garment Rack', unit: 'unit', perGuest: 0,
+    variants: [{ id: 'std', name: 'For: costume events, prize table/vendor staging' }],
+    packs: [{ id: '1', label: '1 unit · Mr. IRONSTONE heavy-duty rolling clothes rack', per: 1, prices: P(null, null, null, null, null, null, 22.99) }] },
+  { id: 'stringlightpole', cat: 'staffing', name: 'Better Homes & Gardens Light Pole Set', unit: 'set', perGuest: 0,
+    variants: [{ id: 'std', name: 'For hanging string lights without a building to attach to' }],
+    packs: [{ id: '2', label: '2-pack · Better Homes & Gardens adjustable-height pole stakes', per: 2, prices: P(null, null, null, null, null, null, 26.35) }] },
+  { id: 'tentlightkit', cat: 'staffing', name: 'Brightz CanopyBrightz Tent Light Kit', unit: 'kit', perGuest: 0,
+    variants: [{ id: 'std', name: 'For: the existing 10x10 canopy tent' }],
+    packs: [{ id: '1', label: '1 kit · Brightz CanopyBrightz LED tent lights, 40 ft string, clips to fabric', per: 1, prices: P(null, null, null, null, null, null, 14.97) }] }
 ];
 
 // Flatten the tree into priced line-item records: id = family.variant.pack
@@ -3989,28 +4458,6 @@ function qbMoney(n) {
 }
 function qbNum(n) { return (n || 0).toLocaleString('en-US'); }
 
-// Which cuisine bucket each restaurant sits under for the picker's top-level filter. Restaurants that
-// don't share a clean category with anything else just get their own (Chick-fil-A, Fresh Indian Grill).
-const QB_BRAND_CUISINE = {
-  'Qdoba': 'Mexican', 'Condado Tacos': 'Mexican',
-  "Jersey Mike's Subs": 'Sandwiches & Subs', "Jimmy John's": 'Sandwiches & Subs', "McAlister's Deli": 'Sandwiches & Subs',
-  'City Barbeque': 'BBQ',
-  'Olive Garden': 'Pizza & Italian', 'Donatos Pizza': 'Pizza & Italian', 'The Old Spaghetti Factory': 'Pizza & Italian',
-  'Roots Burger Bar': 'Burgers', "Freddy's Frozen Custard & Steakburgers": 'Burgers',
-  'Bar Louie': 'Bar & Grill', 'Buffalo Wild Wings': 'Bar & Grill',
-  'Outback Steakhouse': 'Steakhouse & American', 'MCL Restaurant and Bakery': 'Steakhouse & American',
-  'Chick-fil-A': 'Chicken',
-  'BIBIBOP Asian Grill': 'Asian', 'Nara Hibachi & Sushi': 'Asian', 'Noodles & Company': 'Asian',
-  'The Great Greek Mediterranean Grill': 'Mediterranean & Middle Eastern', 'Naf Naf Middle Eastern Grill': 'Mediterranean & Middle Eastern',
-  'Fresh Indian Grill': 'Indian',
-  'Just Love Coffee Cafe': 'Coffee & Cafe', "Dunkin'": 'Coffee & Cafe', 'Panera Bread': 'Coffee & Cafe',
-  'Everbowl': 'Smoothies & Bowls', 'Tropical Smoothie Cafe': 'Smoothies & Bowls',
-  'Crumbl Cookies': 'Bakery & Dessert', 'Cold Stone Creamery': 'Bakery & Dessert', "Auntie Anne's Pretzels": 'Bakery & Dessert',
-  'Costco': 'Other',
-};
-const QB_CUISINE_ORDER = ['Mexican', 'Sandwiches & Subs', 'BBQ', 'Pizza & Italian', 'Burgers', 'Bar & Grill', 'Steakhouse & American', 'Chicken', 'Asian', 'Mediterranean & Middle Eastern', 'Indian', 'Coffee & Cafe', 'Smoothies & Bowls', 'Bakery & Dessert', 'Other'];
-function qbBrandCuisine(brand) { return QB_BRAND_CUISINE[brand] || 'Other'; }
-
 // Best-effort menu-section guess for a catering family, from its name — mirrors how an ezCater
 // restaurant page groups its own menu (Appetizers, Entrees, Sides, ...). Inferred from keywords,
 // not a curated field, so a handful of items may land in an unexpected section.
@@ -4155,139 +4602,450 @@ function QBStorePicker({ allowed, onChange }) {
   );
 }
 
-// ===== Item picker modal (3-step: family -> variant -> pack) =====
-function QBPicker({ category, onClose, onAdd }) {
-  const [fam, setFam] = useState(null);
-  const [variant, setVariant] = useState(null);
-  const [query, setQuery] = useState('');
-  const [cuisine, setCuisine] = useState(null);
-  const [brand, setBrand] = useState(null);
+// ===== Catering browser =====
+// The menu data hides the useful part inside variant names ("Dish name · ingredient list"), which is why
+// the old picker's rows all looked alike. Rows here are built by splitting on that middle dot, so every
+// row shows what the food actually is without a click.
+
+// Ten browsing buckets instead of the old fifteen-bucket cuisine map — thin single-restaurant buckets
+// (Indian, Chicken, BBQ) are merged so the cuisine list stays scannable.
+const QB_CG = {
+  'Qdoba': 'Mexican', 'Condado Tacos': 'Mexican',
+  "Jersey Mike's Subs": 'Sandwiches & Subs', "Jimmy John's": 'Sandwiches & Subs', "McAlister's Deli": 'Sandwiches & Subs',
+  'Olive Garden': 'Pizza & Italian', 'Donatos Pizza': 'Pizza & Italian', 'The Old Spaghetti Factory': 'Pizza & Italian',
+  'City Barbeque': 'BBQ & Burgers', 'Roots Burger Bar': 'BBQ & Burgers', "Freddy's Frozen Custard & Steakburgers": 'BBQ & Burgers',
+  'Bar Louie': 'American & Grill', 'Buffalo Wild Wings': 'American & Grill', 'Outback Steakhouse': 'American & Grill',
+  'MCL Restaurant and Bakery': 'American & Grill', 'Chick-fil-A': 'American & Grill',
+  'BIBIBOP Asian Grill': 'Asian', 'Nara Hibachi & Sushi': 'Asian', 'Noodles & Company': 'Asian',
+  'The Great Greek Mediterranean Grill': 'Mediterranean & Indian', 'Naf Naf Middle Eastern Grill': 'Mediterranean & Indian', 'Fresh Indian Grill': 'Mediterranean & Indian',
+  'Just Love Coffee Cafe': 'Coffee & Cafe', "Dunkin'": 'Coffee & Cafe', 'Panera Bread': 'Coffee & Cafe',
+  'Everbowl': 'Sweets & Smoothies', 'Tropical Smoothie Cafe': 'Sweets & Smoothies', 'Crumbl Cookies': 'Sweets & Smoothies',
+  'Cold Stone Creamery': 'Sweets & Smoothies', "Auntie Anne's Pretzels": 'Sweets & Smoothies',
+};
+const QB_CG_ORDER = ['Mexican', 'Sandwiches & Subs', 'Pizza & Italian', 'BBQ & Burgers', 'American & Grill', 'Asian', 'Mediterranean & Indian', 'Coffee & Cafe', 'Sweets & Smoothies', 'Other'];
+function qbCuisineOf(brand) { return QB_CG[brand] || 'Other'; }
+
+const QB_MEAL_ORDER = ['Breakfast', 'Mains', 'Sandwiches & Salads', 'Sides & Starters', 'Desserts', 'Extras'];
+const QB_SUBCAT_TO_MEAL = { 'Breakfast': 'Breakfast', 'Entrées': 'Mains', 'Bundles & Boxed Meals': 'Mains',
+  'Sandwiches & Wraps': 'Sandwiches & Salads', 'Salads': 'Sandwiches & Salads', 'Soups': 'Sandwiches & Salads',
+  'Appetizers': 'Sides & Starters', 'Sides': 'Sides & Starters', 'Desserts': 'Desserts',
+  'Beverages': 'Extras', 'Extras & Add-Ons': 'Extras', 'Other': 'Extras' };
+// Ordered classifier. Two rules matter: what a thing IS beats how it is packaged (qbCateringSubcat
+// tests "tray/pack/bundle" before its own dessert rule, so "Dessert Tray" came out a main course), and
+// Extras requires a positive add-on signal — an unrecognised dish name is a main course, not an add-on.
+const QB_RX_M_ADDON = /^(?:extra\b|side of\b|bagged ice\b|ice\b(?! ?cream)|sauces?\b|dressings?\b|dipping\b|toppings?\b|utensils?\b|chafing\b|condiments?\b|cutlery\b|serviceware\b|paper goods\b|napkins?\b|pickles?\b|buns?\b|cream cheese\b|setup\b|delivery\b)/;
+const QB_RX_M_DRINK = /beverage|lemonade|iced tea|\bsoda\b|\bdrinks?\b|coffee|\blatte\b|cold brew|\bgallon\b|2-liter|\b2l\b|smoothie|\bjuice\b|bottled water|\bcocoa\b|\btea\b|\bcider\b/;
+const QB_RX_M_BREAKFAST = /breakfast|\bbagels?\b|pastr|croissant|\bmuffins?\b|donut hole|\bwaffle|pancake|\bomelet|\bfrittata\b/;
+const QB_RX_M_DESSERT = /dessert|cookie|brownie|cheesecake|cobbler|churro|\bpies?\b|cake|ice cream|gelato|custard|baklava|\bscone\b|cannoli|tiramisu|banana pudding|bread pudding|rice pudding|donut|doughnut|\bsweets?\b|\bcandy\b|\bfudge\b|\btreats?\b/;
+const QB_RX_M_HANDHELD = /sandwich|\bsubs?\b|\bwraps?\b|\bgyro\b|\bsalads?\b|\bsoups?\b|stuffer|hoagie|panini|\bclub\b|calzato|\bbowls?\b/;
+const QB_RX_M_PLATE = /box lunch|boxed|\bbox\b|two sides|\bcombos?\b|\bduos?\b|\bplates?\b|platter|\bmeals?\b|package|\bfeast\b|bundle|\bbuffet\b|hot bar|\btray\b|\bpans?\b|\bpitmaster/;
+const QB_RX_M_SIDE = /hush pupp|cornbread|potato|\bgreens\b|broccoli|breadstick|\bfries\b|\bchips\b|\brice\b|\bbeans\b|\bslaw\b|mac.{0,4}cheese|macaroni|veggies|vegetable|corn pudding|\bside\b|appetizer|\bdip\b|\bwings?\b|mozzarella|pretzel|nachos|spanakopita|rangoon|egg roll|hummus|\bqueso\b|guacamole|\bsalsa\b/;
+function qbMealType(name) {
+  const n = (name || '').toLowerCase();
+  if (QB_RX_M_BREAKFAST.test(n)) return 'Breakfast';
+  if (QB_RX_M_DESSERT.test(n)) return 'Desserts';
+  if (QB_RX_M_HANDHELD.test(n)) return 'Sandwiches & Salads';
+  if (QB_RX_M_ADDON.test(n)) return 'Extras';
+  if (QB_RX_M_DRINK.test(n)) return 'Extras';
+  if (QB_RX_M_PLATE.test(n)) return 'Mains';
+  if (QB_RX_M_SIDE.test(n)) return 'Sides & Starters';
+  return 'Mains';
+}
+// Best-effort tags read off ingredient text. Never a substitute for asking the restaurant.
+const QB_RX_MEAT = /chicken|beef|steak|\bpork\b|bacon|\bham\b|turkey|sausage|pepperoni|shrimp|salmon|\bfish\b|meatball|brisket|\bribs?\b|\bgyro\b|tuna|anchov|carnitas|barbacoa|chorizo|prosciutto|pastrami|\blamb\b|\bcrab\b|\bmeats?\b|bratwurst|\bwings?\b|\bprotein\b|pulled|philly|capicola|salami|mortadella|pepper ?oni|\bbird\b|\bcod\b|tilapia|\bduck\b|\bveal\b|\bbbq\b|angus|wagyu|\bchuck\b|\bcarne\b|\bal pastor\b|\bbirria\b/;
+const QB_RX_DAIRY = /cheese|cream|butter|\bmilk\b|yogurt|mayonnais|\bmayo\b|ranch|aioli|feta|parmesan|parmigian|mozzarella|queso|custard|\bhoney\b|\beggs?\b|tzatziki|alfredo|pesto|buttermilk|\bgelato\b/;
+const QB_RX_GLUTEN = /bread|\bbuns?\b|\brolls?\b|tortilla|\bpasta\b|spaghetti|fettuccin|penne|linguin|ravioli|gnocchi|\borzo\b|rigatoni|ziti|tortellini|crouton|breaded|panko|\bwraps?\b|\bpita\b|cookie|cake|pretzel|ladyfinger|tiramisu|baguette|noodle|biscuit|bagel|croissant|brownie|pastr|\bpies?\b|cracker|calzon|pizza|\bsubs?\b|stuffer|\bflour\b|batter|waffle|churro|\bcrust\b|lasagna|macaroni|\bmac\b|\bwonton\b|\bsandwich|sourdough|\btoast|brioche|hoagie|focaccia|ciabatta|panini|\bnaan\b|\bdough\b|\brye\b|\bwheat\b|pancake|\bcrepe|\bbao\b|\bpuff\b|\bcrisp|burrito|quesadilla|\bslider|donut|doughnut|\btacos?\b|flatbread|empanada|\bchalupa\b|\bpanzerotti\b|\bstromboli\b|\bhero\b|\bwrapped\b|\bmargherita\b|\bgarlic knot/;
+const QB_RX_NUTS = /pecan|walnut|almond|peanut|cashew|pistachio|hazelnut|\bnuts?\b/;
+function qbDiet(text) {
+  const t = (text || '').toLowerCase();
+  const meat = QB_RX_MEAT.test(t);
+  const dairy = QB_RX_DAIRY.test(t);
+  return { meat, dairy, veg: !meat, vegan: !meat && !dairy, gf: !QB_RX_GLUTEN.test(t), nuts: QB_RX_NUTS.test(t) };
+}
+// Placeholder copy ("choice of protein", "Serves 20", a list of option names) describes nothing about
+// what is in the food, so those rows are tagged UNKNOWN and carry no dietary claim at all.
+const QB_RX_VAGUE = /choice of|your choice|selected by staff|\bserves\b|\bvaries\b|per person|\bpack\b|\bct\b|\blb\b|\boz\b|includes? your/i;
+function qbDietKnown(text) {
+  const t = (text || '').trim();
+  if (t.length < 13 || QB_RX_VAGUE.test(t)) return false;
+  // Prose like "rotating seasonal flavors" names no ingredients — require list-shaped text.
+  return (/[,&]/.test(t) || t.split(/\s+/).length >= 4);
+}
+const QB_DIET_FILTERS = [{ id: 'veg', label: 'Vegetarian' }, { id: 'vegan', label: 'Vegan' }, { id: 'gf', label: 'No gluten in listing' }, { id: 'nutfree', label: 'No nuts listed' }];
+const QB_SERVES_FILTERS = [{ id: 0, label: 'Any' }, { id: 10, label: '10+' }, { id: 25, label: '25+' }, { id: 50, label: '50+' }];
+const QB_PPP_FILTERS = [{ id: 'any', label: 'Any' }, { id: 'a', label: 'Under $5', max: 5 }, { id: 'b', label: '$5–10', min: 5, max: 10 }, { id: 'c', label: '$10–20', min: 10, max: 20 }, { id: 'd', label: '$20+', min: 20 }];
+
+function qbSplitDish(s) {
+  const i = (s || '').indexOf('·');
+  return i < 0 ? { t: (s || '').trim(), d: '' } : { t: s.slice(0, i).trim(), d: s.slice(i + 1).trim() };
+}
+function qbItemsFor(famId) {
+  if (!window.__qbIBF) {
+    const m = {};
+    window.QB_ITEMS.forEach(it => { (m[it.family] || (m[it.family] = [])).push(it); });
+    window.__qbIBF = m;
+  }
+  return window.__qbIBF[famId] || [];
+}
+// One row per real dish: a family splits into rows only where its variants carry their own ingredient
+// text (a true dish). Families whose variants are mere options (Chicken / Beef) stay a single row.
+function qbDishRows(fam) {
+  const short = qbShortFam(fam);
+  const items = qbItemsFor(fam.id);
+  const named = fam.variants.filter(v => v.name);
+  const dishy = named.filter(v => v.name.includes('·'));
+  const pers = fam.packs.map(p => p.per || 1);
+  const maxPer = Math.max.apply(null, pers);
+  // The displayed price, size and per-unit figure must all describe the SAME pack, so the pack that
+  // produced the minimum price is the one whose size and unit price get reported.
+  const priceOf = vid => {
+    let min = null, max = null, minPer = null, bestPpu = null, bestPer = null;
+    items.filter(it => vid == null || it.variant === vid).forEach(it => {
+      const p = qbBest(it, null).price;
+      if (!isFinite(p) || p <= 0) return;
+      if (min == null || p < min) { min = p; minPer = it.per || 1; }
+      if (max == null || p > max) max = p;
+      const u = it.per ? p / it.per : null;
+      if (u != null && (bestPpu == null || u < bestPpu)) { bestPpu = u; bestPer = it.per; }
+    });
+    return { min, max, minPer, ppu: min != null && minPer ? min / minPer : null, bestPpu, bestPer };
+  };
+  if (dishy.length > 1) {
+    return dishy.map(v => {
+      const s = qbSplitDish(v.name);
+      const qual = s.t.toLowerCase().includes(short.toLowerCase()) ? '' : short;
+      const pr = priceOf(v.id);
+      return { key: fam.id + '|' + v.id, fam, variantId: v.id, title: s.t, qual, ing: s.d,
+        serves: pr.minPer || maxPer, maxServes: maxPer, pers, price: pr,
+        tagged: qbDietKnown(s.d), diet: qbDiet(short + ' ' + s.t + ' ' + s.d), meal: qbMealType(s.t + ' ' + short) };
+    });
+  }
+  const one = dishy.length === 1 ? qbSplitDish(dishy[0].name) : null;
+  const optNames = named.map(v => qbSplitDish(v.name).t).filter(Boolean);
+  // No ingredient text on file: fall back to the option names, then the pack label.
+  const ing = (one && one.d) || (optNames.length >= 1 ? optNames.join(' · ') : '') || (fam.packs[0] || {}).label || '';
+  // Single row: the description is this dish's own text whenever there is exactly one variant (with
+  // several, `ing` is just a list of option names and describes no single dish, so no tag).
+  const own = dishy.length === 1 ? one.d : (named.length === 1 ? ing : '');
+  const solo = qbDietKnown(own);
+  const pr0 = priceOf(null);
+  return [{ key: fam.id, fam, variantId: dishy.length === 1 ? dishy[0].id : null, title: short, ing,
+    serves: pr0.minPer || maxPer, maxServes: maxPer, pers, price: pr0,
+    tagged: solo, diet: qbDiet(short + ' ' + (solo ? own : '')), meal: qbMealType(short) }];
+}
+
+// Rows only ever state what a listing DOES contain. "Vegetarian" / "no gluten" are absence claims that a
+// finite keyword list cannot support — they stay in the filter rail (where being over-inclusive costs a
+// scroll) and never get printed as a badge next to a dish.
+function qbShortFam(fam) {
+  // Family names repeat the restaurant ("Buffalo Wild Wings Boneless Wings", "City BBQ · Smokehouse Taco
+  // Bar"). Consume leading words for as long as they still spell the brand, comparing on a normalised
+  // form so possessives ("Mike's" vs "Mike"), connectors ("and" vs "&") and BBQ/Barbeque all line up.
+  const name = fam.name || '', brand = fam.brand || '';
+  if (!brand) return name;
+  const norm = s => (s || '').toLowerCase()
+    .replace(/&/g, '').replace(/\band\b/g, '').replace(/\bthe\b/g, '')
+    .replace(/\bbbq\b/g, 'barbeque').replace(/barbecue/g, 'barbeque')
+    .replace(/[^a-z0-9]/g, '');
+  const nb = norm(brand);
+  if (!nb) return name;
+  const words = name.split(/\s+/);
+  let acc = '', cut = 0;
+  for (let i = 0; i < words.length - 1; i++) {
+    const w = norm(words[i]);
+    if (!w) { cut = i + 1; continue; }
+    const next = acc + w;
+    if (!nb.startsWith(next)) break;
+    acc = next; cut = i + 1;
+  }
+  if (!cut) return name;
+  // A brand can end in a food word ("Auntie Anne's Pretzels"), which then gets eaten out of "Pretzel
+  // Package". If all that survives is packaging, hand the word back — the label has to name the food.
+  const clean = c => words.slice(c).join(' ').replace(/^[·\-–—:,]+\s*/, '').trim();
+  let out = clean(cut);
+  if (cut >= 1 && /^(?:packages?|buckets?|packs?|trays?|boxe?s?|kits?|bundles?|platters?|bars?|lunch|meals?|combos?|feasts?|spreads?)$/i.test(out)) out = clean(cut - 1);
+  return out || name;
+}
+
+const QB_SUBTYPES = {
+  drinks: { order: ['Soda', 'Water', 'Juice & Cider', 'Lemonade & Tea', 'Sports & Energy', 'Coffee & Cocoa', 'Milk'], map: {
+    coke: 'Soda', pepsi: 'Soda', lemonlime: 'Soda',
+    water: 'Water', sparkling: 'Water',
+    juice: 'Juice & Cider', applecider: 'Juice & Cider',
+    lemonade: 'Lemonade & Tea', icedtea: 'Lemonade & Tea',
+    sports: 'Sports & Energy', energydrink: 'Sports & Energy',
+    coffee: 'Coffee & Cocoa', coldbrew: 'Coffee & Cocoa', cocoa: 'Coffee & Cocoa', coffeepods: 'Coffee & Cocoa', pumpkinsyrup: 'Coffee & Cocoa',
+    milkcartons: 'Milk',
+    gingerale: 'Soda', rootbeer: 'Soda', orangesoda: 'Soda', prebioticsoda: 'Soda', creamsoda: 'Soda', grapefruitsoda: 'Soda', tonicwater: 'Soda',
+    fruitpunch: 'Juice & Cider', sparklingcider: 'Juice & Cider', powderdrinkmix: 'Juice & Cider', juicepouch: 'Juice & Cider', cidermix: 'Juice & Cider',
+    sweettea: 'Lemonade & Tea', instanticedtea: 'Lemonade & Tea', bottledtea: 'Lemonade & Tea',
+    proteinshake: 'Sports & Energy', propelwater: 'Sports & Energy', gatoradepowder: 'Sports & Energy',
+    bottledicedcoffee: 'Coffee & Cocoa', chailatte: 'Coffee & Cocoa', nitrocoldbrew: 'Coffee & Cocoa',
+    chocmilk: 'Milk', almondmilk: 'Milk' } },
+  food: { order: ['Grill & Mains', 'Appetizers & Trays', 'Snacks', 'Fruit', 'Ice Cream', 'Bakery & Sweets', 'Breakfast', 'Spreads & Toppings'], map: {
+    hotdogs: 'Grill & Mains', buns: 'Grill & Mains', burgers: 'Grill & Mains', ribs: 'Grill & Mains', wings: 'Grill & Mains',
+    vegetables: 'Appetizers & Trays', pinwheels: 'Appetizers & Trays', hummus: 'Appetizers & Trays', guac: 'Appetizers & Trays',
+    chips: 'Snacks', pretzels: 'Snacks', popcorn: 'Snacks', candy: 'Snacks', halloweenoreos: 'Snacks',
+    fruit: 'Fruit', watermelon: 'Fruit', strawberries: 'Fruit', blueberries: 'Fruit', caramelapples: 'Fruit',
+    icecreamtubs: 'Ice Cream', icecreamcones: 'Ice Cream', icecream: 'Ice Cream', icecreamsyrup: 'Ice Cream',
+    icecreamtoppings: 'Ice Cream', cherries: 'Ice Cream', whipcream: 'Ice Cream', chocshavings: 'Ice Cream',
+    cookies: 'Bakery & Sweets', cupcakes: 'Bakery & Sweets', pumpkinpie: 'Bakery & Sweets', pumpkindonuts: 'Bakery & Sweets',
+    bundtinis: 'Bakery & Sweets', frostedcookies: 'Bakery & Sweets',
+    bagels: 'Breakfast', wafflemix: 'Breakfast', syrup: 'Breakfast', creamcheese: 'Breakfast', oatcreamer: 'Breakfast',
+    nutella: 'Spreads & Toppings', peanutbutter: 'Spreads & Toppings', jam: 'Spreads & Toppings', honey: 'Spreads & Toppings',
+    candycanestirrers: 'Spreads & Toppings',
+    rotisseriechicken: 'Grill & Mains', tacokit: 'Grill & Mains', bakedbeans: 'Grill & Mains', dinnerrolls: 'Grill & Mains', turkeybreast: 'Grill & Mains',
+    mozzsticks: 'Appetizers & Trays', delitray: 'Appetizers & Trays',
+    pretzelbites: 'Snacks',
+    cranberrysauce: 'Spreads & Toppings',
+    patriotictreat: 'Bakery & Sweets' } },
+  decor: { order: ['Balloons', 'Banners & Signs', 'Table Linens', 'Lighting', 'Flowers & Greenery', 'Photo Area', 'Themed Kits', 'Craft Supplies'], map: {
+    balloons: 'Balloons', balloonarch: 'Balloons',
+    signage: 'Banners & Signs', labels: 'Banners & Signs', chalkboardsigns: 'Banners & Signs', postcards: 'Banners & Signs',
+    linens: 'Table Linens', runners: 'Table Linens', fittedcloths: 'Table Linens', falltablecloths: 'Table Linens', halloweentablecloths: 'Table Linens',
+    lights: 'Lighting',
+    roses: 'Flowers & Greenery', lilies: 'Flowers & Greenery', sunflowers: 'Flowers & Greenery', filler: 'Flowers & Greenery',
+    rosepetals: 'Flowers & Greenery', bouquetwrap: 'Flowers & Greenery', ribbon: 'Flowers & Greenery', twine: 'Flowers & Greenery',
+    backdrop: 'Photo Area', haybales: 'Photo Area',
+    center: 'Themed Kits', bballdecor: 'Themed Kits', pizzadecor: 'Themed Kits', falldecor: 'Themed Kits',
+    halloweendecorkit: 'Themed Kits', hangingdecor: 'Themed Kits', treatbags: 'Themed Kits', minipumpkins: 'Themed Kits',
+    paintmarkers: 'Craft Supplies', googlyeyes: 'Craft Supplies', pumpkinstickers: 'Craft Supplies',
+    christmasdecor: 'Themed Kits', valentinedecor: 'Themed Kits', easterdecor: 'Themed Kits', patrioticdecor: 'Themed Kits',
+    birthdaydecor: 'Themed Kits', graddecor: 'Themed Kits', nyedecor: 'Themed Kits', stpatrickdecor: 'Themed Kits',
+    babyshowerdecor: 'Themed Kits', luaudecor: 'Themed Kits', underseadecor: 'Themed Kits',
+    christmaslights: 'Lighting', fairylightcurtain: 'Lighting',
+    plastictablecloths: 'Table Linens', tablenumberstands: 'Table Linens', cakestandriser: 'Table Linens', chaircovers: 'Table Linens',
+    balloonweights: 'Balloons',
+    confetti: 'Craft Supplies', crepestreamers: 'Craft Supplies', hangingpaperfans: 'Craft Supplies',
+    marqueeletters: 'Banners & Signs', welcomeeasel: 'Banners & Signs',
+    retirementdecor: 'Photo Area', photoboothprops: 'Photo Area' } },
+  paper: { order: ['Plates & Trays', 'Cups', 'Cutlery & Napkins', 'Serving & Tables'], map: {
+    plates: 'Plates & Trays', trays: 'Plates & Trays',
+    cups: 'Cups', hotcups: 'Cups', insulatedcups: 'Cups',
+    cutlery: 'Cutlery & Napkins', napkins: 'Cutlery & Napkins', utensils: 'Cutlery & Napkins',
+    chafing: 'Serving & Tables', skirting: 'Serving & Tables', dropcloth: 'Serving & Tables',
+    bowls: 'Plates & Trays', compostableplates: 'Plates & Trays', buffetbowls: 'Plates & Trays', foamplates: 'Plates & Trays',
+    stirrers: 'Cups', straws: 'Cups',
+    compostablecutlery: 'Cutlery & Napkins', beveragenapkins: 'Cutlery & Napkins',
+    togoboxes: 'Serving & Tables', foil: 'Serving & Tables', trashbags: 'Serving & Tables', wipes: 'Serving & Tables',
+    papertowels: 'Serving & Tables', gloves: 'Serving & Tables', nitrilegloves: 'Serving & Tables', clingwrap: 'Serving & Tables',
+    parchmentpaper: 'Serving & Tables', disposableaprons: 'Serving & Tables', squeezebottles: 'Serving & Tables', souffecups: 'Serving & Tables',
+    sandwichbags: 'Serving & Tables', freezerbags: 'Serving & Tables', placemats: 'Serving & Tables', foodcontainers: 'Serving & Tables',
+    cuttingboardsheets: 'Serving & Tables' } },
+  prizes: { order: ['Gift Cards & Grand Prizes', 'Giveaway Bags', 'Awards & Raffle', 'Garden Prizes', 'Pet Prizes', 'Custom Blanks'], map: {
+    giftcards: 'Gift Cards & Grand Prizes', grand: 'Gift Cards & Grand Prizes', basket: 'Gift Cards & Grand Prizes',
+    goody: 'Giveaway Bags', totebags: 'Giveaway Bags', supplybags: 'Giveaway Bags', backpacks: 'Giveaway Bags', schoolkit: 'Giveaway Bags',
+    medals: 'Awards & Raffle', raffle: 'Awards & Raffle',
+    gardentools: 'Garden Prizes', wateringcan: 'Garden Prizes', plantties: 'Garden Prizes', planttags: 'Garden Prizes',
+    leashes: 'Pet Prizes', takehomebowls: 'Pet Prizes', petgiftfillers: 'Pet Prizes',
+    tumblers: 'Custom Blanks', waterbottles: 'Custom Blanks',
+    trophies: 'Awards & Raffle', certificates: 'Awards & Raffle',
+    stickers: 'Giveaway Bags', keychains: 'Giveaway Bags', sunglasses: 'Giveaway Bags', coloringkit: 'Giveaway Bags',
+    stressballs: 'Giveaway Bags', squirtguns: 'Giveaway Bags',
+    bandanas: 'Pet Prizes' } },
+  addons: { order: ['Activities & Games', 'Treat Machines', 'Ice', 'Pet Supplies'], map: {
+    photobooth: 'Activities & Games', facepaint: 'Activities & Games', lawngames: 'Activities & Games',
+    bouncehouse: 'Activities & Games', arcadebball: 'Activities & Games',
+    cottoncandy: 'Treat Machines', snowcone: 'Treat Machines',
+    ice: 'Ice',
+    milkbone: 'Pet Supplies', greenies: 'Pet Supplies', poopbags: 'Pet Supplies', dogbowlsdisp: 'Pet Supplies',
+    karaoke: 'Activities & Games', btspeaker: 'Activities & Games', bubblemachine: 'Activities & Games', cornhole: 'Activities & Games',
+    giantjenga: 'Activities & Games', ringtoss: 'Activities & Games', balloontwist: 'Activities & Games', pumpkinpatch: 'Activities & Games',
+    popcornmachine: 'Treat Machines', smoresfirepit: 'Treat Machines' } },
+  staffing: { order: ['Staff & Vendors', 'Tables & Seating', 'Tents', 'Power & AV', 'Food Equipment', 'Logistics & Safety', 'Pet Gear'], map: {
+    lead: 'Staff & Vendors', assistant: 'Staff & Vendors', trainer: 'Staff & Vendors', konaice: 'Staff & Vendors',
+    tables: 'Tables & Seating', chairs: 'Tables & Seating', picnictable: 'Tables & Seating', fabrictablecloth: 'Tables & Seating',
+    tent: 'Tents', tentweights: 'Tents',
+    pa: 'Power & AV', tvrental: 'Power & AV', extensioncord: 'Power & AV', powerstrip: 'Power & AV', phonetripod: 'Power & AV',
+    wafflemaker: 'Food Equipment', coffeeurn: 'Food Equipment', podcoffeemaker: 'Food Equipment', grill: 'Food Equipment',
+    icecreamscoopset: 'Food Equipment', rollingcooler: 'Food Equipment', servingutensilset: 'Food Equipment',
+    handtruck: 'Logistics & Safety', firstaidkit: 'Logistics & Safety', judgingclipboards: 'Logistics & Safety', floralshears: 'Logistics & Safety',
+    petbowls: 'Pet Gear', doggiebags: 'Pet Gear',
+    marketumbrella: 'Tables & Seating', cardtable: 'Tables & Seating', directorschair: 'Tables & Seating',
+    tentsidewalls: 'Tents',
+    generator: 'Power & AV', cordreel: 'Power & AV', powerbank: 'Power & AV', wirelessmic: 'Power & AV', projectorscreen: 'Power & AV',
+    megaphone: 'Power & AV', walkietalkies: 'Power & AV', stringlightpole: 'Power & AV', tentlightkit: 'Power & AV',
+    chestcooler: 'Food Equipment', waterdispenser: 'Food Equipment', beveragetub: 'Food Equipment',
+    patioheater: 'Logistics & Safety', utilitywagon: 'Logistics & Safety', tarp: 'Logistics & Safety', cashbox: 'Logistics & Safety',
+    stepladder: 'Logistics & Safety', barriertape: 'Logistics & Safety', countdowntimer: 'Logistics & Safety', trafficcones: 'Logistics & Safety',
+    garmentrack: 'Logistics & Safety' } },
+};
+// Second facet, chosen per category for what it actually decides. Only Drinks cares how it's packaged.
+const QB_FACET2 = {
+  drinks: { label: 'Sold as', unit: true },
+  food: { label: 'Prep needed', order: ['Ready to serve', 'Heat or cook', 'Assemble on site'], map: {
+    hotdogs: 'Heat or cook', burgers: 'Heat or cook', ribs: 'Heat or cook', wings: 'Heat or cook',
+    wafflemix: 'Heat or cook', popcorn: 'Heat or cook',
+    buns: 'Assemble on site', icecreamtubs: 'Assemble on site', icecreamcones: 'Assemble on site',
+    icecreamsyrup: 'Assemble on site', icecreamtoppings: 'Assemble on site', cherries: 'Assemble on site',
+    whipcream: 'Assemble on site', chocshavings: 'Assemble on site', candycanestirrers: 'Assemble on site',
+    creamcheese: 'Assemble on site', nutella: 'Assemble on site', peanutbutter: 'Assemble on site',
+    jam: 'Assemble on site', honey: 'Assemble on site', syrup: 'Assemble on site', bagels: 'Assemble on site',
+    oatcreamer: 'Assemble on site', guac: 'Assemble on site', hummus: 'Assemble on site',
+    vegetables: 'Ready to serve', fruit: 'Ready to serve', watermelon: 'Ready to serve', strawberries: 'Ready to serve',
+    blueberries: 'Ready to serve', chips: 'Ready to serve', pretzels: 'Ready to serve', candy: 'Ready to serve',
+    cookies: 'Ready to serve', cupcakes: 'Ready to serve', icecream: 'Ready to serve', caramelapples: 'Ready to serve',
+    pumpkinpie: 'Ready to serve', pumpkindonuts: 'Ready to serve', bundtinis: 'Ready to serve',
+    frostedcookies: 'Ready to serve', halloweenoreos: 'Ready to serve', pinwheels: 'Ready to serve',
+    rotisseriechicken: 'Ready to serve', dinnerrolls: 'Ready to serve', cranberrysauce: 'Ready to serve', delitray: 'Ready to serve', patriotictreat: 'Ready to serve',
+    mozzsticks: 'Heat or cook', pretzelbites: 'Heat or cook', bakedbeans: 'Heat or cook', turkeybreast: 'Heat or cook',
+    tacokit: 'Assemble on site' } },
+  decor: { label: 'Reuse', order: ['Reusable', 'Single-use'], map: {
+    lights: 'Reusable', backdrop: 'Reusable', fittedcloths: 'Reusable', chalkboardsigns: 'Reusable',
+    signage: 'Reusable', paintmarkers: 'Reusable', hangingdecor: 'Reusable', halloweendecorkit: 'Reusable',
+    falldecor: 'Reusable', bballdecor: 'Reusable', pizzadecor: 'Reusable', center: 'Reusable',
+    balloons: 'Single-use', balloonarch: 'Single-use', linens: 'Single-use', runners: 'Single-use',
+    falltablecloths: 'Single-use', halloweentablecloths: 'Single-use', roses: 'Single-use', lilies: 'Single-use',
+    sunflowers: 'Single-use', filler: 'Single-use', rosepetals: 'Single-use', ribbon: 'Single-use',
+    twine: 'Single-use', bouquetwrap: 'Single-use', postcards: 'Single-use', labels: 'Single-use',
+    treatbags: 'Single-use', minipumpkins: 'Single-use', googlyeyes: 'Single-use', pumpkinstickers: 'Single-use',
+    haybales: 'Single-use',
+    christmasdecor: 'Single-use', valentinedecor: 'Single-use', easterdecor: 'Single-use', patrioticdecor: 'Single-use',
+    birthdaydecor: 'Single-use', graddecor: 'Single-use', plastictablecloths: 'Single-use', confetti: 'Single-use',
+    nyedecor: 'Single-use', stpatrickdecor: 'Single-use', babyshowerdecor: 'Single-use', luaudecor: 'Single-use',
+    underseadecor: 'Single-use', crepestreamers: 'Single-use', hangingpaperfans: 'Single-use', photoboothprops: 'Single-use',
+    christmaslights: 'Reusable', balloonweights: 'Reusable', retirementdecor: 'Reusable', tablenumberstands: 'Reusable',
+    cakestandriser: 'Reusable', marqueeletters: 'Reusable', fairylightcurtain: 'Reusable', welcomeeasel: 'Reusable',
+    chaircovers: 'Reusable' } },
+  paper: { label: 'Used for', order: ['Eating', 'Drinking', 'Serving', 'Tables'], map: {
+    plates: 'Eating', cutlery: 'Eating', napkins: 'Eating',
+    cups: 'Drinking', hotcups: 'Drinking', insulatedcups: 'Drinking',
+    trays: 'Serving', chafing: 'Serving', utensils: 'Serving',
+    skirting: 'Tables', dropcloth: 'Tables',
+    bowls: 'Eating', compostablecutlery: 'Eating', compostableplates: 'Eating', foamplates: 'Eating',
+    stirrers: 'Drinking', straws: 'Drinking', beveragenapkins: 'Drinking',
+    placemats: 'Tables',
+    togoboxes: 'Serving', foil: 'Serving', trashbags: 'Serving', wipes: 'Serving', papertowels: 'Serving',
+    gloves: 'Serving', nitrilegloves: 'Serving', clingwrap: 'Serving', parchmentpaper: 'Serving', disposableaprons: 'Serving',
+    squeezebottles: 'Serving', souffecups: 'Serving', sandwichbags: 'Serving', freezerbags: 'Serving',
+    buffetbowls: 'Serving', foodcontainers: 'Serving', cuttingboardsheets: 'Serving' } },
+  prizes: { label: 'Who it suits', order: ['Anyone', 'Kids', 'Adults', 'Pets'], map: {
+    giftcards: 'Anyone', grand: 'Anyone', basket: 'Anyone', medals: 'Anyone', raffle: 'Anyone', totebags: 'Anyone',
+    goody: 'Kids', schoolkit: 'Kids', supplybags: 'Kids', backpacks: 'Kids',
+    gardentools: 'Adults', wateringcan: 'Adults', plantties: 'Adults', planttags: 'Adults', tumblers: 'Adults',
+    leashes: 'Pets', takehomebowls: 'Pets', petgiftfillers: 'Pets', bandanas: 'Pets',
+    trophies: 'Anyone', certificates: 'Anyone', keychains: 'Anyone', waterbottles: 'Anyone', stressballs: 'Anyone',
+    stickers: 'Kids', coloringkit: 'Kids', squirtguns: 'Kids',
+    sunglasses: 'Adults' } },
+  addons: { label: 'Restock', order: ['Keep & reuse', 'Restock each event'], map: {
+    photobooth: 'Keep & reuse', lawngames: 'Keep & reuse', snowcone: 'Keep & reuse',
+    bouncehouse: 'Keep & reuse', arcadebball: 'Keep & reuse',
+    facepaint: 'Restock each event', cottoncandy: 'Restock each event', ice: 'Restock each event',
+    milkbone: 'Restock each event', greenies: 'Restock each event', poopbags: 'Restock each event',
+    dogbowlsdisp: 'Restock each event',
+    karaoke: 'Keep & reuse', btspeaker: 'Keep & reuse', cornhole: 'Keep & reuse', giantjenga: 'Keep & reuse',
+    ringtoss: 'Keep & reuse', pumpkinpatch: 'Keep & reuse',
+    bubblemachine: 'Restock each event', popcornmachine: 'Restock each event', balloontwist: 'Restock each event', smoresfirepit: 'Restock each event' } },
+  staffing: { label: 'Labor or gear', order: ['Labor', 'Owned gear'], map: {
+    lead: 'Labor', assistant: 'Labor', trainer: 'Labor', konaice: 'Labor',
+    tables: 'Owned gear', chairs: 'Owned gear', tent: 'Owned gear', pa: 'Owned gear',
+    tvrental: 'Owned gear', picnictable: 'Owned gear', tentweights: 'Owned gear', wafflemaker: 'Owned gear', coffeeurn: 'Owned gear', podcoffeemaker: 'Owned gear', grill: 'Owned gear',
+    icecreamscoopset: 'Owned gear', rollingcooler: 'Owned gear', extensioncord: 'Owned gear', powerstrip: 'Owned gear',
+    fabrictablecloth: 'Owned gear', servingutensilset: 'Owned gear', handtruck: 'Owned gear', petbowls: 'Owned gear',
+    doggiebags: 'Owned gear', floralshears: 'Owned gear', judgingclipboards: 'Owned gear', phonetripod: 'Owned gear',
+    firstaidkit: 'Owned gear',
+    chestcooler: 'Owned gear', patioheater: 'Owned gear', generator: 'Owned gear', tentsidewalls: 'Owned gear', utilitywagon: 'Owned gear',
+    tarp: 'Owned gear', cashbox: 'Owned gear', waterdispenser: 'Owned gear', cordreel: 'Owned gear', powerbank: 'Owned gear',
+    marketumbrella: 'Owned gear', wirelessmic: 'Owned gear', cardtable: 'Owned gear', projectorscreen: 'Owned gear', megaphone: 'Owned gear',
+    directorschair: 'Owned gear', stepladder: 'Owned gear', barriertape: 'Owned gear', countdowntimer: 'Owned gear', trafficcones: 'Owned gear',
+    beveragetub: 'Owned gear', walkietalkies: 'Owned gear', garmentrack: 'Owned gear', stringlightpole: 'Owned gear', tentlightkit: 'Owned gear' } },
+};
+function qbFacet2(fam) {
+  const c = QB_FACET2[fam.cat];
+  if (!c) return null;
+  return c.unit ? (fam.unit || 'item') : (c.map[fam.id] || 'Other');
+}
+function qbFacet2Text(cat, v) { return (QB_FACET2[cat] || {}).unit ? qbUnitLabel(v) : v; }
+
+function qbSubType(fam) {
+  const t = QB_SUBTYPES[fam.cat];
+  return (t && t.map[fam.id]) || 'Other';
+}
+const QB_PACK_FILTERS = [{ id: 'any', label: 'Any' }, { id: 'a', label: '1–12', max: 12 }, { id: 'b', label: '12–30', min: 12, max: 30 }, { id: 'c', label: '30–100', min: 30, max: 100 }, { id: 'd', label: '100+', min: 100 }];
+const QB_UNIT_MASS = ['oz', 'lb', 'lbs', 'gal', 'gallon', 'each', 'multi-pack'];
+function qbSize(n) { return n % 1 === 0 ? qbNum(n) : String(+n.toFixed(2)); }
+const QB_BOOKING_UNITS = ['hour', 'day', 'event', 'session'];
+function qbPackNoun(fam, per) {
+  if (QB_BOOKING_UNITS.indexOf(fam.unit) >= 0) return 'per booking';
+  return per === 1 ? 'each' : 'per pack';
+}
+function qbUnitLabel(u) {
+  const s = (u || 'item').trim();
+  const low = s.toLowerCase();
+  let out;
+  if (QB_UNIT_MASS.indexOf(low) >= 0) out = low === 'gallon' ? 'gallons' : s;
+  else if (/(?:s|x|ch|sh|z)$/i.test(s)) out = s + 'es';
+  else if (/[^aeiou]y$/i.test(s)) out = s.slice(0, -1) + 'ies';
+  else out = s + 's';
+  return out.replace(/^./, c => c.toUpperCase());
+}
+
+function QBDishTags({ row }) {
+  if (!row.tagged) return null;
+  const tags = [];
+  if (row.diet.nuts) tags.push('Contains nuts');
+  if (row.diet.meat) tags.push('Contains meat');
+  else if (row.diet.dairy) tags.push('Contains dairy');
+  if (!tags.length) return null;
+  return <div className="qb-tags">{tags.map(t => <span key={t} className="qb-tag warn">{t}</span>)}</div>;
+}
+
+function QBDish({ row, showBrand, hideQual, goods, open, onToggle, onAdd }) {
+  const { fam } = row;
+  const named = fam.variants.filter(v => v.name);
+  const multiOpt = row.variantId == null && named.length > 1;
+  const [opt, setOpt] = useState(row.variantId || (multiOpt ? null : (fam.variants[0] || {}).id));
   const [packs, setPacks] = useState({});
   const [added, setAdded] = useState({});
-
-  useEffect(() => {
-    const onKey = e => { if (e.key === 'Escape') onClose(); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, []);
-
-  const families = window.QB_FAMILIES.filter(f => f.cat === category.id);
-  const brands = Array.from(new Set(families.filter(f => f.brand).map(f => f.brand))).sort();
-  const cuisines = QB_CUISINE_ORDER.filter(c => brands.some(b => qbBrandCuisine(b) === c));
-  const q = query.trim().toLowerCase();
-  const filtered = families.filter(f => {
-    const matchesQuery = !q || f.name.toLowerCase().includes(q) || f.variants.some(v => (v.name || '').toLowerCase().includes(q));
-    if (brand) return f.brand === brand && matchesQuery;
-    if (cuisine) return qbBrandCuisine(f.brand) === cuisine && matchesQuery;
-    // Categories with no brand/cuisine pill system (everything except Catering) always show their
-    // full flat list, even with an empty search box — only Catering hides items behind pills first.
-    if (brands.length <= 1) return matchesQuery;
-    return q ? matchesQuery : false;
-  });
-
-  const named = fam ? fam.variants.filter(v => v.name) : [];
-  const step = !fam ? 1 : (named.length > 1 && !variant ? 2 : 3);
-  const activeVariant = variant || (fam && (named.length <= 1 ? (fam.variants[0] || {}).id : null));
-
-  const stepItems = fam ? window.QB_ITEMS.filter(it => it.family === fam.id && it.variant === activeVariant) : [];
-
-  function back() {
-    if (step === 3 && named.length > 1) setVariant(null);
-    else { setFam(null); setVariant(null); }
-  }
-
-  function familyCard(f) {
-    const packCount = f.packs.length;
-    const varCount = f.variants.length;
-    const items = window.QB_ITEMS.filter(it => it.family === f.id);
-    const cheapest = items.reduce((min, it) => { const b = qbBest(it, null); return (min == null || b.price < min) ? b.price : min; }, null);
-    return (
-      <button key={f.id} className="qb-family-card" onClick={() => setFam(f)}>
-        <strong>{f.name}</strong>
-        <span>{f.brand && !brand ? f.brand + ' · ' : ''}{varCount} option{varCount !== 1 ? 's' : ''} · {packCount} pack size{packCount !== 1 ? 's' : ''}{cheapest != null ? ' · from ' + qbMoney(cheapest) : ''}</span>
-      </button>
-    );
-  }
-
+  const activeOpt = row.variantId || opt;
+  const stepItems = activeOpt ? qbItemsFor(fam.id).filter(it => it.variant === activeOpt) : [];
+  const p = row.price;
+  const perPerson = p.min != null && row.serves > 1 ? p.min / row.serves : null;
   return (
-    <div className="qb-modal-scrim" onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="qb-modal">
-        <div className="qb-modal-head">
-          <div>
-            <div className="qb-modal-crumb">
-              <span className={fam ? 'on' : 'off'}>{category.name.toUpperCase()}</span>
-              {fam && <span className="off"> / <span className="on">{fam.name.toUpperCase()}</span></span>}
-              {activeVariant && named.length > 1 && <span className="off"> / <span className="on">{(fam.variants.find(v => v.id === activeVariant) || {}).name}</span></span>}
-            </div>
-            <h2>{step === 1 ? 'What are you adding?' : step === 2 ? 'Which one?' : 'Pick a pack size'}</h2>
-          </div>
-          <div className="qb-modal-head-actions">
-            {step > 1 && <button className="qb-modal-icon-btn" onClick={back}>&larr;</button>}
-            <button className="qb-modal-icon-btn" onClick={onClose}>&times;</button>
-          </div>
+    <div className={'qb-dish' + (open ? ' open' : '')}>
+      <div className="qb-dish-row" onClick={onToggle}>
+        <div>
+          <div className="qb-dish-name">{row.title}</div>
+          {((row.qual && !hideQual) || (showBrand && fam.brand)) && (
+            <div className="qb-dish-from">{[hideQual ? null : row.qual, showBrand ? fam.brand : null].filter(Boolean).join(' · ')}</div>
+          )}
+          {row.ing && <div className="qb-dish-ing">{row.ing}</div>}
+          {!goods && <QBDishTags row={row} />}
         </div>
-        <div className="qb-modal-body">
-          {step === 1 && (
+        <div className="qb-dish-price">
+          {p.min == null ? <b>no price yet</b> : <b>{p.max != null && p.max > p.min ? 'from ' + qbMoney(p.min) : qbMoney(p.min)}</b>}
+          {goods ? (
             <>
-              <div className="qb-search"><span>&#8981;</span><input autoFocus placeholder="Search…" value={query} onChange={e => setQuery(e.target.value)} /></div>
-
-              {brands.length > 1 && !q && !cuisine && !brand && (
-                <div className="qb-brand-row">
-                  {cuisines.map(c => (
-                    <button type="button" key={c} className="qb-brand-chip" onClick={() => setCuisine(c)}>{c}</button>
-                  ))}
-                </div>
+              <span>{qbPackNoun(fam, row.serves)}{row.serves !== 1 ? ' · ' + qbSize(row.serves) + ' ' + qbUnitLabel(fam.unit).toLowerCase() : ''}</span>
+              {p.ppu != null && row.serves !== 1 && <span>{qbMoney(p.ppu)} per {fam.unit || 'unit'}</span>}
+              {p.bestPpu != null && p.ppu != null && p.bestPer != null && p.bestPpu < p.ppu * 0.95 && (
+                <span>{qbMoney(p.bestPpu)} per {fam.unit || 'unit'} in {qbSize(p.bestPer)}-pack</span>
               )}
-
-              {brands.length > 1 && !q && cuisine && !brand && (
-                <>
-                  <button type="button" className="qb-brand-back" onClick={() => setCuisine(null)}>&larr; All cuisines</button>
-                  <div className="qb-brand-row">
-                    {brands.filter(b => qbBrandCuisine(b) === cuisine).map(b => (
-                      <button type="button" key={b} className="qb-brand-chip" onClick={() => setBrand(b)}>{b}</button>
-                    ))}
-                  </div>
-                </>
-              )}
-
-              {brands.length > 1 && brand && (
-                <button type="button" className="qb-brand-back" onClick={() => setBrand(null)}>&larr; {cuisine || 'Restaurants'}</button>
-              )}
-              {brands.length > 1 && !brand && cuisine && q && (
-                <button type="button" className="qb-brand-back" onClick={() => setCuisine(null)}>&larr; All cuisines</button>
-              )}
-
-              {brand ? (
-                filtered.length ? QB_SUBCAT_ORDER.map(label => {
-                  const group = filtered.filter(f => qbCateringSubcat(f.name) === label);
-                  if (!group.length) return null;
-                  return (
-                    <div key={label} className="qb-subcat-group">
-                      <div className="qb-subcat-label">{label}</div>
-                      <div className="qb-family-grid">{group.map(f => familyCard(f))}</div>
-                    </div>
-                  );
-                }) : <p className="qb-empty-note">No items match "{query}" at {brand}.</p>
-              ) : (q || brands.length <= 1) ? (
-                filtered.length
-                  ? <div className="qb-family-grid">{filtered.map(f => familyCard(f))}</div>
-                  : <p className="qb-empty-note">No items match "{query}".</p>
-              ) : null}
+            </>
+          ) : (
+            <>
+              <span>per package{row.serves > 1 ? ' · serves ~' + qbNum(Math.round(row.serves)) : ''}</span>
+              {perPerson != null && <span>{qbMoney(perPerson)} a person</span>}
             </>
           )}
-          {step === 2 && (
-            <div className="qb-variant-row">
-              {named.map(v => <button key={v.id} className="qb-variant-pill" onClick={() => setVariant(v.id)}>{v.name}</button>)}
+        </div>
+      </div>
+      {open && (
+        <div className="qb-dish-body">
+          {multiOpt && (
+            <div className="qb-opt-row">
+              {named.map(v => <button type="button" key={v.id} className={'qb-opt' + (opt === v.id ? ' on' : '')} onClick={() => setOpt(v.id)}>{qbSplitDish(v.name).t}</button>)}
             </div>
           )}
-          {step === 3 && stepItems.map(it => {
+          {!activeOpt ? <p className="qb-empty-note">Pick an option above to see pack sizes.</p> : stepItems.map(it => {
             const isAdded = added[it.id] || 0;
             const n = packs[it.id] || 1;
             const best = qbBest(it, null);
+            const noPrice = it.flat == null && !window.QB_STORES.some(s => it.prices[s.key] != null);
             return (
               <div className="qb-pack-card" key={it.id}>
                 <div className="qb-pack-top">
-                  <div><strong>{it.packLabel}</strong><br /><span>{it.per} {it.unit}{it.per !== 1 ? 's' : ''} per pack{it.flat == null ? ' · ' + qbMoney(best.price / it.per) + ' per ' + it.unit : ''}</span></div>
+                  <div><strong>{it.packLabel}</strong><br /><span>{it.per} {it.unit}{it.per !== 1 ? 's' : ''} per pack{it.flat == null && !noPrice ? ' · ' + qbMoney(best.price / it.per) + ' per ' + it.unit : ''}{noPrice ? ' · ' : ''}{noPrice && <span className="qb-unpriced">not priced</span>}</span></div>
                   <div className="qb-pack-controls">
                     <QBNumber value={n} min={1} suffix="pk" width={78} onChange={v => setPacks({ ...packs, [it.id]: Math.max(1, v) })} />
                     <button className={'btn btn-sm ' + (isAdded ? 'btn-ink-ghost' : 'btn-primary')}
@@ -4310,6 +5068,321 @@ function QBPicker({ category, onClose, onAdd }) {
               </div>
             );
           })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function QBPicker({ category, onClose, onAdd }) {
+  const [query, setQuery] = useState('');
+  const [cuisine, setCuisine] = useState(null);
+  const [brand, setBrand] = useState(null);
+  const [meals, setMeals] = useState([]);
+  const [diets, setDiets] = useState([]);
+  const [serves, setServes] = useState(0);
+  const [ppp, setPpp] = useState('any');
+  const [unitSel, setUnitSel] = useState(null);
+  const [typeSel, setTypeSel] = useState(null);
+  const [packSel, setPackSel] = useState('any');
+  const [unpriced, setUnpriced] = useState(true);
+  const [sortBy, setSortBy] = useState('az');
+  const [openKey, setOpenKey] = useState(null);
+  const [mealSel, setMealSel] = useState(null);
+  const [section, setSection] = useState(null);
+  const [limit, setLimit] = useState(60);
+
+  useEffect(() => {
+    const onKey = e => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = prev; };
+  }, []);
+
+  const families = React.useMemo(() => window.QB_FAMILIES.filter(f => f.cat === category.id), [category.id]);
+  const allRows = React.useMemo(() => families.reduce((acc, f) => acc.concat(qbDishRows(f)), []), [families]);
+  const brands = React.useMemo(() => Array.from(new Set(families.filter(f => f.brand).map(f => f.brand))).sort(), [families]);
+  const isCatering = brands.length > 1;
+  const q = query.trim().toLowerCase();
+  useEffect(() => { setLimit(60); }, [query, cuisine, brand, mealSel, section, unitSel, typeSel, packSel, unpriced, meals.length, diets.length, serves, ppp]);
+  useEffect(() => { setMealSel(null); setSection(null); }, [brand]);
+
+  function passes(r, skip) {
+    if (q && !(r.title.toLowerCase().includes(q) || r.ing.toLowerCase().includes(q) || (r.fam.brand || '').toLowerCase().includes(q))) return false;
+    if (!isCatering) {
+      // Retail facets, all read off real fields — no keyword guessing.
+      if (skip !== 'type' && typeSel && qbSubType(r.fam) !== typeSel) return false;
+      if (skip !== 'unit' && unitSel && qbFacet2(r.fam) !== unitSel) return false;
+      if (!unpriced && r.price.min == null) return false;
+      if (packSel !== 'any') {
+        const f = QB_PACK_FILTERS.find(x => x.id === packSel);
+        if (!r.pers.some(p => (f.min == null || p >= f.min) && (f.max == null || p < f.max))) return false;
+      }
+      return true;
+    }
+    if (meals.length && !meals.includes(r.meal)) return false;
+    if (diets.length && (!r.tagged || !diets.every(d => d === 'nutfree' ? !r.diet.nuts : r.diet[d]))) return false;
+    if (serves && (r.maxServes || r.serves) < serves) return false;
+    if (ppp !== 'any') {
+      const f = QB_PPP_FILTERS.find(x => x.id === ppp);
+      const pp = r.price.min != null && r.serves ? r.price.min / r.serves : null;
+      if (pp == null) return false;
+      if (f.min != null && pp < f.min) return false;
+      if (f.max != null && pp >= f.max) return false;
+    }
+    return true;
+  }
+  const scoped = allRows.filter(r => passes(r));
+  const cuisines = QB_CG_ORDER.filter(c => brands.some(b => qbCuisineOf(b) === c));
+  const restaurants = (cuisine ? brands.filter(b => qbCuisineOf(b) === cuisine) : brands)
+    .map(b => ({ brand: b, rows: scoped.filter(r => r.fam.brand === b) })).filter(x => x.rows.length);
+  const anyFilter = isCatering
+    ? !!(meals.length || diets.length || serves || ppp !== 'any')
+    : !!(typeSel || unitSel || packSel !== 'any' || !unpriced);
+  const clearFilters = () => {
+    if (isCatering) { setMeals([]); setDiets([]); setServes(0); setPpp('any'); }
+    else { setTypeSel(null); setUnitSel(null); setPackSel('any'); setUnpriced(true); }
+  };
+  const crossView = isCatering && !brand && (!!q || anyFilter);
+  const dishRows = brand ? scoped.filter(r => r.fam.brand === brand)
+    : crossView ? (cuisine ? scoped.filter(r => qbCuisineOf(r.fam.brand) === cuisine) : scoped) : scoped;
+  const menuMeals = React.useMemo(() => brand
+    ? QB_MEAL_ORDER.map(m => ({ m, n: dishRows.filter(r => r.meal === m).length })).filter(x => x.n)
+    : [], [brand, dishRows]);
+  const typeBase = isCatering ? [] : allRows.filter(r => passes(r, 'type'));
+  const unitBase = isCatering ? [] : allRows.filter(r => passes(r, 'unit'));
+  const goodsTypes = React.useMemo(() => {
+    if (isCatering) return [];
+    const order = (QB_SUBTYPES[category.id] || { order: [] }).order.concat('Other');
+    const seen = {};
+    typeBase.forEach(r => { const t = qbSubType(r.fam); seen[t] = (seen[t] || 0) + 1; });
+    return order.filter(t => seen[t]).map(t => ({ t, n: seen[t] }));
+  }, [typeBase.length, isCatering, category.id, typeSel]);
+  const goodsUnits = React.useMemo(() => {
+    if (isCatering) return [];
+    const cfg = QB_FACET2[category.id] || {};
+    const seen = {};
+    unitBase.forEach(r => { const u = qbFacet2(r.fam); if (u) seen[u] = (seen[u] || 0) + 1; });
+    const keys = Object.keys(seen);
+    const ordered = cfg.order ? cfg.order.concat('Other').filter(k => seen[k])
+      : keys.sort((a, b) => qbUnitLabel(a).localeCompare(qbUnitLabel(b)));
+    return ordered.map(u => ({ u, n: seen[u] }));
+  }, [unitBase.length, isCatering, unitSel, category.id]);
+  const soloMeal = menuMeals.length === 1 ? menuMeals[0].m : null;
+  const activeMeal = (mealSel && menuMeals.some(x => x.m === mealSel) ? mealSel : null) || soloMeal;
+  const mealRows = activeMeal ? dishRows.filter(r => r.meal === activeMeal) : dishRows;
+  const menuSections = React.useMemo(() => {
+    if (!brand || !activeMeal) return [];
+    const seen = {};
+    mealRows.forEach(r => {
+      const s = seen[r.fam.id] || (seen[r.fam.id] = { id: r.fam.id, name: qbShortFam(r.fam), n: 0 });
+      s.n++;
+    });
+    return Object.keys(seen).map(k => seen[k]).sort((a, b) => b.n - a.n || a.name.localeCompare(b.name));
+  }, [brand, activeMeal, mealRows]);
+  const activeSection = section && menuSections.some(s => s.id === section) ? section : null;
+  let shownRows = activeSection ? mealRows.filter(r => r.fam.id === activeSection) : mealRows;
+  const showDishes = !isCatering || !!brand || crossView;
+  // A single filter chip can match hundreds of dishes across 30 restaurants; render them in pages so
+  // the list stays responsive.
+  if (!isCatering) {
+    shownRows = shownRows.slice().sort(sortBy === 'cheap'
+      ? (a, b) => (a.price.bestPpu == null ? Infinity : a.price.bestPpu) - (b.price.bestPpu == null ? Infinity : b.price.bestPpu)
+      : (a, b) => a.title.localeCompare(b.title));
+  }
+  const groupOrder = isCatering ? QB_MEAL_ORDER
+    : (typeSel || sortBy === 'cheap' ? [null] : goodsTypes.map(x => x.t));
+  const groupOf = r => isCatering ? r.meal : qbSubType(r.fam);
+  const groupLabel = g => g;
+  const capped = !brand && shownRows.length > limit;
+  const visibleRows = capped ? shownRows.slice(0, limit) : shownRows;
+  const toggle = (arr, set, v) => set(arr.includes(v) ? arr.filter(x => x !== v) : arr.concat(v));
+
+  return (
+    <div className="qb-modal-scrim" onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="qb-modal qb-wide">
+        <div className="qb-modal-head">
+          <div>
+            <div className="qb-modal-crumb">
+              <span className={brand ? 'off' : 'on'}>{category.name.toUpperCase()}</span>
+              {cuisine && <span className="off"> / <span className={brand ? 'off' : 'on'}>{cuisine.toUpperCase()}</span></span>}
+              {brand && <span className="off"> / <span className="on">{brand.toUpperCase()}</span></span>}
+            </div>
+            <h2>{brand ? brand : crossView ? 'Dishes across every restaurant' : isCatering ? 'Pick a restaurant' : 'What are you adding?'}</h2>
+          </div>
+          <div className="qb-modal-head-actions">
+            {(activeSection || mealSel || brand || cuisine) && <button className="qb-modal-icon-btn" onClick={() => (activeSection ? setSection(null) : mealSel ? setMealSel(null) : brand ? setBrand(null) : setCuisine(null))}>&larr;</button>}
+            <button className="qb-modal-icon-btn" onClick={onClose}>&times;</button>
+          </div>
+        </div>
+        <div className="qb-browse">
+          <div className="qb-browse-rail">
+            <div className="qb-rail-sec">
+              <div className="qb-search" style={{ marginBottom: 0 }}><span>&#8981;</span>
+                <input autoFocus placeholder={isCatering ? 'Dish or ingredient…' : 'Search ' + category.name.toLowerCase() + '…'} value={query} onChange={e => setQuery(e.target.value)} />
+              </div>
+            </div>
+            {!isCatering && (
+              <>
+                <div className="qb-rail-sec">
+                  <div className="qb-rail-lbl">Type</div>
+                  <div className="qb-cuisine-list">
+                    <button type="button" className={'qb-cuisine' + (typeSel ? '' : ' on')} onClick={() => setTypeSel(null)}>Everything <i>{typeBase.length}</i></button>
+                    {goodsTypes.map(x => (
+                      <button type="button" key={x.t} className={'qb-cuisine' + (typeSel === x.t ? ' on' : '')} onClick={() => setTypeSel(x.t)}>{x.t} <i>{x.n}</i></button>
+                    ))}
+                  </div>
+                </div>
+                <div className="qb-rail-sec">
+                  <div className="qb-rail-lbl">{(QB_FACET2[category.id] || {}).label || 'Sold as'}</div>
+                  <div className="qb-fchips">
+                    <button type="button" className={'qb-fchip' + (unitSel ? '' : ' on')} onClick={() => setUnitSel(null)}>Any</button>
+                    {goodsUnits.map(x => (
+                      <button type="button" key={x.u} className={'qb-fchip' + (unitSel === x.u ? ' on' : '')} onClick={() => setUnitSel(x.u)}>{qbFacet2Text(category.id, x.u)}</button>
+                    ))}
+                  </div>
+                </div>
+                <div className="qb-rail-sec">
+                  <div className="qb-rail-lbl">Pack size</div>
+                  <div className="qb-fchips">{QB_PACK_FILTERS.map(f => (
+                    <button type="button" key={f.id} className={'qb-fchip' + (packSel === f.id ? ' on' : '')} onClick={() => setPackSel(f.id)}>{f.label}</button>
+                  ))}</div>
+                </div>
+                <div className="qb-rail-sec">
+                  <div className="qb-rail-lbl">Sort</div>
+                  <div className="qb-fchips">
+                    <button type="button" className={'qb-fchip' + (sortBy === 'az' ? ' on' : '')} onClick={() => setSortBy('az')}>A–Z</button>
+                    <button type="button" className={'qb-fchip' + (sortBy === 'cheap' ? ' on' : '')} onClick={() => setSortBy('cheap')}>Cheapest per unit</button>
+                  </div>
+                  <div className="qb-fchips" style={{ marginTop: 8 }}>
+                    <button type="button" className={'qb-fchip' + (unpriced ? '' : ' on')} onClick={() => setUnpriced(!unpriced)}>Hide items with no price</button>
+                  </div>
+                  <p className="qb-rail-note">Some items have never been priced at any store — they show “no price yet” rather than a guess.</p>
+                  {anyFilter && <button type="button" className="qb-clear" onClick={clearFilters}>Clear filters</button>}
+                </div>
+              </>
+            )}
+            {isCatering && (
+              <>
+              <div className="qb-rail-sec">
+                <div className="qb-rail-lbl">Cuisine</div>
+                <div className="qb-cuisine-list">
+                  <button type="button" className={'qb-cuisine' + (cuisine ? '' : ' on')} onClick={() => { setCuisine(null); setBrand(null); }}>All cuisines <i>{scoped.length}</i></button>
+                  {cuisines.map(c => {
+                    const n = scoped.filter(r => qbCuisineOf(r.fam.brand) === c).length;
+                    return <button type="button" key={c} className={'qb-cuisine' + (cuisine === c ? ' on' : '')} disabled={!n} style={n ? null : { opacity: .4 }}
+                      onClick={() => { setCuisine(c); setBrand(null); }}>{c} <i>{n}</i></button>;
+                  })}
+                </div>
+              </div>
+              <div className="qb-rail-sec">
+                <div className="qb-rail-lbl">Meal type</div>
+                <div className="qb-fchips">{QB_MEAL_ORDER.map(m => (
+                  <button type="button" key={m} className={'qb-fchip' + (meals.includes(m) ? ' on' : '')} onClick={() => toggle(meals, setMeals, m)}>{m}</button>
+                ))}</div>
+              </div>
+              <div className="qb-rail-sec">
+                <div className="qb-rail-lbl">Dietary</div>
+                <div className="qb-fchips">{QB_DIET_FILTERS.map(d => (
+                  <button type="button" key={d.id} className={'qb-fchip' + (diets.includes(d.id) ? ' on' : '')} onClick={() => toggle(diets, setDiets, d.id)}>{d.label}</button>
+                ))}</div>
+                <p className="qb-rail-note">Guessed from each dish's own ingredient list, to narrow the field — not an allergy guarantee. Confirm anything dietary with the restaurant.</p>
+              </div>
+              <div className="qb-rail-sec">
+                <div className="qb-rail-lbl">Serves at least</div>
+                <div className="qb-fchips">{QB_SERVES_FILTERS.map(s => (
+                  <button type="button" key={s.id} className={'qb-fchip' + (serves === s.id ? ' on' : '')} onClick={() => setServes(s.id)}>{s.label}</button>
+                ))}</div>
+              </div>
+              <div className="qb-rail-sec">
+                <div className="qb-rail-lbl">Cost per person</div>
+                <div className="qb-fchips">{QB_PPP_FILTERS.map(f => (
+                  <button type="button" key={f.id} className={'qb-fchip' + (ppp === f.id ? ' on' : '')} onClick={() => setPpp(f.id)}>{f.label}</button>
+                ))}</div>
+              </div>
+              {anyFilter && <button type="button" className="qb-clear" onClick={clearFilters}>Clear filters</button>}
+              </>
+            )}
+          </div>
+          <div className="qb-results">
+            {!showDishes ? (
+              <>
+                <div className="qb-results-head">
+                  <h3>{restaurants.length} restaurant{restaurants.length !== 1 ? 's' : ''}{cuisine ? ' · ' + cuisine : ''}</h3>
+                  <span>{scoped.length} dishes in all<br />Search or filter to compare across all of them</span>
+                </div>
+                {restaurants.length ? (
+                  <div className="qb-rest-grid">
+                    {restaurants.map(({ brand: b, rows }) => {
+                      const prices = rows.map(r => r.price.min).filter(v => v != null);
+                      const lo = prices.length ? Math.min.apply(null, prices) : null;
+                      const mealsHere = QB_MEAL_ORDER.filter(m => rows.some(r => r.meal === m));
+                      return (
+                        <button key={b} className="qb-rest" onClick={() => { setBrand(b); setOpenKey(null); }}>
+                          <span className="cz">{qbCuisineOf(b)}</span>
+                          <b>{b}</b>
+                          <span className="mt">{rows.length} dish{rows.length !== 1 ? 'es' : ''}{lo != null ? ' · from ' + qbMoney(lo) + ' a package' : ''}<br />{mealsHere.slice(0, 3).join(' · ')}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                ) : <p className="qb-empty-note">No restaurant has a dish matching these filters. Try clearing one.</p>}
+              </>
+            ) : (
+              <>
+                {brand && menuMeals.length > 1 && (
+                  <div className="qb-menu-row">
+                    <button type="button" className={'qb-fchip' + (activeMeal ? '' : ' on')} onClick={() => { setMealSel(null); setSection(null); }}>Whole menu <i>{dishRows.length}</i></button>
+                    {menuMeals.map(x => (
+                      <button type="button" key={x.m} className={'qb-fchip' + (activeMeal === x.m ? ' on' : '')} onClick={() => { setMealSel(x.m); setSection(null); }}>{x.m} <i>{x.n}</i></button>
+                    ))}
+                  </div>
+                )}
+                {brand && activeMeal && menuSections.length >= 1 && (
+                  <div className="qb-menu-row sub">
+                    <button type="button" className={'qb-fchip' + (activeSection ? '' : ' on')} onClick={() => setSection(null)}>All {activeMeal.toLowerCase()} <i>{mealRows.length}</i></button>
+                    {menuSections.map(s => (
+                      <button type="button" key={s.id} className={'qb-fchip' + (activeSection === s.id ? ' on' : '')} onClick={() => setSection(s.id)}>{s.name} <i>{s.n}</i></button>
+                    ))}
+                  </div>
+                )}
+                <div className="qb-results-head">
+                  <h3>{activeSection ? (menuSections.find(s => s.id === activeSection) || {}).name : activeMeal ? activeMeal : shownRows.length + (isCatering ? ' dish' : ' item') + (shownRows.length !== 1 ? (isCatering ? 'es' : 's') : '')}{brand ? '' : cuisine ? ' · ' + cuisine : ''}</h3>
+                  <span>{isCatering ? 'Package price shown · tap a dish for options and pack sizes' : 'Pack price shown · tap an item for options and pack sizes'}</span>
+                </div>
+                {activeSection ? visibleRows.map(r => (
+                  <QBDish key={r.key} row={r} showBrand={false} open={openKey === r.key}
+                    onToggle={() => setOpenKey(openKey === r.key ? null : r.key)} onAdd={onAdd} />
+                )) : activeMeal ? menuSections.map(s => {
+                  const g = visibleRows.filter(r => r.fam.id === s.id);
+                  if (!g.length) return null;
+                  return (
+                    <div key={s.id} className="qb-subcat-group">
+                      <div className="qb-subcat-label">{s.name}</div>
+                      {g.map(r => <QBDish key={r.key} row={r} showBrand={false} hideQual open={openKey === r.key}
+                        onToggle={() => setOpenKey(openKey === r.key ? null : r.key)} onAdd={onAdd} />)}
+                    </div>
+                  );
+                }) : shownRows.length ? groupOrder.map(gk => {
+                  const g = gk == null ? visibleRows : visibleRows.filter(r => groupOf(r) === gk);
+                  if (!g.length) return null;
+                  return (
+                    <div key={gk == null ? 'all' : gk} className="qb-subcat-group">
+                      {gk != null && <div className="qb-subcat-label">{groupLabel(gk)}</div>}
+                      {g.map(r => <QBDish key={r.key} row={r} goods={!isCatering} showBrand={isCatering && !brand} open={openKey === r.key}
+                        onToggle={() => setOpenKey(openKey === r.key ? null : r.key)} onAdd={onAdd} />)}
+                    </div>
+                  );
+                }) : null}
+                {capped && (
+                  <button type="button" className="btn btn-sm btn-ink-ghost" style={{ width: '100%', marginTop: 4 }}
+                    onClick={() => setLimit(limit + 60)}>Show 60 more · {dishRows.length - limit} left</button>
+                )}
+                {!shownRows.length && <p className="qb-empty-note">Nothing matches{q ? ' \u201C' + query + '\u201D' : ''}{brand ? ' at ' + brand : ''}.</p>}
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -4346,7 +5419,7 @@ function QBShoppingList({ lines, allowed }) {
               {rows.map(r => (
                 <div className="qb-shop-row" key={r.line.id}>
                   <span>{r.line.packs}× {r.calc.item.short} · {r.calc.item.packLabel}</span>
-                  <span>{qbMoney(r.calc.price)}</span>
+                  <span>{r.calc.price > 0 ? qbMoney(r.calc.price) : <span className="qb-unpriced">not priced</span>}</span>
                 </div>
               ))}
               {min && subtotal < min && (
@@ -4518,11 +5591,24 @@ function Button({ variant = 'primary', size = 'md', disabled, fullWidth, onClick
   return <button className={cls} disabled={disabled} onClick={onClick} style={{ ...(fullWidth ? { width: '100%' } : {}), ...style }}>{children}</button>;
 }
 function SectionLabel({ children }) { return <p className="section-label">{children}</p>; }
-const QB_LOCKUP_SRC = 'data:image/png;base64,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';
 function BrandMark({ heightPx }) {
+  // Primary lockup: broken-ring crest + CS monogram, rule, wordmark, descriptor. Spacing is tied to the
+  // ring diameter so it scales as one unit; below ~64px the rule and descriptor drop away (small-size
+  // lockup) rather than rendering illegibly.
+  const H = heightPx || 44, s = H / 92, px = n => +(n * s).toFixed(2) + 'px', full = H >= 64;
+  const stroke = H < 48 ? 2.2 : 1.9;
   return (
-    <span className="brand">
-      <img className="brand-lockup" src={QB_LOCKUP_SRC} alt="Community Spark — Resident Events" width="1181" height="313" style={{ height: (heightPx || 44) + 'px', width: 'auto', display: 'block' }} />
+    <span className="brand" style={{ gap: px(26) }} aria-label="Community Spark — Resident events">
+      <svg width={px(92)} height={px(92)} viewBox="0 0 100 100" className="brand-ring" aria-hidden="true">
+        <circle cx="50" cy="55" r="40" fill="none" stroke="currentColor" strokeWidth={stroke} strokeDasharray="217.3 34" strokeDashoffset="17" transform="rotate(-90 50 55)"></circle>
+        <path d="M50 4 56 38 74 26 62 44 96 50 62 56 74 74 56 62 50 96 44 62 26 74 38 56 4 50 38 44 26 26 44 38Z" transform="translate(50 15) scale(0.21) translate(-50 -50)" fill="var(--gold)"></path>
+        <text x="50" y="58" textAnchor="middle" dominantBaseline="central" fontFamily="var(--font-display)" fontSize="38" fontWeight="600" letterSpacing="1.5" fill="currentColor">CS</text>
+      </svg>
+      <span className="brand-type">
+        {full && <span className="brand-rule"></span>}
+        <span className="brand-word" style={{ fontSize: px(40), paddingTop: full ? px(15) : 0 }}>Community Spark</span>
+        {full && <span className="brand-sub" style={{ fontSize: px(9.5), marginTop: px(13) }}>Resident events</span>}
+      </span>
     </span>
   );
 }
@@ -4550,6 +5636,7 @@ function QBLine({ line, allowed, onChange, onRemove }) {
   const it = calc.item;
   const lineCharge = line.charge != null ? line.charge : calc.price;
   const lineMargin = lineCharge > 0 ? (lineCharge - calc.price) / lineCharge * 100 : 0;
+  const unpriced = it.flat == null && !window.QB_STORES.some(s => it.prices[s.key] != null);
   const storeOptions = it.flat != null ? null : (() => {
     const best = calc.best;
     const opts = [{ key: 'best', label: 'Best · ' + (best.store === 'inhouse' ? 'In-house' : qbStoreName(best.store)) }];
@@ -4580,7 +5667,7 @@ function QBLine({ line, allowed, onChange, onRemove }) {
             </select>
           )}
         </div>
-        <div className="qb-cell-right qb-cost-value">{qbMoney(calc.price)}</div>
+        <div className="qb-cell-right qb-cost-value">{unpriced ? <span className="qb-unpriced">not priced</span> : qbMoney(calc.price)}</div>
         <div className="qb-charging">
           <QBNumber value={lineCharge} prefix="$" min={0} onChange={v => onChange({ ...line, charge: v })} width={72} align="right" />
           <div className={'qb-cell-sub qb-charging-margin ' + (line.charge == null ? '' : lineMargin < 0 ? 'qb-charging-warn' : 'qb-charging-good')}>
