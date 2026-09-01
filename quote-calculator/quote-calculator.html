@@ -858,9 +858,9 @@ window.QB_FAMILIES = [
     variants: [{ id: 'vanilla', name: 'Vanilla' }, { id: 'chocolate', name: 'Chocolate' },
                { id: 'cookiescream', name: 'Cookies & cream' }, { id: 'specialty', name: 'Specialty flavor', delta: 2 }],
     packs: [{ id: '2gal', label: '2 gallon tub (vanilla confirmed; other flavors priced the same pending a real quote)', per: 32, prices: P(null, null, 9.46, null) }] },
-  { id: 'icecreamcones', cat: 'food', name: 'Ice cream cones', unit: 'cone', perGuest: 1,
-    variants: [{ id: 'cake', name: 'Cake cone' }, { id: 'waffle', name: 'Waffle cone', delta: .5 }],
-    packs: [{ id: '100', label: '~100 ct box', per: 100, prices: P(null, null, null, null) }] },
+  { id: 'icecreamcones', cat: 'food', name: 'Gefen Sugar Cones', unit: 'cone', perGuest: 1,
+    variants: [{ id: 'cake', name: 'Cake/sugar cone' }, { id: 'waffle', name: 'Waffle cone', delta: .5 }],
+    packs: [{ id: '48', label: '48 ct box', per: 48, prices: P(null, null, null, null, null, null, 23.79) }] },
   { id: 'icecreamsyrup', cat: 'food', name: 'Ice cream syrup', unit: 'bottle', perGuest: .03,
     variants: [{ id: 'chocolate', name: 'Chocolate' }, { id: 'caramel', name: 'Caramel', delta: 1 }],
     packs: [{ id: '7.8lb', label: '7.8 lb jug', per: 1, prices: P(8.99, null, null, null) }] },
@@ -982,6 +982,9 @@ window.QB_FAMILIES = [
   { id: 'chocshavings', cat: 'food', name: 'Chocolate shavings, bulk bag', unit: 'bag', perGuest: .05,
     variants: [{ id: 'std', name: '' }],
     packs: [{ id: '1', label: 'Nestlé Toll House Semi-Sweet Morsels, 72 oz (topping substitute)', per: 1, prices: P(14.99, null, null, null) }] },
+  { id: 'minimms', cat: 'food', name: 'Mini M&M\'s, bulk bag', unit: 'bag', perGuest: .05,
+    variants: [{ id: 'std', name: 'Milk chocolate' }],
+    packs: [{ id: '1', label: 'Family size, 16.9 oz', per: 1, prices: P(null, null, null, null, null, null, 13.99) }] },
   { id: 'candycanestirrers', cat: 'food', name: 'Peppermint stick stirrers, bulk pack', unit: 'piece', perGuest: 1,
     variants: [{ id: 'std', name: '' }],
     packs: [{ id: '260', label: "Brach's Mini Peppermint Candy Canes, 260 ct", per: 260, prices: P(13.99, null, null, null) }] },
@@ -1061,6 +1064,12 @@ window.QB_FAMILIES = [
   { id: 'donuts', cat: 'catering', brand: 'Costco', name: 'Glazed donuts, bulk bakery pack', unit: 'donut', perGuest: 1.4,
     variants: [{ id: 'std', name: '' }],
     packs: [{ id: '12', label: 'Dozen (12 ct)', per: 12, prices: P(7.49, 6.99, null, null, null, 4.99, null) }] },
+  { id: 'assorteddonuts', cat: 'catering', brand: "Sam's Club", name: "Member's Mark Assorted Donut Tray", unit: 'donut', perGuest: 0,
+    variants: [{ id: 'std', name: 'Five flavors: chocolate frosted, pink iced, cinnamon sugar, cookies & cream filled, raspberry filled' }],
+    packs: [{ id: '20', label: '20 ct tray · 5 flavor varieties', per: 20, prices: P(null, null, 8.97, null, null, null, null) }] },
+  { id: 'donutholes', cat: 'catering', brand: 'Freshness Guaranteed', name: 'Munchkins-style Donut Holes', unit: 'donut', perGuest: 0,
+    variants: [{ id: 'std', name: 'Assorted: plain powdered sugar & cinnamon sugar' }],
+    packs: [{ id: '28', label: '28 ct box, 14 oz', per: 28, prices: P(null, null, null, null, null, null, 3.34) }] },
 
   // -- Qdoba Catering (real menu + pricing, QDOBA Mexican Eats, 14490 Clay Terrace Blvd, Carmel, IN —
   //    sourced live from ezCater on 2026-08-26; $30+ delivery fee, $100 delivery minimum, 25% fee if
@@ -3832,6 +3841,9 @@ window.QB_FAMILIES = [
     packs: [{ id: '175', label: '175 ct · Dixie', per: 175, prices: P(12.99, null, null, null, null, null, null) },
             { id: '200', label: '200 ct · Member\'s Mark', per: 200, prices: P(null, null, 13.98, null, null, null, null) },
             { id: '1000', label: '1000 ct · Chinet', per: 1000, prices: P(null, null, null, 38.43, null, null, null) }] },
+  { id: 'plasticbowls', cat: 'paper', name: 'PLASTICPRO Clear Plastic Serving Bowls', unit: 'bowl', perGuest: 1,
+    variants: [{ id: '6oz', name: '6 oz' }],
+    packs: [{ id: '100', label: '100 ct · clear, hard plastic', per: 100, prices: P(null, null, null, null, null, null, 11.99) }] },
   { id: 'stirrers', cat: 'paper', name: 'Coffee stirrers, bulk box', unit: 'stirrer', perGuest: 0,
     variants: [{ id: 'std', name: '' }],
     packs: [{ id: '5000', label: '5,000 ct · 7 in, plastic', per: 5000, prices: P(9.99, null, null, null, null, null, null) },
@@ -4388,9 +4400,16 @@ window.QB_EVENT_PRESETS = [
     { cat: 'prizes', item: 'totebags.std.12', packs: 6 }
   ] },
   { id: 'national-donut-day', name: 'National Donut Day', guests: 65, charge: 1250, lines: [
-    { cat: 'catering', item: 'donuts.std.12', packs: 8 },
+    { cat: 'catering', item: 'donuts.std.12', packs: 3 },
+    { cat: 'catering', item: 'assorteddonuts.std.20', packs: 2 },
+    { cat: 'catering', item: 'donutholes.std.28', packs: 1 },
     { cat: 'drinks', item: 'milkcartons.std.18', packs: 4 },
-    { cat: 'drinks', item: 'coffee.regular.100', packs: 1 }
+    { cat: 'food', item: 'oatcreamer.std.6', packs: 1 },
+    { cat: 'drinks', item: 'coffee.regular.100', packs: 1 },
+    { cat: 'drinks', item: 'coffee.decaf.100', packs: 1 },
+    { cat: 'paper', item: 'hotcups.12oz.100', packs: 1 },
+    { cat: 'paper', item: 'stirrers.std.5000', packs: 1 },
+    { cat: 'paper', item: 'napkins.white.800', packs: 1 }
   ] },
   { id: 'back-to-school-supply-event', name: 'Back-to-School Supply Event', guests: 65, charge: 1750, lines: [
     { cat: 'prizes', item: 'schoolkit.std.24', packs: 3 },
@@ -4411,7 +4430,10 @@ window.QB_EVENT_PRESETS = [
   { id: 'dog-adoption-pet-appreciation-day', name: 'Dog Adoption & Pet Appreciation Day', guests: 65, charge: 800, lines: [
     { cat: 'addons', item: 'milkbone.std.15', packs: 1 },
     { cat: 'addons', item: 'greenies.std.36', packs: 1 },
-    { cat: 'addons', item: 'poopbags.std.600', packs: 1 }
+    { cat: 'addons', item: 'poopbags.std.600', packs: 1 },
+    { cat: 'prizes', item: 'petgiftfillers.std.10', packs: 3 },
+    { cat: 'prizes', item: 'leashes.std.10', packs: 2 },
+    { cat: 'prizes', item: 'takehomebowls.std.12', packs: 2 }
   ] },
   { id: 'community-pool-party', name: 'Community Pool Party', guests: 65, charge: 1750, lines: [
     { cat: 'food', item: 'hotdogs.regular.12', packs: 9 },
@@ -4424,9 +4446,24 @@ window.QB_EVENT_PRESETS = [
     { cat: 'paper', item: 'cups.18.240', packs: 1 }
   ] },
   { id: 'national-ice-cream-day', name: 'National Ice Cream Day', guests: 65, charge: 1250, lines: [
-    { cat: 'food', item: 'icecreamtubs.vanilla.2gal', packs: 2 },
+    { cat: 'food', item: 'icecreamtubs.vanilla.2gal', packs: 1 },
+    { cat: 'food', item: 'icecreamtubs.chocolate.2gal', packs: 1 },
+    { cat: 'food', item: 'icecreamtubs.cookiescream.2gal', packs: 1 },
+    { cat: 'food', item: 'icecreamtubs.specialty.2gal', packs: 1 },
+    { cat: 'food', item: 'icecreamcones.cake.48', packs: 2 },
+    { cat: 'food', item: 'icecreamcones.waffle.48', packs: 1 },
     { cat: 'food', item: 'icecreamsyrup.chocolate.7.8lb', packs: 2 },
-    { cat: 'food', item: 'cherries.std.128oz', packs: 1 }
+    { cat: 'food', item: 'icecreamsyrup.caramel.7.8lb', packs: 1 },
+    { cat: 'food', item: 'cherries.std.128oz', packs: 1 },
+    { cat: 'food', item: 'icecreamtoppings.std.1', packs: 1 },
+    { cat: 'food', item: 'whipcream.std.3ct15', packs: 2 },
+    { cat: 'food', item: 'chocshavings.std.1', packs: 1 },
+    { cat: 'food', item: 'strawberries.std.1', packs: 3 },
+    { cat: 'food', item: 'minimms.std.1', packs: 1 },
+    { cat: 'paper', item: 'squeezebottles.std.4', packs: 1 },
+    { cat: 'paper', item: 'plasticbowls.6oz.100', packs: 1 },
+    { cat: 'paper', item: 'cutlery.std.180', packs: 1 },
+    { cat: 'paper', item: 'napkins.white.800', packs: 1 }
   ] },
   { id: 'national-coffee-day', name: 'National Coffee Day', guests: 65, charge: 1250, lines: [
     { cat: 'drinks', item: 'coffee.regular.100', packs: 1 },
