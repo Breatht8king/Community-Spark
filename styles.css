@@ -31,7 +31,7 @@ nav a:hover,nav a.active{color:var(--ink);background:var(--cream)}
 nav a.active{color:var(--gold)}
 .nav-cta{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 22px;border-radius:999px;background:var(--ink);color:#fff;font-size:13px;font-weight:700;transition:background .2s,transform .15s;flex-shrink:0}
 .nav-cta:hover{background:var(--plum);transform:translateY(-1px)}
-.mobile-toggle{display:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:#fff;place-items:center;font-size:18px;margin-left:auto;flex-shrink:0;cursor:pointer}
+.mobile-toggle{display:none;width:42px;height:42px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--paper);color:var(--ink);place-items:center;font-size:17px;margin-left:auto;flex-shrink:0;cursor:pointer}
 .mobile-drawer{display:none;position:fixed;inset:0;z-index:200}
 .mobile-drawer.open{display:block}
 .drawer-backdrop{position:absolute;inset:0;background:rgba(18,14,10,.6);backdrop-filter:blur(8px);cursor:pointer}

@@ -141,17 +141,13 @@
 /* ==========================================================================
    components/navigation — mobile drawer (corrected)
    ========================================================================== */
-.mobile-toggle{
-  display:none;
-  width:42px;height:42px;
-  align-items:center;justify-content:center;
-  border:1px solid var(--line);
-  border-radius:var(--r-pill);
-  background:var(--paper);
-  color:var(--ink);
-  font-size:17px;
-  cursor:pointer;
-}
+/* .mobile-toggle's show/hide-at-mobile-width rule lives in styles.css (with
+   the matching @media(max-width:920px) that also hides header>nav/.nav-cta
+   at the same breakpoint) — a duplicate unconditional display:none was here
+   before with no media query to re-enable it, which silently broke the
+   hamburger menu on every page that loads this file (i.e. every real page
+   except 404.html/privacy.html). Removed rather than re-duplicated so there's
+   one source of truth. */
 .mobile-drawer{
   position:fixed;inset:0;z-index:200;
   visibility:hidden;pointer-events:none;
