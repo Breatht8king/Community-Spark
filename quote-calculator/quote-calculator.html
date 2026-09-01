@@ -5840,7 +5840,29 @@ function QBApp() {
       let cancelled = false;
       fetch(QB_GITHUB_QUOTES_URL, { cache: 'no-store' })
         .then(r => (r.ok ? r.json() : null))
-        .then(data => { if (!cancelled && Array.isArray(data) && data.length) setSaved(data); })
+        .then(data => {
+          if (cancelled || !Array.isArray(data) || !data.length) return;
+          // This file is a manually-exported snapshot -- it can be arbitrarily stale
+          // relative to the live catalog, and this fetch can resolve *after* the user
+          // has already started editing on this device (e.g. loaded a preset and hit
+          // Update within the first second or two). Blindly replacing `saved` here was
+          // silently reverting both in-flight edits and, for any untouched preset id,
+          // masking every catalog change made since this file was last exported. Merge
+          // instead: skip every remote "Built-in preset" entry (the live local seed is
+          // always more current for those), and never clobber an id the current device
+          // has already genuinely saved/updated.
+          setSaved(current => {
+            const merged = [...current];
+            for (const remote of data) {
+              if (remote.date === 'Built-in preset') continue;
+              const local = merged.find(q => q.id === remote.id);
+              if (local && local.date !== 'Built-in preset') continue;
+              const idx = merged.findIndex(q => q.id === remote.id);
+              if (idx >= 0) merged[idx] = remote; else merged.unshift(remote);
+            }
+            return merged;
+          });
+        })
         .catch(() => { });
       return () => { cancelled = true; };
     }
