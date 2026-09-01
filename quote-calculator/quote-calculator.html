@@ -701,7 +701,7 @@ const P = (costco, bjs, sams, amazon, kroger, meijer, walmart) => ({ costco, bjs
 window.QB_FAMILIES = [
   // -- Drinks
   { id: 'coke', cat: 'drinks', name: 'Coca-Cola', unit: 'can', perGuest: 1.5,
-    variants: [{ id: 'classic', name: 'Classic' }, { id: 'cherry', name: 'Cherry', only: ['24'], delta: .6 }, { id: 'zero', name: 'Zero Sugar' }, { id: 'vanilla', name: 'Vanilla', only: ['12'], delta: .4 }],
+    variants: [{ id: 'classic', name: 'Classic' }, { id: 'cherry', name: 'Cherry', only: ['24'], delta: .6 }, { id: 'zero', name: 'Zero Sugar' }, { id: 'diet', name: 'Diet' }, { id: 'vanilla', name: 'Vanilla', only: ['12'], delta: .4 }],
     packs: [{ id: '12', label: '12 pack · 12 oz cans', per: 12, prices: P(null, null, null, 8.42, null, 8.99, null) },
             { id: '24', label: '24 pack · 12 oz cans', per: 24, prices: P(null, null, null, 14.77, null, 11.99, null) },
             { id: '35', label: '35 pack · 12 oz cans', per: 35, prices: P(null, 16.79, 18.48, null) }] },
@@ -4396,12 +4396,14 @@ window.QB_EVENT_PRESETS = [
     { cat: 'food', item: 'blueberries.std.1', packs: 2 },
     { cat: 'food', item: 'peanutbutter.std.80', packs: 1 },
     { cat: 'paper', item: 'plates.10.100', packs: 2 },
+    { cat: 'paper', item: 'cutlery.std.180', packs: 1 },
     { cat: 'paper', item: 'napkins.white.800', packs: 1 }
   ] },
   { id: 'pi-day-pizza-party', name: 'Pi Day Pizza Party', guests: 65, charge: 1250, lines: [
     { cat: 'catering', item: 'personalpizza.cheese.12', packs: 6 },
     { cat: 'prizes', item: 'giftcards.25.4', packs: 1 },
     { cat: 'paper', item: 'plates.10.100', packs: 2 },
+    { cat: 'paper', item: 'cutlery.std.180', packs: 1 },
     { cat: 'paper', item: 'napkins.white.800', packs: 1 }
   ] },
   { id: 'patio-decorating-contest', name: 'Patio Decorating Contest', guests: 65, charge: 1250, lines: [
@@ -4442,7 +4444,8 @@ window.QB_EVENT_PRESETS = [
     { cat: 'decor', item: 'falldecor.std.1', packs: 1 },
     { cat: 'paper', item: 'plates.10.100', packs: 2 },
     { cat: 'paper', item: 'cups.18.240', packs: 1 },
-    { cat: 'paper', item: 'cutlery.std.360', packs: 1 }
+    { cat: 'paper', item: 'cutlery.std.360', packs: 1 },
+    { cat: 'paper', item: 'napkins.white.800', packs: 1 }
   ] },
   { id: 'dog-adoption-pet-appreciation-day', name: 'Dog Adoption & Pet Appreciation Day', guests: 65, charge: 1250, lines: [
     { cat: 'addons', item: 'milkbone.std.15', packs: 1 },
@@ -4511,6 +4514,8 @@ window.QB_EVENT_PRESETS = [
     { cat: 'drinks', item: 'applecider.std.1gal', packs: 6 },
     { cat: 'food', item: 'pumpkindonuts.std.costco-18', packs: 4 },
     { cat: 'food', item: 'pumpkinpie.std.58oz', packs: 6 },
+    { cat: 'paper', item: 'plates.10.100', packs: 2 },
+    { cat: 'paper', item: 'cutlery.std.180', packs: 1 },
     { cat: 'paper', item: 'hotcups.12oz.100', packs: 1 },
     { cat: 'paper', item: 'napkins.white.800', packs: 1 }
   ] },
@@ -4523,7 +4528,10 @@ window.QB_EVENT_PRESETS = [
     { cat: 'food', item: 'pumpkindonuts.std.costco-18', packs: 4 },
     { cat: 'decor', item: 'halloweentablecloths.spiderweb.6', packs: 2 },
     { cat: 'decor', item: 'center.floral.6', packs: 2 },
-    { cat: 'decor', item: 'hangingdecor.std.30', packs: 2 }
+    { cat: 'decor', item: 'hangingdecor.std.30', packs: 2 },
+    { cat: 'paper', item: 'plates.10.100', packs: 2 },
+    { cat: 'paper', item: 'cutlery.std.180', packs: 1 },
+    { cat: 'paper', item: 'napkins.white.800', packs: 1 }
   ] },
   { id: 'hot-cocoa-bar', name: 'Hot Cocoa Bar', guests: 65, charge: 800, lines: [
     { cat: 'drinks', item: 'cocoa.classic.100', packs: 1 },
