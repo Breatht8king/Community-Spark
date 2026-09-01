@@ -3973,9 +3973,27 @@ window.QB_FAMILIES = [
   { id: 'takehomebowls', cat: 'prizes', name: 'Take-home dog bowls, bulk multi-pack', unit: 'bowl', perGuest: .3,
     variants: [{ id: 'std', name: 'Stainless steel' }],
     packs: [{ id: '12', label: '12 pack · stainless steel', per: 12, prices: P(null, null, null, 23.99) }] },
-  { id: 'petgiftfillers', cat: 'prizes', name: 'Pet gift bag fillers, bulk assortment', unit: 'piece', perGuest: 1,
-    variants: [{ id: 'std', name: 'Mini plush dog toys' }],
-    packs: [{ id: '10', label: '10 pack · 4.3" plush puppies', per: 10, prices: P(null, null, null, 19.99) }] },
+  { id: 'plushtoys', cat: 'prizes', name: 'Mini plush dog toys, bulk pack', unit: 'toy', perGuest: 0,
+    variants: [{ id: 'std', name: '4.3" plush puppies' }],
+    packs: [{ id: '10', label: '10 pack', per: 10, prices: P(null, null, null, 19.99) }] },
+  { id: 'petgiftbags', cat: 'prizes', name: 'BagDream Kraft Paper Gift Bags, bulk pack', unit: 'bag', perGuest: 0,
+    variants: [{ id: 'std', name: '5.25 x 3.75 x 8 in, with handles' }],
+    packs: [{ id: '100', label: '100 ct · white kraft', per: 100, prices: P(null, null, null, null, null, null, 24.49) }] },
+  { id: 'minitreats', cat: 'prizes', name: "Milk-Bone Mini's, small box (take-home)", unit: 'box', perGuest: 0,
+    variants: [{ id: 'std', name: 'Original biscuits' }],
+    packs: [{ id: '1', label: '15 oz box', per: 1, prices: P(null, null, null, null, null, null, 3.98) }] },
+  { id: 'petsmartgiftcards', cat: 'prizes', name: 'PetSmart gift cards', unit: 'card', perGuest: 0,
+    variants: [{ id: 'std', name: '$25 value' }],
+    packs: [{ id: '4', label: '4 cards · $100 value', per: 4, prices: P(null, null, 89.98, null, null, null, null) }] },
+  { id: 'blankcollar', cat: 'prizes', name: 'Plain nylon dog collar (paint-your-own)', unit: 'collar', perGuest: 0,
+    variants: [{ id: 'std', name: 'Adjustable, undecorated' }],
+    packs: [{ id: '1', label: '1 collar', per: 1, prices: P(null, null, null, null, null, null, 8.59) }] },
+  { id: 'blankleash', cat: 'prizes', name: 'Plain nylon dog leash (paint-your-own)', unit: 'leash', perGuest: 0,
+    variants: [{ id: 'std', name: '6 ft, undecorated' }],
+    packs: [{ id: '1', label: '1 leash', per: 1, prices: P(null, null, null, null, null, null, 9.99) }] },
+  { id: 'fabricmarkers', cat: 'prizes', name: 'Zenacolor Fabric Markers, bulk pack', unit: 'marker', perGuest: 0,
+    variants: [{ id: 'std', name: 'Assorted colors' }],
+    packs: [{ id: '32', label: '32 pack', per: 32, prices: P(null, null, null, null, null, null, 9.96) }] },
   // -- Prizes & Giveaways (added 2026-08-30)
   { id: 'trophies', cat: 'prizes', name: 'Bulk trophy awards', unit: 'trophy', perGuest: 0,
     variants: [{ id: 'star', name: '4.5in gold plastic star trophy' }, { id: 'cup', name: '5-6in gold plastic cup trophy' }],
@@ -4399,7 +4417,7 @@ window.QB_EVENT_PRESETS = [
   { id: 'community-farmers-market', name: 'Community Farmers Market', guests: 65, charge: 1750, lines: [
     { cat: 'prizes', item: 'totebags.std.12', packs: 6 }
   ] },
-  { id: 'national-donut-day', name: 'National Donut Day', guests: 65, charge: 1250, lines: [
+  { id: 'national-donut-day', name: 'National Donut Day', guests: 65, charge: 800, lines: [
     { cat: 'catering', item: 'donuts.std.12', packs: 3 },
     { cat: 'catering', item: 'assorteddonuts.std.20', packs: 2 },
     { cat: 'catering', item: 'donutholes.std.28', packs: 1 },
@@ -4427,13 +4445,19 @@ window.QB_EVENT_PRESETS = [
     { cat: 'paper', item: 'cups.18.240', packs: 1 },
     { cat: 'paper', item: 'cutlery.std.360', packs: 1 }
   ] },
-  { id: 'dog-adoption-pet-appreciation-day', name: 'Dog Adoption & Pet Appreciation Day', guests: 65, charge: 800, lines: [
+  { id: 'dog-adoption-pet-appreciation-day', name: 'Dog Adoption & Pet Appreciation Day', guests: 65, charge: 1250, lines: [
     { cat: 'addons', item: 'milkbone.std.15', packs: 1 },
     { cat: 'addons', item: 'greenies.std.36', packs: 1 },
     { cat: 'addons', item: 'poopbags.std.600', packs: 1 },
-    { cat: 'prizes', item: 'petgiftfillers.std.10', packs: 3 },
+    { cat: 'prizes', item: 'petgiftbags.std.100', packs: 1 },
+    { cat: 'prizes', item: 'plushtoys.std.10', packs: 3 },
+    { cat: 'prizes', item: 'minitreats.std.1', packs: 3 },
     { cat: 'prizes', item: 'leashes.std.10', packs: 2 },
-    { cat: 'prizes', item: 'takehomebowls.std.12', packs: 2 }
+    { cat: 'prizes', item: 'takehomebowls.std.12', packs: 2 },
+    { cat: 'prizes', item: 'petsmartgiftcards.std.4', packs: 1 },
+    { cat: 'prizes', item: 'blankcollar.std.1', packs: 8 },
+    { cat: 'prizes', item: 'blankleash.std.1', packs: 4 },
+    { cat: 'prizes', item: 'fabricmarkers.std.32', packs: 2 }
   ] },
   { id: 'community-pool-party', name: 'Community Pool Party', guests: 65, charge: 1750, lines: [
     { cat: 'food', item: 'hotdogs.regular.12', packs: 9 },
@@ -4445,7 +4469,7 @@ window.QB_EVENT_PRESETS = [
     { cat: 'drinks', item: 'coke.classic.35', packs: 3 },
     { cat: 'paper', item: 'cups.18.240', packs: 1 }
   ] },
-  { id: 'national-ice-cream-day', name: 'National Ice Cream Day', guests: 65, charge: 1250, lines: [
+  { id: 'national-ice-cream-day', name: 'National Ice Cream Day', guests: 65, charge: 800, lines: [
     { cat: 'food', item: 'icecreamtubs.vanilla.2gal', packs: 1 },
     { cat: 'food', item: 'icecreamtubs.chocolate.2gal', packs: 1 },
     { cat: 'food', item: 'icecreamtubs.cookiescream.2gal', packs: 1 },
@@ -4908,11 +4932,11 @@ const QB_SUBTYPES = {
     sandwichbags: 'Serving & Tables', freezerbags: 'Serving & Tables', placemats: 'Serving & Tables', foodcontainers: 'Serving & Tables',
     cuttingboardsheets: 'Serving & Tables' } },
   prizes: { order: ['Gift Cards & Grand Prizes', 'Giveaway Bags', 'Awards & Raffle', 'Garden Prizes', 'Pet Prizes', 'Custom Blanks'], map: {
-    giftcards: 'Gift Cards & Grand Prizes', grand: 'Gift Cards & Grand Prizes', basket: 'Gift Cards & Grand Prizes',
-    goody: 'Giveaway Bags', totebags: 'Giveaway Bags', supplybags: 'Giveaway Bags', backpacks: 'Giveaway Bags', schoolkit: 'Giveaway Bags',
+    giftcards: 'Gift Cards & Grand Prizes', grand: 'Gift Cards & Grand Prizes', basket: 'Gift Cards & Grand Prizes', petsmartgiftcards: 'Gift Cards & Grand Prizes',
+    goody: 'Giveaway Bags', totebags: 'Giveaway Bags', supplybags: 'Giveaway Bags', backpacks: 'Giveaway Bags', schoolkit: 'Giveaway Bags', petgiftbags: 'Giveaway Bags',
     medals: 'Awards & Raffle', raffle: 'Awards & Raffle',
     gardentools: 'Garden Prizes', wateringcan: 'Garden Prizes', plantties: 'Garden Prizes', planttags: 'Garden Prizes',
-    leashes: 'Pet Prizes', takehomebowls: 'Pet Prizes', petgiftfillers: 'Pet Prizes',
+    leashes: 'Pet Prizes', takehomebowls: 'Pet Prizes', plushtoys: 'Pet Prizes', minitreats: 'Pet Prizes', blankcollar: 'Pet Prizes', blankleash: 'Pet Prizes', fabricmarkers: 'Pet Prizes',
     tumblers: 'Custom Blanks', waterbottles: 'Custom Blanks',
     trophies: 'Awards & Raffle', certificates: 'Awards & Raffle',
     stickers: 'Giveaway Bags', keychains: 'Giveaway Bags', sunglasses: 'Giveaway Bags', coloringkit: 'Giveaway Bags',
@@ -4995,10 +5019,10 @@ const QB_FACET2 = {
     squeezebottles: 'Serving', souffecups: 'Serving', sandwichbags: 'Serving', freezerbags: 'Serving',
     buffetbowls: 'Serving', foodcontainers: 'Serving', cuttingboardsheets: 'Serving' } },
   prizes: { label: 'Who it suits', order: ['Anyone', 'Kids', 'Adults', 'Pets'], map: {
-    giftcards: 'Anyone', grand: 'Anyone', basket: 'Anyone', medals: 'Anyone', raffle: 'Anyone', totebags: 'Anyone',
-    goody: 'Kids', schoolkit: 'Kids', supplybags: 'Kids', backpacks: 'Kids',
+    giftcards: 'Anyone', grand: 'Anyone', basket: 'Anyone', medals: 'Anyone', raffle: 'Anyone', totebags: 'Anyone', petsmartgiftcards: 'Anyone',
+    goody: 'Kids', schoolkit: 'Kids', supplybags: 'Kids', backpacks: 'Kids', blankcollar: 'Kids', blankleash: 'Kids', fabricmarkers: 'Kids',
     gardentools: 'Adults', wateringcan: 'Adults', plantties: 'Adults', planttags: 'Adults', tumblers: 'Adults',
-    leashes: 'Pets', takehomebowls: 'Pets', petgiftfillers: 'Pets', bandanas: 'Pets',
+    leashes: 'Pets', takehomebowls: 'Pets', plushtoys: 'Pets', minitreats: 'Pets', petgiftbags: 'Pets', bandanas: 'Pets',
     trophies: 'Anyone', certificates: 'Anyone', keychains: 'Anyone', waterbottles: 'Anyone', stressballs: 'Anyone',
     stickers: 'Kids', coloringkit: 'Kids', squirtguns: 'Kids',
     sunglasses: 'Adults' } },
