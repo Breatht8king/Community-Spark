@@ -5875,6 +5875,14 @@ function QBApp() {
     setLines(window.QB_SAMPLE.map((s, i) => ({ id: 's' + uid.current + '-' + i, cat: s.cat, item: s.item, packs: s.packs, store: 'best', note: '' })));
   }
   function loadPreset(presetId) {
+    // A saved/updated copy of this preset always wins over the pristine catalog
+    // version -- otherwise "Update saved quote" appears to silently undo itself
+    // the next time this event is loaded from this dropdown.
+    const savedVersion = saved.find(q => q.id === presetId);
+    if (savedVersion) {
+      loadQuote(savedVersion);
+      return;
+    }
     const preset = window.QB_EVENT_PRESETS.find(p => p.id === presetId);
     if (!preset) return;
     uid.current += 1;
