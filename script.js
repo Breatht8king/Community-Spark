@@ -276,9 +276,7 @@ if(sponsorForm){
 }
 var bookEventSelect=document.getElementById('bookEventSelect');
 var bookingType='preset';
-var bookEventAddonsGroup=document.getElementById('bookEventAddonsGroup'),
-    bookEventAddonsList=document.getElementById('bookEventAddonsList'),
-    bookPackageAddonsList=document.getElementById('bookPackageAddonsList');
+var bookPackageAddonsList=document.getElementById('bookPackageAddonsList');
 function addonCheckboxLabel(text,fieldName,opts){
   opts=opts||{};
   var label=document.createElement('label');
@@ -308,15 +306,6 @@ function addonCheckboxLabel(text,fieldName,opts){
     label.appendChild(pendingEl);
   }
   return label;
-}
-function renderEventAddons(){
-  if(!bookEventAddonsList||!bookEventAddonsGroup)return;
-  bookEventAddonsList.innerHTML='';
-  var opt=selectedEventOption();
-  var items=(opt&&opt.value&&typeof EVENT_ADDONS!=='undefined')?EVENT_ADDONS[opt.value]:null;
-  if(bookingType==='custom'||!items||!items.length){bookEventAddonsGroup.hidden=true;return;}
-  items.forEach(function(item){bookEventAddonsList.appendChild(addonCheckboxLabel(item,'eventAddons',{pendingLabel:'Priced in proposal'}));});
-  bookEventAddonsGroup.hidden=false;
 }
 function renderPackageAddons(){
   if(!bookPackageAddonsList||typeof GENERAL_ADDON_PACKAGES==='undefined')return;
@@ -432,7 +421,6 @@ function selectedEventOption(){
   return bookEventSelect&&bookEventSelect.selectedOptions?bookEventSelect.selectedOptions[0]:null;
 }
 function updateEventIntro(){
-  renderEventAddons();
   if(!bookingEventNameEl||!bookingEventMetaEl)return;
   if(bookingType==='custom'){
     bookingEventNameEl.textContent='Booking: Custom Event';
