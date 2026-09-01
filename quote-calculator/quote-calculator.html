@@ -4120,7 +4120,7 @@ window.QB_FAMILIES = [
     variants: [{ id: 'std', name: 'For: National Ice Cream Day' }],
     packs: [{ id: '1', label: '1 set · 3 pc stainless steel, release trigger', per: 1, prices: P(null, null, null, 9.99) }] },
   { id: 'rollingcooler', cat: 'staffing', name: 'Wheeled rolling cooler', unit: 'unit', perGuest: 0,
-    variants: [{ id: 'std', name: 'For: Trivia Night, Bagel Bar, March Madness, Pool Party, Ice Cream Day, Farmers Market' }],
+    variants: [{ id: 'std', name: 'For: Trivia Night, Bingo Night, Bagel Bar, March Madness, Pool Party, Ice Cream Day, Farmers Market' }],
     packs: [{ id: '1', label: '1 unit · 60 qt', per: 1, prices: P(null, null, null, 89.99) }] },
   { id: 'extensioncord', cat: 'staffing', name: 'Heavy-duty outdoor extension cord', unit: 'cord', perGuest: 0,
     variants: [{ id: 'std', name: 'For: Waffle Bar, March Madness, Bagel Bar, Donut Day, Coffee Day, Hot Cocoa Bar, Fitness Session, Fall Festival, Pumpkin Decorating, Halloween Dessert Bar — anywhere something plugs in' }],
@@ -4167,6 +4167,9 @@ window.QB_FAMILIES = [
   { id: 'scoreboard', cat: 'staffing', name: 'Maxtek Tripod Easel Whiteboard', unit: 'unit', perGuest: 0,
     variants: [{ id: 'std', name: 'For: Trivia Night — team score tracking, visible room-wide' }],
     packs: [{ id: '1', label: '1 unit · 36x24in magnetic dry-erase board, height-adjustable tripod stand', per: 1, prices: P(null, null, null, 52.99, null, null, null) }] },
+  { id: 'bingokit', cat: 'staffing', name: 'GSE Games & Sports Expert Deluxe Bingo Game Set', unit: 'set', perGuest: 0,
+    variants: [{ id: 'std', name: 'For: Bingo Night — metal cage, master board, 75 balls, chips & 50 reusable cards' }],
+    packs: [{ id: '1', label: '1 set · reusable cards, chips, calling cage & master board', per: 1, prices: P(null, null, null, null, null, null, 24.98) }] },
   // -- More reusable equipment (added 2026-08-30)
   { id: 'chestcooler', cat: 'staffing', name: 'Large chest cooler', unit: 'unit', perGuest: 0,
     variants: [{ id: 'std', name: 'General use — extra beverage/food cold storage (distinct from the wheeled rolling cooler)' }],
@@ -4290,6 +4293,21 @@ window.QB_SAMPLE = [
    genuinely needs contracted extra help; just add them from the category picker when that applies. */
 window.QB_EVENT_PRESETS = [
   { id: 'trivia-night', name: 'Trivia Night', guests: 50, charge: 1250, lines: [
+    { cat: 'food', item: 'chips.classic.50', packs: 1 },
+    { cat: 'food', item: 'pretzels.original.32', packs: 2 },
+    { cat: 'food', item: 'candy.std.jar', packs: 3 },
+    { cat: 'drinks', item: 'coke.classic.35', packs: 1 },
+    { cat: 'drinks', item: 'pepsi.classic.24', packs: 1 },
+    { cat: 'drinks', item: 'rootbeer.classic.24', packs: 1 },
+    { cat: 'drinks', item: 'lemonlime.regular.24', packs: 1 },
+    { cat: 'drinks', item: 'cannedlemonade.classic.12', packs: 2 },
+    { cat: 'drinks', item: 'water.purified.40', packs: 3 },
+    { cat: 'paper', item: 'plates.10.100', packs: 1 },
+    { cat: 'paper', item: 'cutlery.std.180', packs: 1 },
+    { cat: 'paper', item: 'napkins.white.800', packs: 1 },
+    { cat: 'staffing', item: 'rentalfee.std.1', packs: 1 }
+  ] },
+  { id: 'bingo-night', name: 'Bingo Night', guests: 50, charge: 800, lines: [
     { cat: 'food', item: 'chips.classic.50', packs: 1 },
     { cat: 'food', item: 'pretzels.original.32', packs: 2 },
     { cat: 'food', item: 'candy.std.jar', packs: 3 },
@@ -4888,7 +4906,7 @@ const QB_SUBTYPES = {
     chestcooler: 'Food Equipment', waterdispenser: 'Food Equipment', beveragetub: 'Food Equipment',
     patioheater: 'Logistics & Safety', utilitywagon: 'Logistics & Safety', tarp: 'Logistics & Safety', cashbox: 'Logistics & Safety',
     stepladder: 'Logistics & Safety', barriertape: 'Logistics & Safety', countdowntimer: 'Logistics & Safety', trafficcones: 'Logistics & Safety',
-    garmentrack: 'Logistics & Safety', triviawhiteboards: 'Logistics & Safety', scoreboard: 'Logistics & Safety' } },
+    garmentrack: 'Logistics & Safety', triviawhiteboards: 'Logistics & Safety', scoreboard: 'Logistics & Safety', bingokit: 'Logistics & Safety' } },
 };
 // Second facet, chosen per category for what it actually decides. Only Drinks cares how it's packaged.
 const QB_FACET2 = {
@@ -4969,7 +4987,7 @@ const QB_FACET2 = {
     marketumbrella: 'Owned gear', wirelessmic: 'Owned gear', cardtable: 'Owned gear', projectorscreen: 'Owned gear', megaphone: 'Owned gear',
     directorschair: 'Owned gear', stepladder: 'Owned gear', barriertape: 'Owned gear', countdowntimer: 'Owned gear', trafficcones: 'Owned gear',
     beveragetub: 'Owned gear', walkietalkies: 'Owned gear', garmentrack: 'Owned gear', stringlightpole: 'Owned gear', tentlightkit: 'Owned gear',
-    triviawhiteboards: 'Owned gear', scoreboard: 'Owned gear' } },
+    triviawhiteboards: 'Owned gear', scoreboard: 'Owned gear', bingokit: 'Owned gear' } },
 };
 function qbFacet2(fam) {
   const c = QB_FACET2[fam.cat];
