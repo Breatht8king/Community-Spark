@@ -757,9 +757,12 @@ window.QB_FAMILIES = [
     variants: [{ id: 'medium', name: 'Medium roast' }],
     packs: [{ id: '120', label: '120 ct · Kirkland Signature Summit Roast (organic, medium)', per: 120, prices: P(31.99, null, null, null, null, 31.99, null) },
             { id: '100', label: '100 ct', per: 100, prices: P(null, null, 28.00, 42.97) }] },
-  { id: 'pumpkinsyrup', cat: 'drinks', name: 'Flavored coffee syrup, bulk bottle (pumpkin spice)', unit: 'oz', perGuest: .4,
-    variants: [{ id: 'pumpkinspice', name: 'Pumpkin spice' }],
+  { id: 'pumpkinsyrup', cat: 'drinks', name: 'Flavored coffee syrup, bulk bottle', unit: 'oz', perGuest: .4,
+    variants: [{ id: 'pumpkinspice', name: 'Pumpkin spice' }, { id: 'vanilla', name: 'Vanilla' }],
     packs: [{ id: '750ml', label: '750 mL (25.4 oz) bottle · Torani', per: 25.4, prices: P(null, null, null, 19.99) }] },
+  { id: 'localcoffee', cat: 'drinks', brand: 'Indie Coffee Roasters', name: 'Indie Coffee Roasters Circle Blend, local roast', unit: 'bag', perGuest: 0,
+    variants: [{ id: 'std', name: '12 oz bag -- Carmel, IN roaster' }],
+    packs: [{ id: '1', label: '12 oz bag', per: 1, flat: 17.00 }] },
   // -- Drinks (added 2026-08-30)
   { id: 'gingerale', cat: 'drinks', name: 'Canada Dry Ginger Ale', unit: 'can', perGuest: 1,
     variants: [{ id: 'classic', name: 'Classic' }, { id: 'zero', name: 'Zero sugar' }],
@@ -4452,14 +4455,15 @@ window.QB_EVENT_PRESETS = [
     { cat: 'prizes', item: 'takehomebowls.std.12', packs: 2 },
     { cat: 'prizes', item: 'petsmartgiftcards.std.4', packs: 1 }
   ] },
-  { id: 'community-pool-party', name: 'Community Pool Party', guests: 65, charge: 1750, lines: [
-    { cat: 'food', item: 'hotdogs.regular.12', packs: 9 },
-    { cat: 'food', item: 'buns.hotdog.24', packs: 5 },
+  { id: 'community-pool-party', name: 'Community Pool Party', guests: 100, charge: 1750, lines: [
+    { cat: 'food', item: 'hotdogs.regular.12', packs: 13 },
+    { cat: 'food', item: 'buns.hotdog.24', packs: 7 },
     { cat: 'food', item: 'chips.classic.50', packs: 2 },
-    { cat: 'catering', item: 'pizza.cheese.4', packs: 3 },
-    { cat: 'food', item: 'fruit.std.20', packs: 2 },
-    { cat: 'food', item: 'vegetables.std.20', packs: 2 },
+    { cat: 'catering', item: 'pizza.cheese.4', packs: 4 },
+    { cat: 'food', item: 'fruit.std.20', packs: 3 },
+    { cat: 'food', item: 'vegetables.std.20', packs: 3 },
     { cat: 'drinks', item: 'coke.classic.35', packs: 3 },
+    { cat: 'drinks', item: 'pepsi.classic.24', packs: 2 },
     { cat: 'paper', item: 'cups.18.240', packs: 1 }
   ] },
   { id: 'national-ice-cream-day', name: 'National Ice Cream Day', guests: 65, charge: 800, lines: [
@@ -4483,9 +4487,10 @@ window.QB_EVENT_PRESETS = [
     { cat: 'paper', item: 'napkins.white.800', packs: 1 }
   ] },
   { id: 'national-coffee-day', name: 'National Coffee Day', guests: 65, charge: 1250, lines: [
-    { cat: 'drinks', item: 'coffee.regular.100', packs: 1 },
+    { cat: 'drinks', item: 'localcoffee.std.1', packs: 3 },
     { cat: 'drinks', item: 'coffeepods.medium.120', packs: 1 },
     { cat: 'drinks', item: 'pumpkinsyrup.pumpkinspice.750ml', packs: 2 },
+    { cat: 'drinks', item: 'pumpkinsyrup.vanilla.750ml', packs: 1 },
     { cat: 'paper', item: 'hotcups.12oz.100', packs: 1 },
     { cat: 'paper', item: 'napkins.white.800', packs: 1 },
     { cat: 'drinks', item: 'applecider.std.1gal', packs: 6 }
@@ -4865,7 +4870,7 @@ const QB_SUBTYPES = {
     juice: 'Juice & Cider', applecider: 'Juice & Cider',
     lemonade: 'Lemonade & Tea', icedtea: 'Lemonade & Tea',
     sports: 'Sports & Energy', energydrink: 'Sports & Energy',
-    coffee: 'Coffee & Cocoa', coldbrew: 'Coffee & Cocoa', cocoa: 'Coffee & Cocoa', coffeepods: 'Coffee & Cocoa', pumpkinsyrup: 'Coffee & Cocoa',
+    coffee: 'Coffee & Cocoa', coldbrew: 'Coffee & Cocoa', cocoa: 'Coffee & Cocoa', coffeepods: 'Coffee & Cocoa', pumpkinsyrup: 'Coffee & Cocoa', localcoffee: 'Coffee & Cocoa',
     milkcartons: 'Milk',
     gingerale: 'Soda', rootbeer: 'Soda', orangesoda: 'Soda', prebioticsoda: 'Soda', creamsoda: 'Soda', grapefruitsoda: 'Soda', tonicwater: 'Soda',
     fruitpunch: 'Juice & Cider', sparklingcider: 'Juice & Cider', powderdrinkmix: 'Juice & Cider', juicepouch: 'Juice & Cider', cidermix: 'Juice & Cider',
