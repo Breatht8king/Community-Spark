@@ -4,7 +4,7 @@
 .skip-link:focus{top:12px}
 .event-price{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:10px;row-gap:2px}
 .event-amount{font-size:17px;font-weight:700;white-space:nowrap}
-.event-band{font-size:15px;font-weight:600;color:var(--muted);white-space:nowrap}
+.event-band{font-size:17px;font-weight:600;color:var(--muted);white-space:nowrap}
 [hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{font-family:"Inter",sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
