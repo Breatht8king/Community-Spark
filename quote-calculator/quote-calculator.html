@@ -4041,9 +4041,12 @@ window.QB_FAMILIES = [
   { id: 'snowcone', cat: 'addons', name: 'Snow cone machine kit', unit: 'kit', perGuest: 0,
     variants: [{ id: 'classic', name: 'Classic syrups' }, { id: 'tropical', name: 'Tropical syrups', delta: 5 }],
     packs: [{ id: '1', label: '1 kit · Hawaiian Shaved Ice S700, incl. 6x16oz syrups, cups & spoon straws — mfr. spec ~50 servings', per: 1, prices: P(null, null, null, 87.99) }] },
-  { id: 'arcadebball', cat: 'addons', name: 'Two-player arcade basketball game rental', unit: 'day', perGuest: 0,
-    variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '1', label: 'Per day', per: 1, flat: 175.00 }] },
+  { id: 'arcadebball', cat: 'addons', name: 'Two-player arcade basketball game', unit: 'day', perGuest: 0,
+    variants: [{ id: 'std', name: 'Owned -- reused event to event, not a per-event cost' }],
+    packs: [{ id: '1', label: 'Owned, no per-event cost', per: 1, flat: 0.00 }] },
+  { id: 'bracketprintouts', cat: 'addons', name: 'Pen + Gear Copy Paper, printed bracket sheets', unit: 'sheet', perGuest: 1,
+    variants: [{ id: 'std', name: 'Printed in-house from a free bracket template' }],
+    packs: [{ id: '500', label: '1 ream, 500 sheets', per: 500, prices: P(null, null, null, null, null, null, 5.77) }] },
   { id: 'milkbone', cat: 'addons', name: 'Milk-Bone dog treats, bulk box', unit: 'lb', perGuest: .03,
     variants: [{ id: 'std', name: 'Original biscuits' }],
     packs: [{ id: '15', label: '15 lb box', per: 15, prices: P(null, null, 21.94, null) }] },
@@ -4376,7 +4379,9 @@ window.QB_EVENT_PRESETS = [
     { cat: 'food', item: 'hummus.std.32', packs: 3 },
     { cat: 'food', item: 'fruit.std.20', packs: 2 },
     { cat: 'drinks', item: 'coke.classic.35', packs: 3 },
+    { cat: 'drinks', item: 'pepsi.classic.24', packs: 2 },
     { cat: 'decor', item: 'bballdecor.std.1', packs: 4 },
+    { cat: 'addons', item: 'bracketprintouts.std.500', packs: 1 },
   ] },
   { id: 'waffle-bar', name: 'Build-Your-Own Waffle Bar', guests: 65, charge: 1250, lines: [
     { cat: 'food', item: 'wafflemix.buttermilk.10lb', packs: 1 },
@@ -4932,7 +4937,7 @@ const QB_SUBTYPES = {
     bandanas: 'Pet Prizes' } },
   addons: { order: ['Activities & Games', 'Treat Machines', 'Ice', 'Pet Supplies'], map: {
     photobooth: 'Activities & Games', facepaint: 'Activities & Games', lawngames: 'Activities & Games',
-    bouncehouse: 'Activities & Games', arcadebball: 'Activities & Games',
+    bouncehouse: 'Activities & Games', arcadebball: 'Activities & Games', bracketprintouts: 'Activities & Games',
     cottoncandy: 'Treat Machines', snowcone: 'Treat Machines',
     ice: 'Ice',
     milkbone: 'Pet Supplies', greenies: 'Pet Supplies', poopbags: 'Pet Supplies', dogbowlsdisp: 'Pet Supplies',
@@ -5018,7 +5023,7 @@ const QB_FACET2 = {
     photobooth: 'Keep & reuse', lawngames: 'Keep & reuse', snowcone: 'Keep & reuse',
     bouncehouse: 'Keep & reuse', arcadebball: 'Keep & reuse',
     facepaint: 'Restock each event', cottoncandy: 'Restock each event', ice: 'Restock each event',
-    milkbone: 'Restock each event', greenies: 'Restock each event', poopbags: 'Restock each event',
+    milkbone: 'Restock each event', greenies: 'Restock each event', poopbags: 'Restock each event', bracketprintouts: 'Restock each event',
     dogbowlsdisp: 'Restock each event',
     karaoke: 'Keep & reuse', btspeaker: 'Keep & reuse', cornhole: 'Keep & reuse', giantjenga: 'Keep & reuse',
     ringtoss: 'Keep & reuse', pumpkinpatch: 'Keep & reuse',
@@ -5875,10 +5880,15 @@ function QBApp() {
     setLines(window.QB_SAMPLE.map((s, i) => ({ id: 's' + uid.current + '-' + i, cat: s.cat, item: s.item, packs: s.packs, store: 'best', note: '' })));
   }
   function loadPreset(presetId) {
-    // A saved/updated copy of this preset always wins over the pristine catalog
+    // A version the user actually saved/updated wins over the pristine catalog
     // version -- otherwise "Update saved quote" appears to silently undo itself
-    // the next time this event is loaded from this dropdown.
-    const savedVersion = saved.find(q => q.id === presetId);
+    // the next time this event is loaded from this dropdown. But an untouched
+    // auto-seeded "Built-in preset" copy (which every event gets on first load,
+    // for every browser) must NOT win -- that would permanently shadow any future
+    // catalog update to that event's recipe, even though the user never asked to
+    // freeze it. Only a real save/update (a real date, not the seed sentinel)
+    // counts as the user's own choice.
+    const savedVersion = saved.find(q => q.id === presetId && q.date !== 'Built-in preset');
     if (savedVersion) {
       loadQuote(savedVersion);
       return;
