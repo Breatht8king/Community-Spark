@@ -1,8 +1,13 @@
 {
   "name": "community-spark-calc",
   "compatibility_date": "2026-08-30",
+  "main": "worker.js",
   "assets": {
     "directory": "./",
-    "not_found_handling": "404-page"
-  }
+    "not_found_handling": "404-page",
+    "binding": "ASSETS"
+  },
+  "kv_namespaces": [
+    { "binding": "QUOTES_KV", "id": "cde3cd83cd0c4d9fa69b7fa9b96d5056" }
+  ]
 }

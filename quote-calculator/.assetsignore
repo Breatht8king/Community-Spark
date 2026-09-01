@@ -1,3 +1,4 @@
 .wrangler
 .assetsignore
 wrangler.jsonc
+worker.js

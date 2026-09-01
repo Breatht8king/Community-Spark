@@ -5671,13 +5671,10 @@ Object.assign(window, {
 </script>
 <script type="text/babel">
 const QB_KEY = 'cs-event-quote-builder-v1';
-/* Cross-device sync, read side only: on load, the app fetches this file straight from the public GitHub
-   repo and — if it's there and well-formed — replaces the local Saved Quotes list with it. This means any
-   device opening the app always sees the latest committed quotes with zero setup on that device.
-   There is deliberately no write side: this page never pushes to GitHub itself (that would require a
-   write-capable token embedded in client-side code, which anyone opening the page could read out). To
-   share edits, use "Export saved quotes" (in the Saved Quotes card) and commit that file the normal way. */
-const QB_GITHUB_QUOTES_URL = 'https://raw.githubusercontent.com/Breatht8king/Community-Spark/main/quote-calculator/saved-quotes.json';
+/* Cross-device sync: Saved Quotes are backed by Cloudflare KV via this same Worker's own
+   /api/quotes endpoint (see worker.js) -- every save/update/duplicate/rename/delete writes
+   through to it (see pushSaved), and every load reads the current shared state back. Real
+   two-way sync, not a one-time bootstrap from a manually-exported file. */
 
 function Button({ variant = 'primary', size = 'md', disabled, fullWidth, onClick, children, style }) {
   const cls = ['btn', variant === 'inkGhost' ? 'btn-ink-ghost' : 'btn-primary', size === 'sm' ? 'btn-sm' : ''].filter(Boolean).join(' ');
@@ -5817,56 +5814,55 @@ function QBApp() {
   const bump = () => setTick(t => t + 1);
 
   useEffect(() => {
-    let hadLocalSaved = false;
     try {
       const saved_ = JSON.parse(localStorage.getItem(QB_KEY));
       if (saved_) {
         setLines(saved_.lines || []); setName(saved_.name || ''); setGuests(saved_.guests ?? 60);
         setCharge(saved_.charge ?? 0); setTaxPct(saved_.taxPct ?? 7); setDelivery(saved_.delivery ?? 0);
         setTarget(saved_.target ?? 35); setDepositPct(saved_.depositPct ?? 50);
-        hadLocalSaved = !!(saved_.saved && saved_.saved.length);
-        setSaved(hadLocalSaved ? saved_.saved : seedPresetQuotes());
+        setSaved(saved_.saved && saved_.saved.length ? saved_.saved : seedPresetQuotes());
         setAllowed(saved_.allowed || []);
       } else {
         setSaved(seedPresetQuotes());
       }
     } catch (e) { }
 
-    // Only bootstrap saved quotes from GitHub on a fresh browser/device that has nothing saved locally
-    // yet — once anything has been saved here, that always wins. There's no write side (this page never
-    // pushes to GitHub), so treating the remote file as always-authoritative would silently overwrite a
-    // local-only save on every reload — that was the bug behind "I click Save and nothing happens."
-    if (!hadLocalSaved) {
-      let cancelled = false;
-      fetch(QB_GITHUB_QUOTES_URL, { cache: 'no-store' })
-        .then(r => (r.ok ? r.json() : null))
-        .then(data => {
-          if (cancelled || !Array.isArray(data) || !data.length) return;
-          // This file is a manually-exported snapshot -- it can be arbitrarily stale
-          // relative to the live catalog, and this fetch can resolve *after* the user
-          // has already started editing on this device (e.g. loaded a preset and hit
-          // Update within the first second or two). Blindly replacing `saved` here was
-          // silently reverting both in-flight edits and, for any untouched preset id,
-          // masking every catalog change made since this file was last exported. Merge
-          // instead: skip every remote "Built-in preset" entry (the live local seed is
-          // always more current for those), and never clobber an id the current device
-          // has already genuinely saved/updated.
-          setSaved(current => {
-            const merged = [...current];
-            for (const remote of data) {
-              if (remote.date === 'Built-in preset') continue;
-              const local = merged.find(q => q.id === remote.id);
-              if (local && local.date !== 'Built-in preset') continue;
-              const idx = merged.findIndex(q => q.id === remote.id);
-              if (idx >= 0) merged[idx] = remote; else merged.unshift(remote);
-            }
-            return merged;
-          });
-        })
-        .catch(() => { });
-      return () => { cancelled = true; };
-    }
+    // Real cross-device sync: /api/quotes is backed by Cloudflare KV on this same Worker
+    // (see worker.js) -- every save/update/duplicate/rename/delete pushes here too (see
+    // pushSaved below), so this is live shared state, not a stale manual export. Runs on
+    // every load (not just a fresh device) and merges rather than replaces: whichever side
+    // has the newer `updatedAt` for a given id wins. An untouched "Built-in preset" entry
+    // has no updatedAt (treated as 0) on both sides, so ties go to local -- which is always
+    // the current live catalog via seedPresetQuotes() above -- and a genuine edit (local or
+    // remote, whichever happened more recently) always wins over that.
+    let cancelled = false;
+    fetch('/api/quotes', { cache: 'no-store' })
+      .then(r => (r.ok ? r.json() : null))
+      .then(data => {
+        if (cancelled || !Array.isArray(data) || !data.length) return;
+        setSaved(current => {
+          const merged = [...current];
+          for (const remote of data) {
+            const idx = merged.findIndex(q => q.id === remote.id);
+            if (idx < 0) { merged.push(remote); continue; }
+            if ((remote.updatedAt || 0) > (merged[idx].updatedAt || 0)) merged[idx] = remote;
+          }
+          return merged;
+        });
+      })
+      .catch(() => { });
+    return () => { cancelled = true; };
   }, []);
+
+  // Pushes a new Saved Quotes list to both local state and the shared KV store, so every
+  // user-initiated change (save/update/duplicate/rename/delete) reaches other devices.
+  // Fire-and-forget on the network side -- local state and localStorage (via the effect
+  // below) always update immediately regardless of connectivity.
+  function pushSaved(next) {
+    setSaved(next);
+    fetch('/api/quotes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(next) })
+      .catch(() => { });
+  }
 
   useEffect(() => {
     localStorage.setItem(QB_KEY, JSON.stringify({ lines, name, guests, charge, taxPct, delivery, target, depositPct, saved, allowed }));
@@ -5930,15 +5926,16 @@ function QBApp() {
   function saveQuote() {
     if (!lines.length) return;
     const id = 'q' + Date.now();
-    const snap = { id, name, date: new Date().toLocaleDateString('en-US'), cost, charge, lines, guests, taxPct, delivery, allowed, depositPct };
-    setSaved(s => [snap, ...s].slice(0, 12));
+    const snap = { id, name, date: new Date().toLocaleDateString('en-US'), updatedAt: Date.now(), cost, charge, lines, guests, taxPct, delivery, allowed, depositPct };
+    pushSaved([snap, ...saved].slice(0, 12));
     setLoadedQuoteId(id);
     setSaveMsg('Saved.');
   }
   function updateQuote() {
     if (!lines.length || !loadedQuoteId) return;
-    const snap = { id: loadedQuoteId, name, date: new Date().toLocaleDateString('en-US'), cost, charge, lines, guests, taxPct, delivery, allowed, depositPct };
-    setSaved(s => s.some(q => q.id === loadedQuoteId) ? s.map(q => q.id === loadedQuoteId ? snap : q) : [snap, ...s].slice(0, 12));
+    const snap = { id: loadedQuoteId, name, date: new Date().toLocaleDateString('en-US'), updatedAt: Date.now(), cost, charge, lines, guests, taxPct, delivery, allowed, depositPct };
+    const next = saved.some(q => q.id === loadedQuoteId) ? saved.map(q => q.id === loadedQuoteId ? snap : q) : [snap, ...saved].slice(0, 12);
+    pushSaved(next);
     setSaveMsg('Updated.');
   }
   function loadQuote(q) {
@@ -5949,10 +5946,11 @@ function QBApp() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   function duplicateQuote(q) {
-    setSaved(s => [{ ...q, id: 'q' + Date.now(), name: (q.name || 'Untitled quote') + ' (copy)', date: new Date().toLocaleDateString('en-US') }, ...s].slice(0, 12));
+    const copy = { ...q, id: 'q' + Date.now(), name: (q.name || 'Untitled quote') + ' (copy)', date: new Date().toLocaleDateString('en-US'), updatedAt: Date.now() };
+    pushSaved([copy, ...saved].slice(0, 12));
   }
-  function renameQuote(id, newName) { setSaved(s => s.map(q => q.id === id ? { ...q, name: newName } : q)); }
-  function deleteQuote(id) { setSaved(s => s.filter(q => q.id !== id)); }
+  function renameQuote(id, newName) { pushSaved(saved.map(q => q.id === id ? { ...q, name: newName, updatedAt: Date.now() } : q)); }
+  function deleteQuote(id) { pushSaved(saved.filter(q => q.id !== id)); }
 
   function exportSavedQuotes() {
     const blob = new Blob([JSON.stringify(saved, null, 2)], { type: 'application/json' });
@@ -6098,7 +6096,7 @@ function QBApp() {
               </div>
               <div className="qb-card" style={qbCard}>
                 <span className="qb-card-label">Saved quotes</span>
-                <div className="qb-field-help">Saved quotes stay on this device once you click Save or Update above. A brand-new device with nothing saved yet will start from whatever was last exported and pushed here.</div>
+                <div className="qb-field-help">Save or Update syncs to every device automatically. Export is just for a one-off backup or sharing a single quote as a file.</div>
                 <Button variant="inkGhost" size="sm" fullWidth disabled={!saved.length} onClick={exportSavedQuotes}>Export saved quotes</Button>
                 <QBSavedQuotes saved={saved} onLoad={loadQuote} onDuplicate={duplicateQuote} onRename={renameQuote} onDelete={deleteQuote} />
               </div>
