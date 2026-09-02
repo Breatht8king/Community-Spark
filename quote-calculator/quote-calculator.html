@@ -4297,8 +4297,9 @@ window.QB_FAMILIES = [
     variants: [{ id: 'std', name: '' }],
     packs: [{ id: '1', label: 'Self-developed, no cost', per: 1, flat: 0.00 }] },
   { id: 'bingokit', cat: 'staffing', name: 'GSE Games & Sports Expert Deluxe Bingo Game Set', unit: 'set', perGuest: 0,
-    variants: [{ id: 'std', name: 'For: Bingo Night — metal cage, master board, 75 balls, chips & 50 reusable cards' }],
-    packs: [{ id: '1', label: '1 set · reusable cards, chips, calling cage & master board', per: 1, prices: P(null, null, null, null, null, null, 24.99) }] },
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '1', label: '1 set · reusable cards, chips, calling cage & master board', per: 1, prices: P(null, null, null, null, null, null, 24.99) },
+            { id: 'premium', label: '1 set · brass cage, 75 solid wood calling balls, wood folding master board, 50 reusable shutter-slide cards', per: 1, prices: P(null, null, null, 59.98, null, null, null) }] },
   // -- More reusable equipment (added 2026-08-30)
   { id: 'chestcooler', cat: 'staffing', name: 'Large chest cooler', unit: 'unit', perGuest: 0,
     variants: [{ id: 'std', name: 'General use — extra beverage/food cold storage (distinct from the wheeled rolling cooler)' }],
@@ -4457,6 +4458,7 @@ window.QB_EVENT_PRESETS = [
     { cat: 'paper', item: 'plates.10.100', packs: 1 },
     { cat: 'paper', item: 'cutlery.std.180', packs: 1 },
     { cat: 'paper', item: 'napkins.white.800', packs: 1 },
+    { cat: 'staffing', item: 'bingokit.std.premium', packs: 1 },
     { cat: 'staffing', item: 'rentalfee.std.1', packs: 1 }
   ] },
   { id: 'bagel-bar', name: 'National Bagel Day Bar', guests: 65, charge: 800, lines: [
