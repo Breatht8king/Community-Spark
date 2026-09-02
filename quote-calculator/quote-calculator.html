@@ -4200,6 +4200,9 @@ window.QB_FAMILIES = [
   { id: 'triviaminipc', cat: 'staffing', name: 'Mini PC', unit: 'unit', perGuest: 0,
     variants: [{ id: 'std', name: '' }],
     packs: [{ id: '1', label: 'Already own this', per: 1, flat: 0.00 }] },
+  { id: 'triviaeventsoftware', cat: 'staffing', name: 'Event software', unit: 'unit', perGuest: 0,
+    variants: [{ id: 'std', name: '' }],
+    packs: [{ id: '1', label: 'Self-developed, no cost', per: 1, flat: 0.00 }] },
   { id: 'bingokit', cat: 'staffing', name: 'GSE Games & Sports Expert Deluxe Bingo Game Set', unit: 'set', perGuest: 0,
     variants: [{ id: 'std', name: 'For: Bingo Night — metal cage, master board, 75 balls, chips & 50 reusable cards' }],
     packs: [{ id: '1', label: '1 set · reusable cards, chips, calling cage & master board', per: 1, prices: P(null, null, null, null, null, null, 24.98) }] },
@@ -4343,6 +4346,7 @@ window.QB_EVENT_PRESETS = [
     { cat: 'staffing', item: 'triviatv.small.1', packs: 1 },
     { cat: 'staffing', item: 'triviatv.medium.1', packs: 1 },
     { cat: 'staffing', item: 'triviaminipc.std.1', packs: 1 },
+    { cat: 'staffing', item: 'triviaeventsoftware.std.1', packs: 1 },
     { cat: 'staffing', item: 'rentalfee.std.1', packs: 1 }
   ] },
   { id: 'bingo-night', name: 'Bingo Night', guests: 50, charge: 800, lines: [
@@ -4982,7 +4986,7 @@ const QB_SUBTYPES = {
     lead: 'Staff & Vendors', assistant: 'Staff & Vendors', trainer: 'Staff & Vendors', konaice: 'Staff & Vendors',
     tables: 'Tables & Seating', chairs: 'Tables & Seating', picnictable: 'Tables & Seating', fabrictablecloth: 'Tables & Seating',
     tent: 'Tents', tentweights: 'Tents',
-    pa: 'Power & AV', tvrental: 'Power & AV', extensioncord: 'Power & AV', powerstrip: 'Power & AV', phonetripod: 'Power & AV', triviatv: 'Power & AV', triviaminipc: 'Power & AV',
+    pa: 'Power & AV', tvrental: 'Power & AV', extensioncord: 'Power & AV', powerstrip: 'Power & AV', phonetripod: 'Power & AV', triviatv: 'Power & AV', triviaminipc: 'Power & AV', triviaeventsoftware: 'Power & AV',
     wafflemaker: 'Food Equipment', coffeeurn: 'Food Equipment', podcoffeemaker: 'Food Equipment', grill: 'Food Equipment',
     icecreamscoopset: 'Food Equipment', rollingcooler: 'Food Equipment', servingutensilset: 'Food Equipment',
     handtruck: 'Logistics & Safety', firstaidkit: 'Logistics & Safety', judgingclipboards: 'Logistics & Safety', floralshears: 'Logistics & Safety',
@@ -5075,7 +5079,7 @@ const QB_FACET2 = {
     marketumbrella: 'Owned gear', wirelessmic: 'Owned gear', cardtable: 'Owned gear', projectorscreen: 'Owned gear', megaphone: 'Owned gear',
     directorschair: 'Owned gear', stepladder: 'Owned gear', barriertape: 'Owned gear', countdowntimer: 'Owned gear', trafficcones: 'Owned gear',
     beveragetub: 'Owned gear', walkietalkies: 'Owned gear', garmentrack: 'Owned gear', stringlightpole: 'Owned gear', tentlightkit: 'Owned gear',
-    triviawhiteboards: 'Owned gear', scoreboard: 'Owned gear', bingokit: 'Owned gear', triviatv: 'Owned gear', triviaminipc: 'Owned gear' } },
+    triviawhiteboards: 'Owned gear', scoreboard: 'Owned gear', bingokit: 'Owned gear', triviatv: 'Owned gear', triviaminipc: 'Owned gear', triviaeventsoftware: 'Owned gear' } },
 };
 function qbFacet2(fam) {
   const c = QB_FACET2[fam.cat];
