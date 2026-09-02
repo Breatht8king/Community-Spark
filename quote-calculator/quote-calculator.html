@@ -5834,6 +5834,9 @@ function seedPresetQuotes() {
 
 function QBApp() {
   const uid = useRef(Date.now());
+  // Ids this tab has pushed (save/update/duplicate/rename/delete) since page load. Once an id
+  // is in here, the one-shot remote merge below must never touch it again -- see pushSaved.
+  const touchedIdsRef = useRef(new Set());
   const [lines, setLines] = useState([]);
   const [name, setName] = useState('');
   const [guests, setGuests] = useState(60);
@@ -5878,6 +5881,13 @@ function QBApp() {
     // has no updatedAt (treated as 0) on both sides, so ties go to local -- which is always
     // the current live catalog via seedPresetQuotes() above -- and a genuine edit (local or
     // remote, whichever happened more recently) always wins over that.
+    //
+    // This fetch can take a while (Cloudflare Access + a cold KV read). If the user edits and
+    // hits Update/Save before it resolves, its response reflects state from BEFORE that edit --
+    // comparing `updatedAt` alone isn't enough insurance against that, since a slow response
+    // racing a fast edit can otherwise land after pushSaved and silently revert it. So once an
+    // id has been pushed locally this tab (touchedIdsRef), this merge must never touch it again,
+    // no matter what timestamp the remote copy carries.
     let cancelled = false;
     fetch('/api/quotes', { cache: 'no-store' })
       .then(r => (r.ok ? r.json() : null))
@@ -5886,6 +5896,7 @@ function QBApp() {
         setSaved(current => {
           const merged = [...current];
           for (const remote of data) {
+            if (touchedIdsRef.current.has(remote.id)) continue;
             const idx = merged.findIndex(q => q.id === remote.id);
             if (idx < 0) { merged.push(remote); continue; }
             if ((remote.updatedAt || 0) > (merged[idx].updatedAt || 0)) merged[idx] = remote;
@@ -5902,6 +5913,7 @@ function QBApp() {
   // Fire-and-forget on the network side -- local state and localStorage (via the effect
   // below) always update immediately regardless of connectivity.
   function pushSaved(next) {
+    next.forEach(q => touchedIdsRef.current.add(q.id));
     setSaved(next);
     fetch('/api/quotes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(next) })
       .catch(() => { });
