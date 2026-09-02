@@ -6076,7 +6076,7 @@ function QBApp() {
                 <div className="qb-totals-parts">
                   <div>{railStat('Items subtotal', qbMoney(goods))}<div className="qb-totals-qual">{lines.length} line{lines.length !== 1 ? 's' : ''}</div></div>
                   <div>{railStat('Tax', qbMoney(tax))}<div className="qb-totals-qual">{taxPct}% of items</div></div>
-                  <div>{railStat('Delivery & fees', qbMoney(delivery))}<div className="qb-totals-qual">flat add-on</div></div>
+                  <div>{railStat('Charging client', qbMoney(itemsChargeTotal))}<div className="qb-totals-qual">sum of per-item charging</div></div>
                 </div>
                 <div className="qb-totals-sum">
                   <span className="qb-totals-sum-label">Total event cost</span>
