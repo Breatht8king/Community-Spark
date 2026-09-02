@@ -4109,9 +4109,9 @@ window.QB_FAMILIES = [
   { id: 'tent', cat: 'staffing', name: 'Canopy tent rental', unit: 'tent', perGuest: 0,
     variants: [{ id: '10x10', name: '10 x 10' }, { id: '10x20', name: '10 x 20', delta: 85 }],
     packs: [{ id: '1', label: '1 tent, per day', per: 1, flat: 125.00 }] },
-  { id: 'pa', cat: 'staffing', name: 'PA system + mic rental', unit: 'day', perGuest: 0,
+  { id: 'pa', cat: 'staffing', name: 'PA system + mic', unit: 'day', perGuest: 0,
     variants: [{ id: 'std', name: '' }],
-    packs: [{ id: '1', label: 'Per day', per: 1, flat: 85.00 }] },
+    packs: [{ id: '1', label: 'Already own this', per: 1, flat: 0.00 }] },
   { id: 'tvrental', cat: 'staffing', name: 'Portable TV/monitor + stand rental', unit: 'day', perGuest: 0,
     variants: [{ id: 'std', name: '' }],
     packs: [{ id: '1', label: 'Per day', per: 1, flat: 100.00 }] },
@@ -4347,6 +4347,7 @@ window.QB_EVENT_PRESETS = [
     { cat: 'staffing', item: 'triviatv.medium.1', packs: 1 },
     { cat: 'staffing', item: 'triviaminipc.std.1', packs: 1 },
     { cat: 'staffing', item: 'triviaeventsoftware.std.1', packs: 1 },
+    { cat: 'staffing', item: 'pa.std.1', packs: 1 },
     { cat: 'staffing', item: 'rentalfee.std.1', packs: 1 }
   ] },
   { id: 'bingo-night', name: 'Bingo Night', guests: 50, charge: 800, lines: [
