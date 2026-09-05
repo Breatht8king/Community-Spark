@@ -4108,11 +4108,15 @@ window.QB_FAMILIES = [
   { id: 'totebags', cat: 'prizes', name: 'Custom/blank tote bags', unit: 'bag', perGuest: 1,
     variants: [{ id: 'std', name: 'Blank canvas' }],
     packs: [{ id: '12', label: '12 pack · canvas', per: 12, prices: P(null, null, null, 38.99) }] },
-  { id: 'schoolkit', cat: 'prizes', name: 'School supply kit, bulk', unit: 'kit', perGuest: 1,
-    variants: [{ id: 'std', name: 'Standard assortment' }],
-    packs: [{ id: '24', label: '24 pack · 20-piece student kits', per: 24, prices: P(null, null, null, 114.00) },
-            { id: '1-42', label: '1 box · 42-piece (pens/highlighters focus)', per: 1, prices: P(null, null, 12.18, null) },
-            { id: '1-25', label: '1 box · 25-piece variety', per: 1, prices: P(null, 7.99, null, null) }] },
+  { id: 'pencils', cat: 'prizes', name: 'Ticonderoga Pencils', unit: 'pencil', perGuest: 1,
+    variants: [{ id: 'std', name: 'No. 2 HB, yellow' }],
+    packs: [{ id: '96', label: '96 ct box', per: 96, prices: P(null, null, null, null, null, null, 15.99) }] },
+  { id: 'gluesticks', cat: 'prizes', name: "Elmer's Glue Sticks, Classroom Pack", unit: 'stick', perGuest: 1,
+    variants: [{ id: 'std', name: 'All-purpose, washable' }],
+    packs: [{ id: '30', label: '30 ct box', per: 30, prices: P(null, null, null, null, null, null, 15.47) }] },
+  { id: 'compnotebooks', cat: 'prizes', name: 'Mead Composition Notebooks', unit: 'notebook', perGuest: 1,
+    variants: [{ id: 'std', name: 'Wide ruled, 100 sheets' }],
+    packs: [{ id: '12', label: '12 pack', per: 12, prices: P(null, null, null, null, null, null, 35.55) }] },
   { id: 'supplybags', cat: 'prizes', name: 'Supply bags, bulk (drawstring)', unit: 'bag', perGuest: 1,
     variants: [{ id: 'std', name: 'Assorted colors' }],
     packs: [{ id: '100', label: '100 pack · nylon drawstring', per: 100, prices: P(null, null, null, 56.03) }] },
@@ -4624,9 +4628,14 @@ window.QB_EVENT_PRESETS = [
     { cat: 'paper', item: 'napkins.white.800', packs: 1 }
   ] },
   { id: 'back-to-school-supply-event', name: 'Back-to-School Supply Event', guests: 65, charge: 1750, lines: [
-    { cat: 'prizes', item: 'schoolkit.std.24', packs: 3 },
     { cat: 'prizes', item: 'supplybags.std.100', packs: 1 },
-    { cat: 'prizes', item: 'backpacks.std.24', packs: 1 }
+    { cat: 'prizes', item: 'backpacks.std.24', packs: 1 },
+    { cat: 'prizes', item: 'pencils.std.96', packs: 2 },
+    { cat: 'prizes', item: 'gluesticks.std.30', packs: 2 },
+    { cat: 'prizes', item: 'compnotebooks.std.12', packs: 6 },
+    { cat: 'decor', item: 'signage.generic.1', packs: 1 },
+    { cat: 'decor', item: 'balloons.assorted.144', packs: 1 },
+    { cat: 'decor', item: 'chalkboardsigns.std.20', packs: 1 }
   ] },
   { id: 'fall-festival', name: 'Fall Festival', guests: 65, charge: 1250, lines: [
     { cat: 'food', item: 'caramelapples.std.2', packs: 33 },
@@ -5140,7 +5149,8 @@ const QB_SUBTYPES = {
     cuttingboardsheets: 'Serving & Tables' } },
   prizes: { order: ['Gift Cards & Grand Prizes', 'Giveaway Bags', 'Awards & Raffle', 'Garden Prizes', 'Pet Prizes', 'Custom Blanks'], map: {
     giftcards: 'Gift Cards & Grand Prizes', grand: 'Gift Cards & Grand Prizes', basket: 'Gift Cards & Grand Prizes', petsmartgiftcards: 'Gift Cards & Grand Prizes',
-    goody: 'Giveaway Bags', totebags: 'Giveaway Bags', supplybags: 'Giveaway Bags', backpacks: 'Giveaway Bags', schoolkit: 'Giveaway Bags', petgiftbags: 'Giveaway Bags',
+    goody: 'Giveaway Bags', totebags: 'Giveaway Bags', supplybags: 'Giveaway Bags', backpacks: 'Giveaway Bags', petgiftbags: 'Giveaway Bags',
+    pencils: 'Giveaway Bags', gluesticks: 'Giveaway Bags', compnotebooks: 'Giveaway Bags',
     medals: 'Awards & Raffle', raffle: 'Awards & Raffle',
     gardentools: 'Garden Prizes', wateringcan: 'Garden Prizes', plantties: 'Garden Prizes', planttags: 'Garden Prizes',
     leashes: 'Pet Prizes', takehomebowls: 'Pet Prizes', plushtoys: 'Pet Prizes', minitreats: 'Pet Prizes',
@@ -5230,7 +5240,7 @@ const QB_FACET2 = {
     buffetbowls: 'Serving', foodcontainers: 'Serving', cuttingboardsheets: 'Serving' } },
   prizes: { label: 'Who it suits', order: ['Anyone', 'Kids', 'Adults', 'Pets'], map: {
     giftcards: 'Anyone', grand: 'Anyone', basket: 'Anyone', medals: 'Anyone', raffle: 'Anyone', totebags: 'Anyone', petsmartgiftcards: 'Anyone',
-    goody: 'Kids', schoolkit: 'Kids', supplybags: 'Kids', backpacks: 'Kids',
+    goody: 'Kids', supplybags: 'Kids', backpacks: 'Kids', pencils: 'Kids', gluesticks: 'Kids', compnotebooks: 'Kids',
     gardentools: 'Adults', wateringcan: 'Adults', plantties: 'Adults', planttags: 'Adults', tumblers: 'Adults',
     leashes: 'Pets', takehomebowls: 'Pets', plushtoys: 'Pets', minitreats: 'Pets', petgiftbags: 'Pets', bandanas: 'Pets',
     trophies: 'Anyone', certificates: 'Anyone', keychains: 'Anyone', waterbottles: 'Anyone', stressballs: 'Anyone',
